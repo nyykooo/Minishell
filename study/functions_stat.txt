@@ -44,3 +44,18 @@ Retorno: 0 se as informações do link simbólico forem obtidas com sucesso, ou 
 Obs: a estrutura lstat retornada é 
 
 -------------------------------------------------------------------------------
+
+3 - fstat
+
+int fstat(int fd, struct stat *statbuf);
+
+Usada para obter informações sobre um arquivo associado a um descritor de arquivo específico. É semelhante à função stat(), mas em vez de usar o nome do arquivo, ela usa um descritor de arquivo previamente aberto.
+
+-- int fd: O descritor de arquivo para o qual você deseja obter informações.
+-- statbuf: Um ponteiro para uma estrutura stat onde as informações do arquivo serão armazenadas.
+
+Retorno: 0 se as informações do arquivo forem obtidas com sucesso, ou -1 em caso de erro.
+
+Obs: A estrutura stat retornada por fstat() é a mesma estrutura retornada por stat() e lstat(), com as mesmas informações sobre o arquivo associado ao descritor de arquivo.
+
+-------------------------------------------------------------------------------
