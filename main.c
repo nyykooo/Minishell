@@ -6,16 +6,16 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 22:46:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:56:43 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libs/headers.h"
+#include "libs/headers.h"
 
 static void	analyze_input(char *input)
 {
-	char **commands;
-	int i;
+	char	**commands;
+	int		i;
 
 	if (!input)
 		return ;
@@ -23,12 +23,13 @@ static void	analyze_input(char *input)
 	// commands = mega_parsing(input);
 	if (ft_strcmp(commands[0], "cd") == 0)
 	{
-		if(chdir(commands[1]) == -1)
-			write(2, "cd: no such file or directory\n", 30);
+		if (chdir(commands[1]) == -1)
+			write (2, "cd: no such file or directory\n", 30);
 	}
 	else if (commands[0] != NULL)
 	{
-		write(2, "command not found\n", 18);
+		if (ft_strcmp(commands[0], "exit") != 0)
+			write(2, "command not found\n", 18);
 	}
 	i = 0;
 	while (commands[i] != NULL)
@@ -46,13 +47,13 @@ static char	*ft_pathname(char *pwd)
 	while ((pwd)[i] != '/')
 		i--;
 	pwd[--i] = '~';
-	return(ft_strjoin(ft_substr(pwd, i, ft_strlen(pwd)), " $ "));
+	return (ft_strjoin (ft_substr(pwd, i, ft_strlen(pwd)), " $ "));
 }
 
-int main(void)
+int	main(void)
 {
-	char *input;
-	char *pwd;
+	char	*input;
+	char	*pwd;
 
 	input = NULL;
 	while (ft_strcmp(input, "exit") != 0)
@@ -65,6 +66,5 @@ int main(void)
 		free(pwd);
 	}
 	rl_clear_history();
-
-    return (0);
+	return (0);
 }
