@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 12:56:22 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:46:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,16 @@ static void	analyze_input(char *input)
 	char **commands;
 	int i;
 
+	if (!input)
+		return ;
 	commands = ft_split(input, ' ');
+	// commands = mega_parsing(input);
 	if (ft_strcmp(commands[0], "cd") == 0)
 	{
 		if(chdir(commands[1]) == -1)
 			write(2, "cd: no such file or directory\n", 30);
 	}
-	else
+	else if (commands[0] != NULL)
 	{
 		write(2, "command not found\n", 18);
 	}
@@ -54,14 +57,13 @@ int main(void)
 	input = NULL;
 	while (ft_strcmp(input, "exit") != 0)
 	{
+		analyze_input(input);
 		pwd = getcwd(NULL, 0);
 		pwd = ft_pathname(pwd);
 		input = readline(pwd);
-		analyze_input(input);
 		add_history(input);
 		free(pwd);
 	}
-	
 	rl_clear_history();
 
     return (0);
