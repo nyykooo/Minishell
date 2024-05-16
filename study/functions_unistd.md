@@ -1,10 +1,8 @@
-#include <unistd.h>
+# <unistd.h>
 
--------------------------------------------------------------------------------
+## 1. _access_
 
-1 - access
-
-int access(const char *pathname, int mode);
+_int access(const char *pathname, int mode);_
 
 Usada para verificar se um determinado arquivo pode ser acessado ou não com as permissões especificadas. Esta função é útil quando você precisa verificar se um arquivo existe ou se possui permissões específicas antes de realizar operações de leitura ou escrita nele.
 
@@ -13,13 +11,9 @@ Usada para verificar se um determinado arquivo pode ser acessado ou não com as 
 
 Retorno: 0 se o acesso ao arquivo for permitido de acordo com as permissões especificadas, e -1 se ocorrer algum erro.
 
--------------------------------------------------------------------------------
+## 2. _fork_
 
-2 - fork
-
-#include <unistd.h>
-
-pid_t fork(void);
+_pid_t fork(void);_
 
 Usada para criar um novo processo. Ambos os processos continuam a executar o mesmo programa a partir do ponto em que fork() foi chamado, mas cada um deles tem seu próprio espaço de endereço de memória e identificador de processo (PID).
 
@@ -31,11 +25,9 @@ Usada para criar um novo processo. Ambos os processos continuam a executar o mes
 	* No processo filho, o valor retornado é 0.
 	* Se ocorrer um erro, o valor retornado é -1.
 
--------------------------------------------------------------------------------
+## 3. _getcwd_
 
-3 - getcwd
-
-char *getcwd(char *buf, size_t size);
+_char *getcwd(char *buf, size_t size);_
 
 Usada para obter o diretório de trabalho atual do processo.
 
@@ -44,11 +36,9 @@ Usada para obter o diretório de trabalho atual do processo.
 
 Retorno: string contendo o caminho absoluto do diretório de trabalho atual, ou NULL em caso de erro.
 
--------------------------------------------------------------------------------
+## 4. _chdir_
 
-4 - chdir
-
-int chdir(const char *path);
+_int chdir(const char *path);_
 
 Usada para alterar o diretório de trabalho atual do processo para o diretório especificado. Isso permite que você mude para um diretório diferente durante a execução do programa.
 
@@ -56,11 +46,9 @@ Usada para alterar o diretório de trabalho atual do processo para o diretório 
 
 Retorno: 0 se a operação for bem-sucedida e -1 em caso de erro.
 
--------------------------------------------------------------------------------
+## 5. _unlink_
 
-5 - unlink
-
-int unlink(const char *pathname);
+_int unlink(const char *pathname);_
 
 Usada para remover (ou "excluir") um arquivo do sistema de arquivos. Ela exclui o arquivo especificado pelo caminho fornecido.
 
@@ -68,11 +56,9 @@ Usada para remover (ou "excluir") um arquivo do sistema de arquivos. Ela exclui 
 
 Retorno: 0 se a operação for bem-sucedida e -1 em caso de erro.
 
--------------------------------------------------------------------------------
+## 6. _execve_
 
-6 - execve
-
-int execve(const char *pathname, char *const argv[], char *const envp[]);
+_int execve(const char *pathname, char *const argv[], char *const envp[]);_
 
 Usada para executar um programa a partir de um arquivo binário. Ele substitui o programa atual do processo pelo programa especificado e executa-o.
 
@@ -82,11 +68,9 @@ char *const envp: Um vetor de strings que representam as variáveis de ambiente 
 
 Retorno: -1 em caso de erro e não retorna se for bem-sucedida.
 
--------------------------------------------------------------------------------
+## 7. _dup_
 
-7 - dup
-
-int dup(int oldfd);
+_int dup(int oldfd);_
 
 Usada para duplicar um descritor de arquivo existente. Ela cria uma nova entrada na tabela de fds do processo, que se refere ao mesmo arquivo ou pipe que o fd original.
 
@@ -94,11 +78,9 @@ Usada para duplicar um descritor de arquivo existente. Ela cria uma nova entrada
 
 Retorno: novo fd se for bem-sucedida, ou -1 em caso de erro.
 
--------------------------------------------------------------------------------
+## 8. _dup2_
 
-8 - dup2
-
-int dup2(int oldfd, int newfd);
+_int dup2(int oldfd, int newfd);_
 
 Usada tambem para duplicar um fd existente. Porem, permite que você especifique explicitamente o número do novo fd. Ela duplica um fd existente para um número de fd específico.
 
@@ -107,9 +89,7 @@ Usada tambem para duplicar um fd existente. Porem, permite que você especifique
 
 Retorno: novo fd (ou newfd) se for bem-sucedida, ou -1 em caso de erro.
 
--------------------------------------------------------------------------------
-
-9 - pipe
+## 9. _pipe_
 
 int pipe(int pipefd[2]);
 
@@ -121,11 +101,9 @@ Obs: "Um pipe é uma sequência de bytes unidirecional e sem nome, que pode ser 
 
 Retorno: 0 se a operação for bem-sucedida, ou -1 em caso de erro.
 
--------------------------------------------------------------------------------
+## 10. _isatty_
 
-10 - isatty
-
-int isatty(int fd);
+_int isatty(int fd);_
 
 Usada para verificar se um descritor de arquivo se refere a um terminal. Isso é útil para determinar se a entrada ou saída está sendo redirecionada para um arquivo ou se está interagindo diretamente com um terminal.
 
@@ -133,11 +111,9 @@ Usada para verificar se um descritor de arquivo se refere a um terminal. Isso é
 
 Retorno: 1 se o descritor de arquivo estiver associado a um terminal (ou seja, se for um terminal), ou 0 se não estiver associado a um terminal.
 
--------------------------------------------------------------------------------
+## 11. _ttyname_
 
-11 - ttyname
-
-char *ttyname(int fd);
+_char *ttyname(int fd);_
 
 Usada para obter o nome do terminal associado a um determinado descritor de arquivo.
 
@@ -145,11 +121,9 @@ Usada para obter o nome do terminal associado a um determinado descritor de arqu
 
 Retorno: string contendo o caminho do terminal associado ao descritor de arquivo especificado. Se o descritor de arquivo não estiver associado a um terminal, a função retorna NULL.
 
--------------------------------------------------------------------------------
+## 12. _ttyslot_
 
-12 - ttyslot
-
-int ttyslot(void);
+_int ttyslot(void);_
 
 Usada para determinar o número da entrada de terminal do usuário no arquivo /etc/ttys. Essa função é principalmente usada em sistemas Unix para obter informações sobre a posição do terminal do usuário em relação aos outros terminais.
 
@@ -157,11 +131,9 @@ Usada para determinar o número da entrada de terminal do usuário no arquivo /e
 
 Retorno: número da entrada de terminal do usuário no arquivo /etc/ttys. Se ocorrer um erro, ou se o usuário não estiver conectado a um terminal, a função retorna -1.
 
--------------------------------------------------------------------------------
+## 13. _getenv_
 
-13 - getenv
-
-char *getenv(const char *name);
+_char *getenv(const char *name);_
 
 Usada para obter o valor de uma variável de ambiente.
 
