@@ -6,14 +6,15 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/05/15 16:09:36 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/05/16 22:47:19 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRC = main.c
+SRC = main.c \
+		#src/parsing.c
 
 LIBFT = libs/libft/libft.a
 
