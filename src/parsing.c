@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:13:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 22:46:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:46:18 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char **mega_parsing(char *input)
 		while (*input == ' ')
 			input++;
 		if (*input == '"' || *input == '\'')
-			list[position] = deal_quotes(&input);				
+			list[position] = deal_quotes(&input);			
 		else
 			list[position] = deal_normal(&input);
 		position++;
