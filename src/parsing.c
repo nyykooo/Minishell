@@ -3,40 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:13:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/17 13:46:18 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:12:12 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
 
-static char *deal_quotes(char **input)
-{
-	int i;
-
-	i = 0;
-	if (*input[i] == '"')
-	{
-		(*input)++;
-		while ((**input) != '"')
-		{
-			i++;
-			(*input)++;
-		}
-	}
-	else if (*input[i] == '\'')
-	{
-		(*input)++;
-		while ((**input) != '\'')
-		{
-			i++;
-			(*input)++;
-		}
-	}
-	return (ft_substr(*input - i, 0, i));
-}
 
 static char *deal_normal(char **input)
 {
@@ -135,4 +110,51 @@ char **mega_parsing(char *input)
 		position++;
 	}
 	return (list);
+}
+
+
+static int look_4quotes(char *input)
+{
+	int	found;
+
+	found = 0;
+	while (*input != '\0')
+	{
+		if (*input == '"')
+		{
+			found = 1;
+			while (*input != '"' && *input != '\0')
+				input++;
+			if (*input == '\0')
+				return (-1);
+		}
+		else if (*input == '\'')
+		{
+			found = 1;
+			while (*input != '\'' && *input != '\0')
+				input++;
+			if (*input == '\0')
+				return (-1);
+		}
+		input++;
+	}
+	return (found);
+}
+
+char **parse_hub(char *input)
+{
+	char **result;
+
+	if (look_4quotes(input) < 0)
+	{
+		write(2, "erro\n", 4);
+		exit(0);
+	}
+	else if (look_4quotes(input) == 0)
+		result = ft_split(input, ' ');
+	else if (look_4quotes(input == 1))
+	{
+		result = quote_split(input);
+	//while (result) --> split if (!'"')
+	}
 }
