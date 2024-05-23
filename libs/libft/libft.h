@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/15 15:25:11 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:40:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ long	ft_atol(const char *nbr);
 bool	int_number(const char *nbr);
 void	ft_error_print(char *error);
 int		get_charlen(char c);
+bool	ft_isspace(char c);
 
 #endif

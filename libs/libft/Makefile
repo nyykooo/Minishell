@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 09:59:57 by ncampbel          #+#    #+#              #
-#    Updated: 2024/05/15 16:08:36 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/05/23 10:41:07 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ SRC= ft_isalpha.c \
 		ft_htoi.c \
 		ft_array_len.c \
 		ft_error_print.c \
-		get_charlen.c
+		get_charlen.c \
+		ft_isspace.c
 OBJ= $(SRC:.c=.o)
 
 all: $(NAME)
