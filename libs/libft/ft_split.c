@@ -3,68 +3,129 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 14:28:12 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/16 15:46:19 by ncampbel         ###   ########.fr       */
+/*   Created: 2023/10/09 16:59:28 by brunhenr          #+#    #+#             */
+/*   Updated: 2023/10/25 15:07:50 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_count_words(char const *s, char c)
+void	skip_and_find_next_word(const char *s, char c, int *i, int *j)
 {
-	int		i;
-	int		count;
+	while (s[*i] == c && s[*i] != '\0')
+		(*i)++;
+	*j = *i;
+	while (s[*i] != c && s[*i] != '\0')
+		(*i)++;
+}
 
-	i = 0;
+int	count_words(const char *s, char c)
+{
+	int	count;
+	int	i;
+	int	j;
+
 	count = 0;
+	i = 0;
+	j = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] != c && s[i + 1] != '\0')
-		{
+		skip_and_find_next_word(s, c, &i, &j);
+		if (i > j)
 			count++;
-			while (s[i] != c && s[i] != '\0')
-				i++;
-		}
-		else
-			i++;
 	}
 	return (count);
 }
 
-static char	ft_wordlen(const char *str, char sep)
+int	allocate_words(const char *s, char **strings, char c)
 {
 	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
-	while (str[i] && str[i] != sep)
-		i++;
-	return (i);
-}
-
-char	**ft_split(const char *s, char c)
-{
-	char	**list;
-	int		position;
-	int		words;
-
-	words = ft_count_words(s, c);
-	list = (char **)malloc((words + 1) * sizeof(char *));
-	if (!list)
-		return (NULL);
-	list[words] = 0;
-	position = 0;
-	while (words > 0)
+	j = 0;
+	k = 0;
+	while (s[i] != '\0')
 	{
-		while (*s == c)
-			s++;
-		list[position] = ft_substr(s, 0, ft_wordlen(s, c));
-		if (!list)
-			break ;
-		s += ft_wordlen(s, c);
-		position++;
-		words--;
+		skip_and_find_next_word(s, c, &i, &j);
+		if (i > j)
+		{
+			strings[k] = malloc(sizeof(char) * (i - j) + 1);
+			if (strings[k] == NULL)
+			{
+				while (k >= 0)
+					free(strings[k--]);
+				free(strings);
+				return (1);
+			}
+			k++;
+		}
 	}
-	return (list);
+	return (0);
 }
+
+void	copy_to_string(const char *s, char **string, char c)
+{
+	int	i;
+	int	j;
+	int	k;
+	int	p;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	p = 0;
+	while (s[i] != '\0')
+	{
+		skip_and_find_next_word(s, c, &i, &j);
+		if (i > j)
+		{
+			p = 0;
+			while (j < i)
+				string[k][p++] = s[j++];
+			string[k][p] = '\0';
+			k++;
+		}
+	}
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**string;
+	int		count;
+	int		control;
+
+	if (s == NULL)
+		return (NULL);
+	count = 0;
+	control = 0;
+	count = count_words(s, c) + 1;
+	string = malloc(sizeof(char *) * count);
+	if (string == NULL)
+		return (NULL);
+	string[count - 1] = NULL;
+	control = allocate_words(s, string, c);
+	if (control == 1)
+		return (NULL);
+	copy_to_string(s, string, c);
+	return (string);
+}
+
+/*int	main()
+{
+	int	i = 0;
+	char	*str;
+	char	**strings;
+
+	str = "-6 -67 -61 -38 9 -16 -16 32 56 16 ";
+	strings = ft_split(str, ' ');
+	while (strings[i] != NULL)
+	{
+		printf("split[%d]:%s\n", i, strings[i]);
+		i++;
+	}
+	return (0);
+}*/

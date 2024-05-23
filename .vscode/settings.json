@@ -1,6 +1,8 @@
 {
 	"files.associations": {
 		"wait.h": "c",
-		"headers.h": "c"
+		"headers.h": "c",
+		"libft.h": "c",
+		"readline.h": "c"
 	}
 }
