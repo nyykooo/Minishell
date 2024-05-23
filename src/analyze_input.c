@@ -79,13 +79,15 @@ static void	handle_command(char **commands)
 void	analyze_input(char *input)
 {
 	char	**commands;
+	char *temp;
 	int		i;
 
 	i = 0;
 	if (!input)
 		return ;
-	commands = ft_split(input, ' ');
-	// commands = mega_parsing(input);
+	temp = input;
+	// commands = ft_split(input, ' ');
+	commands = parsing_hub(temp);
 	if (ft_strcmp(commands[0], "cd") == 0)
 		handle_cd(commands);
 	else if (ft_strcmp(commands[0], "exit") == 0)

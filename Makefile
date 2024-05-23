@@ -3,17 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
+#    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/05/17 16:33:29 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/05/23 15:25:37 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRC = main.c src/analyze_input.c
+SRC = main.c \
+	src/analyze_input.c \
+	src/parsing.c \
+	src/parse/input_handle.c \
+	src/parse/token_handle.c
 
 LIBFT = "libs/libft/libft.a"
 
