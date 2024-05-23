@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/05/22 21:24:55 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/05/23 22:27:21 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,12 +181,14 @@ void	handle_unset(char **commands, t_envvar **envvar_list)
 void	analyze_input(char *input, t_envvar **envvar_list)
 {
 	char	**commands;
+	char *temp;
 	int		i;
 
 	i = 0;
 	if (!input)
 		return ;
-	commands = ft_split(input, ' ');
+	// commands = mega_parsing(input);
+	commands = parsing_hub(input);
 	if (ft_strcmp(commands[0], "cd") == 0)
 		handle_cd(commands);
 	else if (ft_strcmp(commands[0], "exit") == 0)

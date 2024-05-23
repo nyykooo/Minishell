@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:11:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/23 17:21:42 by ncampbel         ###   ########.fr       */
+/*   Created: 2024/05/23 10:38:12 by ncampbel          #+#    #+#             */
+/*   Updated: 2024/05/23 10:40:04 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libs/headers.h"
+#include "libft.h"
 
-char **parsing_hub(char *input)
+bool	ft_isspace(char c)
 {
-	
-	input_manager(&input);
-	return (token_manager(input));
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (true);
+	return (false);
 }
