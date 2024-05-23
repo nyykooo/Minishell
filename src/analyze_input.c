@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/05/23 22:27:21 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/23 22:31:56 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +187,9 @@ void	analyze_input(char *input, t_envvar **envvar_list)
 	i = 0;
 	if (!input)
 		return ;
+	temp = ft_strdup(input);
 	// commands = mega_parsing(input);
-	commands = parsing_hub(input);
+	commands = parsing_hub(temp);
 	if (ft_strcmp(commands[0], "cd") == 0)
 		handle_cd(commands);
 	else if (ft_strcmp(commands[0], "exit") == 0)
@@ -210,5 +211,6 @@ void	analyze_input(char *input, t_envvar **envvar_list)
 			free(commands[i++]);
 		free(commands);
 	}
+	free(temp);
 	return ;
 }
