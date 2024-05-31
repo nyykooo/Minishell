@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 20:18:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:37:08 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ static char **get_arguments(char **tokens_arg, int *i)
 	if (!arguments)
 		return (NULL); // error handling
 	j = 0;
-	arguments[j] = ft_strdup(tokens_arg[(*i)]);
+	arguments[j++] = ft_strdup(tokens_arg[(*i)]);
 	while (tokens_arg[++(*i)])
 	{
 		if (check_cmd(tokens_arg[(*i)]) == true)
@@ -138,7 +138,6 @@ static char **get_arguments(char **tokens_arg, int *i)
 		arguments[j] = quote_del(arguments[j]);
 		j++;
 	}
-	printf("arguments[%d] = %s\n", j, arguments[j]);
 	return (arguments);
 }
 
