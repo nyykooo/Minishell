@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/23 17:49:02 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:21:28 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char *trim_hub(char *input)
 	temp = ft_calloc(ft_strlen(input) + 1, sizeof(char));
 	if(!temp)
 		return (NULL);
-	while (space_trim(input, temp))
+	while (space_trim(input, temp) == false)
 		(void)0;
 	return (temp);
 }
@@ -83,7 +83,8 @@ static int input_cleaner(char *input)
 		printf("Error: failed to allocate memory\n");
 		exit(1);
 	}
-	input = trim;
+	ft_strlcpy(input, trim, ft_strlen(trim) + 1);
+	free(trim);
 	return (0);
 }
 

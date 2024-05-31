@@ -6,13 +6,13 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:11:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/23 17:21:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:17:18 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
 
-char **parsing_hub(char *input)
+t_token **parsing_hub(char *input)
 {
 	
 	input_manager(&input);

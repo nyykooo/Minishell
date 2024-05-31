@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/23 22:15:04 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/29 23:40:19 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*ft_pathname(char *pwd)
 	free(pwd);
     return result;
 }
-void	minishell_loop(t_envvar *envvar_list)
+void	minishell_loop(t_minishell *shell)
 {
 	char	*pwd;
 	char	*input;
@@ -43,7 +43,7 @@ void	minishell_loop(t_envvar *envvar_list)
 		pwd = ft_pathname(pwd);
 		input = readline(pwd);
 		free(pwd);
-		analyze_input(input, &envvar_list);
+		analyze_input(input, shell);
 		if (input == NULL) // O Ctrl + D para a readline eh um NULL 
 		{
 			// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
@@ -55,19 +55,19 @@ void	minishell_loop(t_envvar *envvar_list)
         free(input);
 }
 
-t_envvar *create_list(char **envp)
+t_var *create_list(char **envp)
 {
 	char	**current;
-	t_envvar	*new_node;
-	t_envvar	*head;
-	t_envvar	*tail;
+	t_var	*new_node;
+	t_var	*head;
+	t_var	*tail;
 
 	head = NULL;
 	tail = NULL;
 	current = envp;
 	while (*current)
 	{
-		new_node = malloc(sizeof(t_envvar));
+		new_node = malloc(sizeof(t_var));
 		new_node->content = ft_strdup(*current);
 		new_node->next = NULL;
 		if (head == NULL)
@@ -80,10 +80,10 @@ t_envvar *create_list(char **envp)
 	return (head);
 }
 
-void	free_list(t_envvar *head)
+void	free_list(t_var *head)
 {
-	t_envvar	*current;
-	t_envvar	*next;
+	t_var	*current;
+	t_var	*next;
 
 	current = head;
 	while (current)
@@ -97,19 +97,18 @@ void	free_list(t_envvar *head)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_envvar	*envvar_list;
+	t_minishell *shell;
 
+	shell = ft_calloc(1, sizeof(t_minishell));
 	(void)argv;
 	if (argc != 1)
 	{
 		write(2, "usage: ./minishell\n", 20);
 		return (EXIT_FAILURE);
 	}
-	envvar_list = NULL;
-	envvar_list = create_list(envp);
-	minishell_loop(envvar_list);
-	printf("exit\n");
-	free_list(envvar_list);
+	shell->envvars = create_list(envp);
+	minishell_loop(shell);
+	free_list(shell->envvars);
 	clear_history();
 	return (0);
 }

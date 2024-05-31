@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/05/23 15:25:37 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/05/29 23:43:28 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC = main.c \
 	src/analyze_input.c \
 	src/parsing.c \
 	src/parse/input_handle.c \
-	src/parse/token_handle.c
+	src/parse/token_handle.c \
+	src/free_error_exit/free.c
 
 LIBFT = "libs/libft/libft.a"
 

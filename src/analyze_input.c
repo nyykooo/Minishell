@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/05/23 22:31:56 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:17:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static char	*get_command_path(char *command)
 	return (NULL);
 }
 
-static void	handle_cd(char **commands)
+static void	handle_cd(t_token **commands)
 {
 	char	*dir; 
-
-	dir = commands[1];
+	
+	dir = ft_strdup(commands[0]->argument[1]);
 	if (dir == NULL)
 	{
 		dir = getenv("HOME");
@@ -61,19 +61,17 @@ static void	handle_cd(char **commands)
 	}
 	if (chdir(dir) == -1)
 		write(2, "cd: no such file or directory\n", 30);
+	free(dir);
 }
 
-static void	handle_exit(char **commands)
+static void	handle_exit(t_minishell *shell)
 {
-	int	i;
-
-	i = 0;
-	while (commands[i] != NULL)
-		free(commands[i++]);
-	free(commands);
+	free_shell(shell);
+	printf("exit\n");
+	exit(EXIT_SUCCESS);
 }
 
-static void	handle_command(char **commands)
+static void	handle_command(t_token **commands)
 {
 	pid_t	pid;
 	char	*command_path;
@@ -83,13 +81,13 @@ static void	handle_command(char **commands)
 	pid = fork();
 	if (pid == 0)
 	{
-		command_path = get_command_path(commands[0]);
+		command_path = get_command_path(commands[0]->cmd);
 		if (command_path == NULL)
 		{
 			perror ("minishell");
 			exit (EXIT_FAILURE);
 		}
-		if (execve(command_path, commands, NULL) == -1)
+		if (execve(command_path, commands[0]->argument, NULL) == -1)
 		{
 			perror("minishell");
 			free(command_path);
@@ -102,9 +100,9 @@ static void	handle_command(char **commands)
 		waitpid (pid, &status, WUNTRACED);
 }
 
-void	print_export(t_envvar *envvar_list)
+void	print_export(t_var *envvar_list)
 {
-	t_envvar	*current;
+	t_var	*current;
 
 	current = envvar_list;
 	while (current != NULL)
@@ -114,9 +112,9 @@ void	print_export(t_envvar *envvar_list)
 	}
 }
 
-void	print_env(t_envvar *envvar_list)
+void	print_env(t_var *envvar_list)
 {
-	t_envvar	*current;
+	t_var	*current;
 
 	current = envvar_list;
 	while (current != NULL)
@@ -126,9 +124,9 @@ void	print_env(t_envvar *envvar_list)
 	}
 }
 
-t_envvar	*find_envvar(t_envvar *envvar_list, char *name)
+t_var	*find_envvar(t_var *envvar_list, char *name)
 {
-	t_envvar	*current;
+	t_var	*current;
 	size_t		name_len;
 
 	name_len = strlen(name);
@@ -143,10 +141,10 @@ t_envvar	*find_envvar(t_envvar *envvar_list, char *name)
 	return (NULL);
 }
 
-void	remove_envvar(t_envvar **envvar_list, t_envvar *envvar)
+void	remove_envvar(t_var **envvar_list, t_var *envvar)
 {
-	t_envvar	*current;
-	t_envvar	*prev;
+	t_var	*current;
+	t_var	*prev;
 
 	current = *envvar_list;
 	prev = NULL;
@@ -167,50 +165,37 @@ void	remove_envvar(t_envvar **envvar_list, t_envvar *envvar)
 	}
 }
 
-void	handle_unset(char **commands, t_envvar **envvar_list)
+void	handle_unset(t_token **commands, t_var **envvar_list)
 {
-	t_envvar	*envvar;
+	t_var	*envvar;
 
-	if (commands[1] == NULL)
+	if (commands[0] == NULL)
 		return ;
-	envvar = find_envvar(*envvar_list, commands[1]);
+	envvar = find_envvar(*envvar_list, commands[0]->argument[0]);
 	if (envvar != NULL)
 		remove_envvar(envvar_list, envvar);
 }
 
-void	analyze_input(char *input, t_envvar **envvar_list)
+void	analyze_input(char *input, t_minishell *shell)
 {
-	char	**commands;
-	char *temp;
-	int		i;
-
-	i = 0;
 	if (!input)
 		return ;
-	temp = ft_strdup(input);
-	// commands = mega_parsing(input);
-	commands = parsing_hub(temp);
-	if (ft_strcmp(commands[0], "cd") == 0)
-		handle_cd(commands);
-	else if (ft_strcmp(commands[0], "exit") == 0)
-	{
-		handle_exit(commands);
-		return ;
-	}
-	else if (ft_strcmp(commands[0], "export") == 0)
-		print_export(*envvar_list);
-	else if (ft_strcmp(commands[0], "unset") == 0)
-		handle_unset(commands, envvar_list);
-	else if (ft_strcmp(commands[0], "env") == 0)
-		print_env(*envvar_list);
-	else if (commands[0] != NULL)
-		handle_command(commands);
-	if (commands != NULL)
-	{
-		while (commands[i] != NULL)
-			free(commands[i++]);
-		free(commands);
-	}
-	free(temp);
+	shell->input = ft_strdup(input);
+	shell->tokens = parsing_hub(shell->input);
+	if (ft_strcmp(shell->tokens[0]->cmd, "cd") == 0)
+		handle_cd(shell->tokens);
+	else if (ft_strcmp(shell->tokens[0]->cmd, "exit") == 0)
+		handle_exit(shell);
+	else if (ft_strcmp(shell->tokens[0]->cmd, "export") == 0)
+		print_export(shell->envvars);
+	else if (ft_strcmp(shell->tokens[0]->cmd, "unset") == 0)
+		handle_unset(shell->tokens, &shell->envvars);
+	else if (ft_strcmp(shell->tokens[0]->cmd, "env") == 0)
+		print_env(shell->envvars);
+	else if (shell->tokens[0] != NULL)
+		handle_command(shell->tokens);
+	// if (shell->tokens != NULL)
+	// 	free_tokens(shell->tokens);
+	free(shell->input);
 	return ;
 }
