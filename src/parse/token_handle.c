@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/31 14:37:08 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:39:06 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 static bool check_cmd(char *tokens_arg)
 {
-	if (ft_strcmp(tokens_arg, "echo") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "cd") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "pwd") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "export") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "unset") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "env") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "exit") == 0)
+	if (ft_strcmp(tokens_arg, "echo") == 0 || ft_strcmp(tokens_arg, "cd") == 0
+		|| ft_strcmp(tokens_arg, "pwd") == 0 || ft_strcmp(tokens_arg, "export") == 0
+		|| ft_strcmp(tokens_arg, "unset") == 0 || ft_strcmp(tokens_arg, "env") == 0
+		|| ft_strcmp(tokens_arg, "exit") == 0 || ft_strcmp(tokens_arg, "ls") == 0
+		|| ft_strcmp(tokens_arg, "grep") == 0 || ft_strcmp(tokens_arg, "cat") == 0
+		|| ft_strcmp(tokens_arg, "wc") == 0 || ft_strcmp(tokens_arg, "sort") == 0
+		|| ft_strcmp(tokens_arg, "uniq") == 0 || ft_strcmp(tokens_arg, "cut") == 0
+		|| ft_strcmp(tokens_arg, "paste") == 0 || ft_strcmp(tokens_arg, "join") == 0
+		|| ft_strcmp(tokens_arg, "comm") == 0 || ft_strcmp(tokens_arg, "diff") == 0
+		|| ft_strcmp(tokens_arg, "sed") == 0 || ft_strcmp(tokens_arg, "awk") == 0
+		|| ft_strcmp(tokens_arg, "tr") == 0)
 		return (true);
 	else
 		return (false);
@@ -138,6 +136,7 @@ static char **get_arguments(char **tokens_arg, int *i)
 		arguments[j] = quote_del(arguments[j]);
 		j++;
 	}
+	arguments[j] = NULL;
 	return (arguments);
 }
 

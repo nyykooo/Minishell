@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 09:23:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:12:24 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structures.h"
 
-void	analyze_input(char *input, t_minishell *shell);
+bool	analyze_input(char *input, t_minishell *shell);
 
 t_token **parsing_hub(char *input);
 int	input_manager(char **input);

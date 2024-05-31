@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/29 23:40:19 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:12:08 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	minishell_loop(t_minishell *shell)
 		pwd = ft_pathname(pwd);
 		input = readline(pwd);
 		free(pwd);
-		analyze_input(input, shell);
 		if (input == NULL) // O Ctrl + D para a readline eh um NULL 
 		{
 			// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
 			break ;
 		}
-		add_history(input);
+		if (analyze_input(input, shell) == true)
+			add_history(input);
 	}
 	if (input != NULL)
         free(input);
