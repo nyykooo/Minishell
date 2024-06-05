@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/31 18:12:08 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:59:46 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ void	minishell_loop(t_minishell *shell)
 			// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
 			break ;
 		}
-		if (analyze_input(input, shell) == true)
+		if (input[0] != '\0')
 			add_history(input);
+		analyze_input(input, shell);
 	}
 	if (input != NULL)
         free(input);
@@ -69,6 +70,7 @@ t_var *create_list(char **envp)
 	{
 		new_node = malloc(sizeof(t_var));
 		new_node->content = ft_strdup(*current);
+		new_node->env = true;
 		new_node->next = NULL;
 		if (head == NULL)
 			head = new_node;

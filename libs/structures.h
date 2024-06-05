@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/29 22:58:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:01:27 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef	struct s_var
 {
 	char *content;
+	bool env;
 	struct s_var *next;
 	struct s_var *prev;	
 } t_var;

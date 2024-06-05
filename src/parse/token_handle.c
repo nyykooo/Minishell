@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/31 17:39:06 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:44:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,23 @@ static bool check_cmd(char *tokens_arg)
 		return (false);
 }
 
+static char *check_meta(char *str)
+{
+	int		i;
+	bool	before_quote;
+
+	i = -1;
+	before_quote = true;
+	while (str[++i] != '\0')
+	{
+		if (before_quote == true && (str[i] == N_DQUOTE || str[i] == N_SQUOTE))
+			before_quote = false;
+		if (before_quote == true && (str[i] == N_EQUAL))
+			return (ft_strdup("="));
+	}
+	return (NULL);
+}
+
 static int count_cmd(char **tokens_arg)
 {
 	int i;
@@ -42,6 +59,8 @@ static int count_cmd(char **tokens_arg)
 		if (check_cmd(tokens_arg[i]) == true)
 			size++;
 	}
+	if (size == 0)
+		size = 1;
 	return (size);
 }
 
@@ -86,7 +105,7 @@ static void	mark_tokens(char *input)
 	{
 		if (input[i] == '\'' || input[i] == '\"')
 			i = skip_quotes(input, &i);
-		if (input[i] == ' ')
+		if (input[i] == ' ' || input[i] == '=')
 			input[i] *= -1;
 	}
 }
@@ -133,7 +152,7 @@ static char **get_arguments(char **tokens_arg, int *i)
 		if (check_cmd(tokens_arg[(*i)]) == true)
 			break ;
 		arguments[j] = ft_strdup(tokens_arg[(*i)]);
-		arguments[j] = quote_del(arguments[j]);
+		arguments[j] = quote_del(arguments[j]); //delete quotes??
 		j++;
 	}
 	arguments[j] = NULL;
@@ -156,6 +175,13 @@ static void init_tokens(t_token ***tokens, char **array)
 			(*tokens)[j]->cmd = ft_strdup(array[i]);
 			(*tokens)[j]->argument = get_arguments(array, &i);
 			j++;
+		}
+		else if (array[i] != NULL)
+		{
+			(*tokens)[j]->cmd = check_meta(array[i]); // check metachars
+			(*tokens)[j]->argument = (char **)malloc(sizeof(char *) * 2);
+			(*tokens)[j]->argument[0] = ft_strdup(array[i]);
+			(*tokens)[j]->argument[1] = NULL;
 		}
 	}
 }

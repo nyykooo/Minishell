@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/05/31 18:12:44 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:45:16 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,50 +62,6 @@ static void	handle_cd(t_token **commands)
 	if (chdir(dir) == -1)
 		write(2, "cd: no such file or directory\n", 30);
 	free(dir);
-}
-static bool look_for_flag(char **argument, int *i)
-{
-	int		j;
-
-	j = 0;
-	if (argument[*i][j] == '-')
-	{
-		j++;
-		while (argument[*i][j] == 'n' && argument[*i][j] != '\0')
-			j++;
-		if (argument[*i][j] == '\0')
-		{
-			(*i)++;
-			return (true);
-		}
-		else
-			return (false);
-	}
-	else
-		return false;
-}
-
-static void handle_echo(t_token **comands)
-{
-	int i;
-	bool flag;
-
-	i = 1;
-	flag = false;
-	while (comands[0]->argument[i] != NULL)
-	{
-		if(look_for_flag(comands[0]->argument, &i))
-			flag = true;
-		else
-		{	
-			printf("%s", comands[0]->argument[i]);
-			if (comands[0]->argument[i + 1] != NULL)
-				printf(" ");
-			i++;
-		}
-	}
-	if (!flag)
-		printf("\n");
 }
 
 static void	handle_exit(t_minishell *shell)
@@ -220,15 +176,17 @@ void	handle_unset(t_token **commands, t_var **envvar_list)
 		remove_envvar(envvar_list, envvar);
 }
 
-bool	analyze_input(char *input, t_minishell *shell)
+void	analyze_input(char *input, t_minishell *shell)
 {
-	if (!input[0])
-		return (false);
 	shell->input = ft_strdup(input);
 	shell->tokens = parsing_hub(shell->input);
+	if (shell->tokens[0] == NULL)
+		return ;
 	if (shell->tokens[0]->cmd != NULL)
 	{
-		if (ft_strcmp(shell->tokens[0]->cmd, "cd") == 0)
+		if (ft_strcmp(shell->tokens[0]->cmd, "=") == 0)
+			handle_equal(shell, shell->tokens[0]);
+		else if (ft_strcmp(shell->tokens[0]->cmd, "cd") == 0)
 			handle_cd(shell->tokens);
 		else if (ft_strcmp(shell->tokens[0]->cmd, "echo") == 0)
 			handle_echo(shell->tokens);
@@ -246,5 +204,5 @@ bool	analyze_input(char *input, t_minishell *shell)
 		// 	free_tokens(shell->tokens);
 	}
 	free(shell->input);
-	return (true);
+	return ;
 }
