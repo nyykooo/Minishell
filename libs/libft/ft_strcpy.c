@@ -1,40 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structures.h                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 16:16:22 by brunhenr         ###   ########.fr       */
+/*   Created: 2024/06/06 14:19:04 by brunhenr          #+#    #+#             */
+/*   Updated: 2024/06/06 14:19:29 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTURES_H
-# define STRUCTURES_H
+#include "libft.h"
 
-typedef	struct s_var
+void	ft_strcpy(char *dest, char *src)
 {
-	char *content;
-	bool env;
-	struct s_var *next;
-	struct s_var *prev;	
-} t_var;
-
-typedef struct s_token
-{
-	char	**argument;
-	char	*cmd;
-} t_token;
-
-
-typedef struct s_minishell
-{
-	char		*input;
-	int			n_cmd;
-	t_var		*envvars;
-	t_token		**tokens;
-} t_minishell;
-
-
-#endif
+	while (*src)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*dest = '\0';
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/30 09:21:28 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:47:29 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool space_trim(char *input, char *temp)
 		i++;
 	temp[j] = '\0';
 	if (input[i] == '\0')
-		return (true);
+		return (i = 0, j = 0, true);
 	return (false);
 }
 

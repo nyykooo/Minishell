@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
+#    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 09:59:57 by ncampbel          #+#    #+#              #
-#    Updated: 2024/05/23 10:41:07 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/06/06 14:25:02 by brunhenr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,9 @@ SRC= ft_isalpha.c \
 		ft_array_len.c \
 		ft_error_print.c \
 		get_charlen.c \
-		ft_isspace.c
+		ft_isspace.c \
+		ft_strcat.c \
+		ft_strcpy.c 
 OBJ= $(SRC:.c=.o)
 
 all: $(NAME)

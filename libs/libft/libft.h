@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/23 10:40:15 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:20:44 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ bool	int_number(const char *nbr);
 void	ft_error_print(char *error);
 int		get_charlen(char c);
 bool	ft_isspace(char c);
+void	ft_strcpy(char *dest, char *src);
+void	ft_strcat(char *dest, char *src);
 
 #endif

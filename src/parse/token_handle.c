@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/31 14:37:08 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:44:08 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ static char **get_arguments(char **tokens_arg, int *i)
 		arguments[j] = quote_del(arguments[j]);
 		j++;
 	}
+	arguments[j] = NULL;
 	return (arguments);
 }
 

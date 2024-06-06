@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/29 23:40:19 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:26:45 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static char	*ft_pathname(char *pwd)
         i++;
     while ((pwd)[i] != '/')
         i--;
-    pwd[--i] = '~';
+    if (&pwd[i] != pwd)
+		pwd[--i] = '~';
     substr = ft_substr(pwd, i, ft_strlen(pwd));
     result = ft_strjoin(substr, " $ ");
     free(substr);
@@ -49,7 +50,8 @@ void	minishell_loop(t_minishell *shell)
 			// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
 			break ;
 		}
-		add_history(input);
+		if (input[0] != '\0')
+			add_history(input);
 	}
 	if (input != NULL)
         free(input);
@@ -57,24 +59,22 @@ void	minishell_loop(t_minishell *shell)
 
 t_var *create_list(char **envp)
 {
-	char	**current;
 	t_var	*new_node;
 	t_var	*head;
 	t_var	*tail;
 
 	head = NULL;
 	tail = NULL;
-	current = envp;
-	while (*current)
+	while (*envp)
 	{
 		new_node = malloc(sizeof(t_var));
-		new_node->content = ft_strdup(*current);
+		new_node->content = ft_strdup(*envp);
 		new_node->next = NULL;
 		if (head == NULL)
 			head = new_node;
 		else
 			tail->next = new_node;
-		current++;
+		envp++;
 		tail = new_node;
 	}
 	return (head);
