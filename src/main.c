@@ -6,19 +6,21 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 17:59:46 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:45:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libs/headers.h"
+#include "../libs/headers.h"
 
-static char	*ft_pathname(char *pwd)
+static char	*get_pathname(void)
 {
     int	i;
     char *substr;
     char *result;
+	char *pwd;
 
     i = 0;
+	pwd = getcwd(NULL, 0);
     while ((pwd)[i] != '\0')
         i++;
     while ((pwd)[i] != '/')
@@ -30,87 +32,60 @@ static char	*ft_pathname(char *pwd)
 	free(pwd);
     return result;
 }
-void	minishell_loop(t_minishell *shell)
+
+static bool create_prompt(t_minishell *shell)
 {
-	char	*pwd;
+	char	*prompt;
 	char	*input;
 
 	input = NULL;
-	pwd = NULL;
-	while (ft_strcmp(input, "exit") != 0)
-	{
-		pwd = getcwd(NULL, 0);
-		pwd = ft_pathname(pwd);
-		input = readline(pwd);
-		free(pwd);
-		if (input == NULL) // O Ctrl + D para a readline eh um NULL 
-		{
-			// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
-			break ;
-		}
-		if (input[0] != '\0')
-			add_history(input);
-		analyze_input(input, shell);
-	}
+	prompt = get_pathname();
+	input = readline(prompt);
+	free(prompt);
+	if (input[0] == 0)
+		return (false);
+	add_history(input);
+	shell->input = ft_strdup(input);
 	if (input != NULL)
         free(input);
+	return (true);
 }
 
-t_var *create_list(char **envp)
+static void clear_shell(t_minishell *shell)
 {
-	char	**current;
-	t_var	*new_node;
-	t_var	*head;
-	t_var	*tail;
-
-	head = NULL;
-	tail = NULL;
-	current = envp;
-	while (*current)
-	{
-		new_node = malloc(sizeof(t_var));
-		new_node->content = ft_strdup(*current);
-		new_node->env = true;
-		new_node->next = NULL;
-		if (head == NULL)
-			head = new_node;
-		else
-			tail->next = new_node;
-		current++;
-		tail = new_node;
-	}
-	return (head);
+	free(shell->input);
 }
 
-void	free_list(t_var *head)
+void	minishell_loop(t_minishell *shell)
 {
-	t_var	*current;
-	t_var	*next;
-
-	current = head;
-	while (current)
+	while (true)
 	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = next;
+		if (create_prompt(shell))
+		{
+			analyze_input(shell);
+			clear_shell(shell);
+		}
+		// if (input == NULL) // O Ctrl + D para a readline eh um NULL 
+		// {
+		// 	// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
+		// 	break ;
+		// }
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishell *shell;
+	static t_minishell shell;
 
-	shell = ft_calloc(1, sizeof(t_minishell));
 	(void)argv;
 	if (argc != 1)
 	{
 		write(2, "usage: ./minishell\n", 20);
 		return (EXIT_FAILURE);
 	}
-	shell->envvars = create_list(envp);
-	minishell_loop(shell);
-	free_list(shell->envvars);
+	shell.envvars = create_list(envp);
+	minishell_loop(&shell);
+	free_var(shell.envvars);
 	clear_history();
 	return (0);
 }

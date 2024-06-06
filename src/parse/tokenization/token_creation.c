@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_handle.c                                     :+:      :+:    :+:   */
+/*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 20:44:15 by ncampbel         ###   ########.fr       */
+/*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
+/*   Updated: 2024/06/06 17:35:59 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libs/headers.h"
+#include "../../../libs/headers.h"
 
 static bool check_cmd(char *tokens_arg)
 {
@@ -30,23 +30,6 @@ static bool check_cmd(char *tokens_arg)
 		return (false);
 }
 
-static char *check_meta(char *str)
-{
-	int		i;
-	bool	before_quote;
-
-	i = -1;
-	before_quote = true;
-	while (str[++i] != '\0')
-	{
-		if (before_quote == true && (str[i] == N_DQUOTE || str[i] == N_SQUOTE))
-			before_quote = false;
-		if (before_quote == true && (str[i] == N_EQUAL))
-			return (ft_strdup("="));
-	}
-	return (NULL);
-}
-
 static int count_cmd(char **tokens_arg)
 {
 	int i;
@@ -62,77 +45,6 @@ static int count_cmd(char **tokens_arg)
 	if (size == 0)
 		size = 1;
 	return (size);
-}
-
-static int count_quotes(char *input)
-{
-	int i;
-	int quotes;
-
-	i = -1;
-	quotes = 0;
-	while (input[++i])
-	{
-		if (input[i] == N_DQUOTE || input[i] == N_SQUOTE)
-			quotes++;
-	}
-	return (quotes);
-}
-
-static int skip_quotes(char *input, int *i)
-{
-	char quote;
-
-	quote = input[(*i)];
-	input[(*i)] *= -1;
-	while (input[++(*i)])
-	{
-		if (input[(*i)] == quote)
-		{
-			input[(*i)] *= -1;
-			return ((*i));
-		}
-	}
-	return ((*i));
-}
-
-static void	mark_tokens(char *input)
-{
-	int i;
-
-	i = -1;
-	while (input[++i])
-	{
-		if (input[i] == '\'' || input[i] == '\"')
-			i = skip_quotes(input, &i);
-		if (input[i] == ' ' || input[i] == '=')
-			input[i] *= -1;
-	}
-}
-
-static char *quote_del(char *input)
-{
-	int	i;
-	int size;
-	char *new;
-	int quotes;
-	
-	size = ft_strlen(input);
-	quotes = count_quotes(input);
-	new = (char *)malloc((sizeof(char) * size) - quotes + 1);
-	if (!new)
-		return NULL;
-	i = -1;
-	quotes = 0;
-	while (input[++i])
-	{
-		new[i - quotes] = input[i];
-		if (input[i] == N_DQUOTE || input[i] == N_SQUOTE)
-			quotes++;
-	}
-	new[i - quotes] = '\0';
-	free(input);
-	return (new);
 }
 
 static char **get_arguments(char **tokens_arg, int *i)
@@ -152,7 +64,6 @@ static char **get_arguments(char **tokens_arg, int *i)
 		if (check_cmd(tokens_arg[(*i)]) == true)
 			break ;
 		arguments[j] = ft_strdup(tokens_arg[(*i)]);
-		arguments[j] = quote_del(arguments[j]); //delete quotes??
 		j++;
 	}
 	arguments[j] = NULL;
@@ -186,7 +97,7 @@ static void init_tokens(t_token ***tokens, char **array)
 	}
 }
 
-static void	create_tokens(char **array, t_token ***tokens)
+void	create_tokens(char **array, t_token ***tokens)
 {
 	int i;
 	int size;
@@ -203,18 +114,4 @@ static void	create_tokens(char **array, t_token ***tokens)
 			free_tokens(*tokens);
 	}
 	init_tokens(tokens, array);
-}
-
-t_token **token_manager(char *input)
-{
-	char **array;
-	t_token **tokens;
-
-	mark_tokens(input);
-	array = ft_split(input, N_SPACE);
-	if (!array)
-		return (NULL);
-	create_tokens(array, &tokens);
-	free_array(array);
-	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/05 20:45:16 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:42:59 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,9 +176,8 @@ void	handle_unset(t_token **commands, t_var **envvar_list)
 		remove_envvar(envvar_list, envvar);
 }
 
-void	analyze_input(char *input, t_minishell *shell)
+void	analyze_input(t_minishell *shell)
 {
-	shell->input = ft_strdup(input);
 	shell->tokens = parsing_hub(shell->input);
 	if (shell->tokens[0] == NULL)
 		return ;
@@ -200,9 +199,5 @@ void	analyze_input(char *input, t_minishell *shell)
 			print_env(shell->envvars);
 		else if (shell->tokens[0] != NULL)
 				handle_command(shell->tokens);
-		// if (shell->tokens != NULL)
-		// 	free_tokens(shell->tokens);
 	}
-	free(shell->input);
-	return ;
 }
