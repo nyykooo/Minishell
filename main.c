@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 16:26:45 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:09:54 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	minishell_loop(t_minishell *shell)
 		pwd = ft_pathname(pwd);
 		input = readline(pwd);
 		free(pwd);
-		analyze_input(input, shell);
 		if (input == NULL) // O Ctrl + D para a readline eh um NULL 
 		{
 			// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
@@ -52,6 +51,7 @@ void	minishell_loop(t_minishell *shell)
 		}
 		if (input[0] != '\0')
 			add_history(input);
+		analyze_input(input, shell);
 	}
 	if (input != NULL)
         free(input);
@@ -69,6 +69,7 @@ t_var *create_list(char **envp)
 	{
 		new_node = malloc(sizeof(t_var));
 		new_node->content = ft_strdup(*envp);
+		new_node->env = true;
 		new_node->next = NULL;
 		if (head == NULL)
 			head = new_node;

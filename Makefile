@@ -6,7 +6,7 @@
 #    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/05 14:17:52 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/06/06 17:12:09 by brunhenr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,14 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 SRC = main.c \
 	src/analyze_input.c \
-	src/parsing.c \
 	src/parse/input_handle.c \
 	src/parse/token_handle.c \
 	src/free_error_exit/free.c \
 	src/cd.c \
-	src/envvar_handler.c
-
+	src/envvar_handler.c \
+	src/builtins/echo.c \
+	src/parse/parsing.c \
+	src/builtins/equal.c
 
 LIBFT = "libs/libft/libft.a"
 

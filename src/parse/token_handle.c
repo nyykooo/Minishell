@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/05/31 17:44:08 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:13:49 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,37 @@
 
 static bool check_cmd(char *tokens_arg)
 {
-	if (ft_strcmp(tokens_arg, "echo") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "cd") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "pwd") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "export") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "unset") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "env") == 0)
-		return (true);
-	else if (ft_strcmp(tokens_arg, "exit") == 0)
+	if (ft_strcmp(tokens_arg, "echo") == 0 || ft_strcmp(tokens_arg, "cd") == 0
+		|| ft_strcmp(tokens_arg, "pwd") == 0 || ft_strcmp(tokens_arg, "export") == 0
+		|| ft_strcmp(tokens_arg, "unset") == 0 || ft_strcmp(tokens_arg, "env") == 0
+		|| ft_strcmp(tokens_arg, "exit") == 0 || ft_strcmp(tokens_arg, "ls") == 0
+		|| ft_strcmp(tokens_arg, "grep") == 0 || ft_strcmp(tokens_arg, "cat") == 0
+		|| ft_strcmp(tokens_arg, "wc") == 0 || ft_strcmp(tokens_arg, "sort") == 0
+		|| ft_strcmp(tokens_arg, "uniq") == 0 || ft_strcmp(tokens_arg, "cut") == 0
+		|| ft_strcmp(tokens_arg, "paste") == 0 || ft_strcmp(tokens_arg, "join") == 0
+		|| ft_strcmp(tokens_arg, "comm") == 0 || ft_strcmp(tokens_arg, "diff") == 0
+		|| ft_strcmp(tokens_arg, "sed") == 0 || ft_strcmp(tokens_arg, "awk") == 0
+		|| ft_strcmp(tokens_arg, "tr") == 0)
 		return (true);
 	else
 		return (false);
+}
+
+static char *check_meta(char *str)
+{
+	int		i;
+	bool	before_quote;
+
+	i = -1;
+	before_quote = true;
+	while (str[++i] != '\0')
+	{
+		if (before_quote == true && (str[i] == N_DQUOTE || str[i] == N_SQUOTE))
+			before_quote = false;
+		if (before_quote == true && (str[i] == N_EQUAL))
+			return (ft_strdup("="));
+	}
+	return (NULL);
 }
 
 static int count_cmd(char **tokens_arg)
@@ -44,6 +59,8 @@ static int count_cmd(char **tokens_arg)
 		if (check_cmd(tokens_arg[i]) == true)
 			size++;
 	}
+	if (size == 0)
+		size = 1;
 	return (size);
 }
 
@@ -88,7 +105,7 @@ static void	mark_tokens(char *input)
 	{
 		if (input[i] == '\'' || input[i] == '\"')
 			i = skip_quotes(input, &i);
-		if (input[i] == ' ')
+		if (input[i] == ' ' || input[i] == '=')
 			input[i] *= -1;
 	}
 }
@@ -135,7 +152,7 @@ static char **get_arguments(char **tokens_arg, int *i)
 		if (check_cmd(tokens_arg[(*i)]) == true)
 			break ;
 		arguments[j] = ft_strdup(tokens_arg[(*i)]);
-		arguments[j] = quote_del(arguments[j]);
+		arguments[j] = quote_del(arguments[j]); //delete quotes??
 		j++;
 	}
 	arguments[j] = NULL;
@@ -158,6 +175,13 @@ static void init_tokens(t_token ***tokens, char **array)
 			(*tokens)[j]->cmd = ft_strdup(array[i]);
 			(*tokens)[j]->argument = get_arguments(array, &i);
 			j++;
+		}
+		else if (array[i] != NULL)
+		{
+			(*tokens)[j]->cmd = check_meta(array[i]); // check metachars
+			(*tokens)[j]->argument = (char **)malloc(sizeof(char *) * 2);
+			(*tokens)[j]->argument[0] = ft_strdup(array[i]);
+			(*tokens)[j]->argument[1] = NULL;
 		}
 	}
 }

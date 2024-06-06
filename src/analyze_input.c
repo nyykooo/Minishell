@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/05 16:51:00 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:11:52 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,33 +118,31 @@ void	handle_unset(t_token **commands, t_var **envvar_list)
 
 void	analyze_input(char *input, t_minishell *shell)
 {
-	if (!input)
-		return ;
 	shell->input = ft_strdup(input);
 	shell->tokens = parsing_hub(shell->input);
-	/*while (1)
-	{
-		printf("shell->tokens->cmd: %s\n", shell->tokens[0]->cmd);
-		printf("shell->tokens->argument[0]: %s\n", shell->tokens[0]->argument[0]);
-		printf("shell->tokens->argument[1]: %s\n", shell->tokens[0]->argument[1]);
-		printf("shell->tokens->argument[2]: %s\n", shell->tokens[0]->argument[2]);
-
+	if (shell->tokens[0] == NULL)
 		return ;
-	}*/
-	if (ft_strcmp(shell->tokens[0]->cmd, "cd") == 0)
-		handle_cd(shell->tokens, shell);
-	else if (ft_strcmp(shell->tokens[0]->cmd, "exit") == 0)
-		handle_exit(shell);
-	else if (ft_strcmp(shell->tokens[0]->cmd, "export") == 0)
-		print_export(shell->envvars);
-	else if (ft_strcmp(shell->tokens[0]->cmd, "unset") == 0)
-		handle_unset(shell->tokens, &shell->envvars);
-	else if (ft_strcmp(shell->tokens[0]->cmd, "env") == 0)
-		print_env(shell->envvars);
-	else if (shell->tokens[0] != NULL)
-		handle_command(shell->tokens);
-	// if (shell->tokens != NULL)
-	// 	free_tokens(shell->tokens);
+	if (shell->tokens[0]->cmd != NULL)
+	{
+		if (ft_strcmp(shell->tokens[0]->cmd, "=") == 0)
+			handle_equal(shell, shell->tokens[0]);
+		else if (ft_strcmp(shell->tokens[0]->cmd, "cd") == 0)
+			handle_cd(shell->tokens, shell);
+		else if (ft_strcmp(shell->tokens[0]->cmd, "echo") == 0)
+			handle_echo(shell->tokens);
+		else if (ft_strcmp(shell->tokens[0]->cmd, "exit") == 0)
+			handle_exit(shell);
+		else if (ft_strcmp(shell->tokens[0]->cmd, "export") == 0)
+			print_export(shell->envvars);
+		else if (ft_strcmp(shell->tokens[0]->cmd, "unset") == 0)
+			handle_unset(shell->tokens, &shell->envvars);
+		else if (ft_strcmp(shell->tokens[0]->cmd, "env") == 0)
+			print_env(shell->envvars);
+		else if (shell->tokens[0] != NULL)
+				handle_command(shell->tokens);
+		// if (shell->tokens != NULL)
+		// 	free_tokens(shell->tokens);
+	}
 	free(shell->input);
 	return ;
 }

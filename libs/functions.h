@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 16:00:47 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:12:52 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,16 @@ void	free_array(char **array);
 
 // BUILTINS
 void	handle_cd(t_token **tokens, t_minishell *shell);
+void	handle_echo(t_token **tokens);
+void	handle_equal(t_minishell *shell, t_token *token);
 
 //ENVVAR_FTS
 t_var	*find_envvar(t_var *envvar_list, char *name);
 void	remove_envvar(t_var **envvar_list, t_var *envvar);
 void	set_envvar(t_var **envvar_list, char *name, char *value);
 char	*get_value(t_var *envvar_list, char *name);
+
+
+
 
 #endif
