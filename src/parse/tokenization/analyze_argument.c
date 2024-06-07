@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 17:38:24 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:06:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static char *quote_del(char *input)
 			quotes++;
 	}
 	new[i - quotes] = '\0';
-	free(input);
+	if (input)
+		free(input);
 	return (new);
 }
 

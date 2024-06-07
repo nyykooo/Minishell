@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 17:35:59 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:14:44 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	create_tokens(char **array, t_token ***tokens)
 
 	i = -1;
 	size = count_cmd(array);
-	*tokens = (t_token **)malloc(sizeof(t_token *) * size);
+	*tokens = (t_token **)malloc(sizeof(t_token *) * size + 1);
 	if (!(*tokens))
 		return ; // error handling
 	while (++i < size)
@@ -113,5 +113,6 @@ void	create_tokens(char **array, t_token ***tokens)
 		if (!(*tokens)[i])
 			free_tokens(*tokens);
 	}
+	(*tokens)[i] = NULL;
 	init_tokens(tokens, array);
 }
