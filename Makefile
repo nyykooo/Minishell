@@ -6,7 +6,7 @@
 #    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/06 17:12:09 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/06/07 18:02:08 by brunhenr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC = main.c \
 	src/envvar_handler.c \
 	src/builtins/echo.c \
 	src/parse/parsing.c \
-	src/builtins/equal.c
+	src/builtins/equal.c \
+	src/signals_handler.c \
 
 LIBFT = "libs/libft/libft.a"
 

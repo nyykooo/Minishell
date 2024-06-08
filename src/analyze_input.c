@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/06 17:11:52 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:21:27 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*get_command_path(char *command)
 	return (NULL);
 }
 
-static void	handle_exit(t_minishell *shell)
+void	handle_exit(t_minishell *shell)
 {
 	free_shell(shell);
 	printf("exit\n");
@@ -118,9 +118,11 @@ void	handle_unset(t_token **commands, t_var **envvar_list)
 
 void	analyze_input(char *input, t_minishell *shell)
 {
+	if (input == NULL || strcmp(input, "\0") == 0)
+		return ;
 	shell->input = ft_strdup(input);
 	shell->tokens = parsing_hub(shell->input);
-	if (shell->tokens[0] == NULL)
+	if (shell->tokens[0] == NULL || strcmp(shell->tokens[0]->argument[0], "\0") == 0)
 		return ;
 	if (shell->tokens[0]->cmd != NULL)
 	{
@@ -140,9 +142,6 @@ void	analyze_input(char *input, t_minishell *shell)
 			print_env(shell->envvars);
 		else if (shell->tokens[0] != NULL)
 				handle_command(shell->tokens);
-		// if (shell->tokens != NULL)
-		// 	free_tokens(shell->tokens);
 	}
-	free(shell->input);
 	return ;
 }

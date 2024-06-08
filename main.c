@@ -6,11 +6,13 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 17:09:54 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/08 11:02:04 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libs/headers.h"
+
+volatile sig_atomic_t ctrl_c_pressed = 0;
 
 static char	*ft_pathname(char *pwd)
 {
@@ -31,24 +33,39 @@ static char	*ft_pathname(char *pwd)
 	free(pwd);
     return result;
 }
+
+void	handle_sigint(int sig) 
+{
+	(void)sig;
+	ctrl_c_pressed = 1;
+	write(1, "^C", 3);
+
+}
+
 void	minishell_loop(t_minishell *shell)
 {
 	char	*pwd;
 	char	*input;
 
+	signal(SIGINT, handle_sigint);
 	input = NULL;
 	pwd = NULL;
-	while (ft_strcmp(input, "exit") != 0)
+	rl_catch_signals = 0; // uma var global do readline que impede o ctrl+c de ser capturado
+	while (1)
 	{
 		pwd = getcwd(NULL, 0);
 		pwd = ft_pathname(pwd);
+		//edit_termios();
 		input = readline(pwd);
+		//printf("input: %s\n", input);
 		free(pwd);
-		if (input == NULL) // O Ctrl + D para a readline eh um NULL 
+		if (ctrl_c_pressed)
 		{
-			// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
-			break ;
+			ctrl_c_pressed = 0;
+			continue ;
 		}
+		if (input == NULL)
+			handle_exit(shell);
 		if (input[0] != '\0')
 			add_history(input);
 		analyze_input(input, shell);
@@ -81,25 +98,11 @@ t_var *create_list(char **envp)
 	return (head);
 }
 
-void	free_list(t_var *head)
-{
-	t_var	*current;
-	t_var	*next;
-
-	current = head;
-	while (current)
-	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = next;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell *shell;
 
+	//edit_termios();
 	shell = ft_calloc(1, sizeof(t_minishell));
 	(void)argv;
 	if (argc != 1)

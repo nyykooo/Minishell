@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 17:12:52 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:58:00 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_token **token_manager(char *input);
 void	free_shell(t_minishell *shell);
 void	free_tokens(t_token **tokens);
 void	free_array(char **array);
+void	free_list(t_var *head);
+void	handle_exit(t_minishell *shell);
 
 // BUILTINS
 void	handle_cd(t_token **tokens, t_minishell *shell);
@@ -36,6 +38,10 @@ t_var	*find_envvar(t_var *envvar_list, char *name);
 void	remove_envvar(t_var **envvar_list, t_var *envvar);
 void	set_envvar(t_var **envvar_list, char *name, char *value);
 char	*get_value(t_var *envvar_list, char *name);
+
+//TTY
+void	edit_termios(void);
+
 
 
 

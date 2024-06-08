@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 17:13:49 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:42:07 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static char *quote_del(char *input)
 	int size;
 	char *new;
 	int quotes;
-	
+
 	size = ft_strlen(input);
 	quotes = count_quotes(input);
 	new = (char *)malloc((sizeof(char) * size) - quotes + 1);
@@ -131,15 +131,15 @@ static char *quote_del(char *input)
 			quotes++;
 	}
 	new[i - quotes] = '\0';
-	free(input);
 	return (new);
 }
 
 static char **get_arguments(char **tokens_arg, int *i)
 {
-	int size;
+	int	size;
 	int j;
 	char **arguments;
+	char *temp;
 
 	size = ft_array_len(tokens_arg) - count_cmd(tokens_arg) + 2;
 	arguments = (char **)malloc(sizeof(char *) * size);
@@ -151,8 +151,9 @@ static char **get_arguments(char **tokens_arg, int *i)
 	{
 		if (check_cmd(tokens_arg[(*i)]) == true)
 			break ;
-		arguments[j] = ft_strdup(tokens_arg[(*i)]);
-		arguments[j] = quote_del(arguments[j]); //delete quotes??
+		temp = ft_strdup(tokens_arg[(*i)]);
+		arguments[j] = quote_del(temp); //delete quotes??
+		free(temp);
 		j++;
 	}
 	arguments[j] = NULL;
@@ -187,21 +188,27 @@ static void init_tokens(t_token ***tokens, char **array)
 }
 
 static void	create_tokens(char **array, t_token ***tokens)
-{
-	int i;
-	int size;
+{	
+	int	i;
+	int	size;
 
 	i = -1;
 	size = count_cmd(array);
-	*tokens = (t_token **)malloc(sizeof(t_token *) * size);
+	*tokens = (t_token **)malloc(sizeof(t_token *) * (size + 1));
 	if (!(*tokens))
 		return ; // error handling
 	while (++i < size)
 	{
 		(*tokens)[i] = (t_token *)malloc(sizeof(t_token));
 		if (!(*tokens)[i])
+		{
+			(*tokens)[i] = NULL;
 			free_tokens(*tokens);
+			free(*tokens);
+			return ;
+		}
 	}
+	(*tokens)[i] = NULL;
 	init_tokens(tokens, array);
 }
 
@@ -210,6 +217,7 @@ t_token **token_manager(char *input)
 	char **array;
 	t_token **tokens;
 
+	tokens = NULL;
 	mark_tokens(input);
 	array = ft_split(input, N_SPACE);
 	if (!array)
