@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enums.h                                            :+:      :+:    :+:   */
+/*   dolar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:26:29 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/08 19:36:41 by ncampbel         ###   ########.fr       */
+/*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
+/*   Updated: 2024/06/09 14:31:58 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENUMS_H
-# define ENUMS_H
+// #include "../../libs/headers.h"
 
-enum e_negative_markers
-{
-	N_SPACE = -32,
-	N_DQUOTE = -34,
-	N_SQUOTE = -39,
-	N_EQUAL = -61,
-	N_DOLLAR = -36,
-};
+// void	dolar(t_minishell *shell, char *str)
+// {
+// 	int		i;
 
-#endif
+// 	i = 0;
+	
+// }

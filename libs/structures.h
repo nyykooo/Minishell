@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 11:15:29 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/08 10:06:44 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,17 @@ typedef	struct s_var
 	struct s_var *prev;	
 } t_var;
 
+typedef struct s_arg
+{
+	char	*arg;
+	bool	dq;
+	bool	sq;
+	bool	dol;
+} t_arg;
+
 typedef struct s_token
 {
-	char	**argument;
+	t_arg	**argument;
 	char	*cmd;
 	// fazer flag para single ou double quote resolve o bo de incluir as quotes se necessario
 } t_token;

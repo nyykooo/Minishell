@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/07 20:14:44 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/09 10:04:58 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,43 @@ static int count_cmd(char **tokens_arg)
 	return (size);
 }
 
-static char **get_arguments(char **tokens_arg, int *i)
+static t_arg **init_arguments(t_arg **arguments, char **tokens_arg)
 {
 	int size;
 	int j;
-	char **arguments;
 
 	size = ft_array_len(tokens_arg) - count_cmd(tokens_arg) + 2;
-	arguments = (char **)malloc(sizeof(char *) * size);
+	arguments = (t_arg **)malloc(sizeof(t_arg *) * size);
 	if (!arguments)
 		return (NULL); // error handling
 	j = 0;
-	arguments[j++] = ft_strdup(tokens_arg[(*i)]);
+	while (j < size)
+	{
+		arguments[j] = (t_arg *)malloc(sizeof(t_arg));
+		arguments[j]->arg = NULL;
+		if (!arguments[j++])
+			return (NULL); // error handling
+	}
+	arguments[j] = NULL;
+	return (arguments);
+}
+
+static t_arg **get_arguments(char **tokens_arg, int *i)
+{
+	int j;
+	t_arg **arguments;
+
+	arguments = NULL;
+	arguments = init_arguments(arguments, tokens_arg);
+	j = 0;
+	arguments[j++]->arg = ft_strdup(tokens_arg[(*i)]);
 	while (tokens_arg[++(*i)])
 	{
 		if (check_cmd(tokens_arg[(*i)]) == true)
 			break ;
-		arguments[j] = ft_strdup(tokens_arg[(*i)]);
+		arguments[j]->arg = ft_strdup(tokens_arg[(*i)]);
 		j++;
 	}
-	arguments[j] = NULL;
 	return (arguments);
 }
 
@@ -87,11 +104,11 @@ static void init_tokens(t_token ***tokens, char **array)
 			(*tokens)[j]->argument = get_arguments(array, &i);
 			j++;
 		}
-		else if (array[i] != NULL)
+		else if (array[i] != NULL) // criar funcao para criar os arguments
 		{
 			(*tokens)[j]->cmd = check_meta(array[i]); // check metachars
-			(*tokens)[j]->argument = (char **)malloc(sizeof(char *) * 2);
-			(*tokens)[j]->argument[0] = ft_strdup(array[i]);
+			(*tokens)[j]->argument = (t_arg **)malloc(sizeof(t_arg *) * 2);
+			(*tokens)[j]->argument[0]->arg = ft_strdup(array[i]);
 			(*tokens)[j]->argument[1] = NULL;
 		}
 	}
