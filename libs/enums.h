@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:26:29 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/05 13:44:55 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:36:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ enum e_negative_markers
 	N_DQUOTE = -34,
 	N_SQUOTE = -39,
 	N_EQUAL = -61,
+	N_DOLLAR = -36,
 };
 
 #endif

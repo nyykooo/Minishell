@@ -51,6 +51,7 @@
 		"streambuf": "c",
 		"cstdbool": "c",
 		"typeinfo": "c",
-		"termios.h": "c"
+		"termios.h": "c",
+		"stdio.h": "c"
 	}
 }

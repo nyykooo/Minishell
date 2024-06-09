@@ -3,27 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
+#    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/07 18:02:08 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/06/09 15:19:58 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRC = main.c \
-	src/analyze_input.c \
-	src/parse/input_handle.c \
-	src/parse/token_handle.c \
-	src/free_error_exit/free.c \
-	src/cd.c \
-	src/envvar_handler.c \
-	src/builtins/echo.c \
-	src/parse/parsing.c \
-	src/builtins/equal.c \
-	src/signals_handler.c \
+SRC = $(wildcard src/*.c src/builtins/*.c src/parse/*.c src/parse/tokenization/*.c src/variables/*.c src/free_error_exit/*.c)
 
 LIBFT = "libs/libft/libft.a"
 
@@ -35,16 +25,18 @@ $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 $(LIBFT):
-	make -C libs/libft
+	make -C libs/libft -s
 
 clean:
 	rm -f $(OBJ)
-	make -C libs/libft clean
+	make -C libs/libft clean -s
 
 fclean: clean
 	rm -f $(NAME)
-	make -C libs/libft fclean
+	make -C libs/libft fclean -s
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
+.SILENT:

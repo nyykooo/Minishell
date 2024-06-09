@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/07 16:21:27 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:22:27 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,36 @@
 #include <string.h>
 #include <stdlib.h>
 
-static char	*get_command_path(char *command)
-{
-	char	*path;
-	char	**dirs;
-	char	*possible_path;
-	int		i;
+// static char	*get_command_path(char *command)
+// {
+// 	char	*path;
+// 	char	**dirs;
+// 	char	*possible_path;
+// 	int		i;
 
-	path = getenv ("PATH");
-	dirs = ft_split (path, ':');
-	i = 0;
-	while (dirs[i] != NULL)
-	{
-		possible_path = malloc (strlen(dirs[i]) + strlen(command) + 2);
-		strcpy (possible_path, dirs[i]);
-		strcat (possible_path, "/");
-		strcat (possible_path, command);
-		if (access(possible_path, X_OK) == 0)
-		{
-			free(dirs);
-			return (possible_path);
-		}
-		free (possible_path);
-		i++;
-	}
-	i = 0;
-	while (dirs[i] != NULL)
-		free(dirs[i++]);
-	free(dirs);
-	return (NULL);
-}
+// 	path = getenv ("PATH");
+// 	dirs = ft_split (path, ':');
+// 	i = 0;
+// 	while (dirs[i] != NULL)
+// 	{
+// 		possible_path = malloc (strlen(dirs[i]) + strlen(command) + 2);
+// 		strcpy (possible_path, dirs[i]);
+// 		strcat (possible_path, "/");
+// 		strcat (possible_path, command);
+// 		if (access(possible_path, X_OK) == 0)
+// 		{
+// 			free(dirs);
+// 			return (possible_path);
+// 		}
+// 		free (possible_path);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (dirs[i] != NULL)
+// 		free(dirs[i++]);
+// 	free(dirs);
+// 	return (NULL);
+// }
 
 void	handle_exit(t_minishell *shell)
 {
@@ -52,34 +52,34 @@ void	handle_exit(t_minishell *shell)
 	exit(EXIT_SUCCESS);
 }
 
-static void	handle_command(t_token **commands)
-{
-	pid_t	pid;
-	char	*command_path;
-	int		status;
+// static void	handle_command(t_token **commands)
+// {
+// 	pid_t	pid;
+// 	char	*command_path;
+// 	int		status;
 
-	status = 0;
-	pid = fork();
-	if (pid == 0)
-	{
-		command_path = get_command_path(commands[0]->cmd);
-		if (command_path == NULL)
-		{
-			perror ("minishell");
-			exit (EXIT_FAILURE);
-		}
-		if (execve(command_path, commands[0]->argument, NULL) == -1)
-		{
-			perror("minishell");
-			free(command_path);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else if (pid < 0)
-		perror ("minishell");
-	else
-		waitpid (pid, &status, WUNTRACED);
-}
+// 	status = 0;
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		command_path = get_command_path(commands[0]->cmd);
+// 		if (command_path == NULL)
+// 		{
+// 			perror ("minishell");
+// 			exit (EXIT_FAILURE);
+// 		}
+// 		if (execve(command_path, commands[0]->argument, NULL) == -1)
+// 		{
+// 			perror("minishell");
+// 			free(command_path);
+// 			exit(EXIT_FAILURE);
+// 		}
+// 	}
+// 	else if (pid < 0)
+// 		perror ("minishell");
+// 	else
+// 		waitpid (pid, &status, WUNTRACED);
+// }
 
 void	print_export(t_var *envvar_list)
 {
@@ -111,16 +111,13 @@ void	handle_unset(t_token **commands, t_var **envvar_list)
 
 	if (commands[0] == NULL)
 		return ;
-	envvar = find_envvar(*envvar_list, commands[0]->argument[0]);
+	envvar = find_envvar(*envvar_list, commands[0]->argument[0]->arg);
 	if (envvar != NULL)
 		remove_envvar(envvar_list, envvar);
 }
 
-void	analyze_input(char *input, t_minishell *shell)
+void	analyze_input(t_minishell *shell)
 {
-	if (input == NULL || strcmp(input, "\0") == 0)
-		return ;
-	shell->input = ft_strdup(input);
 	shell->tokens = parsing_hub(shell->input);
 	if (shell->tokens[0] == NULL || strcmp(shell->tokens[0]->argument[0], "\0") == 0)
 		return ;

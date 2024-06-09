@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/07 15:22:05 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:25:47 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,48 @@ void	free_shell(t_minishell *shell)
 		free(shell);
 }
 
+void	free_arguments(t_arg **arguments)
+{
+	int i;
+
+	i = 0;
+	while (arguments[i] != NULL)
+	{
+		if (arguments[i]->arg != NULL)
+			free(arguments[i]->arg);
+		free(arguments[i]);
+		i++;
+	}
+}
+
+void	free_arguments(t_arg **arguments)
+{
+	int i;
+
+	i = 0;
+	while (arguments[i] != NULL)
+	{
+		if (arguments[i]->arg != NULL)
+			free(arguments[i]->arg);
+		free(arguments[i]);
+		i++;
+	}
+}
+
 void	free_tokens(t_token **tokens)
 {
 	int i;
-	int j;
 
 	i = 0;
 	while (tokens[i] != NULL)
 	{
 		if (tokens[i]->argument != NULL)
 		{
-			j = -1;
-			while (tokens[i]->argument[++j] != NULL)
-				free(tokens[i]->argument[j]);
-			free(tokens[i]->argument);
+			free_arguments(tokens[i]->argument);
 			free(tokens[i]->cmd);
 		}
-		free(tokens[i++]);
+		free(tokens[i]);
+		i++;
 	}
 	free(tokens);
 }
@@ -68,4 +93,19 @@ void	free_array(char **array)
 	while (array[i] != NULL)
 		free(array[i++]);
 	free(array);
+}
+
+void	free_var(t_var *head)
+{
+	t_var	*current;
+	t_var	*next;
+
+	current = head;
+	while (current)
+	{
+		next = current->next;
+		free(current->content);
+		free(current);
+		current = next;
+	}
 }
