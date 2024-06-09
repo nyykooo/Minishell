@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 14:43:19 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:10:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	edit_termios(void);
 
 // VARIABLES
 
-void ft_varadd_back(t_var **lst, t_var *new_node);
+void ft_varadd_back(t_var **lst, t_var *new);
 t_var *create_list(char **envp);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 15:30:14 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:16:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_arg **init_arguments(t_arg **arguments, char **tokens_arg)
 	int size;
 	int j;
 
-	size = ft_array_len(tokens_arg) - count_cmd(tokens_arg) + 2;
+	size = ft_array_len(tokens_arg) - count_cmd(tokens_arg) + 2; // +2 1 pro cmd e 1 pro NULL, verificar se é necessário +1 pro cmd
 	arguments = (t_arg **)malloc(sizeof(t_arg *) * size);
 	if (!arguments)
 		return (NULL); // error handling
@@ -108,6 +108,8 @@ static void init_tokens(t_token ***tokens, char **array)
 		{
 			(*tokens)[j]->cmd = check_meta(array[i]); // check metachars
 			(*tokens)[j]->argument = (t_arg **)malloc(sizeof(t_arg *) * 2);
+			(*tokens)[j]->argument[0] = (t_arg *)malloc(sizeof(t_arg));
+			(*tokens)[j]->argument[1] = (t_arg *)malloc(sizeof(t_arg));
 			(*tokens)[j]->argument[0]->arg = ft_strdup(array[i]);
 			(*tokens)[j]->argument[1] = NULL;
 		}

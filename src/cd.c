@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/06 14:01:49 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:31:38 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ void	handle_cd(t_token **tokens, t_minishell *shell)
 
 	dir = NULL;
 	should_free = 0;
-	if (tokens[0]->argument[1] != NULL && tokens[0]->argument[2] != NULL)
+	if (tokens[0]->argument[1]->arg != NULL && tokens[0]->argument[2]->arg != NULL)
 	{
 		write(2, "cd: too many arguments\n", 24);
 		return ;
 	}
 	else if (tokens[0]->argument[1] == NULL || \
-	ft_strcmp(tokens[0]->argument[1], "--") == 0)
+	ft_strcmp(tokens[0]->argument[1]->arg, "--") == 0)
 	{
 		dir = get_value(shell->envvars, "HOME");
 		if (dir == NULL)
@@ -87,8 +87,8 @@ void	handle_cd(t_token **tokens, t_minishell *shell)
 			return ;
 		}
 	}
-	else if (tokens[0]->argument[1] != NULL && tokens[0]->argument[2] == NULL)
-		dir = get_dir(tokens[0]->argument[1], &should_free, shell->envvars);
+	else if (tokens[0]->argument[1]->arg != NULL && tokens[0]->argument[2]->arg == NULL)
+		dir = get_dir(tokens[0]->argument[1]->arg, &should_free, shell->envvars);
 	if (dir != NULL)
 		change_directory(dir, should_free);
 	pwds_update(shell->envvars, dir);

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 15:25:47 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:57:29 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	free_shell(t_minishell *shell)
 		free_tokens(shell->tokens);
 	if (shell->input != NULL)
 		free(shell->input);
-	if (shell != NULL)
-		free(shell);
 }
 
 void	free_arguments(t_arg **arguments)
@@ -52,21 +50,7 @@ void	free_arguments(t_arg **arguments)
 		i++;
 	}
 }
-
-void	free_arguments(t_arg **arguments)
-{
-	int i;
-
-	i = 0;
-	while (arguments[i] != NULL)
-	{
-		if (arguments[i]->arg != NULL)
-			free(arguments[i]->arg);
-		free(arguments[i]);
-		i++;
-	}
-}
-
+	
 void	free_tokens(t_token **tokens)
 {
 	int i;
