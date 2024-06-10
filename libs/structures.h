@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 14:40:54 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:52:59 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_token
 {
 	t_arg	**argument;
 	char	*cmd;
-	// fazer flag para single ou double quote resolve o bo de incluir as quotes se necessario
 } t_token;
 
 

@@ -6,11 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/09 20:31:38 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:49:18 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libs/headers.h"
+#include "../../libs/headers.h"
 
 static void	change_directory(char *dir, int should_free)
 {
