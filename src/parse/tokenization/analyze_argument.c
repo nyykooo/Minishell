@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 10:08:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:09:16 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char *quote_del(t_arg *input)
 	return (new);
 }
 
-void	analyze_argument(t_token **tokens)
+void	analyze_argument(t_token **tokens, t_minishell *shell)
 {
 	int	i;
 	int	j;
@@ -90,7 +90,8 @@ void	analyze_argument(t_token **tokens)
 			while (tokens[i]->argument[++j] != NULL)
 			{
 				check_quotes_dol(tokens[i]->argument[j]);
-				tokens[i]->argument[j]->arg = quote_del(tokens[i]->argument[j]); // mark which quote were removed
+				tokens[i]->argument[j]->arg = quote_del(tokens[i]->argument[j]);
+				expand_dolar(tokens[i]->argument[j], shell);
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/10 16:59:30 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:59:29 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	handle_unset(t_token **commands, t_var **envvar_list)
 
 void	analyze_input(t_minishell *shell)
 {
-	shell->tokens = parsing_hub(shell->input);
+	parsing_hub(shell->input, shell);
 	if (shell->tokens[0]->cmd != NULL)
 	{
 		if (ft_strcmp(shell->tokens[0]->cmd, "=") == 0)

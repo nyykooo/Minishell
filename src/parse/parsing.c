@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:11:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 17:00:02 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:03:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 // $ handle here? add a flag on the structure to analyze if the expansion is needed
 
-t_token **parsing_hub(char *input)
+void	parsing_hub(char *input, t_minishell *shell)
 {
 	input_manager(&input);
-	return (token_manager(input));
+	shell->tokens = token_manager(input);
+	analyze_argument(shell->tokens, shell);
 }

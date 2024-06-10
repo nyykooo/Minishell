@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 15:10:49 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:03:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ void	analyze_input(t_minishell *shell);
 
 // PARSING
 
-t_token **parsing_hub(char *input);
+void	parsing_hub(char *input, t_minishell *shell);
 int	input_manager(char **input);
 t_token **token_manager(char *input);
 void	create_tokens(char **array, t_token ***tokens);
 char *check_meta(char *str);
-void	analyze_argument(t_token **tokens);
+void	analyze_argument(t_token **tokens, t_minishell *shell);
+void	expand_dolar(t_arg *argument , t_minishell *shell);
 
 
 // FREE_ERROR_EXIT

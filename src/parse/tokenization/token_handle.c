@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/07 20:15:07 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:09:51 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	mark_tokens(char *input)
 	{
 		if (input[i] == '\'' || input[i] == '\"')
 			i = skip_quotes(input, &i);
-		if (input[i] == ' ' || input[i] == '=')
+		if (input[i] == ' ' || input[i] == '=' || input[i] == '$')
 			input[i] *= -1;
 	}
 }
@@ -70,7 +70,6 @@ t_token **token_manager(char *input)
 	if (!array)
 		return (NULL);
 	create_tokens(array, &tokens);
-	analyze_argument(tokens);
 	free_array(array);
 	return (tokens);
 }
