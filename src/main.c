@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/10 16:37:53 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:52:58 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ static bool create_prompt(t_minishell *shell)
 	prompt = get_pathname();
 	input = readline(prompt);
 	free(prompt);
-	if (input == NULL || input[0] == 0)
+	if (input == NULL)
+		handle_exit(shell); //gostaria de diferenciar o ctrl + D do erro
+	if (input[0] == 0)
 		return (false);
 	add_history(input);
 	shell->input = ft_strdup(input);
@@ -68,12 +70,19 @@ void	minishell_loop(t_minishell *shell)
 			analyze_input(shell);
 			clear_shell(shell);
 		}
-		// if (input == NULL) // O Ctrl + D para a readline eh um NULL 
-		// {
-		// 	// Input tbm sera NULL quando ocorrer um erro, bora tratar isso
-		// 	break ;
-		// }
 	}
+}
+
+void	handle_sigint(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	//g_value = 130;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -86,6 +95,8 @@ int	main(int argc, char **argv, char **envp)
 		write(2, "usage: ./minishell\n", 20);
 		return (EXIT_FAILURE);
 	}
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint);
 	shell.envvars = create_list(envp);
 	minishell_loop(&shell);
 	free_var(shell.envvars);

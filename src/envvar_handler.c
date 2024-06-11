@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/06 14:23:07 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:26:27 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	remove_envvar(t_var **envvar_list, t_var *envvar)
 			else
 				prev->next = current->next;
 			free(current->content);
-			free(current);
+			//free(current); ja esta sendo feito no free_shell
 			return ;
 		}
 		prev = current;
@@ -98,6 +98,7 @@ void	set_envvar(t_var **envvar_list, char *name, char *value)
 		return ;
 	}
 	envvar->content = new_content;
+	envvar->env = true;
 	envvar->next = *envvar_list;
 	*envvar_list = envvar;
 }

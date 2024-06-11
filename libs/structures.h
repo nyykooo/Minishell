@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/10 16:52:59 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:26:27 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ typedef	struct s_var
 {
 	char *content;
 	bool env;
+	bool exp;
 	struct s_var *next;
 	struct s_var *prev;	
 } t_var;

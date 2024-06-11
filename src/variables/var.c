@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 15:12:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:26:27 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_var *create_list(char **envp)
 		new_node = malloc(sizeof(t_var));
 		new_node->content = ft_strdup(*current);
 		new_node->env = true;
+		new_node->exp = true;
 		new_node->next = NULL;
 		if (head == NULL)
 			head = new_node;
