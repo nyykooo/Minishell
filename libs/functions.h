@@ -3,32 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/10 20:03:57 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:38:46 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FUNCTIONS_H
+# define FUNCTIONS_H
 
-#ifndef FUNCTIONC_H
-# define FUNCTIONC_H
-
-#include "structures.h"
+# include "structures.h"
 
 void	analyze_input(t_minishell *shell);
 
-
 // PARSING
-
 void	parsing_hub(char *input, t_minishell *shell);
-int	input_manager(char **input);
-t_token **token_manager(char *input);
+int		input_manager(char **input);
+t_token	**token_manager(char *input);
 void	create_tokens(char **array, t_token ***tokens);
-char *check_meta(char *str);
+char	*check_meta(char *str);
 void	analyze_argument(t_token **tokens, t_minishell *shell);
-void	expand_dolar(t_arg *argument , t_minishell *shell);
-
+void	expand_dolar(t_arg *argument, t_minishell *shell);
 
 // FREE_ERROR_EXIT
 void	free_shell(t_minishell *shell);
@@ -38,11 +34,13 @@ void	free_list(t_var *head);
 void	handle_exit(t_minishell *shell);
 void	free_var(t_var *head);
 
-
 // BUILTINS
 void	handle_cd(t_token **tokens, t_minishell *shell);
 void	handle_echo(t_token **tokens);
 void	handle_equal(t_minishell *shell, t_token *token);
+void	handle_export(t_var *envvar_list, t_minishell *shell);
+void	handle_env(t_var *envvar_list, t_minishell *shell);
+void	handle_unset(t_token **tokens, t_var **envvar_list);
 
 //ENVVAR_FTS
 t_var	*find_envvar(t_var *envvar_list, char *name);
@@ -53,13 +51,11 @@ char	*get_value(t_var *envvar_list, char *name);
 //TTY
 void	edit_termios(void);
 
-
-
-
-
 // VARIABLES
+void	ft_varadd_back(t_var **lst, t_var *new);
+t_var	*create_list(char **envp);
 
-void ft_varadd_back(t_var **lst, t_var *new);
-t_var *create_list(char **envp);
+//SIGNALS
+void	handle_sigint(int sig);
 
 #endif

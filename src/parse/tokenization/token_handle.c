@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/10 20:09:51 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:43:58 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
 
-char *check_meta(char *str)
+char	*check_meta(char *str)
 {
 	int		i;
 	bool	before_quote;
@@ -29,9 +29,9 @@ char *check_meta(char *str)
 	return (NULL);
 }
 
-static int skip_quotes(char *input, int *i)
+static int	skip_quotes(char *input, int *i)
 {
-	char quote;
+	char	quote;
 
 	quote = input[(*i)];
 	input[(*i)] *= -1;
@@ -48,7 +48,7 @@ static int skip_quotes(char *input, int *i)
 
 static void	mark_tokens(char *input)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (input[++i])
@@ -60,10 +60,10 @@ static void	mark_tokens(char *input)
 	}
 }
 
-t_token **token_manager(char *input)
+t_token	**token_manager(char *input)
 {
-	char **array;
-	t_token **tokens;
+	char	**array;
+	t_token	**tokens;
 
 	mark_tokens(input);
 	array = ft_split(input, N_SPACE);

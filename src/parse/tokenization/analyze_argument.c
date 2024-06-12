@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/10 20:09:16 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:55:40 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
 
-// para remover as quotes podemos verificar se há duas Nquotes seguidas e fazer um split das strings
+/* para remover as quotes podemos verificar se \
+há duas Nquotes seguidas e fazer um split das strings*/
 
-static void check_quotes_dol(t_arg *input)
+static void	check_quotes_dol(t_arg *input)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (input->arg == NULL)
@@ -30,13 +31,12 @@ static void check_quotes_dol(t_arg *input)
 		else if (input->arg[i] == N_DOLLAR)
 			input->dol = true;
 	}
-	
 }
 
-static int count_quotes(char *input)
+static int	count_quotes(char *input)
 {
-	int i;
-	int quotes;
+	int	i;
+	int	quotes;
 
 	i = -1;
 	quotes = 0;
@@ -48,20 +48,20 @@ static int count_quotes(char *input)
 	return (quotes);
 }
 
-static char *quote_del(t_arg *input)
+static char	*quote_del(t_arg *input)
 {
-	int	i;
-	int size;
-	char *new;
-	int quotes;
-	
+	int		i;
+	int		size;
+	char	*new;
+	int		quotes;
+
 	if (input->arg == NULL)
-		return NULL;
+		return (NULL);
 	size = ft_strlen(input->arg);
 	quotes = count_quotes(input->arg);
 	new = (char *)malloc((sizeof(char) * size) - quotes + 1);
 	if (!new)
-		return NULL;
+		return (NULL);
 	i = -1;
 	quotes = 0;
 	while (input->arg[++i])

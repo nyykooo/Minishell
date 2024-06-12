@@ -3,24 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   input_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 15:18:54 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:42:12 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static bool space_trim(char *input, char *temp)
+static bool	space_trim(char *input, char *temp)
 {
-	char	c;
-	static int i = 0;
-	static int j = 0;
+	char		c;
+	static int	i = 0;
+	static int	j = 0;
 
 	if (!input[i])
 		return (false);
-	while (input[i] && input[i] != '\'' && input[i] != '\"' && !ft_isspace(input[i]))
+	while (input[i] && input[i] != '\'' && \
+	input[i] != '\"' && !ft_isspace(input[i]))
 		temp[j++] = input[i++];
 	if (input[i] == '\'' || input[i] == '\"')
 	{
@@ -40,22 +41,22 @@ static bool space_trim(char *input, char *temp)
 	return (false);
 }
 
-static char *trim_hub(char *input)
+static char	*trim_hub(char *input)
 {
 	char	*temp;
-	
+
 	temp = ft_calloc(ft_strlen(input) + 1, sizeof(char));
-	if(!temp)
+	if (!temp)
 		return (NULL);
 	while (space_trim(input, temp) == false)
 		(void)0;
 	return (temp);
 }
 
-static int quote_check(const char *input)
+static int	quote_check(const char *input)
 {
-	char c;
-	
+	char	c;
+
 	c = 0;
 	while (*input != '\0')
 	{
@@ -71,9 +72,9 @@ static int quote_check(const char *input)
 	return ((c == '\'') + ((c == '\"') * 2));
 }
 
-static int input_cleaner(char *input)
+static int	input_cleaner(char *input)
 {
-	char *trim;
+	char	*trim;
 
 	if (!input)
 		return (-1);

@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 20:16:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:30:05 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
 
-static bool check_cmd(char *tokens_arg)
+static bool	check_cmd(char *tokens_arg)
 {
-	if (ft_strcmp(tokens_arg, "echo") == 0 || ft_strcmp(tokens_arg, "cd") == 0
-		|| ft_strcmp(tokens_arg, "pwd") == 0 || ft_strcmp(tokens_arg, "export") == 0
-		|| ft_strcmp(tokens_arg, "unset") == 0 || ft_strcmp(tokens_arg, "env") == 0
-		|| ft_strcmp(tokens_arg, "exit") == 0 || ft_strcmp(tokens_arg, "ls") == 0
-		|| ft_strcmp(tokens_arg, "grep") == 0 || ft_strcmp(tokens_arg, "cat") == 0
-		|| ft_strcmp(tokens_arg, "wc") == 0 || ft_strcmp(tokens_arg, "sort") == 0
-		|| ft_strcmp(tokens_arg, "uniq") == 0 || ft_strcmp(tokens_arg, "cut") == 0
-		|| ft_strcmp(tokens_arg, "paste") == 0 || ft_strcmp(tokens_arg, "join") == 0
-		|| ft_strcmp(tokens_arg, "comm") == 0 || ft_strcmp(tokens_arg, "diff") == 0
-		|| ft_strcmp(tokens_arg, "sed") == 0 || ft_strcmp(tokens_arg, "awk") == 0
-		|| ft_strcmp(tokens_arg, "tr") == 0)
+	if (ft_strcmp(tokens_arg, "echo") == 0 || ft_strcmp(tokens_arg, "cd") == 0 \
+	|| ft_strcmp(tokens_arg, "pwd") == 0 || ft_strcmp(tokens_arg, "export") == 0 \
+	|| ft_strcmp(tokens_arg, "unset") == 0 || ft_strcmp(tokens_arg, "env") == 0 \
+	|| ft_strcmp(tokens_arg, "exit") == 0 || ft_strcmp(tokens_arg, "ls") == 0 \
+	|| ft_strcmp(tokens_arg, "grep") == 0 || ft_strcmp(tokens_arg, "cat") == 0 \
+	|| ft_strcmp(tokens_arg, "wc") == 0 || ft_strcmp(tokens_arg, "sort") == 0 \
+	|| ft_strcmp(tokens_arg, "uniq") == 0 || ft_strcmp(tokens_arg, "cut") == 0 \
+	|| ft_strcmp(tokens_arg, "paste") == 0 || ft_strcmp(tokens_arg, "join") == 0 \
+	|| ft_strcmp(tokens_arg, "comm") == 0 || ft_strcmp(tokens_arg, "diff") == 0 \
+	|| ft_strcmp(tokens_arg, "sed") == 0 || ft_strcmp(tokens_arg, "awk") == 0 \
+	|| ft_strcmp(tokens_arg, "tr") == 0)
 		return (true);
 	else
 		return (false);
 }
 
-static int count_cmd(char **tokens_arg)
+static int	count_cmd(char **tokens_arg)
 {
-	int i;
-	int size;
+	int	i;
+	int	size;
 
 	i = -1;
 	size = 0;
@@ -47,10 +47,10 @@ static int count_cmd(char **tokens_arg)
 	return (size);
 }
 
-static t_arg **init_arguments(t_arg **arguments, char **tokens_arg)
+static t_arg	**init_arguments(t_arg **arguments, char **tokens_arg)
 {
-	int size;
-	int j;
+	int	size;
+	int	j;
 
 	size = ft_array_len(tokens_arg) - count_cmd(tokens_arg) + 2; // +2 1 pro cmd e 1 pro NULL, verificar se é necessário +1 pro cmd
 	arguments = (t_arg **)malloc(sizeof(t_arg *) * size);
@@ -68,10 +68,10 @@ static t_arg **init_arguments(t_arg **arguments, char **tokens_arg)
 	return (arguments);
 }
 
-static t_arg **get_arguments(char **tokens_arg, int *i)
+static t_arg	**get_arguments(char **tokens_arg, int *i)
 {
-	int j;
-	t_arg **arguments;
+	int		j;
+	t_arg	**arguments;
 
 	arguments = NULL;
 	arguments = init_arguments(arguments, tokens_arg);
@@ -87,11 +87,11 @@ static t_arg **get_arguments(char **tokens_arg, int *i)
 	return (arguments);
 }
 
-static void init_tokens(t_token ***tokens, char **array)
+static void	init_tokens(t_token ***tokens, char **array)
 {
-	int i;
-	int j;
-	int len;
+	int	i;
+	int	j;
+	int	len;
 
 	i = -1;
 	j = 0;
@@ -118,8 +118,8 @@ static void init_tokens(t_token ***tokens, char **array)
 
 void	create_tokens(char **array, t_token ***tokens)
 {
-	int i;
-	int size;
+	int	i;
+	int	size;
 
 	i = -1;
 	size = count_cmd(array);

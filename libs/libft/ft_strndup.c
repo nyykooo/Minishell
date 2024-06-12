@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error_print.c                                   :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 16:27:15 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/12 16:53:58 by brunhenr         ###   ########.fr       */
+/*   Created: 2024/06/12 11:41:31 by brunhenr          #+#    #+#             */
+/*   Updated: 2024/06/12 16:55:23 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_error_print(char *error)
+char	*ft_strndup(const char *s, size_t n)
 {
-	write(2, "Error: ", 7);
-	write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
-	exit(EXIT_FAILURE);
+	char	*dup;
+	size_t	i;
+
+	dup = malloc(n + 1);
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (s[i] && i < n)
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }

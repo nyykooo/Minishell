@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals_handler.c                                  :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/08 10:47:51 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/08 10:47:55 by brunhenr         ###   ########.fr       */
+/*   Created: 2024/06/12 17:00:04 by brunhenr          #+#    #+#             */
+/*   Updated: 2024/06/12 17:14:47 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <termios.h>
 #include "../libs/headers.h"
+#include <termios.h>
 
 struct termios original_termios, new_termios, check_termios;
 
-void	edit_termios(void)
+void	handle_sigint(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+/*void	edit_termios(void)
 {
 	if (tcgetattr(STDIN_FILENO, &original_termios) == -1)
 		perror("tcgetattr");
@@ -29,5 +40,4 @@ void	edit_termios(void)
         printf("ISIG is still enabled\n");
     else
         printf("ISIG is disabled\n");
-}
-
+}*/

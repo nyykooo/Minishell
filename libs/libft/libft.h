@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 14:20:44 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:49:25 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 typedef struct s_list
 {
 	void			*content;
-	struct s_list	*next; 
+	struct s_list	*next;
 }	t_list;
 
 //PARTE1
@@ -86,5 +86,6 @@ int		get_charlen(char c);
 bool	ft_isspace(char c);
 void	ft_strcpy(char *dest, char *src);
 void	ft_strcat(char *dest, char *src);
+char	*ft_strndup(const char *s, size_t n);
 
 #endif
