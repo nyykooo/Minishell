@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 20:16:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:56:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ static t_arg **get_arguments(char **tokens_arg, int *i)
 	arguments = NULL;
 	arguments = init_arguments(arguments, tokens_arg);
 	j = 0;
-	arguments[j++]->arg = ft_strdup(tokens_arg[(*i)]);
+	arguments[j]->arg = ft_strdup(tokens_arg[(*i)]);
+	arguments[j++]->next = NULL;
 	while (tokens_arg[++(*i)])
 	{
 		if (check_cmd(tokens_arg[(*i)]) == true)
 			break ;
 		arguments[j]->arg = ft_strdup(tokens_arg[(*i)]);
-		j++;
+		arguments[j++]->next = NULL;
 	}
 	return (arguments);
 }
@@ -111,6 +112,8 @@ static void init_tokens(t_token ***tokens, char **array)
 			(*tokens)[j]->argument[0] = (t_arg *)malloc(sizeof(t_arg));
 			(*tokens)[j]->argument[1] = (t_arg *)malloc(sizeof(t_arg));
 			(*tokens)[j]->argument[0]->arg = ft_strdup(array[i]);
+			(*tokens)[j]->argument[0]->next = NULL;
+			(*tokens)[j]->argument[1]->next = NULL;
 			(*tokens)[j]->argument[1] = NULL;
 		}
 	}

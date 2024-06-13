@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:13:40 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/09 10:10:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:42:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool look_for_flag(t_arg **argument, int *i)
 		j++;
 		while (argument[*i]->arg[j] == 'n' && argument[*i]->arg[j] != '\0')
 			j++;
-		if (argument[*i]->arg[j] == '\0')
+		if (argument[*i]->arg[j] == '\0' && argument[*i]->next == NULL)
 		{
 			(*i)++;
 			return (true);
@@ -50,7 +50,11 @@ void handle_echo(t_token **tokens)
 			flag = true;
 		else
 		{	
-			printf("%s", tokens[0]->argument[i]->arg);
+			while(tokens[0]->argument[i]->next != NULL)
+			{
+				printf("%s", tokens[0]->argument[i]->arg);
+				tokens[0]->argument[i] = tokens[0]->argument[i]->next;
+			}
 			if (tokens[0]->argument[i + 1] != NULL)
 				printf(" ");
 			i++;
