@@ -6,7 +6,7 @@
 #    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 09:59:57 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/06 14:25:02 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/06/12 17:56:38 by brunhenr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,10 +62,10 @@ SRC= ft_isalpha.c \
 		ft_htoi.c \
 		ft_array_len.c \
 		ft_error_print.c \
-		get_charlen.c \
 		ft_isspace.c \
 		ft_strcat.c \
-		ft_strcpy.c 
+		ft_strcpy.c \
+		ft_strndup.c
 OBJ= $(SRC:.c=.o)
 
 all: $(NAME)

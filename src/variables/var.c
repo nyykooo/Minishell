@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/11 17:26:27 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:40:19 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_var *create_list(char **envp)
 	{
 		new_node = malloc(sizeof(t_var));
 		new_node->content = ft_strdup(*current);
+		new_node->name = ft_strndup(*current, ft_strchr(*current, '=') - *current);
+		new_node->value = ft_strdup(ft_strchr(*current, '=') + 1);
 		new_node->env = true;
 		new_node->exp = true;
 		new_node->next = NULL;

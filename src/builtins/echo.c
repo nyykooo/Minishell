@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:13:40 by ncampbel          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/06/12 16:42:49 by ncampbel         ###   ########.fr       */
+=======
+/*   Updated: 2024/06/12 17:50:37 by brunhenr         ###   ########.fr       */
+>>>>>>> fix_bruno
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-
-static bool look_for_flag(t_arg **argument, int *i)
+static bool	look_for_flag(t_arg **argument, int *i)
 {
 	int		j;
 
@@ -34,19 +37,19 @@ static bool look_for_flag(t_arg **argument, int *i)
 			return (false);
 	}
 	else
-		return false;
+		return (false);
 }
 
-void handle_echo(t_token **tokens)
+void	handle_echo(t_token **tokens)
 {
-	int i;
-	bool flag;
+	int		i;
+	bool	flag;
 
 	i = 1;
 	flag = false;
 	while (tokens[0]->argument[i]->arg != NULL)
 	{
-		if(look_for_flag(tokens[0]->argument, &i))
+		if (look_for_flag(tokens[0]->argument, &i))
 			flag = true;
 		else
 		{	

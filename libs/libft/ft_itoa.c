@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:25:43 by ncampbel          #+#    #+#             */
-/*   Updated: 2023/10/23 17:33:23 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:55:53 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_countsize(int x)
 	while (x)
 	{
 		x /= 10;
-		i++; 
+		i++;
 	}
 	return (i);
 }
