@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 11:41:01 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:27:31 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,20 +89,17 @@ int check_tokens(t_token *tokens)
 
 void	analyze_tokens(t_token *tokens, t_minishell *shell)
 {
-	int i;
-	
-	i = -1;
 	while (tokens != NULL)
 	{
 		if (check_tokens(tokens) == 1) // checks if token is a command
 		{
 			shell->n_cmd++;
-			create_command(tokens, shell, &i); // create_command is a function that creates a command structure
+			create_command(tokens, shell); // create_command is a function that creates a command structure
 		}
 		else if (check_tokens(tokens) == 7)
 		{
 			shell->n_pipe++;
-			create_command(tokens, shell, &i);
+			create_command(tokens, shell);
 		}
 		tokens = tokens->next;
 	}

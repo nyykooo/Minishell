@@ -6,21 +6,14 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/12 16:49:25 by brunhenr         ###   ########.fr       */
-=======
-/*   Updated: 2024/06/13 20:42:45 by ncampbel         ###   ########.fr       */
->>>>>>> fix_nico
+/*   Updated: 2024/06/16 20:20:45 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdbool.h>
+# include "../headers.h"
 
 typedef struct s_list
 {
@@ -90,10 +83,9 @@ int		get_charlen(char c);
 bool	ft_isspace(char c);
 void	ft_strcpy(char *dest, char *src);
 void	ft_strcat(char *dest, char *src);
-<<<<<<< HEAD
 char	*ft_strndup(const char *s, size_t n);
-=======
-char	**ft_array_insert_extra(char **array, char *insert, char *extra,int index);
->>>>>>> fix_nico
+char	**ft_array_insert_extra(char **array, char *insert, char *extra, int index);
+
+int		ft_argsize(t_arg *lst);
 
 #endif

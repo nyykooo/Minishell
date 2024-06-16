@@ -6,11 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 14:40:02 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/15 19:35:56 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:34:38 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libs/headers.h"
+#include "../../../libs/headers.h"
 
 static int count_quotes(char *input)
 {
@@ -40,6 +40,7 @@ char *quote_del(t_arg *input, t_minishell *shell)
 	if (!new)
 	{
 		//free everything
+		printf("Error: failed to allocate memory %s\n", shell->input);
 		exit (1);
 	}
 	i = -1;
@@ -60,7 +61,6 @@ char *quote_del(t_arg *input, t_minishell *shell)
 
 void expand_quotes(t_arg *argument, t_minishell *shell)
 {
-	char	*new;
 	int		i;
 	bool	flag;
 
@@ -83,4 +83,21 @@ void expand_quotes(t_arg *argument, t_minishell *shell)
 	include_arg(shell, argument->arg + i);
 	argument->arg[i] = '\0';
 	expand_quotes(argument->next, shell);
+}
+
+int	skip_quotes(char *input, int *i)
+{
+	char	quote;
+
+	quote = input[(*i)];
+	input[(*i)] *= -1;
+	while (input[++(*i)])
+	{
+		if (input[(*i)] == quote)
+		{
+			input[(*i)] *= -1;
+			return ((*i));
+		}
+	}
+	return ((*i));
 }

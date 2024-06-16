@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/15 14:43:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:39:43 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void check_arg(t_arg *input)
 
 // include arg is a function that includes the new argument in the linked list (in the correct position)
 
-static	void include_arg(t_minishell *shell, char *argument)
+void include_arg(t_minishell *shell, char *argument)
 {
 	t_arg *new;
 	t_arg *tmp;
@@ -78,7 +78,7 @@ static	void include_arg(t_minishell *shell, char *argument)
 	new = (t_arg *)malloc(sizeof(t_arg));
 	if (!new)
 	{
-		//free everything
+		printf("Error: malloc failed 1\n");
 		exit (1);
 	}
 	new->arg = ft_strdup(argument);
@@ -99,14 +99,17 @@ static	void include_arg(t_minishell *shell, char *argument)
 
 void	analyze_arguments(t_minishell *shell, char *cmd)
 {
+	t_arg *tmp;
+
+	tmp = shell->commands->arguments;
 	while (strcmp(shell->commands->cmd, cmd) != 0)
 		shell->commands = shell->commands->next;
-	while (shell->commands->arguments != NULL)
+	while (tmp != NULL)
 	{
-		expand_quotes(shell->commands->arguments, shell);
-		check_arg(shell->commands->arguments);
-		shell->commands->arguments->arg = quote_del(shell->commands->arguments, shell);
-		expand_dolar(shell->commands->arguments, shell);
-		shell->commands->arguments = shell->commands->arguments->next;
+		expand_quotes(tmp, shell);
+		check_arg(tmp);
+		tmp->arg = quote_del(tmp, shell);
+		expand_dolar(tmp, shell);
+		tmp = tmp->next;
 	}
 }

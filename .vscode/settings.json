@@ -52,6 +52,8 @@
 		"cstdbool": "c",
 		"typeinfo": "c",
 		"termios.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"structures.h": "c",
+		"types.h": "c"
 	}
 }

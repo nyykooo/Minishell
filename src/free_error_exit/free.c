@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 14:13:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:31:34 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,19 @@ void	free_arguments(t_arg **arguments)
 }
 // as there is no more t_tokens, everywere this function was being used should be updated to free_array
 
-// void	free_tokens(t_token **tokens)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (tokens[i] != NULL)
-// 	{
-// 		if (tokens[i]->argument != NULL)
-// 		{
-// 			free_arguments(tokens[i]->argument);
-// 			free(tokens[i]->cmd);
-// 		}
-// 		free(tokens[i]);
-// 		i++;
-// 	}
-// 	free(tokens);
-// }
+void	free_tokens(t_token *tokens)
+{
+	t_token *tmp;
+	
+	
+	while (tokens)
+	{
+		tmp = tokens;
+		tokens = tokens->next;
+		free(tmp->content);
+		free(tmp);
+	}
+}
 
 void	free_array(char **array)
 {

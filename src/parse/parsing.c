@@ -5,18 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:11:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/10 20:03:15 by ncampbel         ###   ########.fr       */
+/*   Created: 2024/06/13 14:05:16 by ncampbel          #+#    #+#             */
+/*   Updated: 2024/06/13 14:20:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-// $ handle here? add a flag on the structure to analyze if the expansion is needed
-
-void	parsing_hub(char *input, t_minishell *shell)
+void	parsing_hub(t_minishell *shell)
 {
-	input_manager(&input);
-	shell->tokens = token_manager(input);
-	analyze_argument(shell->tokens, shell);
+	input_manager(shell); // check if input is valid and trim spaces
+	tokenizer(shell); // create tokens from input and analyze them to create the command list
+	// analyze_argument(shell);
 }

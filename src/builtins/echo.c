@@ -3,34 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:13:40 by ncampbel          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/12 16:42:49 by ncampbel         ###   ########.fr       */
-=======
-/*   Updated: 2024/06/12 17:50:37 by brunhenr         ###   ########.fr       */
->>>>>>> fix_bruno
+/*   Updated: 2024/06/16 22:45:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static bool	look_for_flag(t_arg **argument, int *i)
+static bool	look_for_flag(t_arg *argument)
 {
 	int		j;
 
 	j = 0;
-	if (argument[*i]->arg == NULL)
+	if (argument->arg == NULL)
 		return (false);
-	if (argument[*i]->arg[j] == '-')
+	if (argument->arg[j] == '-')
 	{
 		j++;
-		while (argument[*i]->arg[j] == 'n' && argument[*i]->arg[j] != '\0')
+		while (argument->arg[j] == 'n')
 			j++;
-		if (argument[*i]->arg[j] == '\0' && argument[*i]->next == NULL)
+		if (argument->arg[j] == '\0')
 		{
-			(*i)++;
+			argument = argument->next;
 			return (true);
 		}
 		else
@@ -40,27 +36,24 @@ static bool	look_for_flag(t_arg **argument, int *i)
 		return (false);
 }
 
-void	handle_echo(t_token **tokens)
+void	handle_echo(t_cmd *command)
 {
-	int		i;
 	bool	flag;
+	t_arg	*temp_arg;
 
-	i = 1;
 	flag = false;
-	while (tokens[0]->argument[i]->arg != NULL)
+	temp_arg = command->arguments;
+	// printf("%d\n", ft_argsize(command->arguments));
+	while (temp_arg != NULL)
 	{
-		if (look_for_flag(tokens[0]->argument, &i))
+		if (look_for_flag(temp_arg))
 			flag = true;
 		else
-		{	
-			while(tokens[0]->argument[i]->next != NULL)
-			{
-				printf("%s", tokens[0]->argument[i]->arg);
-				tokens[0]->argument[i] = tokens[0]->argument[i]->next;
-			}
-			if (tokens[0]->argument[i + 1] != NULL)
+		{
+			printf("%s", temp_arg->arg);
+			if (temp_arg->next != NULL && !temp_arg->next->expanded) // confirmar se o expanded é o primeiro ou segundo arg
 				printf(" ");
-			i++;
+			temp_arg = temp_arg->next;
 		}
 	}
 	if (!flag)

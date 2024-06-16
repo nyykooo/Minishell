@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 14:13:36 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:06:58 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,6 @@ char	*check_meta(char *str)
 			return (ft_strdup("="));
 	}
 	return (NULL);
-}
-
-static int	skip_quotes(char *input, int *i)
-{
-	char	quote;
-
-	quote = input[(*i)];
-	input[(*i)] *= -1;
-	while (input[++(*i)])
-	{
-		if (input[(*i)] == quote)
-		{
-			input[(*i)] *= -1;
-			return ((*i));
-		}
-	}
-	return ((*i));
 }
 
 static void	mark_tokens(char *input)

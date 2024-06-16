@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/15 14:32:07 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:29:03 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,22 @@ static void	analyze_array(char **array, t_minishell *shell)
 // 	return (NULL);
 // }
 
-static int skip_quotes(char *input, int *i) // add to quotes file (?)
-{
-	char quote;
+// static int skip_quotes(char *input, int *i) // add to quotes file (?)
+// {
+// 	char quote;
 
-	quote = input[(*i)];
-	input[(*i)] *= -1;
-	while (input[++(*i)])
-	{
-		if (input[(*i)] == quote)
-		{
-			input[(*i)] *= -1;
-			return ((*i));
-		}
-	}
-	return ((*i));
-}
+// 	quote = input[(*i)];
+// 	input[(*i)] *= -1;
+// 	while (input[++(*i)])
+// 	{
+// 		if (input[(*i)] == quote)
+// 		{
+// 			input[(*i)] *= -1;
+// 			return ((*i));
+// 		}
+// 	}
+// 	return ((*i));
+// }
 
 static void	mark_tokens(char *input)
 {

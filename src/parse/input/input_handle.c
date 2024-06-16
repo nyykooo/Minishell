@@ -6,11 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/15 19:33:14 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:06:00 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libs/headers.h"
+#include "../../../libs/headers.h"
 
 static bool space_trim(char *input, char *temp)
 {
@@ -99,5 +99,5 @@ void	input_manager(t_minishell *shell)
 		printf("Error: failed to allocate memory\n");
 		exit(1);
 	}
-	return (0);
+	return ;
 }

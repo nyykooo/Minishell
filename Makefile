@@ -6,14 +6,14 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/09 15:19:58 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/06/16 20:33:35 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRC = $(wildcard src/*.c src/builtins/*.c src/parse/*.c src/parse/tokenization/*.c src/variables/*.c src/free_error_exit/*.c)
+SRC = $(wildcard src/*.c src/builtins/*.c src/parse/*.c src/parse/command/*.c src/parse/input/*.c src/parse/pipe/*.c src/parse/quotes/*.c src/parse/redirect/*.c src/parse/token/*.c src/variables/*.c src/free_error_exit/*.c)
 
 LIBFT = "libs/libft/libft.a"
 

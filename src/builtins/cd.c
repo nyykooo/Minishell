@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/10 16:49:18 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 17:33:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,20 @@ void	pwds_update(t_var *envvar_list, char *dir)
 	free(pwd);
 }
 
-void	handle_cd(t_token **tokens, t_minishell *shell)
+void	handle_cd(t_cmd *command, t_minishell *shell)
 {
 	char	*dir;
 	int		should_free;
 
 	dir = NULL;
 	should_free = 0;
-	if (tokens[0]->argument[1]->arg != NULL && tokens[0]->argument[2]->arg != NULL)
+	if (ft_argsize(command->arguments) >= 2) // confirmar se é apenas 1 argumento ou se podem 2
 	{
 		write(2, "cd: too many arguments\n", 24);
 		return ;
 	}
-	else if (tokens[0]->argument[1] == NULL || \
-	ft_strcmp(tokens[0]->argument[1]->arg, "--") == 0)
+	else if (command->arguments == NULL || \
+	ft_strcmp(command->arguments->arg, "--") == 0)
 	{
 		dir = get_value(shell->envvars, "HOME");
 		if (dir == NULL)
@@ -87,8 +87,8 @@ void	handle_cd(t_token **tokens, t_minishell *shell)
 			return ;
 		}
 	}
-	else if (tokens[0]->argument[1]->arg != NULL && tokens[0]->argument[2]->arg == NULL)
-		dir = get_dir(tokens[0]->argument[1]->arg, &should_free, shell->envvars);
+	else if (command->arguments->arg != NULL && command->arguments->next == NULL)
+		dir = get_dir(command->arguments->arg, &should_free, shell->envvars);
 	if (dir != NULL)
 		change_directory(dir, should_free);
 	pwds_update(shell->envvars, dir);

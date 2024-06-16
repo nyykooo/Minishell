@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 14:14:02 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 17:25:20 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_cmd
 {
 	char	*cmd; // command
 	t_arg	*arguments; // array of arguments
-	char	**(*make_array)(t_cmd *); // function to turn everything in a char ** to the execve 2nd argument
+	// char	**(*make_array)(t_cmd *); // function to turn everything in a char ** to the execve 2nd argument
 	bool	exec; // if the command is an executable
 	bool	pipe; // if the command is a pipe
 	bool	rappend; // if the command is a right append

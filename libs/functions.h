@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 14:14:35 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:31:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,38 @@ void	parsing_hub(t_minishell *shell);
 
 // NEW PARSING - INPUT
 
-void	input_manager(char **input);
+void	input_manager(t_minishell *shell);
 
 // NEW PARSING - TOKENS
 
 void	tokenizer(t_minishell *shell);
 void	token_creation(char **array, t_minishell *shell);
-void	analyze_tokens(t_arg **tokens, t_minishell *shell);
+// void	analyze_tokens(t_arg **tokens, t_minishell *shell);
+void	analyze_tokens(t_token *tokens, t_minishell *shell);
+int		check_tokens(t_token *tokens);
 
 // NEW PARSING - META
 
 void	check_pipe(char **tokens, t_minishell *shell);
 void	check_left_apend(char **tokens, t_minishell *shell);
-void	check_left_apend(char **tokens, t_minishell *shell);
+void	check_left_trunc(char **tokens, t_minishell *shell);
 void	check_right_apend(char **tokens, t_minishell *shell);
 void	check_right_trunc(char **tokens, t_minishell *shell);
 
 // NEW PARSING - COMMANDS
 
-void	create_command(char **tokens, t_minishell *shell, int *i);
+void	create_command(t_token *tokens, t_minishell *shell);
 
 // NEW PARSING - ARGUMENTS
 
 void	analyze_arguments(t_minishell *shell, char *cmd);
+void	include_arg(t_minishell *shell, char *argument);
 
 // NEW PARSING - QUOTES
 
 void expand_quotes(t_arg *argument, t_minishell *shell);
 char *quote_del(t_arg *input, t_minishell *shell);
+int	skip_quotes(char *input, int *i);
 
 // NEW PARSING - DOLLAR
 void	expand_dolar(t_arg *argument , t_minishell *shell);
@@ -69,19 +73,19 @@ void	expand_dolar(t_arg *argument , t_minishell *shell);
 
 // FREE_ERROR_EXIT
 void	free_shell(t_minishell *shell);
-void	free_tokens(t_token **tokens);
+void	free_tokens(t_token *tokens);
 void	free_array(char **array);
 void	free_list(t_var *head);
 void	handle_exit(t_minishell *shell);
 void	free_var(t_var *head);
 
 // BUILTINS
-void	handle_cd(t_token **tokens, t_minishell *shell);
-void	handle_echo(t_token **tokens);
-void	handle_equal(t_minishell *shell, t_token *token);
+void	handle_cd(t_cmd *command, t_minishell *shell);
+void	handle_echo(t_cmd *command);
+void	handle_equal(t_minishell *shell, t_cmd *command);
 void	handle_export(t_var *envvar_list, t_minishell *shell);
 void	handle_env(t_var *envvar_list, t_minishell *shell);
-void	handle_unset(t_token **tokens, t_var **envvar_list);
+void	handle_unset(t_cmd *command, t_var **envvar_list);
 
 //ENVVAR_FTS
 t_var	*find_envvar(t_var *envvar_list, char *name);

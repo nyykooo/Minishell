@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 11:57:20 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:34:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,26 @@ static	void	init_arg(t_minishell *shell, char *argument)
 	}
 	else
 		shell->commands->arguments = arg;
+	arg->arg = ft_strdup(argument);
 }
 
-void	create_command(t_token *tokens, t_minishell *shell, int *i)
+void	create_command(t_token *tokens, t_minishell *shell)
 {
 	t_token *tmp;
 
 	tmp = tokens;
 	init_cmd(shell, tokens);
-	if (!shell->commands->arguments)
+	if (!shell->commands)
 	{
 		//free everything
+		printf("Error: malloc failed 2\n");
 		exit (1);
 	}
 	tokens = tokens->next;
-	while (tokens && check_cmd(tokens->content) == 2)
+	while (tokens && check_tokens(tokens) == 2)
 	{
 		init_arg(shell, tokens->content);
 		tokens = tokens->next;
 	}
-	analyze_arguments(shell, tmp);
+	analyze_arguments(shell, tmp->content);
 }

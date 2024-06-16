@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/15 00:41:51 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:14:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	get_type(t_token *token)
 	else if (ft_strcmp(token->content, ">") == 0)
 		token->type = T_RTRUNC;
 	else if (ft_strcmp(token->content, ">>") == 0)
-		token->type = T_RAPPEND;
+		token->type = T_RAPEND;
 	else if (ft_strcmp(token->content, "<") == 0)
 		token->type = T_LTRUNC;
 	else if (ft_strcmp(token->content, "<<") == 0)
@@ -32,7 +32,7 @@ static void	get_type(t_token *token)
 		token->type = T_ARG;
 }
 
-static void	init_token(t_token *token, t_minishell *shell, char *value)
+static void	init_token(t_minishell *shell, char *value)
 {
 	t_token *new_token;
 
@@ -40,10 +40,13 @@ static void	init_token(t_token *token, t_minishell *shell, char *value)
 	if (!new_token)
 	{
 		//free everything
+		printf("init token\n");
 		exit (1);
 	}
 	new_token->type = 0;
-	shell->tokens->content = ft_strdup(value);
+	new_token->content = ft_strdup(value);
+	new_token->prev = NULL;
+	new_token->next = NULL;
 	if (shell->tokens)
 	{
 		shell->tokens->next = new_token;
@@ -51,7 +54,7 @@ static void	init_token(t_token *token, t_minishell *shell, char *value)
 	}
 	else
 		shell->tokens = new_token;
-	get_type(shell->tokens);
+	get_type(new_token);
 }
 
 void	token_creation(char **array, t_minishell *shell)
@@ -60,5 +63,5 @@ void	token_creation(char **array, t_minishell *shell)
 
 	i = -1;
 	while (array[++i] != NULL)
-		init_token(shell->tokens, shell, array[i]);
+		init_token(shell, array[i]);
 }
