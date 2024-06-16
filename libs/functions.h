@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/12 17:38:46 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:14:35 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,54 @@
 void	analyze_input(t_minishell *shell);
 
 // PARSING
-void	parsing_hub(char *input, t_minishell *shell);
-int		input_manager(char **input);
-t_token	**token_manager(char *input);
-void	create_tokens(char **array, t_token ***tokens);
-char	*check_meta(char *str);
-void	analyze_argument(t_token **tokens, t_minishell *shell);
-void	expand_dolar(t_arg *argument, t_minishell *shell);
+
+// void	parsing_hub(char *input, t_minishell *shell);
+// int	input_manager(char **input);
+// t_token **token_manager(char *input);
+// void	create_tokens(char **array, t_token ***tokens);
+// char *check_meta(char *str);
+// void	analyze_argument(t_token **tokens, t_minishell *shell);
+// void	expand_dolar(t_arg *argument , t_minishell *shell);
+
+
+// NEW PARSING
+
+void	parsing_hub(t_minishell *shell);
+
+// NEW PARSING - INPUT
+
+void	input_manager(char **input);
+
+// NEW PARSING - TOKENS
+
+void	tokenizer(t_minishell *shell);
+void	token_creation(char **array, t_minishell *shell);
+void	analyze_tokens(t_arg **tokens, t_minishell *shell);
+
+// NEW PARSING - META
+
+void	check_pipe(char **tokens, t_minishell *shell);
+void	check_left_apend(char **tokens, t_minishell *shell);
+void	check_left_apend(char **tokens, t_minishell *shell);
+void	check_right_apend(char **tokens, t_minishell *shell);
+void	check_right_trunc(char **tokens, t_minishell *shell);
+
+// NEW PARSING - COMMANDS
+
+void	create_command(char **tokens, t_minishell *shell, int *i);
+
+// NEW PARSING - ARGUMENTS
+
+void	analyze_arguments(t_minishell *shell, char *cmd);
+
+// NEW PARSING - QUOTES
+
+void expand_quotes(t_arg *argument, t_minishell *shell);
+char *quote_del(t_arg *input, t_minishell *shell);
+
+// NEW PARSING - DOLLAR
+void	expand_dolar(t_arg *argument , t_minishell *shell);
+
 
 // FREE_ERROR_EXIT
 void	free_shell(t_minishell *shell);
