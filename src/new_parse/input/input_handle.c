@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/13 14:11:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:33:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,25 @@ static int input_cleaner(char *input)
 		return (-1);
 	trim = trim_hub(input);
 	if (!trim)
-	{
-		printf("Error: failed to allocate memory\n");
-		exit(1);
-	}
+		return (-1);
 	ft_strlcpy(input, trim, ft_strlen(trim) + 1);
 	free(trim);
 	return (0);
 }
 
-int	input_manager(char **input)
+void	input_manager(t_minishell *shell)
 {
-	if (quote_check(*input))
+	if (quote_check(shell->input)) // check if the quotes match
 	{
+		// free everything and exit
 		printf("Error: unmatched quote\n");
-		return (1);
+		exit(1);
 	}
-	input_cleaner(*input);
+	if (input_cleaner(shell->input) == -1) // trim the input of extra spaces
+	{
+		// free everything and exit
+		printf("Error: failed to allocate memory\n");
+		exit(1);
+	}
 	return (0);
 }

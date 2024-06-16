@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/06 14:20:44 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:42:45 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ int		get_charlen(char c);
 bool	ft_isspace(char c);
 void	ft_strcpy(char *dest, char *src);
 void	ft_strcat(char *dest, char *src);
+char	**ft_array_insert_extra(char **array, char *insert, char *extra,int index);
 
 #endif

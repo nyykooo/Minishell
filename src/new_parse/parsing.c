@@ -1,40 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enums.h                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:26:29 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 11:38:55 by ncampbel         ###   ########.fr       */
+/*   Created: 2024/06/13 14:05:16 by ncampbel          #+#    #+#             */
+/*   Updated: 2024/06/13 14:20:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENUMS_H
-# define ENUMS_H
+#include "../../libs/headers.h"
 
-enum e_negative_markers
+void	parsing_hub(t_minishell *shell)
 {
-	N_SPACE = -32,
-	N_DQUOTE = -34,
-	N_SQUOTE = -39,
-	N_EQUAL = -61,
-	N_DOLLAR = -36,
-	N_PIPE = -124,
-	N_LRED = -60,
-	N_RRED = -62,
-};
-
-enum e_types
-{
-	T_EMPTY,
-	T_COMMAND,
-	T_ARG,
-	T_RTRUNC,
-	T_RAPEND,
-	T_LTRUNC,
-	T_LAPEND,
-	T_PIPE
-};
-
-#endif
+	input_manager(shell); // check if input is valid and trim spaces
+	tokenizer(shell); // create tokens from input and analyze them to create the command list
+	// analyze_argument(shell);
+}

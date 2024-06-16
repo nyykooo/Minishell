@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/11 18:56:53 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/16 13:39:06 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,27 +170,54 @@ void	handle_unset(t_token **tokens, t_var **envvar_list)
 	}
 }
 
+// recreating analyze input to use the new structures
+
 void	analyze_input(t_minishell *shell)
 {
-	parsing_hub(shell->input, shell);
-	if (shell->tokens[0]->cmd != NULL)
+	parsing_hub(shell);
+	if (shell->commands)
 	{
-		if (ft_strcmp(shell->tokens[0]->cmd, "=") == 0)
-			handle_equal(shell, shell->tokens[0]);
-		else if (ft_strcmp(shell->tokens[0]->cmd, "cd") == 0)
-			handle_cd(shell->tokens, shell);
-		else if (ft_strcmp(shell->tokens[0]->cmd, "echo") == 0)
-			handle_echo(shell->tokens);
-		else if (ft_strcmp(shell->tokens[0]->cmd, "exit") == 0)
+		if (ft_strcmp(shell->commands->cmd, "=") == 0)
+			handle_equal(shell, shell->commands);
+		else if (ft_strcmp(shell->commands->cmd, "cd") == 0)
+			handle_cd(shell->commands->arguments, shell);
+		else if (ft_strcmp(shell->commands->cmd, "echo") == 0)
+			handle_echo(shell->commands->arguments);
+		else if (ft_strcmp(shell->commands->cmd, "exit") == 0)
 			handle_exit(shell);
-		else if (ft_strcmp(shell->tokens[0]->cmd, "export") == 0)
+		else if (ft_strcmp(shell->commands->cmd, "export") == 0)
 			handle_export(shell->envvars, shell);
-		else if (ft_strcmp(shell->tokens[0]->cmd, "unset") == 0)
-			handle_unset(shell->tokens, &shell->envvars);
-		else if (ft_strcmp(shell->tokens[0]->cmd, "env") == 0)
+		else if (ft_strcmp(shell->commands->cmd, "unset") == 0)
+			handle_unset(shell->commands, &shell->envvars);
+		else if (ft_strcmp(shell->commands->cmd, "env") == 0)
 			handle_env(shell->envvars, shell);
-		else if (shell->tokens[0] != NULL)
-			handle_command(shell->tokens);
+		else if (shell->commands != NULL)
+			handle_command(shell->commands);
 	}
 	return ;
 }
+
+// void	analyze_input(t_minishell *shell)
+// {
+// 	parsing_hub(shell);
+// 	if (shell->tokens[0]->cmd != NULL)
+// 	{
+// 		if (ft_strcmp(shell->tokens[0]->cmd, "=") == 0)
+// 			handle_equal(shell, shell->tokens[0]);
+// 		else if (ft_strcmp(shell->tokens[0]->cmd, "cd") == 0)
+// 			handle_cd(shell->tokens, shell);
+// 		else if (ft_strcmp(shell->tokens[0]->cmd, "echo") == 0)
+// 			handle_echo(shell->tokens);
+// 		else if (ft_strcmp(shell->tokens[0]->cmd, "exit") == 0)
+// 			handle_exit(shell);
+// 		else if (ft_strcmp(shell->tokens[0]->cmd, "export") == 0)
+// 			handle_export(shell->envvars, shell);
+// 		else if (ft_strcmp(shell->tokens[0]->cmd, "unset") == 0)
+// 			handle_unset(shell->tokens, &shell->envvars);
+// 		else if (ft_strcmp(shell->tokens[0]->cmd, "env") == 0)
+// 			handle_env(shell->envvars, shell);
+// 		else if (shell->tokens[0] != NULL)
+// 			handle_command(shell->tokens);
+// 	}
+// 	return ;
+// }
