@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 22:34:15 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:00:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 	t_cmd	*cmd;
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
-	if (shell->commands)
-	{
-		shell->commands->next = cmd;
-		cmd->prev = shell->commands;
-	}
-	else
-		shell->commands = cmd;
+	ft_cmdadd_back(&shell->commands, cmd);
 	cmd->cmd = ft_strdup(tokens->content);
 	if (tokens->type == T_PIPE)
 		cmd->pipe = true;
@@ -42,13 +36,7 @@ static	void	init_arg(t_minishell *shell, char *argument)
 	t_arg *arg;
 
 	arg = ft_calloc(1, sizeof(t_arg));
-	if (shell->commands->arguments)
-	{
-		shell->commands->arguments->next = arg;
-		arg->prev = shell->commands->arguments;
-	}
-	else
-		shell->commands->arguments = arg;
+	ft_argadd_back(&shell->commands->arguments, arg);
 	arg->arg = ft_strdup(argument);
 }
 
@@ -57,18 +45,18 @@ void	create_command(t_token *tokens, t_minishell *shell)
 	t_token *tmp;
 
 	tmp = tokens;
-	init_cmd(shell, tokens);
+	init_cmd(shell, tmp);
 	if (!shell->commands)
 	{
 		//free everything
-		printf("Error: malloc failed 2\n");
+		printf("Error: malloc failed create commands\n");
 		exit (1);
 	}
-	tokens = tokens->next;
-	while (tokens && check_tokens(tokens) == 2)
+	if (check_tokens(tmp) != 2)
+		tmp = tmp->next;
+	while (tmp && check_tokens(tmp) == 2)
 	{
-		init_arg(shell, tokens->content);
-		tokens = tokens->next;
+		init_arg(shell, tmp->content);
+		tmp = tmp->next;
 	}
-	analyze_arguments(shell, tmp->content);
 }

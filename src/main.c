@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/12 17:03:14 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:09:52 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,17 @@ static bool	create_prompt(t_minishell *shell)
 
 static void	clear_shell(t_minishell *shell)
 {
-	free(shell->input);
+	if (shell->tokens != NULL)
+		free_tokens(shell->tokens);
+	if (shell->input != NULL)
+		free(shell->input);
+	if (shell->commands != NULL)
+		free_commands(shell->commands);
+	shell->input = NULL;
+	shell->tokens = NULL;
+	shell->commands = NULL;
+	shell->n_cmd = 0;
+	shell->n_pipe = 0;
 }
 
 void	minishell_loop(t_minishell *shell)

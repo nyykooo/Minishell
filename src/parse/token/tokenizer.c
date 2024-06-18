@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 20:29:03 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:49:25 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,24 @@ static void	mark_tokens(char *input)
 	}
 }
 
+static void reset_shell(t_minishell *shell)
+{
+	while (shell->commands)
+	{
+		while (shell->commands->arguments)
+		{
+			if (shell->commands->arguments->prev)
+				shell->commands->arguments = shell->commands->arguments->prev;
+			else
+				break;
+		}
+		if (shell->commands->prev)
+			shell->commands = shell->commands->prev;
+		else
+			break;
+	}
+}
+
 void	tokenizer(t_minishell *shell)
 {
 	char **array;
@@ -84,5 +102,6 @@ void	tokenizer(t_minishell *shell)
 	analyze_array(array, shell); // analyze array to create tokens
 	token_creation(array, shell); // create tokens
 	analyze_tokens(shell->tokens, shell); // analyze tokens to create commands
+	reset_shell(shell);
 	free_array(array);
 }

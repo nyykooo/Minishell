@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 22:39:43 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:00:28 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,11 @@ void include_arg(t_minishell *shell, char *argument)
 
 // analyze_arguments is a function that analyzes the arguments and expands the quotes and dolar signs
 
-void	analyze_arguments(t_minishell *shell, char *cmd)
+void	analyze_arguments(t_minishell *shell, t_cmd *cmd)
 {
 	t_arg *tmp;
 
-	tmp = shell->commands->arguments;
-	while (strcmp(shell->commands->cmd, cmd) != 0)
-		shell->commands = shell->commands->next;
+	tmp = cmd->arguments;
 	while (tmp != NULL)
 	{
 		expand_quotes(tmp, shell);

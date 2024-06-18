@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 20:31:34 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:10:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,39 @@ void	free_list(t_var *head)
 	}
 }
 
+void	free_commands(t_cmd *commands)
+{
+	t_cmd *tmp;
+	t_arg *tmp_arg;
+
+	while (commands)
+	{
+		tmp = commands;
+		commands = commands->next;
+		free(tmp->cmd);
+		while (tmp->arguments)
+		{
+			tmp_arg = tmp->arguments;
+			tmp->arguments = tmp->arguments->next;
+			free(tmp_arg->arg);
+			free(tmp_arg);
+		}
+		free(tmp);
+	}
+}
+
 void	free_shell(t_minishell *shell)
 {
 	if (shell->envvars != NULL)
-		free_list(shell->envvars);
+		free_var(shell->envvars);
 	if (shell->tokens != NULL)
 		free_tokens(shell->tokens);
 	if (shell->input != NULL)
 		free(shell->input);
+	if (shell->commands != NULL)
+		free_commands(shell->commands);
 }
+
 
 void	free_arguments(t_arg **arguments)
 {

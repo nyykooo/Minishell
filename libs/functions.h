@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 20:31:57 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:10:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	create_command(t_token *tokens, t_minishell *shell);
 
 // NEW PARSING - ARGUMENTS
 
-void	analyze_arguments(t_minishell *shell, char *cmd);
+void	analyze_arguments(t_minishell *shell, t_cmd *cmd);
 void	include_arg(t_minishell *shell, char *argument);
 
 // NEW PARSING - QUOTES
@@ -78,6 +78,7 @@ void	free_array(char **array);
 void	free_list(t_var *head);
 void	handle_exit(t_minishell *shell);
 void	free_var(t_var *head);
+void	free_commands(t_cmd *commands);
 
 // BUILTINS
 void	handle_cd(t_cmd *command, t_minishell *shell);

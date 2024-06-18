@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:13:40 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 22:45:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:42:56 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	handle_echo(t_cmd *command)
 
 	flag = false;
 	temp_arg = command->arguments;
-	// printf("%d\n", ft_argsize(command->arguments));
 	while (temp_arg != NULL)
 	{
 		if (look_for_flag(temp_arg))
@@ -53,8 +52,8 @@ void	handle_echo(t_cmd *command)
 			printf("%s", temp_arg->arg);
 			if (temp_arg->next != NULL && !temp_arg->next->expanded) // confirmar se o expanded é o primeiro ou segundo arg
 				printf(" ");
-			temp_arg = temp_arg->next;
 		}
+		temp_arg = temp_arg->next;
 	}
 	if (!flag)
 		printf("\n");
