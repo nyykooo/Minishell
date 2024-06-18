@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 17:25:20 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:09:29 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_token
 	struct s_token 		*prev;
 } t_token;
 
+
+// pensar na ideia de incluir o shell dentro do cmd para facilitar a expansão de variaveis e argumentos do comando
 
 typedef struct s_cmd
 {

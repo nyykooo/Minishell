@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 14:40:02 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 20:34:38 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:08:31 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void expand_quotes(t_arg *argument, t_minishell *shell)
 		else if (argument->arg[i] == N_DQUOTE || argument->arg[i] == N_SQUOTE)
 			flag = true;
 	}
-	if (argument->arg[i] == 0)
+	if (argument->arg[i + 1] == 0)
 		return ;
 	if (flag)
 		i++;
@@ -98,6 +98,21 @@ int	skip_quotes(char *input, int *i)
 			input[(*i)] *= -1;
 			return ((*i));
 		}
+		if (input[(*i)] == '$' && quote == '"')
+			input[(*i)] *= -1;
+	}
+	return ((*i));
+}
+
+int	skip_nquotes(char *input, int *i)
+{
+	char	quote;
+
+	quote = input[(*i)];
+	while (input[++(*i)])
+	{
+		if (input[(*i)] == quote)
+			return ((*i));
 	}
 	return ((*i));
 }

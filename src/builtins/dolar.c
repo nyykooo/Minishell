@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/12 17:49:07 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:08:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	expand_dolar(t_arg *argument, t_minishell *shell)
 {
 	if (argument->arg)
 	{
+		if (argument->dol)
 		if (argument->dol && ((!argument->sq && !argument->dq) \
 		|| argument->dq))
 			expand_argument(argument, shell);

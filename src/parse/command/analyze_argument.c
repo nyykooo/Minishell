@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 13:00:28 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:08:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void check_arg(t_arg *input)
 void include_arg(t_minishell *shell, char *argument)
 {
 	t_arg *new;
-	t_arg *tmp;
+	t_arg *curr;
 
 	new = (t_arg *)malloc(sizeof(t_arg));
 	if (!new)
@@ -87,12 +87,11 @@ void include_arg(t_minishell *shell, char *argument)
 	new->dol = false;
 	new->equal = false;
 	new->expanded = true;
-	while (ft_strncmp(shell->commands->arguments->arg, argument, ft_strlen(argument)) != 0)
-		shell->commands->arguments = shell->commands->arguments->next;
-	tmp = shell->commands->arguments->next;
-	new->prev = shell->commands->arguments;
-	new->next = tmp;
-	shell->commands->arguments->next = new;
+	curr = shell->commands->arguments;
+	while (curr->next
+		&& ft_strncmp(curr->arg, argument, ft_strlen(argument)) != 0)
+		curr = curr->next;
+	ft_argadd_back(&curr, new);
 }
 
 // analyze_arguments is a function that analyzes the arguments and expands the quotes and dolar signs
