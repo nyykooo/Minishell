@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 17:08:57 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:39:52 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void check_arg(t_arg *input)
 
 // include arg is a function that includes the new argument in the linked list (in the correct position)
 
-void include_arg(t_minishell *shell, char *argument)
+void include_arg(t_minishell *shell, char *input, t_arg *argument)
 {
 	t_arg *new;
 	t_arg *curr;
@@ -81,17 +81,20 @@ void include_arg(t_minishell *shell, char *argument)
 		printf("Error: malloc failed 1\n");
 		exit (1);
 	}
-	new->arg = ft_strdup(argument);
+	new->arg = ft_strdup(input);
 	new->dq = false;
 	new->sq = false;
 	new->dol = false;
 	new->equal = false;
 	new->expanded = true;
 	curr = shell->commands->arguments;
-	while (curr->next
-		&& ft_strncmp(curr->arg, argument, ft_strlen(argument)) != 0)
+	while (curr->next && curr != argument)
 		curr = curr->next;
-	ft_argadd_back(&curr, new);
+	new->prev = curr;
+	new->next = curr->next;
+	curr->next = new;
+	if (new->next)
+		new->next->prev = new;
 }
 
 // analyze_arguments is a function that analyzes the arguments and expands the quotes and dolar signs
@@ -105,7 +108,7 @@ void	analyze_arguments(t_minishell *shell, t_cmd *cmd)
 	{
 		expand_quotes(tmp, shell);
 		check_arg(tmp);
-		tmp->arg = quote_del(tmp, shell);
+		tmp->arg = quote_del(tmp->arg, shell);
 		expand_dolar(tmp, shell);
 		tmp = tmp->next;
 	}

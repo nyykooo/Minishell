@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:13:40 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 16:54:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:18:18 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,22 @@ static bool	look_for_flag(t_arg *argument)
 void	handle_echo(t_cmd *command)
 {
 	bool	flag;
+	bool	not_flag;
 	t_arg	*temp_arg;
 
 	flag = false;
+	not_flag = false;
 	temp_arg = command->arguments;
 	while (temp_arg != NULL)
 	{
-		if (look_for_flag(temp_arg))
+		if (look_for_flag(temp_arg) && !not_flag)
 			flag = true;
 		else
 		{
 			printf("%s", temp_arg->arg);
 			if (temp_arg->next != NULL && !temp_arg->next->expanded) // confirmar se o expanded é o primeiro ou segundo arg
 				printf(" ");
+			not_flag = true;
 		}
 		temp_arg = temp_arg->next;
 	}

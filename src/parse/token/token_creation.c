@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/17 17:46:26 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:40:27 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ static void	init_token(t_minishell *shell, char *value)
 void	token_creation(char **array, t_minishell *shell)
 {
 	int i;
+	t_token *tmp;
 
 	i = -1;
 	while (array[++i] != NULL)
 		init_token(shell, array[i]);
-	while (shell->tokens->next != NULL)
+	tmp = shell->tokens;
+	while (tmp->next != NULL)
 	{
-		get_type(shell->tokens);
-		shell->tokens = shell->tokens->next;
+		get_type(tmp);
+		tmp = tmp->next;
 	}
-	get_type(shell->tokens);
-	while (shell->tokens->prev != NULL)
-		shell->tokens = shell->tokens->prev;
+	get_type(tmp);
 }

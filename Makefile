@@ -6,14 +6,47 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/16 20:33:35 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/06/19 14:12:38 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRC = $(wildcard src/*.c src/builtins/*.c src/parse/*.c src/parse/command/*.c src/parse/input/*.c src/parse/pipe/*.c src/parse/quotes/*.c src/parse/redirect/*.c src/parse/token/*.c src/variables/*.c src/free_error_exit/*.c)
+
+SRC_DIR = main analyze_input envvar_handler signals
+
+SRC_BUILTINS = cd dolar echo env equal export unset exec pwd
+
+SRC_FREE_ERROR_EXIT = free
+
+SRC_PARSE = parsing
+
+SRC_PARSE_TOKEN = tokenizer token_creation token_analyze
+
+SRC_PARSE_REDIRECT = left_append left_trunc right_append right_trunc
+
+SRC_PARSE_QUOTES = quotes_functions
+
+SRC_PARSE_PIPE = handle_pipe
+
+SRC_PARSE_INPUT = input_handle
+
+SRC_PARSE_COMMAND = create_commands analyze_argument
+
+SRC_VARIABLES = var
+
+SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
+	$(addsuffix .c, $(addprefix src/builtins/, $(SRC_BUILTINS))) \
+	$(addsuffix .c, $(addprefix src/free_error_exit/, $(SRC_FREE_ERROR_EXIT))) \
+	$(addsuffix .c, $(addprefix src/parse/, $(SRC_PARSE))) \
+	$(addsuffix .c, $(addprefix src/parse/token/, $(SRC_PARSE_TOKEN))) \
+	$(addsuffix .c, $(addprefix src/parse/redirect/, $(SRC_PARSE_REDIRECT))) \
+	$(addsuffix .c, $(addprefix src/parse/quotes/, $(SRC_PARSE_QUOTES))) \
+	$(addsuffix .c, $(addprefix src/parse/pipe/, $(SRC_PARSE_PIPE))) \
+	$(addsuffix .c, $(addprefix src/parse/input/, $(SRC_PARSE_INPUT))) \
+	$(addsuffix .c, $(addprefix src/parse/command/, $(SRC_PARSE_COMMAND))) \
+	$(addsuffix .c, $(addprefix src/variables/, $(SRC_VARIABLES)))
 
 LIBFT = "libs/libft/libft.a"
 

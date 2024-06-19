@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 14:27:43 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:11:29 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	tokenizer(t_minishell *shell);
 void	token_creation(char **array, t_minishell *shell);
 // void	analyze_tokens(t_arg **tokens, t_minishell *shell);
 void	analyze_tokens(t_token *tokens, t_minishell *shell);
-int		check_tokens(t_token *tokens);
+int		check_tokens(t_token *tokens);void	include_token(t_minishell *shell, char *argument, t_token *token);
+
 
 // NEW PARSING - META
 
@@ -55,16 +56,16 @@ void	check_right_trunc(char **tokens, t_minishell *shell);
 // NEW PARSING - COMMANDS
 
 void	create_command(t_token *tokens, t_minishell *shell);
+void	include_arg(t_minishell *shell, char *input, t_arg *argument);
 
 // NEW PARSING - ARGUMENTS
 
 void	analyze_arguments(t_minishell *shell, t_cmd *cmd);
-void	include_arg(t_minishell *shell, char *argument);
 
 // NEW PARSING - QUOTES
 
 void expand_quotes(t_arg *argument, t_minishell *shell);
-char *quote_del(t_arg *input, t_minishell *shell);
+char *quote_del(char *input, t_minishell *shell);
 int	skip_quotes(char *input, int *i);
 int	skip_nquotes(char *input, int *i);
 
@@ -88,6 +89,8 @@ void	handle_equal(t_minishell *shell, t_cmd *command);
 void	handle_export(t_var *envvar_list, t_minishell *shell);
 void	handle_env(t_var *envvar_list, t_minishell *shell);
 void	handle_unset(t_cmd *command, t_var **envvar_list);
+void	handle_exec(t_minishell *shell, t_cmd *cmd);
+void	handle_pwd(t_minishell *shell, t_cmd *cmd);
 
 //ENVVAR_FTS
 t_var	*find_envvar(t_var *envvar_list, char *name);

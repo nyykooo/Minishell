@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/16 16:57:04 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:14:22 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static char	**to_array(t_cmd *command)
 		i++;
 	}
 	array = (char **)malloc(sizeof(char *) * (i + 1));
-	i = -1;
+	i = 0;
+	array[i++] = ft_strdup(command->cmd);
 	while (command->arguments != NULL)
 	{
 		array[i++] = ft_strdup(command->arguments->arg);
