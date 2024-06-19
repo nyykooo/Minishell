@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 11:40:27 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:08:21 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ static void	get_type(t_token *token)
 		token->type = T_LAPEND;
 	else if (ft_strcmp(token->content, "|") == 0)
 		token->type = T_PIPE;
+	else if (ft_strncmp(token->content, "./", 2) == 0 && (!token->prev
+		|| (token->prev->type <= T_PIPE && token->prev->type >= T_RTRUNC)))
+		token->type = T_EXEC;
 	else if (!token->prev || token->prev->type >= T_RTRUNC)
 		token->type = T_COMMAND;
 	else
@@ -59,10 +62,9 @@ void	token_creation(char **array, t_minishell *shell)
 	while (array[++i] != NULL)
 		init_token(shell, array[i]);
 	tmp = shell->tokens;
-	while (tmp->next != NULL)
+	while (tmp)
 	{
 		get_type(tmp);
 		tmp = tmp->next;
 	}
-	get_type(tmp);
 }

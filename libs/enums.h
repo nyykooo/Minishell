@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:26:29 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/17 17:42:34 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:52:06 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ enum e_negative_markers
 enum e_types
 {
 	T_EMPTY = 0,
-	T_COMMAND = 1,
-	T_ARG = 2,
-	T_RTRUNC = 3,
-	T_RAPEND = 4,
-	T_LTRUNC = 5,
-	T_LAPEND = 6,
-	T_PIPE = 7,
+	T_COMMAND,
+	T_ARG,
+	T_RTRUNC,
+	T_RAPEND,
+	T_LTRUNC,
+	T_LAPEND,
+	T_PIPE,
+	T_EXEC
 };
 
 #endif

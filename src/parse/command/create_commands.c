@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 10:25:40 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:54:11 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	ft_cmdadd_back(&shell->commands, cmd);
 	cmd->cmd = ft_strdup(tokens->content);
+	cmd->type = tokens->type;
 	if (tokens->type == T_PIPE)
 		cmd->pipe = true;
 	else if (tokens->type == T_RAPEND)

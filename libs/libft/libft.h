@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 12:59:06 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:44:23 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ t_arg	*ft_arglast(t_arg *lst);
 
 void	ft_cmdadd_back(t_cmd **lst, t_cmd *new);
 t_cmd	*ft_cmdlast(t_cmd *lst);
+
+char	**ft_to_array(t_cmd *command);
 
 
 #endif
