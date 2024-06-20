@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   left_apend.c                                       :+:      :+:    :+:   */
+/*   left_append.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:37:03 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 14:26:57 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:40:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	check_left_apend(char **tokens, t_minishell *shell)
 		{
 			if (tokens[i][j] == N_DQUOTE || tokens[i][j] == N_SQUOTE)
 				j = skip_nquotes(tokens[i], &j);
-			if (tokens[i][j] == N_LRED && tokens[i][j + 1] == N_LRED)
+			if (tokens[i][j] == N_LRED && tokens[i][j + 1] == N_LRED) // blindar para mais de 3 seguidos
 				tokens = ft_array_insert_extra(tokens, tokens[i] + j + 1, "<<", i);
 			if (!tokens)
 			{

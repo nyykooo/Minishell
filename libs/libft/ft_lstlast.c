@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:39:29 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 12:57:44 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 22:55:23 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ t_arg	*ft_arglast(t_arg *lst)
 }
 
 t_cmd	*ft_cmdlast(t_cmd *lst)
+{
+	while (lst)
+	{
+		if (!lst->next)
+			return (lst);
+		lst = lst->next;
+	}
+	return (lst);
+}
+
+t_var	*ft_varlast(t_var *lst)
 {
 	while (lst)
 	{

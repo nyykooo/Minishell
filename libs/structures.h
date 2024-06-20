@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 14:50:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/19 22:53:37 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_var
 	char			*name;
 	char			*value;
 	struct s_var	*next;
-	struct s_var	*prev;	
+	struct s_var	*prev;
 }	t_var;
 
 typedef struct s_arg

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 14:54:11 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:59:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	create_command(t_token *tokens, t_minishell *shell)
 		printf("Error: malloc failed create commands\n");
 		exit (1);
 	}
-	if (check_tokens(tmp) != 2)
+	if (tmp->type != T_ARG)
 		tmp = tmp->next;
-	while (tmp && check_tokens(tmp) == 2)
+	while (tmp && tmp->type == T_ARG)
 	{
 		init_arg(shell, tmp->content);
 		tmp = tmp->next;

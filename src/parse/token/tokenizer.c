@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 11:20:24 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:54:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ void	tokenizer(t_minishell *shell)
 		// free everything
 		exit(1);
 	}
+	// expand dolar here
 	analyze_array(array, shell); // analyze array to create tokens
 	token_creation(array, shell); // create tokens
-	// expand tokens here
 	analyze_tokens(shell->tokens, shell); // analyze tokens to create commands
 	reset_shell(shell);
 	clear_commands(shell->commands, shell);
