@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/12 11:40:19 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/19 23:39:19 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_var *create_list(char **envp)
 	t_var	*new_node;
 	t_var	*head;
 	t_var	*tail;
+	char	*str;
 
 	head = NULL;
 	tail = NULL;
@@ -37,6 +38,12 @@ t_var *create_list(char **envp)
 			tail->next = new_node;
 		current++;
 		tail = new_node;
+		if (ft_strcmp(tail->name, "SHLVL") == 0)
+		{
+			str = ft_itoa(ft_atoi(tail->value) + 1);
+			tail->value = ft_strdup(str);
+			free(str);
+		}
 	}
 	return (head);
 }
