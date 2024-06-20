@@ -6,20 +6,20 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/20 14:53:38 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:23:24 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static char *get_name(t_arg *argument, int start)
+static char *get_name(char *input, int start)
 {
 	int	i;
 	
 	i = 0;
-	while (argument->arg[start + i] != '\0' && argument->arg[start + i] != ' ')
+	while (input[start + i] != '\0' && input[start + i] != ' ')
 		i++;
-	return (ft_substr(argument->arg, start, i));
+	return (ft_substr(input, start, i));
 }
 
 static char	*ft_strreplace(char *src, int i, char *insert)
@@ -48,35 +48,28 @@ static char	*ft_strreplace(char *src, int i, char *insert)
 	return (new);
 }
 
-static void	*expand_argument(t_arg *argument, t_minishell *shell)
+void	expand_dolar(char **input, t_minishell *shell)
 {
 	int		i;
 	t_var	*var;
 	char	*var_value;
 	char	*var_name;
+	bool	squote;
 
 	i = -1;
 	var_value = "";
-	while (argument->arg[++i])
+	squote = false;
+	while ((*input)[++i])
 	{
-		if (argument->arg[i] == N_DOLLAR)
+		if ((*input)[i] == '\'')
+			squote = !squote;
+		if ((*input)[i] == '$' && squote == false)
 		{
-			var_name = get_name(argument, i + 1);
-			var = find_envvar(shell->envvars, var_name); // problema da expansao
+			var_name = get_name((*input), i + 1);
+			var = find_envvar(shell->envvars, var_name);
 			if (var)
 				var_value = ft_strdup(var->value);
-			argument->arg = ft_strreplace(argument->arg, i, var_value);
+			(*input) = ft_strreplace((*input), i, var_value);
 		}
-	}
-	return (argument->arg);
-}
-
-void	expand_dolar(t_arg *argument, t_minishell *shell)
-{
-	if (argument->arg)
-	{
-		if (argument->dol && ((!argument->sq && !argument->dq) \
-		|| argument->dq))
-			expand_argument(argument, shell);
 	}
 }

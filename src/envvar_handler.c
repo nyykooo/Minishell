@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/20 12:39:04 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:05:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_var	*find_envvar(t_var *envvar_list, char *name)
 			return (current);
 		current = current->next;
 	}
-	printf("envvar %s not found\n", name);
 	return (NULL);
 }
 

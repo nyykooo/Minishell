@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/20 11:54:07 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:49:02 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	tokenizer(t_minishell *shell)
 {
 	char **array;
 	
+	expand_dolar(&shell->input, shell); // expand dolar variables
 	mark_tokens(shell->input); // mark special char, spaces and quotes to analyze later
 	array = ft_split(shell->input, N_SPACE); // split tokens by n_space
 	if (!array)
@@ -111,7 +112,6 @@ void	tokenizer(t_minishell *shell)
 		// free everything
 		exit(1);
 	}
-	// expand dolar here
 	analyze_array(array, shell); // analyze array to create tokens
 	token_creation(array, shell); // create tokens
 	analyze_tokens(shell->tokens, shell); // analyze tokens to create commands

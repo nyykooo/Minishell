@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 14:40:02 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 11:39:27 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:32:23 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,32 +60,32 @@ char *quote_del(char *input, t_minishell *shell)
 // expand_quotes is a function that expands the quotes in the arguments
 // think if it makes more sense to expand the quotes in the tokenizer
 
-void expand_quotes(t_arg *argument, t_minishell *shell)
+void expand_quotes(t_token *token, t_minishell *shell)
 {
 	int		i;
 	bool	flag;
-	t_arg *curr;
+	t_token *curr;
 
 	i = -1;
 	flag = false;
-	curr = argument;
-	if (argument->arg == NULL)
+	curr = token;
+	if (token->content == NULL)
 		return ;
-	while (argument->arg[++i] != '\0')
+	while (token->content[++i] != '\0')
 	{
-		if ((argument->arg[i] == N_DQUOTE || argument->arg[i] == N_SQUOTE)
-			&& ((argument->arg[i + 1] == '\0') || (i != 0)))
+		if ((token->content[i] == N_DQUOTE || token->content[i] == N_SQUOTE)
+			&& ((token->content[i + 1] == '\0') || (i != 0)))
 			break ;
-		else if (argument->arg[i] == N_DQUOTE || argument->arg[i] == N_SQUOTE)
+		else if (token->content[i] == N_DQUOTE || token->content[i] == N_SQUOTE)
 			flag = true;
 	}
-	if (argument->arg[i + 1] == 0 || argument->arg[i] == 0)
+	if (token->content[i + 1] == 0 || token->content[i] == 0)
 		return ;
 	if (flag)
 		i++;
-	include_arg(shell, argument->arg + i, curr);
-	argument->arg[i] = '\0';
-	expand_quotes(argument->next, shell);
+	include_token(shell, token->content + i, curr);
+	token->content[i] = '\0';
+	expand_quotes(token->next, shell);
 }
 
 int	skip_quotes(char *input, int *i)

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 17:22:47 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:23:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	analyze_arguments(t_minishell *shell, t_cmd *cmd);
 
 // NEW PARSING - QUOTES
 
-void expand_quotes(t_arg *argument, t_minishell *shell);
+void expand_quotes(t_token *argument, t_minishell *shell);
 char *quote_del(char *input, t_minishell *shell);
 int	skip_quotes(char *input, int *i);
 int	skip_nquotes(char *input, int *i);
 
 // NEW PARSING - DOLLAR
-void	expand_dolar(t_arg *argument , t_minishell *shell);
+void	expand_dolar(char **input , t_minishell *shell);
 
 
 // FREE_ERROR_EXIT

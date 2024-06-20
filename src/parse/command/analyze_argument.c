@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 11:39:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:33:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 // separar aqui as dqs e sqs em argument->next
 // para remover as quotes podemos verificar se há duas Nquotes seguidas e fazer um split das strings
 
-static void check_arg(t_arg *input)
-{
-	int i;
+// static void check_arg(t_arg *input)
+// {
+// 	int i;
 
-	i = -1;
-	if (input->arg == NULL)
-		return ;
-	while (input->arg[++i])
-	{
-		if (input->arg[i] == N_DQUOTE)
-			input->dq = true;
-		else if (input->arg[i] == N_SQUOTE)
-			input->sq = true;
-		else if (input->arg[i] == N_DOLLAR)
-			input->dol = true;
-		else if (input->arg[i] == N_EQUAL)
-			input->equal = true;
-	}
+// 	i = -1;
+// 	if (input->arg == NULL)
+// 		return ;
+// 	while (input->arg[++i])
+// 	{
+// 		if (input->arg[i] == N_DQUOTE)
+// 			input->dq = true;
+// 		else if (input->arg[i] == N_SQUOTE)
+// 			input->sq = true;
+// 		else if (input->arg[i] == N_DOLLAR)
+// 			input->dol = true;
+// 		else if (input->arg[i] == N_EQUAL)
+// 			input->equal = true;
+// 	}
 	
-}
+// }
 
 // static void expand_quotes(t_arg *argument)
 // {
@@ -99,17 +99,17 @@ void include_arg(t_minishell *shell, char *input, t_arg *argument)
 
 // analyze_arguments is a function that analyzes the arguments and expands the quotes and dolar signs
 
-void	analyze_arguments(t_minishell *shell, t_cmd *cmd)
-{
-	t_arg *tmp;
+// void	analyze_arguments(t_minishell *shell, t_cmd *cmd)
+// {
+// 	t_arg *tmp;
 
-	tmp = cmd->arguments;
-	while (tmp != NULL)
-	{
-		expand_quotes(tmp, shell);
-		check_arg(tmp);
-		tmp->arg = quote_del(tmp->arg, shell);
-		expand_dolar(tmp, shell);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = cmd->arguments;
+// 	while (tmp != NULL)
+// 	{
+// 		// expand_quotes(tmp, shell);
+// 		// check_arg(tmp);
+// 		// tmp->arg = quote_del(tmp->arg, shell);
+// 		// expand_dolar(tmp, shell);
+// 		tmp = tmp->next;
+// 	}
+// }

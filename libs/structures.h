@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 22:53:37 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:17:00 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ typedef struct s_arg
 typedef struct s_token
 {
 	char				*content; // token content
+	bool				dq;	// if the argument has a double quote
+	bool				sq; // if the argument has a single quote
+	bool				dol; // if the argument has a dollar sign
+	bool				equal; // if the argument has an equal sign
+	bool				expanded; // if the argument has been expanded (no space between prev and current argument)
 	enum e_types		type; //e_num type
 	struct s_token 		*next;
 	struct s_token 		*prev;
