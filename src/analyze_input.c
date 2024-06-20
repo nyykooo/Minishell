@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/19 17:22:32 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:39:59 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static char	*get_command_path(char *command)
 	char	*possible_path;
 	int		i;
 
+	if (access(command, X_OK) == 0)
+			return (command);
 	path = getenv ("PATH");
 	dirs = ft_split (path, ':');
 	i = -1;

@@ -189,8 +189,8 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | :------ | :------ |
 | 🟢 | `<empty>`  |
 | 🟢 | `<spaces>` |
-| 🟢 | `../../`   |
-| 🟣 | `$`        |
+| 🟢 | `../../`   | Diff error message
+| 🟢 | `$`        | Diff error message	
 
 #### SIGNALS
 > Understanding system signals, showcasing the shell's adaptability in various scenarios.
@@ -201,30 +201,30 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `Ctrl` + `D`                                |
 | 🟢 | `Ctrl` + `\`                                |
 | 🟢 | `write something then press` + `Ctrl` + `C` |
-| 🔴 | `write something then press` + `Ctrl` + `D` |
+| 🟢 | `write something then press` + `Ctrl` + `D` |
 | 🟢 | `write something then press` + `Ctrl` + `\` |
 | 🟢 | `cat` + `Ctrl` + `C`                        |
-| 🔴 | `cat` + `Ctrl` + `D`                        |
+| 🟢 | `cat` + `Ctrl` + `D`                        |
 | 🟢 | `cat` + `Ctrl` + `\`                        |
-| 🔴 | `sleep 5` + `Ctrl` + `C`                    |
-| 🔴 | `sleep 5` + `Ctrl` + `D`                    |
-| 🔴 | `sleep 5` + `Ctrl` + `\`                    |
+| 🟢 | `sleep 5` + `Ctrl` + `C`                    |
+| 🟢 | `sleep 5` + `Ctrl` + `D`                    |
+| 🟢 | `sleep 5` + `Ctrl` + `\`                    |
 	
 #### PATH
 > Managing executable file access by manipulating the system path in Minishell.
 
 | Status  | Command |
 | :------ | :------ |
-| 🔴 | `/bin/echo`        |
-| 🔴 | `/bin/grep`        |
-| 🔴 | `/bin/ls`          |
-| 🔴 | `/bin/ls -la`      |
-| 🔴 | `/bin/cat`         |
-| 🔴 | `/bin/pwd`         |
-| 🔴 | `/bin/cd`          |
-| 🔴 | `/bin/export`      |
-| 🔴 | `/bin/env`         |
-| 🔴 | `/bin/exit`        |
+| 🟢 | `/bin/echo`        |
+| 🟢 | `/bin/grep`        |
+| 🟢 | `/bin/ls`          |
+| 🟢 | `/bin/ls -la`      |
+| 🟢 | `/bin/cat`         |
+| 🟢 | `/bin/pwd`         |
+| 🟢 | `/bin/cd`          | OK! Path not found in bash nor in our
+| 🟢 | `/bin/export`      | OK! Path not found in bash nor in our
+| 🟢 | `/bin/exit`        | OK! Path not found in bash nor in our
+| 🔴 | `/bin/env`         | IMPORTANT!
 
 #### PWD
 > Locating the present directory through the pwd command in Minishell.
@@ -232,8 +232,8 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | Status  | Command |
 | :------ | :------ |
 | 🟢 | `pwd`         |
-| 🔴 | `pwd a`       |
-| 🔴 | `pwd a b c d` |
+| 🟢 | `pwd a`       |
+| 🟢 | `pwd a b c d` |
 
 #### EXPORT, ENV AND UNSET
 > Harnessing environment variables via export, env, and unset commands in Minishell.
@@ -254,7 +254,9 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `  unset  `                  	|
 | 🟢 | `unset [variable]`           	|
 | 🟢 | `unset [variable] [variable]`	|
-| 🟡 | `unset [all variables]`      	|
+| 🟢 | `unset [all variables]`      	| USUAL LIST:
+SHELL WSL2_GUI_APPS_ENABLED WSL_DISTRO_NAME NAME PWD LOGNAME HOME LANG WSL_INTEROP LS_COLORS WAYLAND_DISPLAY LESSCLOSE TERM LESSOPEN USER DISPLAY SHLVL XDG_RUNTIME_DIR WSLENV XDG_DATA_DIRS
+PATH DBUS_SESSION_BUS_ADDRESS HOSTTYPE PULSE_SERVER OLDPWD _
 | 🟢 | `EXPORT`                     	|
 | 🟢 | `eXpOrT`                     	|
 | 🟢 | `export`                     	|
@@ -502,3 +504,6 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 <p>
 This work is published under the terms of <a href="https://github.com/jotavare/minishell/blob/main/LICENSE">Unlicense</a>.
 </p>
+
+SHELL WSL2_GUI_APPS_ENABLED WSL_DISTRO_NAME NAME PWD LOGNAME HOME LANG WSL_INTEROP LS_COLORS WAYLAND_DISPLAY LESSCLOSE TERM LESSOPEN USER DISPLAY SHLVL XDG_RUNTIME_DIR WSLENV XDG_DATA_DIRS
+PATH DBUS_SESSION_BUS_ADDRESS HOSTTYPE PULSE_SERVER OLDPWD _
