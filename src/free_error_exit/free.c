@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 13:10:07 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:12:00 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,19 @@ void	free_commands(t_cmd *commands)
 
 	while (commands)
 	{
-		tmp = commands;
-		commands = commands->next;
-		free(tmp->cmd);
-		while (tmp->arguments)
+		if (commands->cmd != NULL)
+			free(commands->cmd);
+		while (commands->arguments)
 		{
-			tmp_arg = tmp->arguments;
-			tmp->arguments = tmp->arguments->next;
+			tmp_arg = commands->arguments;
+			commands->arguments = commands->arguments->next;
 			free(tmp_arg->arg);
 			free(tmp_arg);
 		}
+		tmp = commands;
+		commands = commands->next;
 		free(tmp);
+		free(commands);
 	}
 }
 

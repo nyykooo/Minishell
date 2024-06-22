@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 22:53:37 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 12:48:43 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ typedef struct s_var
 
 typedef struct s_arg
 {
-	char	*arg;
-	bool	dq;	// if the argument has a double quote
-	bool	sq; // if the argument has a single quote
-	bool	dol; // if the argument has a dollar sign
-	bool	equal; // if the argument has an equal sign
-	bool	expanded; // if the argument has been expanded (no space between prev and current argument)
-	struct s_arg *next;
-	struct s_arg *prev;
+	char			*arg;
+	bool			dq;	// if the argument has a double quote
+	bool			sq; // if the argument has a single quote
+	bool			dol; // if the argument has a dollar sign
+	bool			equal; // if the argument has an equal sign
+	bool			expanded; // if the argument has been expanded (no space between prev and current argument)
+	struct s_arg	*next;
+	struct s_arg	*prev;
 } t_arg;
 
 
@@ -42,6 +42,11 @@ typedef struct s_arg
 typedef struct s_token
 {
 	char				*content; // token content
+	bool				dq;	// if the argument has a double quote
+	bool				sq; // if the argument has a single quote
+	bool				dol; // if the argument has a dollar sign
+	bool				equal; // if the argument has an equal sign
+	bool				expanded; // if the argument has been expanded (no space between prev and current argument)
 	enum e_types		type; //e_num type
 	struct s_token 		*next;
 	struct s_token 		*prev;
@@ -54,6 +59,7 @@ typedef struct s_cmd
 {
 	char	*cmd; // command
 	t_arg	*arguments; // array of arguments
+	char	*path; // path to the command
 	// char	**(*make_array)(t_cmd *); // function to turn everything in a char ** to the execve 2nd argument
 	bool	exec; // if the command is an executable
 	bool	pipe; // if the command is a pipe

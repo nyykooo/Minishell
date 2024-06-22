@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/21 20:16:07 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:33:37 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	analyze_arguments(t_minishell *shell, t_cmd *cmd);
 
 // NEW PARSING - QUOTES
 
-void expand_quotes(t_arg *argument, t_minishell *shell);
+void expand_quotes(t_token *argument, t_minishell *shell);
 char *quote_del(char *input, t_minishell *shell);
 int	skip_quotes(char *input, int *i);
 int	skip_nquotes(char *input, int *i);
 
 // NEW PARSING - DOLLAR
-void	expand_dolar(t_arg *argument , t_minishell *shell);
+void	expand_dolar(char **input , t_minishell *shell);
 
 // FREE_ERROR_EXIT
 void	free_shell(t_minishell *shell);
@@ -99,6 +99,12 @@ void	handle_unset(t_cmd *command, t_var **envvar_list);
 void	handle_exec(t_minishell *shell, t_cmd *cmd);
 void	handle_pwd(t_minishell *shell);
 
+//ENVVAR_FTS
+t_var	*find_envvar(t_var *envvar_list, char *name);
+void	remove_envvar(t_var **envvar_list, t_var *envvar);
+void	set_envvar(t_var **envvar_list, char *name, char *value);
+char	*get_value(t_var *envvar_list, char *name);
+char **envvar_array(t_minishell *shell);
 
 //TTY
 void	edit_termios(void);

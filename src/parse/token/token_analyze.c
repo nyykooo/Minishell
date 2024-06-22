@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 15:05:55 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:04:50 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void analyze_commands(t_minishell *shell)
 	temp = shell->commands;
 	while (temp)
 	{
-		analyze_arguments(shell, temp);
+		// analyze_arguments(shell, temp);
 		temp = temp->next;
 	}
 }
