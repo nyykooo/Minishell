@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/20 17:49:02 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:10:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static void clear_commands(t_cmd *command, t_minishell *shell)
 	tmp = command;
 	while (tmp)
 	{
+		// printf("tmp->cmd: %s\n", tmp->cmd);
 		tmp->cmd = quote_del(tmp->cmd, shell);
 		tmp = tmp->next;
 	}

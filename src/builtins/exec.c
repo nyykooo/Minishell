@@ -6,13 +6,13 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:09:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/20 17:58:40 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:45:50 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static char **envvar_array(t_minishell *shell)
+char **envvar_array(t_minishell *shell)
 {
 	t_var	*temp;
 	char	**env_var;
@@ -36,12 +36,16 @@ static char **envvar_array(t_minishell *shell)
 	i = -1;
 	while (temp)
 	{
-		env_var[i] = ft_strdup(temp->content);
+		env_var[++i] = ft_strdup(temp->content);
 		temp = temp->next;
 	}
 	env_var[i] = NULL;
 	return (env_var);
 }
+
+// juntar handle exec e handle commands na mesma funcao. o ./ é uma direção de caminho para o diretorio aual
+// a função get_path do handle commands deve tentar abrir o arquivo cmd + 2, se nao conseguir, procura dentro da variavel de ambiente PATH
+// se conseguir abrir o cmd + 2, o path da execve sera cmd + 2
 
 void	handle_exec(t_minishell *shell, t_cmd *commands)
 {

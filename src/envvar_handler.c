@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/20 15:05:14 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:19:38 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void	edit_envvar(t_var *envvar, char *var, char *new_value)
 	len = ft_strlen(new_value) + ft_strlen(var) + 2;
 	free(envvar->content);
 	envvar->content = malloc(len);
-	if (envvar->content != NULL)
-	{
+	if (envvar->content == NULL)
+		return ;
+	
 		ft_strcpy (envvar->content, var);
 		ft_strcat (envvar->content, "=");
 		ft_strcat(envvar->content, new_value);
-	}
 }
 
 void	set_envvar(t_var **envvar_list, char *name, char *value)

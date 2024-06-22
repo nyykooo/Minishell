@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/20 16:33:45 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:15:02 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static void	get_type(t_token *token)
 		token->type = T_LAPEND;
 	else if (ft_strcmp(token->content, "|") == 0)
 		token->type = T_PIPE;
-	else if (ft_strncmp(token->content, "./", 2) == 0 && (!token->prev
-		|| (token->prev->type >= T_RTRUNC)))
-		token->type = T_EXEC;
+	// else if (ft_strncmp(token->content, "./", 2) == 0 && (!token->prev
+	// 	|| (token->prev->type >= T_RTRUNC)))
+	// 	token->type = T_EXEC;
 	else if (!token->prev || token->prev->type >= T_RTRUNC)
 		token->type = T_COMMAND;
 	else

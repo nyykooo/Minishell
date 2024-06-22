@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/19 17:22:32 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:21:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ static char	*get_command_path(char *command)
 	return (NULL);
 }
 
+static void	get_path(t_cmd *commands)
+{
+	if (access(commands->cmd, X_OK) == 0)
+		commands->path = ft_strdup(commands->cmd);
+	else
+		commands->path = get_command_path(commands->cmd);
+}
+
 void	handle_exit(t_minishell *shell)
 {
 	free_shell(shell);
@@ -51,27 +59,28 @@ void	handle_exit(t_minishell *shell)
 	exit(EXIT_SUCCESS);
 }
 
-static void	handle_command(t_cmd *commands)
+static void	handle_command(t_cmd *commands, t_minishell *shell)
 {
 	pid_t	pid;
-	char	*command_path;
 	int		status;
 	char	**arguments;
+	char	**env_var;
 
 	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
-		command_path = get_command_path(commands->cmd);
+		get_path(commands);
 		arguments = ft_to_array(commands);
-		if (command_path == NULL || execve(command_path, arguments, NULL) == -1)
+		env_var = envvar_array(shell);
+		if (commands->path == NULL || execve(commands->path, arguments, env_var) == -1)
 		{
 			perror("minishell");
-			if (command_path != NULL)
-				free(command_path);
+			if (commands->path != NULL)
+				free(commands->path);
 			exit(EXIT_FAILURE);
 		}
-		free(command_path);
+		free(commands->path);
 		free(arguments);
 	}
 	else if (pid < 0)
@@ -82,7 +91,6 @@ static void	handle_command(t_cmd *commands)
 
 static void	handle_builtins(t_minishell *shell)
 {
-	
 		if (ft_strcmp(shell->commands->cmd, "cd") == 0)
 			handle_cd(shell->commands, shell);
 		else if (ft_strcmp(shell->commands->cmd, "echo") == 0)
@@ -98,7 +106,7 @@ static void	handle_builtins(t_minishell *shell)
 		else if (ft_strcmp(shell->commands->cmd, "pwd") == 0)
 			handle_pwd(shell);
 		else if (shell->commands != NULL)
-			handle_command(shell->commands);
+			handle_command(shell->commands, shell);
 }
 
 void	analyze_input(t_minishell *shell)
@@ -107,10 +115,10 @@ void	analyze_input(t_minishell *shell)
 	if (shell->commands)
 	{
 		// if (ft_strcmp(shell->commands->cmd, "=") == 0)
-		// 	handle_equal(shell, shell->commands);
-		if (shell->commands->type == T_EXEC)
-			handle_exec(shell, shell->commands);
-		else if (shell->commands->type == T_COMMAND)
+		// // // 	handle_equal(shell, shell->commands);
+		// if (shell->commands->type == T_EXEC)
+		// 	handle_exec(shell, shell->commands);
+		if (shell->commands->type == T_COMMAND)
 			handle_builtins(shell);
 	}
 	return ;
