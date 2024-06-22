@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 17:22:47 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/21 20:16:07 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	skip_nquotes(char *input, int *i);
 // NEW PARSING - DOLLAR
 void	expand_dolar(t_arg *argument , t_minishell *shell);
 
-
 // FREE_ERROR_EXIT
 void	free_shell(t_minishell *shell);
 void	free_tokens(t_token *tokens);
@@ -82,21 +81,24 @@ void	handle_exit(t_minishell *shell);
 void	free_var(t_var *head);
 void	free_commands(t_cmd *commands);
 
+//ENVVAR_FTS
+
+char	*create_envvar_content(char *name, char *value);
+t_var	*find_envvar(t_var *envvar_list, char *name);
+void	remove_envvar(t_var **envvar_list, t_var *envvar);
+void	set_envvar(t_var **envvar_list, char *name, char *value);
+char	*get_value(t_var *envvar_list, char *name);
+
 // BUILTINS
 void	handle_cd(t_cmd *command, t_minishell *shell);
 void	handle_echo(t_cmd *command);
 void	handle_equal(t_minishell *shell, t_cmd *command);
-void	handle_export(t_var *envvar_list, t_minishell *shell);
+int		handle_export(t_minishell *shell);
 void	handle_env(t_var *envvar_list, t_minishell *shell);
 void	handle_unset(t_cmd *command, t_var **envvar_list);
 void	handle_exec(t_minishell *shell, t_cmd *cmd);
 void	handle_pwd(t_minishell *shell);
 
-//ENVVAR_FTS
-t_var	*find_envvar(t_var *envvar_list, char *name);
-void	remove_envvar(t_var **envvar_list, t_var *envvar);
-void	set_envvar(t_var **envvar_list, char *name, char *value);
-char	*get_value(t_var *envvar_list, char *name);
 
 //TTY
 void	edit_termios(void);

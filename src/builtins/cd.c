@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/16 17:33:17 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:09:09 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 	return (dir);
 }
 
-void	pwds_update(t_var *envvar_list, char *dir)
+void	pwds_update(t_var **envvar_list, char *dir)
 {
 	char	*pwd;
 	char	*oldpwd;
 
 	pwd = getcwd(NULL, 0);
+	printf("pwd da getcwd dentro da pwds_update: %s\n", pwd);
 	if (pwd == NULL)
 	{
 		write(2, "cd: error retrieving current directory using getcwd\n", 53);
@@ -55,13 +56,13 @@ void	pwds_update(t_var *envvar_list, char *dir)
 	}
 	if (ft_strcmp(dir, ".") == 0)
 	{
-		set_envvar(&envvar_list, "OLDPWD", pwd);
+		set_envvar(envvar_list, "OLDPWD", pwd);
 		return ;
 	}
-	oldpwd = get_value(envvar_list, "PWD");
+	oldpwd = get_value(*envvar_list, "PWD");
 	if (oldpwd != NULL)
-		set_envvar(&envvar_list, "OLDPWD", oldpwd);
-	set_envvar(&envvar_list, "PWD", pwd);
+		set_envvar(envvar_list, "OLDPWD", oldpwd);
+	set_envvar(envvar_list, "PWD", pwd);
 	free(pwd);
 }
 
@@ -91,5 +92,5 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 		dir = get_dir(command->arguments->arg, &should_free, shell->envvars);
 	if (dir != NULL)
 		change_directory(dir, should_free);
-	pwds_update(shell->envvars, dir);
+	pwds_update(&shell->envvars, dir);
 }

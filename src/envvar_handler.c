@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envvar_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/20 12:39:04 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/21 20:16:10 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_var	*find_envvar(t_var *envvar_list, char *name)
 			return (current);
 		current = current->next;
 	}
-	printf("envvar %s not found\n", name);
+	//printf("envvar %s not found\n", name);
 	return (NULL);
 }
 
@@ -71,37 +71,60 @@ void	edit_envvar(t_var *envvar, char *var, char *new_value)
 	}
 }
 
-void	set_envvar(t_var **envvar_list, char *name, char *value)
+char	*create_envvar_content(char *name, char *value)
 {
-	t_var	*envvar;
-	char	*new_content;
-	size_t	name_len;
-	size_t	value_len;
+	size_t name_len;
+	size_t value_len;
+	char	*content;
 
 	name_len = ft_strlen(name);
 	value_len = ft_strlen(value);
-	envvar = find_envvar(*envvar_list, name);
-	if (envvar != NULL)
-	{
-		edit_envvar(envvar, name, value);
-		return ;
-	}
-	new_content = malloc(name_len + value_len + 2);
-	if (new_content == NULL)
-		return ;
-	ft_strcpy(new_content, name);
-	new_content[name_len] = '=';
-	ft_strcpy(new_content + name_len + 1, value);
+	content = malloc(name_len + value_len + 2);
+	if (content == NULL) 
+		return NULL;
+	strcpy(content, name);
+	content[name_len] = '=';
+	strcpy(content + name_len + 1, value);
+	return (content);
+}
+static void	update_existing_envvar(t_var *envvar, char *name, char *value)
+{
+	free(envvar->name);
+	free(envvar->value);
+	free(envvar->content);
+	envvar->name = strdup(name);
+	envvar->value = strdup(value);
+	envvar->content = create_envvar_content(name, value);
+}
+
+static void add_new_envvar(t_var **envvar_list, char *name, char *value)
+{
+	t_var	*envvar;
+
 	envvar = malloc(sizeof(t_var));
 	if (envvar == NULL)
+		return;
+	envvar->content = create_envvar_content(name, value);
+	if (envvar->content == NULL)
 	{
-		free(new_content);
-		return ;
+		free(envvar);
+		return;
 	}
-	envvar->content = new_content;
 	envvar->env = true;
+	envvar->exp = true;
+	envvar->name = strdup(name);
+	envvar->value = strdup(value);
 	envvar->next = *envvar_list;
 	*envvar_list = envvar;
+}
+void set_envvar(t_var **envvar_list, char *name, char *value)
+{
+	t_var *envvar;
+	envvar = find_envvar(*envvar_list, name);
+	if (envvar != NULL)
+		update_existing_envvar(envvar, name, value);
+	else
+		add_new_envvar(envvar_list, name, value);
 }
 
 char	*get_value(t_var *envvar_list, char *name)

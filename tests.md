@@ -254,49 +254,38 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `  unset  `                  	|
 | 🟢 | `unset [variable]`           	|
 | 🟢 | `unset [variable] [variable]`	|
-| 🟢 | `unset [all variables]`      	| USUAL LIST:
-SHELL WSL2_GUI_APPS_ENABLED WSL_DISTRO_NAME NAME PWD LOGNAME HOME LANG WSL_INTEROP LS_COLORS WAYLAND_DISPLAY LESSCLOSE TERM LESSOPEN USER DISPLAY SHLVL XDG_RUNTIME_DIR WSLENV XDG_DATA_DIRS
-PATH DBUS_SESSION_BUS_ADDRESS HOSTTYPE PULSE_SERVER OLDPWD _
+| 🟢 | `unset [all variables]`      	|
 | 🟢 | `EXPORT`                     	|
 | 🟢 | `eXpOrT`                     	|
 | 🟢 | `export`                     	|
 | 🟢 | ` export`                    	|
 | 🟢 | `export `                    	|
 | 🟢 | `  export  `                 	|
-| 🟡 | `export a=42`                	|
-| 🟡 | `export a=24`		    	|
-| 🟡 | `export b=42`                	|
-| 🟡 | `export a = 42`              	|
-| 🟡 | `export a=" 42 "`            	|
-| 🟡 | `export a=' 42 '`            	|
-| 🟡 | `export a = 42`              	|
-| 🟡 | `export a` 		    	|
-| 🟡 | `export a=''`           	    	|                                         
+| 🟢 | `export a=42`                	|
+| 🟢 | `export a = 42`              	| the equal appears ?char
+| 🟡 | `export a=" 42 "`            	| its possible
+| 🟡 | `export a=' 42 '`            	| its possible
+| 🟢 | `export a` 		    	        |
+| 🔴 | `export a=''`           	    	|                                         
 | 🟡 | `export a='"'`               	|                                   
 | 🟡 | `export a='\'`               	|                                
 | 🟡 | `export a='$'`               	|                                 
 | 🟡 | `export a='\t'`              	|                                    
-| 🟡 | `export a='''` 		 	| 
-| 🟡 | `export =` 		  	|
-| 🟡 | `export ==`		  	|
-| 🟡 | `export a=` 		  	|
-| 🟡 | `export a=42=` 		    	|
-| 🟡 | `export =a=42` 		    	|
-| 🟡 | `export a==42` 		    	|
-| 🟡 | `export "a=42"` 		    	|
-| 🟡 | `export a="42"` 		    	|
-| 🟡 | `export _=42` 		    	|
-| 🟡 | `export 42=42`		    	|
-| 🟡 | `export a b = 42`	    	|
-| 🟡 | `export a= b= 42`	    	|
-| 🟡 | `export a=42 % b=42 @ c=42`  	|
-| 🟡 | `export a=42 b=42 c=42`	    	|
-| 🟡 | `export A=a B=b C=c D=d E=e` 	|
-| 🟡 | `export F=f G=g H=h I=i J=j` 	|
-| 🟡 | `export K=k L=l M=m N=n O=o` 	|
-| 🟡 | `export P=p Q=q R=r S=s T=t` 	|
-| 🟡 | `export U=u V=v W=w X=x Y=y Z=z` |
-| 🟡 | `export _=a; echo $_a` 		|
+| 🟡 | `export a='''` 		 	        | 
+| 🟢 | `export =` 		             	| not a valid identifier
+| 🟢 | `export ==`		            	| not a valid identifier
+| 🟢 | `export a=` 		            	| its possbible
+| 🟢 | `export a=42=` 		    	| its possbible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
+| 🟢 | `export =a=42` 		    	| not a valid identifier
+| 🟢 | `export a==42` 		    	| its possible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
+| 🔴 | `export "a=42"` 		    	| its possbile - value nao esta ficando entre "" na lista export
+| 🔴 | `export _=42` 		    	| O _=aaaaaaa n deve fazer nada. Nao deve aparecer na lista export
+| 🟢 | `export 42=42`		    	|
+| 🟢 | `export a b = 42`	    	|
+| 🟢 | `export a= b= 42`	    	    |
+| 🟢 | `export a=42 % b=42 @ c=42`  	|
+| 🟢 | `export A=a B=b C=c D=d E=e` 	|
+| 🔵 | `export _=a; echo $_a` 		    |
 
 #### EXIT
 > Concluding Minishell's operations gracefully using the exit command.
@@ -505,5 +494,7 @@ PATH DBUS_SESSION_BUS_ADDRESS HOSTTYPE PULSE_SERVER OLDPWD _
 This work is published under the terms of <a href="https://github.com/jotavare/minishell/blob/main/LICENSE">Unlicense</a>.
 </p>
 
+
+USUAL LIST TO TEST:
 SHELL WSL2_GUI_APPS_ENABLED WSL_DISTRO_NAME NAME PWD LOGNAME HOME LANG WSL_INTEROP LS_COLORS WAYLAND_DISPLAY LESSCLOSE TERM LESSOPEN USER DISPLAY SHLVL XDG_RUNTIME_DIR WSLENV XDG_DATA_DIRS
 PATH DBUS_SESSION_BUS_ADDRESS HOSTTYPE PULSE_SERVER OLDPWD _

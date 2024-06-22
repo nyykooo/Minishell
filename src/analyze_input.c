@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/20 14:39:59 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:26:56 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ static void	handle_command(t_cmd *commands)
 
 static void	handle_builtins(t_minishell *shell)
 {
-	
 		if (ft_strcmp(shell->commands->cmd, "cd") == 0)
 			handle_cd(shell->commands, shell);
 		else if (ft_strcmp(shell->commands->cmd, "echo") == 0)
@@ -92,7 +91,7 @@ static void	handle_builtins(t_minishell *shell)
 		else if (ft_strcmp(shell->commands->cmd, "exit") == 0)
 			handle_exit(shell);
 		else if (ft_strcmp(shell->commands->cmd, "export") == 0)
-			handle_export(shell->envvars, shell);
+			handle_export(shell);
 		else if (ft_strcmp(shell->commands->cmd, "unset") == 0)
 			handle_unset(shell->commands, &shell->envvars);
 		else if (ft_strcmp(shell->commands->cmd, "env") == 0)

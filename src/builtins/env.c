@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:06:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/18 14:07:26 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/21 20:16:10 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	handle_env(t_var *envvar_list, t_minishell *shell)
 {
 	t_var	*current;
 
-	//erro free(): invalid pointer - conforme o tamanho do input
 	if (shell->commands->arguments != NULL)
 	{
 		printf("env: %s: No such file or directory\n", \
@@ -26,7 +25,7 @@ void	handle_env(t_var *envvar_list, t_minishell *shell)
 	current = envvar_list;
 	while (current != NULL)
 	{
-		if (current->env == true)
+		if (current->env == true && current->value != NULL)
 			printf("%s\n", current->content);
 		current = current->next;
 	}
