@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/21 16:09:09 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:41:04 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	pwds_update(t_var **envvar_list, char *dir)
 	char	*oldpwd;
 
 	pwd = getcwd(NULL, 0);
-	printf("pwd da getcwd dentro da pwds_update: %s\n", pwd);
 	if (pwd == NULL)
 	{
 		write(2, "cd: error retrieving current directory using getcwd\n", 53);

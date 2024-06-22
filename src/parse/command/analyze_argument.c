@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 11:39:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:48:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void check_arg(t_arg *input)
 		else if (input->arg[i] == N_EQUAL)
 			input->equal = true;
 	}
-	
 }
 
 // static void expand_quotes(t_arg *argument)
@@ -103,13 +102,14 @@ void	analyze_arguments(t_minishell *shell, t_cmd *cmd)
 {
 	t_arg *tmp;
 
+	(void)shell;
 	tmp = cmd->arguments;
 	while (tmp != NULL)
 	{
-		expand_quotes(tmp, shell);
+		// expand_quotes(tmp, shell);
 		check_arg(tmp);
-		tmp->arg = quote_del(tmp->arg, shell);
-		expand_dolar(tmp, shell);
+		// tmp->arg = quote_del(tmp->arg, shell);
+		// expand_dolar(tmp, shell);
 		tmp = tmp->next;
 	}
 }

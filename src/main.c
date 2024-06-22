@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/18 13:09:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:05:02 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static bool	create_prompt(t_minishell *shell)
 	char	*prompt;
 	char	*input;
 
-	input = NULL;
 	prompt = get_pathname();
 	input = readline(prompt);
 	free(prompt);
