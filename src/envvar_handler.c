@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 15:36:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:46:25 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*create_envvar_content(char *name, char *value)
 	strcpy(content + name_len + 1, value);
 	return (content);
 }
-static void	update_existing_envvar(t_var *envvar, char *name, char *value)
+void	update_existing_envvar(t_var *envvar, char *name, char *value)
 {
 	free(envvar->name);
 	free(envvar->value);

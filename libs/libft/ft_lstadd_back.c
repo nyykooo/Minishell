@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:11:22 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/19 23:39:58 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:43:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,18 @@ void	ft_cmdadd_back(t_cmd **lst, t_cmd *new)
 	new->prev = curr;
 }
 
-// void	ft_varadd_back(t_var **lst, t_var *new)
-// {
-// 	t_var	*curr;
+void	ft_varadd_back(t_var **lst, t_var *new)
+{
+	t_var	*curr;
 
-// 	if (!new)
-// 		return ;
-// 	if (!*lst)
-// 	{
-// 		*lst = new;
-// 		return ;
-// 	}
-// 	curr = ft_varlast(*lst);
-// 	curr->next = new;
-// 	new->prev = curr;
-// }
+	if (!new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	curr = ft_varlast(*lst);
+	curr->next = new;
+	new->prev = curr;
+}

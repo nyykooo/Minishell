@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/22 14:43:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:22:20 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,25 @@ t_var *create_list(char **envp)
 	char	**current;
 	t_var	*new_node;
 	t_var	*head;
-	t_var	*tail;
-	char	*str;
+	char	*shlvl_value;
 
 	head = NULL;
-	tail = NULL;
 	current = envp;
 	while (*current)
 	{
-		new_node = malloc(sizeof(t_var));
+		new_node = ft_calloc(1, sizeof(t_var));
 		new_node->content = ft_strdup(*current);
 		new_node->name = ft_strndup(*current, ft_strchr(*current, '=') - *current);
 		new_node->value = ft_strdup(ft_strchr(*current, '=') + 1);
 		new_node->env = true;
 		new_node->exp = true;
-		new_node->next = NULL;
-		if (head == NULL)
-			head = new_node;
-		else
-			tail->next = new_node;
+		ft_varadd_back(&head, new_node);
 		current++;
-		tail = new_node;
-		if (ft_strcmp(tail->name, "SHLVL") == 0)
+		if (ft_strcmp(new_node->name, "SHLVL") == 0)
 		{
-			str = ft_itoa(ft_atoi(tail->value) + 1);
-			tail->value = ft_strdup(str);
-			free(str);
+			shlvl_value = ft_itoa(ft_atoi(new_node->value) + 1);
+			update_existing_envvar(new_node, "SHLVL", shlvl_value);
 		}
 	}
 	return (head);
-}
-
-void ft_varadd_back(t_var **lst, t_var *new)
-{
-	if (!new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	while (lst)
-	{
-		if (!(*lst)->next)
-			break ;
-		(*lst) = (*lst)->next;
-	}
-	(*lst)->next = new;
 }

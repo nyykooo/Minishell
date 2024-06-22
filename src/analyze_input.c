@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 15:34:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:00:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,28 +125,3 @@ void	analyze_input(t_minishell *shell)
 	}
 	return ;
 }
-
-// void	analyze_input(t_minishell *shell)
-// {
-// 	parsing_hub(shell);
-// 	if (shell->tokens[0]->cmd != NULL)
-// 	{
-// 		if (ft_strcmp(shell->tokens[0]->cmd, "=") == 0)
-// 			handle_equal(shell, shell->tokens[0]);
-// 		else if (ft_strcmp(shell->tokens[0]->cmd, "cd") == 0)
-// 			handle_cd(shell->tokens, shell);
-// 		else if (ft_strcmp(shell->tokens[0]->cmd, "echo") == 0)
-// 			handle_echo(shell->tokens);
-// 		else if (ft_strcmp(shell->tokens[0]->cmd, "exit") == 0)
-// 			handle_exit(shell);
-// 		else if (ft_strcmp(shell->tokens[0]->cmd, "export") == 0)
-// 			handle_export(shell->envvars, shell);
-// 		else if (ft_strcmp(shell->tokens[0]->cmd, "unset") == 0)
-// 			handle_unset(shell->tokens, &shell->envvars);
-// 		else if (ft_strcmp(shell->tokens[0]->cmd, "env") == 0)
-// 			handle_env(shell->envvars, shell);
-// 		else if (shell->tokens[0] != NULL)
-// 			handle_command(shell->tokens);
-// 	}
-// 	return ;
-// }

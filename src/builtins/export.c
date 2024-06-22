@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 15:37:15 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:44:34 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ static int handle_with_equal(t_minishell *shell, t_arg *argument)
 	value = strdup(argument->arg + equal_pos + 1);
 	return (update_or_create_var(shell, name, value));
 }*/
-static int	handle_with_equal(t_minishell *shell, t_arg *argument)
+static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
 {
 	char	*name;
 	char	*value;
