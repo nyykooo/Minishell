@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 15:26:15 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:37:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	is_valid_arg(const char *arg)
 {
 	return (arg[0] == '_' || (arg[0] >= 'A' && arg[0] <= 'Z') || \
-	(arg[0] >= 'a' && arg[0] <= 'z');
+	(arg[0] >= 'a' && arg[0] <= 'z'));
 }
 
 static int	handle_no_equal(t_minishell *shell, t_arg *argument)
