@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/22 16:48:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:48:07 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ static void check_arg(t_arg *input)
 		else if (input->arg[i] == N_DOLLAR)
 			input->dol = true;
 		else if (input->arg[i] == N_EQUAL)
+		{
+			input->arg[i] *= -1;
 			input->equal = true;
+		}
 	}
 }
 

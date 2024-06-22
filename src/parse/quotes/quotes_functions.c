@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 14:40:02 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/20 16:32:23 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/22 19:18:02 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	skip_quotes(char *input, int *i)
 			input[(*i)] *= -1;
 			return ((*i));
 		}
-		if (input[(*i)] == '$' && quote == '"')
+		if (input[(*i)] == '=' || (input[(*i)] == '$' && quote == '"'))
 			input[(*i)] *= -1;
 	}
 	return ((*i));

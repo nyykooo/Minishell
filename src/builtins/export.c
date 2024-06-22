@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 17:44:03 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/22 19:23:55 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	t_var	*temp;
 	t_var	*new_var;
 
+	printf("entrou no h_no_equal\n");
 	temp = shell->envvars;
 	while (temp != NULL)
 	{
@@ -161,9 +162,10 @@ static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
 
 	equal_pos = -1;
 	i = 0;
+	printf("entrou na h_equal\n");
 	while (argument->arg[i] != '\0')
-	{
-		if (argument->arg[i] == ('=' * -1))
+	{	
+		if (argument->arg[i] == '=')
 		{
 			equal_pos = i;
 			break ;
@@ -212,12 +214,14 @@ static int	handle_export_args(t_minishell *shell)
 	temp = shell->commands->arguments;
 	while (temp != NULL && temp->arg != NULL)
 	{
+		if (temp->arg[0] == '_' && temp->arg[1] == '=')
+			return (0);
 		if (is_valid_arg(temp->arg) == false)
 			printf("minishell: export: `%s': not a valid identifier\n", \
 			temp->arg);
 		else
 		{
-			if (temp->equal == 0)
+			if (temp->equal == false)
 				exit_status = handle_no_equal(shell, temp);
 			else
 				handle_with_equal(shell, temp);
@@ -273,14 +277,14 @@ int	handle_export(t_minishell *shell)
 {
 	t_var	*current;
 	t_arg	*temp;
-	//t_arg	*temp2;
+	t_arg	*temp2;
 
-	/*temp2 = shell->commands->arguments;
+	temp2 = shell->commands->arguments;
 	while (temp2 != NULL)
 	{
-		printf("arg: %s\n", temp2->arg);
+		printf("arg: %s$\n", temp2->arg);
 		temp2 = temp2->next;
-	}*/
+	}
 	if (!shell->commands)
 		return (1);
 	temp = shell->commands->arguments;
