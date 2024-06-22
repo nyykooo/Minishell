@@ -263,8 +263,8 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `  export  `                 	|
 | 🟢 | `export a=42`                	|
 | 🟢 | `export a = 42`              	| the equal appears ?char
-| 🟡 | `export a=" 42 "`            	| its possible
-| 🟡 | `export a=' 42 '`            	| its possible
+| 🔴 | `export a=" 42 "`            	| its possible
+| 🔴 | `export a=' 42 '`            	| its possible
 | 🟢 | `export a` 		    	        |
 | 🔴 | `export a=''`           	    	|                                         
 | 🟡 | `export a='"'`               	|                                   

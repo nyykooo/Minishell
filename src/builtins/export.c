@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 11:25:22 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:26:15 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	is_valid_arg(const char *arg)
 {
 	return (arg[0] == '_' || (arg[0] >= 'A' && arg[0] <= 'Z') || \
-	(arg[0] >= 'a' && arg[0] <= 'z'));
+	(arg[0] >= 'a' && arg[0] <= 'z');
 }
 
 static int	handle_no_equal(t_minishell *shell, t_arg *argument)
@@ -273,7 +273,16 @@ int	handle_export(t_minishell *shell)
 {
 	t_var	*current;
 	t_arg	*temp;
+	//t_arg	*temp2;
 
+	/*temp2 = shell->commands->arguments;
+	while (temp2 != NULL)
+	{
+		printf("arg: %s\n", temp2->arg);
+		temp2 = temp2->next;
+	}*/
+	if (!shell->commands)
+		return (1);
 	temp = shell->commands->arguments;
 	if (temp == NULL)
 	{
@@ -283,15 +292,12 @@ int	handle_export(t_minishell *shell)
 		{
 			if (current->exp == true && current->env == true && \
 			current->value != NULL)
-			{
-				printf("declare -x %s=", current->name);
-				printf("\"%s\"\n", current->value);
-			}
+				printf("declare -x %s=\"%s\"\n", current->name, current->value);
 			else if (current->exp == true)
 				printf("declare -x %s\n", current->name);
 			current = current->next;
 		}
-		return (1);
+		return (0);
 	}
 	else
 		return (handle_export_args(shell));
