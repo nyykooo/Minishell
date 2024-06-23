@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 19:23:55 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/23 00:46:31 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	t_var	*temp;
 	t_var	*new_var;
 
-	printf("entrou no h_no_equal\n");
 	temp = shell->envvars;
 	while (temp != NULL)
 	{
@@ -162,7 +161,6 @@ static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
 
 	equal_pos = -1;
 	i = 0;
-	printf("entrou na h_equal\n");
 	while (argument->arg[i] != '\0')
 	{	
 		if (argument->arg[i] == '=')
@@ -273,18 +271,44 @@ void	sort_content(t_var *envvar_list)
 	}
 }
 
+static char *prepare_value(char *content)
+{
+	char	*value;
+	int		i;
+	int		j;
+	int		count_meta;
+
+	i = -1;
+	count_meta = 0;
+	while (content[++i] != '\0')
+	{
+	if (content[i] == '\"' || content[i] == '\\' || content[i] == '$' || content[i] == '`')
+			count_meta++;
+	}
+	value = malloc(sizeof(char)*(ft_strlen(content) + count_meta + 1));
+	if (value == NULL)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (content[++i] != '\0')
+	{
+		if (content[i] == '\"' || content[i] == '\\' || content[i] == '$' || content[i] == '`')
+			value[j++] = '\\';
+		value[j++] = content[i];
+	}
+	return (value);
+}
+
 int	handle_export(t_minishell *shell)
 {
 	t_var	*current;
 	t_arg	*temp;
 	t_arg	*temp2;
+	char	*value;
 
 	temp2 = shell->commands->arguments;
 	while (temp2 != NULL)
-	{
-		printf("arg: %s$\n", temp2->arg);
 		temp2 = temp2->next;
-	}
 	if (!shell->commands)
 		return (1);
 	temp = shell->commands->arguments;
@@ -296,7 +320,10 @@ int	handle_export(t_minishell *shell)
 		{
 			if (current->exp == true && current->env == true && \
 			current->value != NULL)
-				printf("declare -x %s=\"%s\"\n", current->name, current->value);
+			{
+				value = prepare_value(current->value);
+				printf("declare -x %s=\"%s\"\n", current->name, value);
+			}
 			else if (current->exp == true)
 				printf("declare -x %s\n", current->name);
 			current = current->next;
