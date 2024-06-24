@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/22 15:57:58 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:11:48 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_var	*find_envvar(t_var *envvar_list, char *name);
 void	remove_envvar(t_var **envvar_list, t_var *envvar);
 void	set_envvar(t_var **envvar_list, char *name, char *value);
 char	*get_value(t_var *envvar_list, char *name);
+void	update_questionvar(t_minishell *shell);
 
 // BUILTINS
 void	handle_cd(t_cmd *command, t_minishell *shell);

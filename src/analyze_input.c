@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 16:00:41 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/23 20:01:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,12 @@ static void	get_path(t_cmd *commands)
 		commands->path = get_command_path(commands->cmd);
 }
 
-void	handle_exit(t_minishell *shell)
-{
-	free_shell(shell);
-	printf("exit\n");
-	exit(EXIT_SUCCESS);
-}
-
 static void	handle_command(t_cmd *commands, t_minishell *shell)
 {
 	pid_t	pid;
-	int		status;
 	char	**arguments;
 	char	**env_var;
 
-	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -88,7 +79,9 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 	else if (pid < 0)
 		perror ("minishell");
 	else
-		waitpid (pid, &status, WUNTRACED);
+		waitpid (pid, &(shell->exit_status), WUNTRACED);
+	if (WIFEXITED(shell->exit_status))
+		shell->exit_status = WEXITSTATUS(shell->exit_status);
 }
 
 static void	handle_builtins(t_minishell *shell)

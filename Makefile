@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/20 12:34:21 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/06/23 20:06:21 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC_DIR = main analyze_input envvar_handler signals
 
-SRC_BUILTINS = cd dolar echo env equal export unset exec pwd
+SRC_BUILTINS = cd dolar echo env equal export unset exec pwd exit
 
 SRC_FREE_ERROR_EXIT = free
 

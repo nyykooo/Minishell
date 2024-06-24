@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/22 12:48:43 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:22:03 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,19 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char	*cmd; // command
-	t_arg	*arguments; // array of arguments
-	char	*path; // path to the command
-	// char	**(*make_array)(t_cmd *); // function to turn everything in a char ** to the execve 2nd argument
-	bool	exec; // if the command is an executable
-	bool	pipe; // if the command is a pipe
-	bool	rappend; // if the command is a right append
-	bool	lappend; // if the command is a left append
-	bool	rtrunc; // if the command is a right trunc
-	bool	ltrunc; // if the command is a left trunc
-	enum	e_types	type; // type of command
-	struct s_cmd *next;
-	struct s_cmd *prev; // prev and next will help to deal with pipes and redirects, aswell it will allow us to expand things correctly
+	char				*cmd; // command
+	t_arg				*arguments; // array of arguments
+	char				*path; // path to the command
+	bool				exec; // if the command is an executable
+	bool				pipe; // if the command is a pipe
+	bool				rappend; // if the command is a right append
+	bool				lappend; // if the command is a left append
+	bool				rtrunc; // if the command is a right trunc
+	bool				ltrunc; // if the command is a left trunc
+	enum e_types		type; // type of command
+	struct t_minishell	*shell; // pointer to shell structure
+	struct s_cmd		*next;
+	struct s_cmd		*prev; // prev and next will help to deal with pipes and redirects, aswell it will allow us to expand things correctly
 } t_cmd;
 
 
@@ -81,6 +81,7 @@ typedef struct s_minishell
 	char		*input;
 	int			n_cmd; // number of commands
 	int			n_pipe; // number of pipes
+	int			exit_status; // status of the last command
 	t_var		*envvars;
 	t_cmd		*commands; // array of commands | work with linked list is easier then arrays (insert and expand commands)
 	t_token		*tokens; // whole input tokenized
