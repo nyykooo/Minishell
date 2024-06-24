@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/24 00:48:35 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:43:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,35 @@ static int	exit_number_analyze(char *arg)
 		
 }
 
-static int	analyze_exit_arguments(t_minishell *shell)
+static int	analyze_exit_arguments(t_cmd *command)
 {
-	if (shell->commands->arguments->next)
+	if (!command->arguments)
+		return (0);
+	if (command->arguments->next)
 	{
 		perror("exit: too many arguments");
 		return (1);
 	}
-	else if (shell->commands->arguments->arg)
+	else if (command->arguments->arg)
 	{
-		if (!is_number(shell->commands->arguments->arg)
-			|| !long_number(shell->commands->arguments->arg))
+		if (!is_number(command->arguments->arg)
+			|| !long_number(command->arguments->arg))
 		{
 			perror("exit: numeric argument required");
 			return (2);
 		}
 		else
-			return (exit_number_analyze(shell->commands->arguments->arg));
+			return (exit_number_analyze(command->arguments->arg));
 	}
 	return (0);
 }
 
-void	handle_exit(t_minishell *shell)
+void	handle_exit(t_cmd *command, t_minishell *shell)
 {
-	shell->exit_status = analyze_exit_arguments(shell);
+	if (command)
+		shell->exit_status = analyze_exit_arguments(command);
+	else
+		shell->exit_status = 0;
 	free_shell(shell);
 	printf("exit\n");
 	exit(shell->exit_status);

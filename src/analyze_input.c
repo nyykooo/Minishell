@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/23 20:01:41 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:42:09 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void	handle_builtins(t_minishell *shell)
 		else if (ft_strcmp(shell->commands->cmd, "echo") == 0)
 			handle_echo(shell->commands);
 		else if (ft_strcmp(shell->commands->cmd, "exit") == 0)
-			handle_exit(shell);
+			handle_exit(shell->commands, shell);
 		else if (ft_strcmp(shell->commands->cmd, "export") == 0)
 			handle_export(shell);
 		else if (ft_strcmp(shell->commands->cmd, "unset") == 0)

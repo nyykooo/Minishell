@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/23 18:11:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:42:00 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	free_shell(t_minishell *shell);
 void	free_tokens(t_token *tokens);
 void	free_array(char **array);
 void	free_list(t_var *head);
-void	handle_exit(t_minishell *shell);
 void	free_var(t_var *head);
 void	free_commands(t_cmd *commands);
 
@@ -99,6 +98,7 @@ void	handle_env(t_var *envvar_list, t_minishell *shell);
 void	handle_unset(t_cmd *command, t_var **envvar_list);
 void	handle_exec(t_minishell *shell, t_cmd *cmd);
 void	handle_pwd(t_minishell *shell);
+void	handle_exit(t_cmd *command, t_minishell *shell);
 
 //ENVVAR_FTS
 t_var	*find_envvar(t_var *envvar_list, char *name);

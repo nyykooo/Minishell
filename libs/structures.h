@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/23 17:22:03 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:36:08 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_cmd
 	bool				rtrunc; // if the command is a right trunc
 	bool				ltrunc; // if the command is a left trunc
 	enum e_types		type; // type of command
-	struct t_minishell	*shell; // pointer to shell structure
+	struct s_minishell	*shell; // pointer to shell structure
 	struct s_cmd		*next;
 	struct s_cmd		*prev; // prev and next will help to deal with pipes and redirects, aswell it will allow us to expand things correctly
 } t_cmd;

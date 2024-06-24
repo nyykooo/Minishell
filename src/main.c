@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/23 18:10:27 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:41:50 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static bool	create_prompt(t_minishell *shell)
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
-		handle_exit(shell); //saber se eh preciso diferenciar o ctrl + D do erro
+		handle_exit(shell->commands, shell); //saber se eh preciso diferenciar o ctrl + D do erro
 	if (input[0] == 0)
 		return (false);
 	add_history(input);
