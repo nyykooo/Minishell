@@ -11,6 +11,8 @@ Ele é uma área de armazenamento temporário na memória usada para manter os d
 - **Sincronização**: O buffer do pipe também serve como um ponto de sincronização entre processos. Por exemplo, se um processo tenta ler de um pipe vazio, ele será bloqueado até que outro processo escreva no pipe. Isso permite que os processos coordenem suas ações sem a necessidade de mecanismos de sincronização explícitos.
 - **Limitações**: Embora os pipes sejam úteis para comunicação entre processos, a capacidade limitada do buffer e o comportamento bloqueante podem ser desvantagens em algumas situações. Para grandes volumes de dados ou comunicação mais complexa, outros mecanismos de IPC, como sockets ou memória compartilhada, podem ser mais apropriados.
 
+### Primeiro exemplo:
+
 ```
 #include <stdio.h>
 #include <stdlib.h>
@@ -91,6 +93,68 @@ int	main(int argc, char *argv[])
 	}
 	exit (0);
 }
+```
 
+### Segundo exemplo (| simulation)
+```
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/wait.h>
 
+int	main(int argc, char **argv, char **envp)
+{
+	int	fd[2];
+	int	pid1;
+	int	pid2;
+	char	*args[] = { "/bin/ping", "-c", "4", "google.com", NULL };
+	char	*args2[] = { "/bin/grep", "rtt", NULL };
+
+	if (pipe(fd) == -1)
+	{
+		perror("pipe");
+		exit (1);
+	}
+	pid1 = fork();
+	if (pid1 < 0)
+	{
+		perror("fork");
+		exit (2);
+	}
+	if (pid1 == 0)
+	{
+		// Estamos no processo para a execucao do ping
+		// Fechar o descritor de leitura.
+		close(fd[0]);
+		// Redirecionar a saida padrao para o descritor de escrita da pipe.
+		dup2(fd[1], STDOUT_FILENO); // STDOUT_FILENO = 1
+		close(fd[1]);
+		execve("/bin/ping", args, envp);
+	}
+	// Todo o codigo apos a execve() nao sera executado (pelo filho), pois o processo filho foi substituido pelo ping.
+	pid2 = fork();
+	if (pid2 == -1)
+	{
+		perror("fork");
+		exit (3);
+	}
+	if (pid2 == 0)
+	{
+		// Estamos no processo filho para a execucao do grep
+		// Fechar o descritor de escrita.
+		close(fd[1]);
+		// Redirecionar a entrada padrao para o descritor de leitura da pipe.
+		dup2(fd[0], 0);
+		close(fd[0]);
+		execve("/bin/grep", args2, envp);
+	}
+	// Estamos no processo pai
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+
+	return (0);
+}
 ```
