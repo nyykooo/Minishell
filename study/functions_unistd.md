@@ -62,9 +62,10 @@ _int execve(const char *pathname, char *const argv[], char *const envp[]);_
 
 Usada para executar um programa a partir de um arquivo binário. Ele substitui o programa atual do processo pelo programa especificado e executa-o.
 
--- const char *pathname: O caminho para o arquivo binário do programa que você deseja executar.
--- char *const argv: Um vetor de strings que representam os argumentos passados para o programa. O último elemento deve ser NULL.
-char *const envp: Um vetor de strings que representam as variáveis de ambiente do programa. O último elemento deve ser NULL.
+-- const char *pathname: O caminho para o arquivo binário do programa que você deseja executar.  
+-- char *const argv: Um vetor de strings que representam os argumentos passados para o programa.  
+-- char **const envp: Um vetor de strings que representam as variáveis de ambiente do programa. O último elemento deve ser NULL.  
+
 
 Retorno: -1 em caso de erro e não retorna se for bem-sucedida.
 
