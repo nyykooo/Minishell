@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   headers.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 17:32:50 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:06:48 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@
 # include "functions.h" // to include functions in the project
 # include "structures.h" // to include structures in the project
 # include "libft/libft.h" // to include the libft library
+# include <stdarg.h> // to use the va_list type to error_msg_construct
 
 #endif

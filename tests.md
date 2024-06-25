@@ -345,13 +345,13 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 
 | Status  | Command |
 | :------ | :------ |
-| 🟡 | `CD`                    |
-| 🟡 | `cd`                    |
-| 🟡 | `cd `                   |
-| 🟡 | ` cd`                   |
-| 🟡 | `  cd  `                |
-| 🟡 | `cd .`                  |
-| 🟡 | `cd ~`                  |
+| 🟢| `CD`                    |
+| 🟢 | `cd`                    |
+| 🟢 | `cd `                   |
+| 🟢 | ` cd`                   |
+| 🟢 | `  cd  `                |
+| 🟢 | `cd .`                  |
+| 🟢 | `cd ~`                  |
 | 🟡 | `cd no_file`            |
 | 🟡 | `cd1`                   |
 | 🟡 | `cd 0`                  |

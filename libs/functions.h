@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 19:08:29 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:17:01 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void expand_quotes(t_token *argument, t_minishell *shell);
 char *quote_del(char *input, t_minishell *shell);
 int	skip_quotes(char *input, int *i);
 int	skip_nquotes(char *input, int *i);
+int		is_inside_quotes(char *str, size_t index);
 
 // NEW PARSING - DOLLAR
 void	expand_dolar(char **input , t_minishell *shell);
@@ -80,7 +81,8 @@ void	free_array(char **array);
 void	free_list(t_var *head);
 void	free_var(t_var *head);
 void	free_commands(t_cmd *commands);
-int		is_inside_quotes(char *str, size_t index);
+char	*error_msg_construct(int nbr, ...);
+int		put_error_msg(char *error_msg, int exit_status);
 
 //ENVVAR_FTS
 
