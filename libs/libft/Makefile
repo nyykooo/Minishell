@@ -6,13 +6,13 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 09:59:57 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/19 16:44:45 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/06/24 17:43:09 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= libft.a
 CC= cc
-CFLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror -g
 SRC= ft_isalpha.c \
 		ft_isdigit.c \
 		int_number.c \

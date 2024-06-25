@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:26:29 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/20 11:53:06 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:39:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@ enum e_negative_markers
 	N_SQUOTE = -39,
 	N_EQUAL = -61,
 	N_DOLLAR = -36,
-	N_PIPE = -124,
-	N_LRED = -60,
-	N_RRED = -62,
+};
+
+enum e_markers
+{
+	PIPE = 124,
+	LRED = 60,
+	RRED = 62,
+	DQUOTE = 34,
+	SQUOTE = 39,
 };
 
 enum e_types
@@ -31,6 +37,7 @@ enum e_types
 	T_COMMAND,
 	T_ARG,
 	T_EXEC,
+	T_EQUAL,
 	T_RTRUNC,
 	T_RAPEND,
 	T_LTRUNC,

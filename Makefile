@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/23 20:06:21 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/06/25 17:54:21 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ SRC_PARSE_INPUT = input_handle
 
 SRC_PARSE_COMMAND = create_commands analyze_argument
 
+SRC_PARSE_EXPANSION = expansion
+
 SRC_VARIABLES = var
 
 SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
@@ -46,6 +48,7 @@ SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/parse/pipe/, $(SRC_PARSE_PIPE))) \
 	$(addsuffix .c, $(addprefix src/parse/input/, $(SRC_PARSE_INPUT))) \
 	$(addsuffix .c, $(addprefix src/parse/command/, $(SRC_PARSE_COMMAND))) \
+	$(addsuffix .c, $(addprefix src/parse/expansion/, $(SRC_PARSE_EXPANSION))) \
 	$(addsuffix .c, $(addprefix src/variables/, $(SRC_VARIABLES)))
 
 LIBFT = "libs/libft/libft.a"

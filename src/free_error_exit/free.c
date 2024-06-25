@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/22 14:12:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:36:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	free_commands(t_cmd *commands)
 		tmp = commands;
 		commands = commands->next;
 		free(tmp);
-		free(commands);
 	}
 }
 

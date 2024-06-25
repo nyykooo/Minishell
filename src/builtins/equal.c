@@ -6,13 +6,29 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 16:41:37 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:42:24 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
 // parsing do igual vai precisar atuar um pouco diferente do antigo
+
+// bool	check_equal(t_token *token)
+// {
+// 	int		i;
+
+// 	i = -1;
+// 	if (token->content == NULL)
+// 		return (false);
+// 	while (token->content[++i])
+// 	{
+// 		if (token->content[i] == N_EQUAL)
+// 			return (true);
+// 	}
+// 	return (false);
+
+// }
 
 void	handle_equal(t_minishell *shell, t_cmd *command)
 {

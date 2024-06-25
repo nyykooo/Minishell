@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/24 10:42:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:08:29 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	parsing_hub(t_minishell *shell);
 // NEW PARSING - INPUT
 
 void	input_manager(t_minishell *shell);
+void	expand_pipes_redir(t_minishell *shell);
 
 // NEW PARSING - TOKENS
 
@@ -47,11 +48,11 @@ int		check_tokens(t_token *tokens);void	include_token(t_minishell *shell, char *
 
 // NEW PARSING - META
 
-void	check_pipe(char **tokens, t_minishell *shell);
-void	check_left_apend(char **tokens, t_minishell *shell);
-void	check_left_trunc(char **tokens, t_minishell *shell);
-void	check_right_apend(char **tokens, t_minishell *shell);
-void	check_right_trunc(char **tokens, t_minishell *shell);
+char	**check_pipe(char **tokens, t_minishell *shell);
+char	**check_left_apend(char **tokens, t_minishell *shell);
+char	**check_left_trunc(char **tokens, t_minishell *shell);
+char	**check_right_apend(char **tokens, t_minishell *shell);
+char	**check_right_trunc(char **tokens, t_minishell *shell);
 
 // NEW PARSING - COMMANDS
 
@@ -79,6 +80,7 @@ void	free_array(char **array);
 void	free_list(t_var *head);
 void	free_var(t_var *head);
 void	free_commands(t_cmd *commands);
+int		is_inside_quotes(char *str, size_t index);
 
 //ENVVAR_FTS
 

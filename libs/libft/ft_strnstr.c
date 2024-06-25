@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 16:38:12 by ncampbel          #+#    #+#             */
-/*   Updated: 2023/10/09 15:22:30 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:37:11 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,27 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 			j++;
 		if (little[j] == 0)
 			return ((char *)big + i);
+		i++;
+	}
+	return (NULL);
+}
+
+
+char	*ft_strcutstr(const char *big, const char *little)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	if (little[i] == 0)
+		return ((char *)big);
+	while (big[i] != 0)
+	{
+		j = 0;
+		while (big[i + j] != 0 && big[i + j] == little[j])
+			j++;
+		if (little[j] == 0)
+			return (ft_substr(big, 0, i));
 		i++;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/24 10:42:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:23:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,36 @@ static void	handle_builtins(t_minishell *shell)
 			handle_command(shell->commands, shell);
 }
 
+static void	pipe_redir_hub(t_minishell *shell)
+{
+	t_cmd	*cmd;
+	
+	cmd = shell->commands;
+	while (cmd)
+	{
+		if (cmd->type == T_PIPE)
+			printf("im a pipe\n");
+		else if (cmd->type >= T_RTRUNC && cmd->type <= T_LAPEND)
+			// handle_redir(cmd, shell);
+			printf("im a redir\n)");
+		else
+			handle_builtins(shell);
+		cmd = cmd->next;
+	}
+}
+
 void	analyze_input(t_minishell *shell)
 {
 	parsing_hub(shell);
-	if (shell->commands)
+	// pensar em um loop para percorrer varios comandos relacionando com a quantidade de pipes e redirects
+	if (shell->n_cmd > 1)
 	{
-		// if (ft_strcmp(shell->commands->cmd, "=") == 0)
-		// // // 	handle_equal(shell, shell->commands);
+		pipe_redir_hub(shell);
+	}
+	else if (shell->commands)
+	{
+		// if (shell->commands->type == T_EQUAL)
+		// 	handle_equal(shell, shell->commands);
 		// if (shell->commands->type == T_EXEC)
 		// 	handle_exec(shell, shell->commands);
 		if (shell->commands->type == T_COMMAND)
