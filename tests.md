@@ -345,36 +345,34 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 
 | Status  | Command |
 | :------ | :------ |
-| 🟢| `CD`                    |
+| 🟢| `CD`                     |
 | 🟢 | `cd`                    |
 | 🟢 | `cd `                   |
 | 🟢 | ` cd`                   |
 | 🟢 | `  cd  `                |
 | 🟢 | `cd .`                  |
 | 🟢 | `cd ~`                  |
-| 🟡 | `cd no_file`            |
-| 🟡 | `cd1`                   |
-| 🟡 | `cd 0`                  |
-| 🟡 | `cd 1`                  |
-| 🟡 | `cd 123`                |
-| 🟡 | `cd 1234`               |
-| 🟡 | `cd 1 2 3 4`            |
-| 🟡 | `cd cd`                 |
-| 🟡 | `cd a`                  |
-| 🟡 | `cd abc`                |
-| 🟡 | `cd a b c`              |
-| 🟡 | `cd a b c d`            |
-| 🟡 | `cd ../../`             |
-| 🟡 | `cd ../../../../../../` |
-| 🟡 | `cd ../../...`          |
-| 🟡 | `cd .../../..`          |
-| 🟡 | `cd .../../...`         |
-| 🟡 | `cd \`                  |
-| 🟡 | `cd /`                  |
-| 🟡 | `cd //`                 |
-| 🟡 | `cd ///`                |
-| 🟡 | `cd -`                  |
-| 🟡 | `cd $[VAR]`             |
+| 🟢 | `cd no_file`            |
+| 🟢 | `cd1`                   |
+| 🟢 | `cd 0`                  |
+| 🟢 | `cd 1`                  |
+| 🟢 | `cd 123`                |
+| 🟢 | `cd 1 2 3 4`            |
+| 🟢 | `cd cd`                 |
+| 🟢 | `cd a`                  |
+| 🟢 | `cd abc`                |
+| 🟢 | `cd a b c`              |
+| 🟢 | `cd ../../`             |
+| 🟢 | `cd ../../../../../../` |
+| 🟢 | `cd ../../...`          |
+| 🟢 | `cd .../../..`          |
+| 🟢 | `cd .../../...`         |
+| 🟢 | `cd \`                  |
+| 🟢 | `cd /`                  |
+| 🟢 | `cd //`                 | OK! TESTAR NO BASH DA ESCOLA>
+| 🟢 | `cd ///`                |
+| 🟢 | `cd -`                  |
+| 🟢 | `cd $[VAR]`             |
 
 #### ECHO
 > Rendering text and variables in the terminal with the versatile echo command in Minishell.

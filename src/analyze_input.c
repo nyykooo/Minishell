@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/25 20:16:04 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 21:12:39 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,10 @@ static void	handle_builtins(t_minishell *shell)
 		else if (ft_strcmp(shell->commands->cmd, "pwd") == 0)
 			handle_pwd(shell);
 		else if (shell->commands != NULL)
-		{
-			/*if (shell->commands->type == T_PIPE)
-				handle_pipe(shell->commands);*/
 			handle_command(shell->commands, shell);
-		}
 }
 
-static void	pipe_redir_hub(t_minishell *shell)
+/*static void	pipe_redir_hub(t_minishell *shell)
 {
 	t_cmd	*cmd;
 	
@@ -125,7 +121,7 @@ static void	pipe_redir_hub(t_minishell *shell)
 			handle_builtins(shell);
 		cmd = cmd->next;
 	}
-}
+}*/
 
 void	analyze_input(t_minishell *shell)
 {
@@ -133,7 +129,8 @@ void	analyze_input(t_minishell *shell)
 	// pensar em um loop para percorrer varios comandos relacionando com a quantidade de pipes e redirects
 	if (shell->n_cmd > 1)
 	{
-		pipe_redir_hub(shell);
+		handle_pipe(shell->commands);
+		//pipe_redir_hub(shell);
 	}
 	else if (shell->commands)
 	{

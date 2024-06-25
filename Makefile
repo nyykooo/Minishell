@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
+#    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/25 20:15:45 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/06/25 21:11:03 by brunhenr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC_DIR = main analyze_input envvar_handler signals
+SRC_DIR = main analyze_input envvar_handler signals pipe
 
 SRC_BUILTINS = cd dolar echo env equal export unset exec pwd exit
 

@@ -6,13 +6,13 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/25 15:35:44 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/25 21:25:11 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
 
-int	exec_pipes(t_minishell *shell)
+/*int	exec_pipes(t_minishell *shell)
 {
 	t_cmd	*cmd;
 	int		fds[2];
@@ -31,6 +31,38 @@ int	exec_pipes(t_minishell *shell)
 	}
 	shell->commands = cmd;
 	return (0);
+}*/
+
+static char	*get_command_path(char *command)
+{
+	char	*path;
+	char	**dirs;
+	char	*possible_path;
+	int		i;
+
+	if (access(command, X_OK) == 0)
+			return (command);
+	path = getenv ("PATH");
+	dirs = ft_split (path, ':');
+	i = -1;
+	while (dirs[++i] != NULL)
+	{
+		possible_path = malloc (strlen(dirs[i]) + strlen(command) + 2);
+		strcpy (possible_path, dirs[i]);
+		strcat (possible_path, "/");
+		strcat (possible_path, command);
+		if (access(possible_path, X_OK) == 0)
+		{
+			free(dirs);
+			return (possible_path);
+		}
+		free (possible_path);
+	}
+	i = 0;
+	while (dirs[i] != NULL)
+		free(dirs[i++]);
+	free(dirs);
+	return (NULL);
 }
 
 int	handle_pipe(t_cmd *commands)
@@ -38,19 +70,40 @@ int	handle_pipe(t_cmd *commands)
 	int	fd[2];
 	int	pid1;
 	int	pid2;
-	char arg_array1;
-	char arg_array2;
+	char **arg_array1;
+	char **arg_array2;
 	t_cmd *temp;
 	char *path1;
 	char *path2;
-	int old_read_fd;
+	//int old_read_fd;
+	int	i = 0;
+
 
 	temp = commands;
+	while (temp != NULL)
+	{
+		printf("temp->cmd: %s\n", temp->cmd);
+		temp = temp->next;
+	}
+	temp = commands;
 	arg_array1 = ft_to_array(commands);
-	temp = temp->next;
+	temp = temp->next->next;
 	arg_array2 = ft_to_array(temp);
-	path1 = commands->path;
-	path2 = temp->path;
+	path1 = get_command_path(commands->cmd);
+	path2 = get_command_path(temp->cmd);
+	printf("path1: %s\n", path1);
+	printf("path2: %s\n", path2);
+	while (arg_array1[i] != NULL)
+	{
+		printf("arg_array1: %s\n", arg_array1[i]);
+		i++;
+	}
+	i = 0;
+	while (arg_array2[i] != NULL)
+	{
+		printf("arg_array2: %s\n", arg_array2[i]);
+		i++;
+	}
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
