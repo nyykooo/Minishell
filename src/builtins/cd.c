@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 15:41:04 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:07:36 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static void	change_directory(char *dir, int should_free)
+static void	 change_directory(char *dir, int should_free)
 {
+	char	*error;
+
 	if (chdir(dir) == -1)
-		write(2, "cd: no such file or directory\n", 30);
+	{
+		error = error_msg_construct(4, "-minishell: cd: ", dir, ": ", "No such file or directory\n");
+		put_error_msg(error, 1);
+		free(error);
+	}
 	if (should_free == 1)
 		free(dir);
 }
@@ -61,6 +67,7 @@ void	pwds_update(t_var **envvar_list, char *dir)
 	oldpwd = get_value(*envvar_list, "PWD");
 	if (oldpwd != NULL)
 		set_envvar(envvar_list, "OLDPWD", oldpwd);
+	printf("pwd: %s\n", pwd);
 	set_envvar(envvar_list, "PWD", pwd);
 	free(pwd);
 }
@@ -72,13 +79,14 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 
 	dir = NULL;
 	should_free = 0;
-	if (ft_argsize(command->arguments) >= 2) // confirmar se é apenas 1 argumento ou se podem 2
+	if (ft_argsize(command->arguments) >= 2)
 	{
-		write(2, "cd: too many arguments\n", 24);
+		write(2, "-minishell: cd: too many arguments\n", 36);
 		return ;
 	}
 	else if (command->arguments == NULL || \
-	ft_strcmp(command->arguments->arg, "--") == 0)
+	ft_strcmp(command->arguments->arg, "--") == 0 || \
+	ft_strcmp(command->arguments->arg, "~") == 0)
 	{
 		dir = get_value(shell->envvars, "HOME");
 		if (dir == NULL)

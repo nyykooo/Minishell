@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/24 10:42:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:10:29 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 		env_var = envvar_array(shell);
 		if (commands->path == NULL || execve(commands->path, arguments, env_var) == -1)
 		{
-			perror("minishell");
+			printf("%s: command not found\n", commands->cmd);
+			//perror("minishell");
 			if (commands->path != NULL)
 				free(commands->path);
 			exit(EXIT_FAILURE);
@@ -101,7 +102,11 @@ static void	handle_builtins(t_minishell *shell)
 		else if (ft_strcmp(shell->commands->cmd, "pwd") == 0)
 			handle_pwd(shell);
 		else if (shell->commands != NULL)
+		{
+			/*if (shell->commands->type == T_PIPE)
+				handle_pipe(shell->commands);*/
 			handle_command(shell->commands, shell);
+		}
 }
 
 void	analyze_input(t_minishell *shell)

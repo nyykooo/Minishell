@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/24 10:42:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:13:33 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	free_array(char **array);
 void	free_list(t_var *head);
 void	free_var(t_var *head);
 void	free_commands(t_cmd *commands);
+char	*error_msg_construct(int nbr, ...);
+int		put_error_msg(char *error_msg, int exit_status);
 
 //ENVVAR_FTS
 
