@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 17:47:56 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:05:03 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	analyze_tokens(t_token *tokens, t_minishell *shell)
 		{
 			if (tokens->type >= T_RTRUNC)
 				shell->n_pipe++;
-			shell->n_cmd++;
+			else
+				shell->n_cmd++;
 			create_command(tokens, shell); // create_command is a function that creates a command structure
 		}
 		tokens = tokens->next;
