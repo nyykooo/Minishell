@@ -6,11 +6,20 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 19:22:30 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:08:40 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
+
+static	void	init_arg(t_cmd *command, char *argument)
+{
+	t_arg *arg;
+
+	arg = ft_calloc(1, sizeof(t_arg));
+	ft_argadd_back(&command->arguments, arg);
+	arg->arg = ft_strdup(argument);
+}
 
 static	void	init_cmd(t_minishell *shell, t_token *tokens)
 {
@@ -31,15 +40,12 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 		cmd->rtrunc = true;
 	else if (tokens->type == T_LTRUNC)
 		cmd->ltrunc = true;
-}
-
-static	void	init_arg(t_minishell *shell, char *argument)
-{
-	t_arg *arg;
-
-	arg = ft_calloc(1, sizeof(t_arg));
-	ft_argadd_back(&shell->commands->arguments, arg);
-	arg->arg = ft_strdup(argument);
+	tokens = tokens->next;
+	while (tokens && tokens->type == T_ARG)
+	{
+		init_arg(cmd, tokens->content);
+		tokens = tokens->next;
+	}
 }
 
 void	create_command(t_token *tokens, t_minishell *shell)
@@ -54,11 +60,5 @@ void	create_command(t_token *tokens, t_minishell *shell)
 		printf("Error: malloc failed create commands\n");
 		exit (1);
 	}
-	if (tmp->type != T_ARG)
-		tmp = tmp->next;
-	while (tmp && tmp->type == T_ARG)
-	{
-		init_arg(shell, tmp->content);
-		tmp = tmp->next;
-	}
+	
 }

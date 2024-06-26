@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/22 16:48:26 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 10:59:54 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,6 @@ void	analyze_tokens(t_token *tokens, t_minishell *shell)
 			shell->n_pipe++;
 			create_command(tokens, shell);
 		}
-		else if (check_tokens(tokens) == 8)
-			create_command(tokens, shell);
 		tokens = tokens->next;
 	}
 	analyze_commands(shell); // analyze_commands is a function that analyzes the command's arguments
