@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 21:11:06 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:58:50 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int		put_error_msg(char *error_msg, int exit_status);
 char	*create_envvar_content(char *name, char *value);
 t_var	*find_envvar(t_var *envvar_list, char *name);
 void	remove_envvar(t_var **envvar_list, t_var *envvar);
-void	set_envvar(t_var **envvar_list, char *name, char *value);
 char	*get_value(t_var *envvar_list, char *name);
 void	update_questionvar(t_minishell *shell);
 
@@ -107,7 +106,7 @@ void	handle_exit(t_cmd *command, t_minishell *shell);
 //ENVVAR_FTS
 t_var	*find_envvar(t_var *envvar_list, char *name);
 void	remove_envvar(t_var **envvar_list, t_var *envvar);
-void	set_envvar(t_var **envvar_list, char *name, char *value);
+void	set_envvar(t_var **envvar_list, char *name, char *value, int flag);
 char	*get_value(t_var *envvar_list, char *name);
 char	**envvar_array(t_minishell *shell);
 void	update_existing_envvar(t_var *envvar, char *name, char *value);

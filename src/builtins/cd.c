@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/25 19:07:36 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:22:54 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 	return (dir);
 }
 
+// dar um jeito de criar a variavel caso ela nao exista
+
 void	pwds_update(t_var **envvar_list, char *dir)
 {
 	char	*pwd;
@@ -61,14 +63,13 @@ void	pwds_update(t_var **envvar_list, char *dir)
 	}
 	if (ft_strcmp(dir, ".") == 0)
 	{
-		set_envvar(envvar_list, "OLDPWD", pwd);
+		set_envvar(envvar_list, "OLDPWD", pwd, 1); // oldpwd deve ir para env se nao existe enquanto a pwd nao deve ir
 		return ;
 	}
 	oldpwd = get_value(*envvar_list, "PWD");
 	if (oldpwd != NULL)
-		set_envvar(envvar_list, "OLDPWD", oldpwd);
-	printf("pwd: %s\n", pwd);
-	set_envvar(envvar_list, "PWD", pwd);
+		set_envvar(envvar_list, "OLDPWD", oldpwd, 1);
+	set_envvar(envvar_list, "PWD", pwd, 0);
 	free(pwd);
 }
 

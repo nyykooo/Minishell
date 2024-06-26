@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/22 15:46:25 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:25:35 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,18 @@ void	remove_envvar(t_var **envvar_list, t_var *envvar)
 				*envvar_list = current->next;
 			else
 				prev->next = current->next;
+			// vai crashar se nao tiver um current->next->prev (pensar sobre dps)
 			free(current->content);
-			//free(current); ja esta sendo feito no free_shell
+			free(current->name);
+			free(current->value);
+			free(current); //ja esta sendo feito no free_shell
 			return ;
 		}
 		prev = current;
 		current = current->next;
 	}
 }
+
 
 void	edit_envvar(t_var *envvar, char *var, char *new_value)
 {
@@ -95,12 +99,12 @@ void	update_existing_envvar(t_var *envvar, char *name, char *value)
 	envvar->content = create_envvar_content(name, value);
 }
 
-static void add_new_envvar(t_var **envvar_list, char *name, char *value)
+static void add_new_envvar(t_var **envvar_list, char *name, char *value, int flag)
 {
 	t_var	*envvar;
 
-	envvar = malloc(sizeof(t_var));
-	if (envvar == NULL)
+	envvar = ft_calloc(1, sizeof(t_var));
+	if (!envvar)
 		return;
 	envvar->content = create_envvar_content(name, value);
 	if (envvar->content == NULL)
@@ -108,21 +112,23 @@ static void add_new_envvar(t_var **envvar_list, char *name, char *value)
 		free(envvar);
 		return;
 	}
-	envvar->env = true;
-	envvar->exp = true;
+	if (flag == 1)
+	{
+		envvar->env = true;
+		envvar->exp = true;	
+	}
 	envvar->name = strdup(name);
 	envvar->value = strdup(value);
-	envvar->next = *envvar_list;
-	*envvar_list = envvar;
+	ft_varadd_back(envvar_list, envvar);
 }
-void set_envvar(t_var **envvar_list, char *name, char *value)
+void set_envvar(t_var **envvar_list, char *name, char *value, int flag)
 {
 	t_var *envvar;
 	envvar = find_envvar(*envvar_list, name);
 	if (envvar != NULL)
 		update_existing_envvar(envvar, name, value);
 	else
-		add_new_envvar(envvar_list, name, value);
+		add_new_envvar(envvar_list, name, value, flag);
 }
 
 char	*get_value(t_var *envvar_list, char *name)
