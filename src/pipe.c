@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 11:09:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:55:17 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
-
-/*int	exec_pipes(t_minishell *shell)
-{
-	t_cmd	*cmd;
-	int		fds[2];
-	int		old_pipe;
-
-	old_pipe = 0;
-	cmd = shell->commands;
-	while (shell->commands != NULL)
-	{
-		if (shell->commands->cmd != NULL)
-		{
-			pipe(fds);
-			exec_pipe_cmd(shell, fds, &old_pipe);
-		}
-		shell->commands = shell->commands->next;
-	}
-	shell->commands = cmd;
-	return (0);
-}*/
 
 static char	*get_command_path(char *command)
 {
@@ -65,7 +44,70 @@ static char	*get_command_path(char *command)
 	return (NULL);
 }
 
-int	handle_pipe(t_cmd *commands)
+int handle_pipe(t_cmd *commands)
+{
+	int fd[2];
+	int old_read_fd = 0;
+	pid_t pid;
+	t_cmd *temp = commands;
+
+	while (temp != NULL && temp->type == T_COMMAND)
+	{
+		if (pipe(fd) == -1)
+		{
+			perror("pipe");
+			exit(1);
+		}
+		pid = fork();
+		if (pid < 0) {
+			perror("fork");
+			exit(2);
+		}
+		else if (pid == 0)
+		{ // Processo filho
+			if (old_read_fd != 0)
+			{
+				dup2(old_read_fd, STDIN_FILENO);
+				close(old_read_fd);
+			}
+			if (temp->next != NULL && temp->next->type == T_PIPE)
+			{
+				close(fd[0]); // Não precisa do lado de leitura do pipe no filho
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[1]);
+			}
+			char **arg_array = ft_to_array(temp);
+			char *path = get_command_path(temp->cmd);
+			execve(path, arg_array, envvar_array(temp->shell));
+			exit(0); // Encerra o filho se execve falhar
+		} 
+		else
+		{ // Processo pai
+			waitpid(pid, NULL, 0); // Espera o filho terminar
+			if (old_read_fd != 0)
+			{
+				close(old_read_fd);
+			}
+			old_read_fd = fd[0];
+			close(fd[1]); // Fecha o lado de escrita do pipe no pai
+		}
+
+		if (temp->next != NULL && temp->next->type == T_PIPE)
+		{
+			temp = temp->next->next; // Pula o token de pipe
+		}
+		else
+		{
+			break; // Sai do loop se não houver mais pipes
+		}
+	}
+	if (old_read_fd != 0) //
+	{
+		close(old_read_fd);
+	}
+	return 0;
+}
+/*int	handle_pipe(t_cmd *commands)
 {
 	int	fd[2];
 	int	pid1;
@@ -75,14 +117,15 @@ int	handle_pipe(t_cmd *commands)
 	t_cmd *temp;
 	char *path1;
 	char *path2;
-	//int old_read_fd;
+	int old_read_fd;
 	int	i = 0;
 
-
+	old_read_fd = 0;
 	temp = commands;
 	while (temp != NULL)
 	{
 		printf("temp->cmd: %s\n", temp->cmd);
+		printf("temp-->cmd->type: %d\n", temp->type);
 		temp = temp->next;
 	}
 	temp = commands;
@@ -143,9 +186,11 @@ int	handle_pipe(t_cmd *commands)
 		execve(path2, arg_array2, envvar_array(commands->shell));
 	}
 	// Estamos no processo pai
-	close(fd[0]);
 	close(fd[1]);
+	if (old_read_fd != 0)
+		close(old_read_fd);
+	old_read_fd = fd[0];
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 	return (0);
-}
+}*/
