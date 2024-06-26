@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 11:09:03 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:53:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,8 @@ static void check_arg(t_arg *input)
 			input->sq = true;
 		else if (input->arg[i] == N_DOLLAR)
 			input->dol = true;
-		else if (input->arg[i] == N_EQUAL)
-		{
-			input->arg[i] *= -1;
+		else if (input->arg[i] == EQUAL)
 			input->equal = true;
-		}
 	}
 }
 

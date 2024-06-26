@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/23 00:46:31 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:46:02 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,50 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	t_var	*temp;
 	t_var	*new_var;
 
-	temp = shell->envvars;
-	while (temp != NULL)
+	temp = find_envvar(shell->envvars, argument->arg);
+	if (temp != NULL)
 	{
-		if (strcmp(temp->name, argument->arg) == 0)
-			return (0);
-		temp = temp->next;
+		temp->exp = true;
+		temp->env = true;
+		return (0);
 	}
-	new_var = malloc(sizeof(t_var));
+	new_var = ft_calloc(1, sizeof(t_var));
 	if (new_var == NULL)
 		return (1);
 	new_var->content = strdup(argument->arg);
 	new_var->name = strdup(argument->arg);
-	new_var->value = NULL;
-	new_var->env = false;
 	new_var->exp = true;
-	new_var->prev = NULL;
-	if (shell->envvars != NULL)
-		shell->envvars->prev = new_var;
-	new_var->next = shell->envvars;
-	shell->envvars = new_var;
+	ft_varadd_back(&shell->envvars, new_var);
 	return (0);
 }
+
+// static int	handle_no_equal(t_minishell *shell, t_arg *argument)
+// {
+// 	t_var	*temp;
+// 	t_var	*new_var;
+
+// 	temp = shell->envvars;
+// 	while (temp != NULL)
+// 	{
+// 		if (strcmp(temp->name, argument->arg) == 0)
+// 			return (0);
+// 		temp = temp->next;
+// 	}
+// 	new_var = malloc(sizeof(t_var));
+// 	if (new_var == NULL)
+// 		return (1);
+// 	new_var->content = strdup(argument->arg);
+// 	new_var->name = strdup(argument->arg);
+// 	new_var->value = NULL;
+// 	new_var->env = false;
+// 	new_var->exp = true;
+// 	new_var->prev = NULL;
+// 	if (shell->envvars != NULL)
+// 		shell->envvars->prev = new_var;
+// 	new_var->next = shell->envvars;
+// 	shell->envvars = new_var;
+// 	return (0);
+// }
 
 /*static int	find_equal_position(char *arg)
 {
@@ -210,7 +232,7 @@ static int	handle_export_args(t_minishell *shell)
 
 	exit_status = 0;
 	temp = shell->commands->arguments;
-	while (temp != NULL && temp->arg != NULL)
+	while (temp != NULL)
 	{
 		if (temp->arg[0] == '_' && temp->arg[1] == '=')
 			return (0);
@@ -231,24 +253,34 @@ static int	handle_export_args(t_minishell *shell)
 
 void	swap_nodes(t_var *a, t_var *b)
 {
-	char	*temp_content;
-	char	*temp_name;
-	char	*temp_value;
-	bool	temp_exp;
+	t_var *temp;
 
-	temp_content = a->content;
-	temp_name = a->name;
-	temp_value = a->value;
-	temp_exp = a->exp;
-	a->content = b->content;
-	a->name = b->name;
-	a->value = b->value;
-	a->exp = b->exp;
-	b->content = temp_content;
-	b->name = temp_name;
-	b->value = temp_value;
-	b->exp = temp_exp;
+	temp = a->next;
+	a->next = b;
+	a->prev = b->prev;
+	b->prev = a;
+	b->next = temp;
+	temp->prev = b;
 }
+
+
+// curr --> next --> next->next || curr->next = next->next; next->next->prev = curr; curr->prev = next; next->next = curr;
+// next --> curr --> next->next
+
+// void	swap_nodes(t_var *curr, t_var *next)
+// {
+// 	t_var	*temp;
+
+// 	temp = next->next;
+// 	if (curr->prev != NULL)
+// 		curr->prev->next = next;
+// 	if (temp != NULL)
+// 		temp->prev = curr;
+// 	next->prev = curr->prev;
+// 	curr->prev = next;
+// 	curr->next = temp;
+// 	next->next = curr;
+// }
 
 void	sort_content(t_var *envvar_list)
 {
@@ -299,6 +331,8 @@ static char *prepare_value(char *content)
 	return (value);
 }
 
+// pensar sobre criar uma variadic function para montar a string que printa o export
+
 int	handle_export(t_minishell *shell)
 {
 	t_var	*current;
@@ -324,7 +358,12 @@ int	handle_export(t_minishell *shell)
 				value = prepare_value(current->value);
 				printf("declare -x %s=\"%s\"\n", current->name, value);
 			}
-			else if (current->exp == true)
+			else if (current->exp == true && current->value)
+			{
+				value = prepare_value(current->value);
+				printf("declare -x %s=\"%s\"\n", current->name, value);
+			}
+			else if (current->exp == true && current->value == NULL)
 				printf("declare -x %s\n", current->name);
 			current = current->next;
 		}

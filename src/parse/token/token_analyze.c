@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 13:40:01 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:47:56 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ void	analyze_tokens(t_token *tokens, t_minishell *shell)
 {
 	while (tokens != NULL)
 	{
-		if (tokens->type == T_COMMAND || tokens->type == T_PIPE || tokens->type == T_EQUAL) // checks if token is a command, a pipe or a executable
+		if (tokens->type == T_COMMAND || tokens->type == T_EQUAL
+			|| (tokens->type >= T_RTRUNC)) // checks if token is a command, a pipe or a executable
 		{
-			if (tokens->type == T_PIPE)
+			if (tokens->type >= T_RTRUNC)
 				shell->n_pipe++;
 			shell->n_cmd++;
 			create_command(tokens, shell); // create_command is a function that creates a command structure

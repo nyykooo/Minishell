@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 12:25:35 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:57:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_var	*find_envvar(t_var *envvar_list, char *name)
 	while (current != NULL)
 	{
 		if (current->content != NULL && \
-		ft_strncmp(current->content, name, name_len - 1) == 0)
+		ft_strncmp(current->content, name, name_len) == 0)
 			return (current);
 		current = current->next;
 	}

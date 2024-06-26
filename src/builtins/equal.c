@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 13:42:49 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:15:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,20 @@
 void	handle_equal(t_minishell *shell, t_cmd *command)
 {
 	t_var	*new_var;
+	int		equal;
 	
 	new_var = malloc(sizeof(t_var));
+	equal = 0;
 	if (new_var == NULL)
 	{
 		write(2, "Error: malloc failed\n", 21);
 		return ;
 	}
+	while (command->cmd[equal] != '=')
+		equal++;
 	new_var->content = ft_strdup(command->cmd);
-	new_var->name = ft_substr(command->cmd, 0, ft_strchr(command->cmd, '=') - command->cmd);
-	new_var->value = ft_strdup(ft_strchr(command->cmd, '=') + 1);
+	new_var->name = ft_substr(command->cmd, 0, equal);
+	new_var->value = ft_substr(command->cmd, equal + 1, ft_strlen(command->cmd) - equal - 1);
 	new_var->env = false;
 	ft_varadd_back(&shell->envvars, new_var);
 }

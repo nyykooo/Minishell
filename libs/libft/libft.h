@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 11:54:21 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:34:52 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	ft_arraycpy(char **dest, char **src);
 char	*ft_strcutstr(const char *big, const char *little);
 
 int		ft_argsize(t_arg *lst);
+int		ft_varsize(t_var *lst);
 
 void	ft_tokenadd_back(t_token **lst, t_token *new);
 t_token	*ft_tokenlast(t_token *lst);

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:26:29 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 13:28:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:51:31 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ enum e_markers
 	RRED = 62,
 	DQUOTE = 34,
 	SQUOTE = 39,
+	EQUAL = 61,
 };
 
 enum e_types
