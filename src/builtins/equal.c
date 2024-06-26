@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/24 15:42:24 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:42:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	handle_equal(t_minishell *shell, t_cmd *command)
 		write(2, "Error: malloc failed\n", 21);
 		return ;
 	}
-	new_var->content = ft_strdup(command->arguments->arg);
+	new_var->content = ft_strdup(command->cmd);
+	new_var->name = ft_substr(command->cmd, 0, ft_strchr(command->cmd, '=') - command->cmd);
+	new_var->value = ft_strdup(ft_strchr(command->cmd, '=') + 1);
 	new_var->env = false;
 	ft_varadd_back(&shell->envvars, new_var);
 }

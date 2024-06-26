@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 11:09:24 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:43:32 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,8 @@ void	analyze_input(t_minishell *shell)
 	}
 	else if (shell->commands)
 	{
-		// if (shell->commands->type == T_EQUAL)
-		// 	handle_equal(shell, shell->commands);
-		// if (shell->commands->type == T_EXEC)
-		// 	handle_exec(shell, shell->commands);
+		if (shell->commands->type == T_EQUAL)
+			handle_equal(shell, shell->commands);
 		if (shell->commands->type == T_COMMAND)
 			handle_builtins(shell);
 	}

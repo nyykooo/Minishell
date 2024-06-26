@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 14:42:37 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:43:00 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ static void check_token(t_token *input)
 	
 }
 
+static bool check_equal(t_token *token)
+{
+	int i;
+
+	i = -1;
+	while (token->content[++i])
+	{
+		if (token->content[i] == N_EQUAL)
+		{
+			token->content[i] = '=';
+			return (true);
+		}
+	}
+	return (false);
+}
+
 static void	get_type(t_token *token)
 {
 	if (ft_strcmp(token->content, "") == 0)
@@ -47,9 +63,9 @@ static void	get_type(t_token *token)
 		token->type = T_LAPEND;
 	else if (ft_strcmp(token->content, "|") == 0)
 		token->type = T_PIPE;
-	// else if (check_equal(token) && (!token->prev
-	// 	|| (token->prev->type >= T_RTRUNC)))
-	// 	token->type = T_EQUAL;
+	else if (check_equal(token) && (!token->prev
+		|| (token->prev->type >= T_RTRUNC)))
+		token->type = T_EQUAL;
 	else if (!token->prev || token->prev->type >= T_RTRUNC)
 		token->type = T_COMMAND;
 	else

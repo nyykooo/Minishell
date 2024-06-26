@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:26:29 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 17:39:07 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:28:00 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ enum e_types
 	T_EMPTY = 0,
 	T_COMMAND,
 	T_ARG,
-	T_EXEC,
 	T_EQUAL,
 	T_RTRUNC,
 	T_RAPEND,

@@ -6,37 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 10:59:54 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:40:01 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
-
-// check_token is a function that checks the type of a token
-
-int check_tokens(t_token *tokens)
-{
-	if (tokens->type == T_EMPTY)
-		return (0);
-	else if (tokens->type == T_COMMAND)
-		return (1);
-	else if (tokens->type == T_ARG)
-		return (2);
-	else if (tokens->type == T_RTRUNC)
-		return (3);
-	else if (tokens->type == T_RAPEND)
-		return (4);
-	else if (tokens->type == T_LTRUNC)
-		return (5);
-	else if (tokens->type == T_LAPEND)
-		return (6);
-	else if (tokens->type == T_PIPE)
-		return (7);
-	else if (tokens->type == T_EXEC)
-		return (8);
-	else
-		return (0);
-}
 
 // static bool check_cmd(char *tokens_arg)
 // {
@@ -105,15 +79,12 @@ void	analyze_tokens(t_token *tokens, t_minishell *shell)
 {
 	while (tokens != NULL)
 	{
-		if (check_tokens(tokens) == 1) // checks if token is a command, a pipe or a executable
+		if (tokens->type == T_COMMAND || tokens->type == T_PIPE || tokens->type == T_EQUAL) // checks if token is a command, a pipe or a executable
 		{
+			if (tokens->type == T_PIPE)
+				shell->n_pipe++;
 			shell->n_cmd++;
 			create_command(tokens, shell); // create_command is a function that creates a command structure
-		}
-		else if (check_tokens(tokens) == 7)
-		{
-			shell->n_pipe++;
-			create_command(tokens, shell);
 		}
 		tokens = tokens->next;
 	}
