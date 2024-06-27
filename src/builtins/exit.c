@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/27 14:33:54 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:17:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static bool is_number(char *str)
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
+	if (str[i] == '\0')
+		return (false);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -86,41 +88,27 @@ static int	exit_number_analyze(char *arg)
 		
 }
 
-// t_arg	*temp;
-// 	int		arg_count;
-
-// 	arg_count = 0;
-// 	temp = command->arguments;
-// 	while (temp->next)
-// 	{
-// 		if (arg_count > 1)
-// 		{
-// 			printf("too many arguments\n");
-// 		}
-// 		if (!is_number(temp->arg) || ! long_number(temp->arg))
-// 		{
-// 			printf("numeric argument required\n");
-// 		}
-// 		arg_count++;
-// 		temp = temp->next;
-// 	}
-// 	return (0);
-
 static int	analyze_exit_arguments(t_cmd *command)
 {
+	char *error_msg;
+
 	if (!command->arguments)
 		return (0);
 	if (!is_number(command->arguments->arg)
 		|| !long_number(command->arguments->arg))
 	{
-		perror("exit: numeric argument required");
+		
+		error_msg = error_msg_construct(3, "-minishell: exit: ", command->arguments->arg,
+			 ": numeric argument required\n");
+		put_error_msg(error_msg, 2);
 		return (2);
 	}
 	else if (command->arguments->arg)
 	{
 		if (command->arguments->next)
 		{
-			perror("exit: too many arguments");
+			error_msg = error_msg_construct(1, "-minishell: exit: too many arguments\n");
+			put_error_msg(error_msg, 1);
 			return (1);
 		}
 		else

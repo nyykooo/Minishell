@@ -298,47 +298,47 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `exit `                     |
 | 🟢 | ` exit`                     |
 | 🟢 | `  exit  `                  |
-| 🟡 | `exit test`                 | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit "test"`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit test`                 | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit "test"`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
 | 🟢 | `"exit test"`               |
 | 🟢 | `"exit"`                    |
 | 🟢 | `exit1`                     |
 | 🟢 | `exita`                     |
-| 🟡 | `exit exit`                 | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit a`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit abc`                  | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit a b c`                | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && ajustar mensagem de erro
-| 🟡 | `exit a b c d`              | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && ajustar mensagem de erro
-| 🟡 | `exit #`                    | pensar sobre o parsing do # (not mandatory??)
-| 🟡 | `exit *`                    | wildcard not mandatory?
+| 🟢 | `exit exit`                 | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit a`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit abc`                  | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit a b c`                | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && ajustar mensagem de erro
+| 🟢 | `exit a b c d`              | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && ajustar mensagem de erro
+| 🔵 | `exit #`                    | pensar sobre o parsing do # (not mandatory??)
+| 🔵 | `exit *`                    | wildcard not mandatory?
 | 🟢 | `exit 0`                    |
 | 🟢 | `exit 1`                    |
 | 🟢 | `exit 123`                  |
 | 🟢 | `exit 1234`                 |
-| 🟡 | `exit 1 2 3 4`              | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit +`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && incluir mensagem de erro
-| 🟡 | `exit -`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && incluir mensagem de erro
-| 🟡 | `exit +10`                  |
-| 🟡 | `exit -10`                  |
-| 🟡 | `exit +2000`                |
-| 🟡 | `exit -2000`                |
-| 🟡 | `exit +-2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit -+2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit ++2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit --2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit -2147483649`          |
-| 🟡 | `exit 2147483648`           |
-| 🟡 | `exit 00000000000000000000` |
-| 🟡 | `exit 11111111111111111111` | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit'42'`                  |
-| 🟡 | `exit '\t42'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit '\t\f\r 42'`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🔴 | `exit '42 '`                |
-| 🟡 | `exit '42\t'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit '42\r'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit '42\t\f\r '`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit '42     a'`           | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
-| 🟡 | `exit '42\t\t\ta'`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit 1 2 3 4`              | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit +`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && incluir mensagem de erro
+| 🟢 | `exit -`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && incluir mensagem de erro
+| 🟢 | `exit +10`                  |
+| 🟢 | `exit -10`                  |
+| 🟢 | `exit +2000`                |
+| 🟢 | `exit -2000`                |
+| 🟢 | `exit +-2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit -+2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit ++2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit --2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit -2147483649`          |
+| 🟢 | `exit 2147483648`           |
+| 🟢 | `exit 00000000000000000000` |
+| 🟢 | `exit 11111111111111111111` | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit'42'`                  |
+| 🟢 | `exit '\t42'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '\t\f\r 42'`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42 '`                |
+| 🟢 | `exit '42\t'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42\r'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42\t\f\r '`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42     a'`           | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42\t\t\ta'`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
 
 #### CD
 > Traversing directories seamlessly using the cd command in Minishell.
