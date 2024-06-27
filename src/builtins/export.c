@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 17:46:02 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:23:48 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,14 +253,27 @@ static int	handle_export_args(t_minishell *shell)
 
 void	swap_nodes(t_var *a, t_var *b)
 {
-	t_var *temp;
-
-	temp = a->next;
-	a->next = b;
-	a->prev = b->prev;
-	b->prev = a;
-	b->next = temp;
-	temp->prev = b;
+	char *temp_content;
+	char *temp_name;
+	char *temp_value;
+	bool temp_exp;
+	bool temp_env;
+	
+	temp_content = a->content;
+	temp_name = a->name;
+	temp_value = a->value;
+	temp_exp = a->exp;
+	temp_env = a->env;
+	a->content = b->content;
+	a->name = b->name;
+	a->value = b->value;
+	a->exp = b->exp;
+	a->env = b->env;
+	b->content = temp_content;
+	b->name = temp_name;
+	b->value = temp_value;
+	b->exp = temp_exp;
+	b->env = temp_env;
 }
 
 
@@ -282,25 +295,53 @@ void	swap_nodes(t_var *a, t_var *b)
 // 	next->next = curr;
 // }
 
-void	sort_content(t_var *envvar_list)
-{
-	t_var	*current;
-	t_var	*next;
+// void	sort_content(t_var *envvar_list)
+// {
+// 	t_var	*current;
+// 	t_var	*next;
 
-	if (envvar_list == NULL)
-		return ;
-	current = envvar_list;
-	while (current != NULL)
-	{
-		next = current->next;
-		while (next != NULL)
-		{
-			if (ft_strcmp(current->content, next->content) > 0)
-				swap_nodes(current, next);
-			next = next->next;
-		}
-		current = current->next;
-	}
+// 	if (envvar_list == NULL)
+// 		return ;
+// 	current = envvar_list;
+// 	while (current != NULL)
+// 	{
+// 		next = current->next;
+// 		while (next != NULL)
+// 		{
+// 			if (ft_strcmp(current->content, next->content) > 0)
+// 			{
+// 				swap_nodes(current, next);
+// 				break ;
+// 			}
+// 			else
+// 				next = next->next;
+// 		}
+// 		current = current->next;
+// 	}
+// }
+
+void	sort_content(t_var *envvar)
+{
+	int swapped = 1;
+    t_var *temp;
+    t_var *last_verified = NULL;
+
+    if (envvar == NULL)
+        return;
+
+    while (swapped) {
+        swapped = 0;
+        temp = envvar;
+
+        while (temp->next != last_verified) {
+            if (ft_strcmp(temp->content, temp->next->content) > 0) { 
+                swap_nodes(temp, temp->next);
+                swapped = 1;
+            }
+            temp = temp->next;
+        }
+        last_verified = temp;
+    }
 }
 
 static char *prepare_value(char *content)
