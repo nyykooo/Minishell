@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/24 10:36:08 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:19:50 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ typedef struct s_cmd
 	char				*cmd; // command
 	t_arg				*arguments; // array of arguments
 	char				*path; // path to the command
+	char				*redirect_in; // input file descriptor
+	char				*redirect_out; // output file descriptor
+	char				*redirect_append; // append file descriptor	
 	bool				exec; // if the command is an executable
 	bool				pipe; // if the command is a pipe
 	bool				rappend; // if the command is a right append
