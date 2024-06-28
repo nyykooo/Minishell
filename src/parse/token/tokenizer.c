@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/28 11:32:44 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:05:35 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,7 @@ static void	get_command_path(t_minishell *shell)
 	while (commands)
 	{
 		if (commands->cmd)
-			if (access(commands->cmd, F_OK) == 0)
-			{
-				commands->path = ft_strdup(commands->cmd);
 				mark_redir(commands);
-			}
 		commands = commands->next;
 	}
 }
