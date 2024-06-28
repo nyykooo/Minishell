@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/27 22:32:47 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:32:44 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,24 @@ static void reset_shell(t_minishell *shell)
 	}
 }
 
+static void mark_redir(t_cmd *command)
+{
+	t_cmd *temp;
+	
+	temp = command->prev;
+	if (temp)
+	{
+		if (temp->type == T_LTRUNC)
+			command->rtrunc = true;
+		else if (temp->type == T_RTRUNC)
+			command->rtrunc = true;
+		else if (temp->type == T_LAPEND)
+			command->rappend = true;
+		else if (temp->type == T_RAPEND)
+			command->rappend = true;
+	}
+}
+
 static void	get_command_path(t_minishell *shell)
 {
 	t_cmd *commands;
@@ -120,7 +138,10 @@ static void	get_command_path(t_minishell *shell)
 	{
 		if (commands->cmd)
 			if (access(commands->cmd, F_OK) == 0)
+			{
 				commands->path = ft_strdup(commands->cmd);
+				mark_redir(commands);
+			}
 		commands = commands->next;
 	}
 }
