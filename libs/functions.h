@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 11:58:50 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/27 22:32:24 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int		is_inside_quotes(char *str, size_t index);
 
 // NEW PARSING - DOLLAR
 void	expand_dolar(char **input , t_minishell *shell);
+void	expand_tildes(char **input, t_minishell *shell);
 
 // FREE_ERROR_EXIT
 void	free_shell(t_minishell *shell);
