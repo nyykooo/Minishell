@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 18:00:22 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:15:51 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,47 +122,8 @@ static void	handle_builtins(t_minishell *shell)
 		cmd = cmd->next;
 	}
 }*/
+
 void	analyze_input(t_minishell *shell)
-{
-	t_cmd *cmd;
-	t_cmd *temp;
-
-	parsing_hub(shell);
-	temp = shell->commands;
-	printf("n_cmd: %d\n", shell->n_cmd);
-	while (temp != NULL)
-	{
-		printf("temp->cmd: %s\n", temp->cmd);
-		printf("temp->type: %d\n", temp->type);
-		temp = temp->next;
-	}
-	if (shell->n_cmd > 1)
-	{
-		cmd = shell->commands;
-		while (cmd != NULL)
-		{
-			if (cmd->type == T_COMMAND)
-			{
-				if (cmd->next && cmd->next->type == T_PIPE)
-				{
-					handle_pipe(cmd);
-					break;
-				}
-				else
-					handle_builtins(shell); // Lida com um comando simples ou o último comando antes de um pipe
-			}
-			// Add mais condições conforme necessário para outros tipos de comandos e redir
-			cmd = cmd->next;
-		}
-	}
-	else if (shell->n_cmd == 1 && shell->commands)
-	{
-		handle_command(shell->commands, shell);
-	}
-	// tratar, por exemplo, nenhum comando ou apenas redirecionamentos
-}
-
-/*void	analyze_input(t_minishell *shell)
 {
 	parsing_hub(shell);
 	// pensar em um loop para percorrer varios comandos relacionando com a quantidade de pipes e redirects

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:09:55 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/20 15:32:12 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/27 10:19:58 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	handle_unset(t_cmd *command, t_var **envvar_list)
 	while (temp != NULL)
 	{
 		envvar = find_envvar(*envvar_list, temp->arg);
+		printf("envvar: %s\n", envvar->content);
 		if (envvar != NULL)
 			remove_envvar(envvar_list, envvar);
 		temp = temp->next;

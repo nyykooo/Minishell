@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 17:05:38 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:19:09 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,20 @@ static void reset_shell(t_minishell *shell)
 	}
 }
 
+static void	get_command_path(t_minishell *shell)
+{
+	t_cmd *commands;
+
+	commands = shell->commands;
+	while (commands)
+	{
+		if (commands->cmd)
+			if (access(commands->cmd, F_OK) == 0)
+				commands->path = ft_strdup(commands->cmd);
+		commands = commands->next;
+	}
+}
+
 void	tokenizer(t_minishell *shell)
 {
 	char **array;
@@ -129,5 +143,6 @@ void	tokenizer(t_minishell *shell)
 	analyze_tokens(shell->tokens, shell); // analyze tokens to create commands
 	reset_shell(shell);
 	clear_commands(shell->commands, shell);
+	get_command_path(shell); // get paths for commands
 	free_array(array);
 }
