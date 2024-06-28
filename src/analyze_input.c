@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/28 10:31:06 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:18:48 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,137 +207,6 @@ int is_builtin(t_cmd *cmd)
 }*/
 
 
-void	analyze_input(t_minishell *shell)
-{
-	t_cmd *cmd;
-	t_cmd *temp;
-
-	parsing_hub(shell);
-	cmd = shell->commands;
-	temp = shell->commands;
-	while (temp != NULL)
-	{
-		printf("temp->cmd: %s\n", temp->cmd);
-		printf("temp->type: %d\n", temp->type);
-		printf("temp->rapend: %d\n", temp->rappend);
-		printf("temp->rtrunc: %d\n", temp->rtrunc);
-		printf("temp->ltrunc: %d\n", temp->ltrunc);
-		temp = temp->next;
-	}
-	exit(0);
-	int fd_in, fd_out; // fds para redirecionamento de in e out
-	int pipefd[2]; // File descriptors para pipes
-	int last_in = 0; // Guarda o read end do último pipe
-
-	while (cmd != NULL)
-	{
-		if (cmd->type == T_COMMAND && is_builtin(cmd))
-		{
-			// VER ISSO: cd nao pode ser executado em um processo filho
-			//config_output_redirection(cmd);
-			handle_builtins(shell);
-			cmd = cmd->next;
-			continue;
-		}
-		// Configura redirecionamento de entrada
-		if (cmd->redirect_in)
-		{
-			fd_in = open(cmd->redirect_in, O_RDONLY);
-			if (fd_in < 0)
-			{
-				perror("Erro ao abrir arquivo de entrada");
-				return;
-			}
-			dup2(fd_in, STDIN_FILENO);
-			close(fd_in);
-		}
-		else if (last_in != 0)
-		{
-			// Se não há redirecionamento de entrada, mas estamos em um pipe
-			dup2(last_in, STDIN_FILENO);
-			close(last_in);
-		}
-		// Configura redirecionamento de saída, append ou pipe
-		if (cmd->next && cmd->next->type == T_PIPE)
-		{
-			pipe(pipefd);
-			dup2(pipefd[1], STDOUT_FILENO);
-			close(pipefd[1]);
-			last_in = pipefd[0]; // Prepara o read end para o próximo comando
-		}
-		else if (cmd->redirect_out)
-		{
-			// Trata redirecionamento de saída
-			fd_out = open(cmd->redirect_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd_out < 0) {
-				perror("Erro ao abrir arquivo de saída");
-				return;
-			}
-			dup2(fd_out, STDOUT_FILENO);
-			close(fd_out);
-		}
-		else if (cmd->redirect_append)
-		{
-			// Trata redirecionamento de saída com append
-			fd_out = open(cmd->redirect_append, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (fd_out < 0) {
-				perror("Erro ao abrir arquivo de saída para append");
-				return;
-			}
-			dup2(fd_out, STDOUT_FILENO);
-			close(fd_out);
-		}
-		// Executa o comando se não for um built-in
-		if (cmd->type == T_COMMAND)
-		{
-			handle_command(cmd, shell);
-		}
-		// Restaura os descritores padrão e avança para o próximo comando
-		dup2(STDIN_FILENO, 0);
-		dup2(STDOUT_FILENO, 1);
-		cmd = cmd->next;
-	}
-}
-	
-/*void	analyze_input(t_minishell *shell)
-{
-	t_cmd *cmd;
-	t_cmd *temp;
-
-	parsing_hub(shell);
-	temp = shell->commands;
-	printf("n_cmd: %d\n", shell->n_cmd);
-	while (temp != NULL)
-	{
-		printf("temp->cmd: %s\n", temp->cmd);
-		printf("temp->type: %d\n", temp->type);
-		temp = temp->next;
-	}
-	if (shell->n_cmd > 1)
-	{
-		cmd = shell->commands;
-		while (cmd != NULL)
-		{
-			if (cmd->type == T_COMMAND)
-			{
-				if (cmd->next && cmd->next->type == T_PIPE)
-				{
-					handle_pipe(cmd);
-					break;
-				}
-				else
-					handle_builtins(shell); // Lida com um comando simples ou o último comando antes de um pipe
-			}
-			// Add mais condições conforme necessário para outros tipos de comandos e redir
-			cmd = cmd->next;
-		}
-	}
-	else if (shell->n_cmd == 1 && shell->commands)
-	{
-		handle_command(shell->commands, shell);
-	}
-	// tratar, por exemplo, nenhum comando ou apenas redirecionamentos
-}
 
 void	analyze_input(t_minishell *shell)
 {

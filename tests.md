@@ -267,21 +267,21 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `export a=' 42 '`            	|
 | 🟢 | `export a` 		    	        |
 | 🟢 | `export a=''`           	    	|                                         
-| 🔴 | `export a='"'`               	|                                   
-| 🔴 | `export a='\'`               	|                                
-| 🔴 | `export a='$'`               	|                                 
-| 🔴 | `export a='\t'`              	|                                    
-| 🔴 | `export a='''` 		 	        | 
+| 🟢 | `export a='"'`               	|                                   
+| 🟢 | `export a='\'`               	|                                
+| 🟢 | `export a='$'`               	|                                 
+| 🟢 | `export a='\t'`              	|                                    
+| 🟢 | `export a='''` 		 	        | 
 | 🟢 | `export =` 		             	| not a valid identifier
 | 🟢 | `export ==`		            	| not a valid identifier
 | 🟢 | `export a=` 		            	| its possbible
-| 🟢 | `export a=42=` 		    	| its possbible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
-| 🟢 | `export =a=42` 		    	| not a valid identifier
-| 🟢 | `export a==42` 		    	| its possible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
-| 🔴 | `export "a=42"` 		    	| its possbile - value nao esta ficando entre "" na lista export
-| 🔴 | `export _=42` 		    	| O _=aaaaaaa n deve fazer nada. Nao deve aparecer na lista export
-| 🟢 | `export 42=42`		    	|
-| 🟢 | `export a b = 42`	    	|
+| 🟢 | `export a=42=` 		    		| its possbible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
+| 🟢 | `export =a=42` 		  	 	 	| not a valid identifier
+| 🟢 | `export a==42` 		  		  	| its possible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
+| 🟢 | `export "a=42"` 		 		   	| its possbile - value nao esta ficando entre "" na lista export
+| 🔴 | `export _=42` 		 		   	| O _=aaaaaaa n deve fazer nada. Fazer tratamento especial pra evitar aparecer na lista exp
+| 🟢 | `export 42=42`		  		  	|
+| 🟢 | `export a b = 42`	  		  	|
 | 🟢 | `export a= b= 42`	    	    |
 | 🟢 | `export a=42 % b=42 @ c=42`  	|
 | 🟢 | `export A=a B=b C=c D=d E=e` 	|
@@ -292,53 +292,53 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 
 | Status  | Command |
 | :------ | :------ |
-| 🟡 | `EXIT`                      |
-| 🟡 | `eXiT`                      |
-| 🟡 | `exit`                      |
-| 🟡 | `exit `                     |
-| 🟡 | ` exit`                     |
-| 🟡 | `  exit  `                  |
-| 🟡 | `exit test`                 |
-| 🟡 | `exit "test"`               |
-| 🟡 | `"exit test"`               |
-| 🟡 | `"exit"`                    |
-| 🟡 | `exit1`                     |
-| 🟡 | `exita`                     |
-| 🟡 | `exit exit`                 |
-| 🟡 | `exit a`                    |
-| 🟡 | `exit abc`                  |
-| 🟡 | `exit a b c`                |
-| 🟡 | `exit a b c d`              |
-| 🟡 | `exit #`                    |
-| 🟡 | `exit *`                    |
-| 🟡 | `exit 0`                    |
-| 🟡 | `exit 1`                    |
-| 🟡 | `exit 123`                  |
-| 🟡 | `exit 1234`                 |
-| 🟡 | `exit 1 2 3 4`              |
-| 🟡 | `exit +`                    |
-| 🟡 | `exit -`                    |
-| 🟡 | `exit +10`                  |
-| 🟡 | `exit -10`                  |
-| 🟡 | `exit +2000`                |
-| 🟡 | `exit -2000`                |
-| 🟡 | `exit +-2000`               |
-| 🟡 | `exit -+2000`               |
-| 🟡 | `exit ++2000`               |
-| 🟡 | `exit --2000`               |
-| 🟡 | `exit -2147483649`          |
-| 🟡 | `exit 2147483648`           |
-| 🟡 | `exit 00000000000000000000` |
-| 🟡 | `exit 11111111111111111111` |
-| 🟡 | `exit'42'`                  |
-| 🟡 | `exit '\t42'`               |
-| 🟡 | `exit '\t\f\r 42'`          |
-| 🟡 | `exit '42 '`                |
-| 🟡 | `exit '42\t'`               |
-| 🟡 | `exit '42\r'`               |
-| 🟡 | `exit '42\t\f\r '`          |
-| 🟡 | `exit '42     a'`           |
-| 🟡 | `exit '42\t\t\ta'`          | 
+| 🟢 | `EXIT`                      |
+| 🟢 | `eXiT`                      |
+| 🟢 | `exit`                      |
+| 🟢 | `exit `                     |
+| 🟢 | ` exit`                     |
+| 🟢 | `  exit  `                  |
+| 🟢 | `exit test`                 | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit "test"`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `"exit test"`               |
+| 🟢 | `"exit"`                    |
+| 🟢 | `exit1`                     |
+| 🟢 | `exita`                     |
+| 🟢 | `exit exit`                 | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit a`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit abc`                  | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit a b c`                | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && ajustar mensagem de erro
+| 🟢 | `exit a b c d`              | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && ajustar mensagem de erro
+| 🔵 | `exit #`                    | pensar sobre o parsing do # (not mandatory??)
+| 🔵 | `exit *`                    | wildcard not mandatory?
+| 🟢 | `exit 0`                    |
+| 🟢 | `exit 1`                    |
+| 🟢 | `exit 123`                  |
+| 🟢 | `exit 1234`                 |
+| 🟢 | `exit 1 2 3 4`              | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit +`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && incluir mensagem de erro
+| 🟢 | `exit -`                    | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr) && incluir mensagem de erro
+| 🟢 | `exit +10`                  |
+| 🟢 | `exit -10`                  |
+| 🟢 | `exit +2000`                |
+| 🟢 | `exit -2000`                |
+| 🟢 | `exit +-2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit -+2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit ++2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit --2000`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit -2147483649`          |
+| 🟢 | `exit 2147483648`           |
+| 🟢 | `exit 00000000000000000000` |
+| 🟢 | `exit 11111111111111111111` | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit'42'`                  |
+| 🟢 | `exit '\t42'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '\t\f\r 42'`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42 '`                |
+| 🟢 | `exit '42\t'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42\r'`               | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42\t\f\r '`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42     a'`           | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
+| 🟢 | `exit '42\t\t\ta'`          | inverter a ordem das mensagens do stdout e err (verificar se o err ta no stderr)
 
 #### CD
 > Traversing directories seamlessly using the cd command in Minishell.
