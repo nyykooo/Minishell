@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/27 16:19:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/27 22:32:47 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	tokenizer(t_minishell *shell)
 	char **array;
 	
 	expand_dolar(&shell->input, shell); // expand dolar variables
+	expand_tildes(&shell->input, shell); // expand tildes
 	expand_pipes_redir(shell); // expand pipes and redirections
 	mark_tokens(shell->input); // mark special char, spaces and quotes to analyze later
 	array = ft_split(shell->input, N_SPACE); // split tokens by n_space

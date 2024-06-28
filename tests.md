@@ -379,53 +379,53 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 
 | Status  | Command |
 | :------ | :------ |
-| 🟡 | `ECHO`                                                               |
-| 🟡 | `echO`                                                               |
-| 🟡 | `ECHo`                                                               |
-| 🟡 | `echo`                                                               |
-| 🟡 | `echo echo`                                                          |
-| 🟡 | `echo `                                                              |
-| 🟡 | ` echo`                                                              |
-| 🟡 | `  echo  `                                                           |
-| 🟡 | `echo .`                                                             |
-| 🟡 | `echo ~`                                                             |
-| 🟡 | `echo echo ~`                                                        |
-| 🟡 | `"echo test"`                                                        |
-| 🟡 | `echo "~"`                                                           |
-| 🟡 | `echo '~'`                                                           |
-| 🟡 | `echo ~123`                                                          |
-| 🟡 | `echo 123~`                                                          |
-| 🟡 | `echo ~/123`                                                         |
-| 🟡 | `echo ~/123/456`                                                     |
+| 🟢 | `ECHO`                                                               |
+| 🟢 | `echO`                                                               |
+| 🟢 | `ECHo`                                                               |
+| 🟢 | `echo`                                                               |
+| 🟢 | `echo echo`                                                          |
+| 🟢 | `echo `                                                              |
+| 🟢 | ` echo`                                                              |
+| 🟢 | `  echo  `                                                           |
+| 🟢 | `echo .`                                                             |
+| 🟢 | `echo ~`                                                             | expand ~ to home
+| 🟢 | `echo echo ~`                                                        | expand ~ to home
+| 🟢 | `"echo test"`                                                        |
+| 🟢 | `echo "~"`                                                           |
+| 🟢 | `echo '~'`                                                           |
+| 🟢 | `echo ~123`                                                          |
+| 🟢 | `echo 123~`                                                          |
+| 🟢 | `echo ~/123`                                                         |
+| 🟢 | `echo ~/123/456`                                                     |
 | 🟡 | `echo #`                                                             |
-| 🟡 | `echofile`                                                           |
-| 🟡 | `echo file`                                                          |
-| 🟡 | `echo no_file`                                                       |
-| 🟡 | `echo file test`                                                     |
-| 🟡 | `echo file   test`                                                   |
-| 🟡 | `echo file     test file   test`                                     |
-| 🟡 | `echo a"b"c`                                                         |
-| 🟡 | `echo "a'b'c`                                                        |
-| 🟡 | `echo "test"`                                                        |
-| 🟡 | `echo test`                                                          |
-| 🟡 | `echo 'test'`                                                        |
-| 🟡 | `echo -n`                                                            |
-| 🟡 | `echo -n -n -n -n`                                                   |
-| 🟡 | `echo -nnnnnnnnnnnnnnnnnnnnnnnn`                                     |
-| 🟡 | `echo -n test -n`                                                    |
-| 🟡 | `"echo" "-n"`                                                        |
-| 🟡 | `echo -n test`                                                       |
-| 🟡 | `echo -nn test`                                                      |
-| 🟡 | `echo -n -n -n test`                                                 |
-| 🟡 | `echo "-n" test`                                                     |
-| 🟡 | `echo -n"-n" test`                                                   |
-| 🟡 | `echo "-nnnn" test`                                                  |
-| 🟡 | `echo "-n -n -n"-n test`                                             |
-| 🟡 | `echo "-n '-n'" test `                                               |
-| 🟡 | `echo -n file test`                                                  |
-| 🟡 | `echo -n -n -n file test`                                            |
-| 🟡 | `echo $USER`                                                         |
-| 🟡 | `echo "$USER"`                                                       |
+| 🟢 | `echofile`                                                           |
+| 🟢 | `echo file`                                                          |
+| 🟢 | `echo no_file`                                                       |
+| 🟢 | `echo file test`                                                     |
+| 🟢 | `echo file   test`                                                   |
+| 🟢 | `echo file     test file   test`                                     |
+| 🟢 | `echo a"b"c`                                                         |
+| 🟢 | `echo "a'b'c`                                                        |
+| 🟢 | `echo "test"`                                                        |
+| 🟢 | `echo test`                                                          |
+| 🟢 | `echo 'test'`                                                        |
+| 🟢 | `echo -n`                                                            |
+| 🟢 | `echo -n -n -n -n`                                                   |
+| 🟢 | `echo -nnnnnnnnnnnnnnnnnnnnnnnn`                                     |
+| 🟢 | `echo -n test -n`                                                    |
+| 🟢 | `"echo" "-n"`                                                        |
+| 🟢 | `echo -n test`                                                       |
+| 🟢 | `echo -nn test`                                                      |
+| 🟢 | `echo -n -n -n test`                                                 |
+| 🟢 | `echo "-n" test`                                                     |
+| 🟢 | `echo -n"-n" test`                                                   |
+| 🟢 | `echo "-nnnn" test`                                                  |
+| 🟢 | `echo "-n -n -n"-n test`                                             |
+| 🟢 | `echo "-n '-n'" test `                                               |
+| 🟢 | `echo -n file test`                                                  |
+| 🟢 | `echo -n -n -n file test`                                            |
+| 🟢 | `echo $USER`                                                         |
+| 🔴 | `echo "$USER"`                                                       |
 | 🟡 | `echo "'$USER'"`                                                     |
 | 🟡 | `echo " '$USER' "`                                                   |
 | 🟡 | `echo text"$USER"`                                                   |
