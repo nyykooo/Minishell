@@ -206,8 +206,6 @@ int is_builtin(t_cmd *cmd)
 	}
 }*/
 
-
-
 void	analyze_input(t_minishell *shell)
 {
 	parsing_hub(shell);
@@ -225,4 +223,4 @@ void	analyze_input(t_minishell *shell)
 			handle_builtins(shell);
 	}
 	return ;
-}*/
+}

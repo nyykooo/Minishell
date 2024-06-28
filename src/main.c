@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/27 10:46:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:21:34 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	minishell_loop(t_minishell *shell)
 		if (create_prompt(shell))
 		{
 			analyze_input(shell);
-			update_questionvar(shell);
+			// update_questionvar(shell);
 			clear_shell(shell);
 		}
 	}
@@ -85,7 +85,8 @@ void	minishell_loop(t_minishell *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	static t_minishell	shell;
+	static t_minishell	shell; // conversar com o Nyko sobre o static
+	t_var *envvar;
 
 	(void)argv;
 	if (argc != 1)
@@ -96,6 +97,9 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
 	shell.envvars = create_list(envp);
+	envvar = find_envvar(shell.envvars, "?");
+	if (envvar->exp)
+		printf("bug\n");
 	minishell_loop(&shell);
 	free_var(shell.envvars);
 	clear_history();
