@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/28 11:12:16 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/30 19:38:32 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ static char *get_name(char *input, int start)
 	int	i;
 	
 	i = 0;
+	if (ft_isalpha(input[start]) == 0 && input[start] != '_' && input[start] != '?')
+		return (ft_substr(input, start, 1));
 	while (input[start + i] != '\0' && input[start + i] != ' '
 			&& input[start + i] != '"' && input[start + i] != '\''
-			&& input[start + i] != '$')
+			&& input[start + i] != '$' && input[start + i] != '='
+			&& input[start + i] != '/')
 		i++;
 	return (ft_substr(input, start, i));
 }
@@ -30,15 +33,14 @@ static char	*ft_strreplace(char *src, int i, char *insert, int flag)
 	int		del_len;
 	int		insert_len;
 	int		size;
+	char	*name;
 
 	if (!src || !insert)
 		return (NULL);
 	insert_len = ft_strlen(insert);
 	del_len = 0;
-	src[i] *= -1;
-	while (src[i + del_len] && src[i + del_len] != ' ' && src[i + del_len] != '$'
-			&& src[i + del_len] != '"' && src[i + del_len] != '\'')
-		del_len++;
+	name = get_name(src, i + 1);
+	del_len = ft_strlen(name) + 1;
 	if (flag == 1)
 		del_len = 1;
 	size = ft_strlen(src) - del_len + insert_len + 1;
@@ -51,6 +53,7 @@ static char	*ft_strreplace(char *src, int i, char *insert, int flag)
 	ft_strlcpy(new + i + insert_len, \
 	src + i + del_len, ft_strlen(src) - del_len);
 	free(src);
+	free(name);
 	return (new);
 }
 
@@ -87,13 +90,17 @@ void	expand_dolar(char **input, t_minishell *shell)
 	char	*var_value;
 	char	*var_name;
 	bool	squote;
+	bool	dquote;
 
 	i = -1;
-	var_value = "";
 	squote = false;
+	dquote = false;
 	while ((*input)[++i])
 	{
-		if ((*input)[i] == '\'')
+		var_value = "";
+		if ((*input)[i] == '"' && squote == false)
+			dquote = !dquote;
+		if ((*input)[i] == '\'' && dquote == false)
 			squote = !squote;
 		if ((*input)[i] == '$' && squote == false)
 		{
@@ -102,6 +109,7 @@ void	expand_dolar(char **input, t_minishell *shell)
 			if (var)
 				var_value = ft_strdup(var->value);
 			(*input) = ft_strreplace((*input), i, var_value, 0);
+			free(var_name);
 		}
 	}
 }
