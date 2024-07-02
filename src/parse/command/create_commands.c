@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 11:08:40 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:04:58 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,6 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 	cmd->cmd = ft_strdup(tokens->content);
 	cmd->type = tokens->type;
 	cmd->shell = shell;
-	if (tokens->type == T_PIPE)
-		cmd->pipe = true;
-	else if (tokens->type == T_RAPEND)
-		cmd->rappend = true;
-	else if (tokens->type == T_LAPEND)
-		cmd->lappend = true;
-	else if (tokens->type == T_RTRUNC)
-		cmd->rtrunc = true;
-	else if (tokens->type == T_LTRUNC)
-		cmd->ltrunc = true;
 	tokens = tokens->next;
 	while (tokens && tokens->type == T_ARG)
 	{

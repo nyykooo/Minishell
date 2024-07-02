@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 13:22:54 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:32:12 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 		return ;
 	}
 	else if (command->arguments == NULL || \
-	ft_strcmp(command->arguments->arg, "--") == 0 || \
-	ft_strcmp(command->arguments->arg, "~") == 0)
+	ft_strcmp(command->arguments->arg, "--") == 0)
 	{
 		dir = get_value(shell->envvars, "HOME");
 		if (dir == NULL)

@@ -425,50 +425,50 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `echo -n file test`                                                  |
 | 🟢 | `echo -n -n -n file test`                                            |
 | 🟢 | `echo $USER`                                                         |
-| 🔴 | `echo "$USER"`                                                       |
-| 🟡 | `echo "'$USER'"`                                                     |
-| 🟡 | `echo " '$USER' "`                                                   |
-| 🟡 | `echo text"$USER"`                                                   |
-| 🟡 | `echo text"'$USER'" ' $USER '`                                       |
-| 🟡 | `echo "text"   "$USER"    "$USER"`                                   |
-| 🟡 | `echo '              $USER          '`                               |
-| 🟡 | `echo               text "$USER"            "$USER"text`             |
-| 🟡 | `echo ''''''''''$USER''''''''''`                                     |
-| 🟡 | `echo """"""""$USER""""""""`                                         |
-| 🟡 | `echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''` |
-| 🟡 | `echo $USER '' $USER $USER '' $USER '' $USER -n $USER`               |
-| 🟡 | `echo ' \' ' \'`                                                     |
-| 🟡 | `echo '\" ' " \"\""`                                                 |
-| 🟡 | `echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'`                      |
-| 🟡 | `echo "$USER""$USER""$USER"`                                         |
-| 🟡 | `echo text"$USER"test`                                               |
-| 🟡 | `echo '$USER' "$USER" "text \' text"`                                |
-| 🟡 | `echo '$USER'`                                                       |
-| 🟡 | `echo $USER " "`                                                     |
-| 🟡 | `echo "$USER""Users/$USER/file""'$USER'"'$USER'`                     |
-| 🟡 | `echo "$USER$USER$USER"`                                             |
-| 🟡 | `echo '$USER'"$USER"'$USER'`                                         |
-| 🟡 | `echo '"$USER"''$USER'"""$USER"`                                     |
-| 🟡 | `echo " $USER  "'$PWD'`                                              |
-| 🟡 | `echo " $USER  \$ "'$PWD'`                                           |
-| 🟡 | `echo $USER=4`                                                       |
-| 🟡 | `echo $USER=thallard`                                                |
-| 🟡 | `echo $USER`                                                         |
-| 🟡 | `echo $?`                                                            |
-| 🟡 | `echo $USER213`                                                      |
-| 🟡 | `echo $USER$12USER$USER=4$USER12`                                    |
-| 🟡 | `echo $USER $123456789USER $USER123456789`                           |
-| 🟡 | `echo $USER $9999USER $8888USER $7777USER`                           |
-| 🟡 | `echo $USER $USER9999 $USER8888 $USER7777`                           |
-| 🟡 | `echo $USER $USER9999 $USER8888 $USER7777 "$USER"`                   |
-| 🟡 | `echo "$USER=12$USER"`                                               |
-| 🟡 | `echo "$9USER" "'$USER=12$SOMETHING'"`                               |
-| 🟡 | `echo $PWD/file`                                                     |
-| 🟡 | `echo "$PWD/file`                                                    |
-| 🟡 | `echo "text" "text$USER" ... "$USER`                                 |
-| 🟡 | `echo $PW`                                                           |
-| 🟡 | `echo "'"'ola'"'"`                                                   |
-| 🟡 | `echo "'"' ola '"'"`                                                 |
+| 🟢 | `echo "$USER"`                                                       |
+| 🔴 | `echo "'$USER'"`                                                     | erro aspas simples dentro de duplas
+| 🔴 | `echo " '$USER' "`                                                   | erro aspas simples dentro de duplas
+| 🟢 | `echo text"$USER"`                                                   |
+| 🔴 | `echo text"'$USER'" ' $USER '`                                       | erro aspas simples dentro de duplas
+| 🟢 | `echo "text"   "$USER"    "$USER"`                                   |
+| 🟢 | `echo '              $USER          '`                               |
+| 🟢 | `echo               text "$USER"            "$USER"text`             |
+| 🟢 | `echo ''''''''''$USER''''''''''`                                     |
+| 🟢 | `echo """"""""$USER""""""""`                                         |
+| 🟢 | `echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''` |
+| 🔴 | `echo $USER '' $USER $USER '' $USER '' $USER -n $USER`               | bug printando apenas 1 vez
+| 🟢 | `echo ' \' ' \'`                                                     |
+| 🔵 | `echo '\" ' " \"\""`                                                 |
+| 🔵 | `echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'`                      |
+| 🟢 | `echo "$USER""$USER""$USER"`                                         |
+| 🟢 | `echo text"$USER"test`                                               |
+| 🟢 | `echo '$USER' "$USER" "text \' text"`                                |
+| 🟢 | `echo '$USER'`                                                       |
+| 🟢 | `echo $USER " "`                                                     |
+| 🟢 | `echo "$USER""Users/$USER/file""'$USER'"'$USER'`                     |
+| 🟢 | `echo "$USER$USER$USER"`                                             |
+| 🟢 | `echo '$USER'"$USER"'$USER'`                                         |
+| 🟢 | `echo '"$USER"''$USER'"""$USER"`                                     |
+| 🟢 | `echo " $USER  "'$PWD'`                                              |
+| 🟢 | `echo " $USER  \$ "'$PWD'`                                           |
+| 🟢 | `echo $USER=4`                                                       |
+| 🟢 | `echo $USER=thallard`                                                |
+| 🟢 | `echo $USER`                                                         |
+| 🟢 | `echo $?`                                                            |
+| 🟢 | `echo $USER213`                                                      |
+| 🔴 | `echo $USER$12USER$USER=4$USER12`                                    |
+| 🔴 | `echo $USER $123456789USER $USER123456789`                           |
+| 🔴 | `echo $USER $9999USER $8888USER $7777USER`                           |
+| 🔴 | `echo $USER $USER9999 $USER8888 $USER7777`                           |
+| 🔴 | `echo $USER $USER9999 $USER8888 $USER7777 "$USER"`                   |
+| 🔴 | `echo "$USER=12$USER"`                                               |
+| 🔴 | `echo "$9USER" "'$USER=12$SOMETHING'"`                               |
+| 🔴 | `echo $PWD/file`                                                     |
+| 🟢 | `echo "$PWD/file`                                                    | error unmatched quotes
+| 🟢 | `echo "text" "text$USER" ... "$USER`                                 |
+| 🟢 | `echo $PW`                                                           |
+| 🟢 | `echo "'"'ola'"'"`                                                   |
+| 🟢 | `echo "'"' ola '"'"`                                                 |
 
 ## NORMINETTE
 > At 42 School, it is expected that almost every project is written following the Norm, which is the coding standard of the school.
