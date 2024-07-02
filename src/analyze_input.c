@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/28 11:15:51 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/02 08:49:59 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,22 @@ static void	handle_builtins(t_minishell *shell)
 
 void	analyze_input(t_minishell *shell)
 {
+	t_cmd *temp;
+	
 	parsing_hub(shell);
+	temp = shell->commands;
+	while (temp)
+	{
+		printf("temp->cmd: %s\n", temp->cmd);
+		printf("temp->type: %d\n", temp->type);
+		printf("temp->rtrunc: %d\n", temp->rtrunc);
+		printf("temp->rappend: %d\n", temp->rappend);
+		printf("temp->lappend: %d\n", temp->lappend);
+		printf("temp->ltrunc: %d\n", temp->ltrunc);
+		printf("temp->path: %s\n", temp->path);
+		printf("----------------\n");
+		temp = temp->next;
+	}
 	// pensar em um loop para percorrer varios comandos relacionando com a quantidade de pipes e redirects
 	if (shell->n_cmd > 1)
 	{
@@ -140,4 +155,4 @@ void	analyze_input(t_minishell *shell)
 			handle_builtins(shell);
 	}
 	return ;
-}*/
+}

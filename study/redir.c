@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 10:56:44 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/24 11:22:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:10:51 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int main(int ac, char **av, char **envp)
 	if (ac != 2)
 		return (0);
 	if (strcmp(av[1], ">") == 0 || strcmp(av[1], "<") == 0)
-		fd = open("redirect.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		fd = open("redirect.txt", O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	else if (strcmp(av[1], ">>") == 0)
-		fd = open("redirect.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
+		fd = open("redirect.txt", O_WRONLY | O_CREAT | O_APPEND, 0664);
 	else
 		return (0);
 	dup2(fd, 1);
