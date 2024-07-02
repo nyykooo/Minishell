@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/28 17:04:58 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:53:36 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 	cmd->type = tokens->type;
 	cmd->shell = shell;
 	tokens = tokens->next;
-	while (tokens && tokens->type == T_ARG)
+	while (tokens && (tokens->type == T_ARG || tokens->type == T_EMPTY))
 	{
 		init_arg(cmd, tokens->content);
 		tokens = tokens->next;

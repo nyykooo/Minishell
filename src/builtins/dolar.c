@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/30 19:38:32 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:59:32 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,27 @@ void	expand_tildes(char **input, t_minishell *shell)
 				var_value = ft_strdup(var->value);
 			(*input) = ft_strreplace((*input), i, var_value, 1);
 		}
+	}
+}
+
+void	expand_hashtag(char **input)
+{
+	
+	int		i;
+	bool	squote;
+	bool	dquote;
+
+	i = -1;
+	squote = false;
+	dquote = false;
+	while ((*input)[++i])
+	{
+		if ((*input)[i] == '"' && squote == false)
+			dquote = !dquote;
+		if ((*input)[i] == '\'')
+			squote = !squote;
+		if ((*input)[i] == '#' && squote == false)
+			(*input)[i] = 0;
 	}
 }
 

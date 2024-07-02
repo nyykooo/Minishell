@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 15:55:11 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:59:46 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ static void	create_questionvar(t_var *envvar)
 	ft_varadd_back(&envvar, new_node);
 }
 
+static void	set_underline(t_var *envvar)
+{
+	t_var	*node;
+
+	node = find_envvar(envvar, "_");
+	if (!node)
+		return ;
+	node->exp = false;
+}
+
 t_var *create_list(char **envp)
 {
 	char	**current;
@@ -62,5 +72,6 @@ t_var *create_list(char **envp)
 		}
 	}
 	create_questionvar(head);
+	set_underline(head);
 	return (head);
 }

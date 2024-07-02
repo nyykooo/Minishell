@@ -224,7 +224,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `/bin/cd`          | OK! Path not found in bash nor in our
 | 🟢 | `/bin/export`      | OK! Path not found in bash nor in our
 | 🟢 | `/bin/exit`        | OK! Path not found in bash nor in our
-| 🔴 | `/bin/env`         | IMPORTANT!
+| 🟢 | `/bin/env`         | IMPORTANT!
 
 #### PWD
 > Locating the present directory through the pwd command in Minishell.
@@ -397,7 +397,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `echo 123~`                                                          |
 | 🟢 | `echo ~/123`                                                         |
 | 🟢 | `echo ~/123/456`                                                     |
-| 🔴 | `echo #`                                                             |
+| 🟢 | `echo #`                                                             |
 | 🟢 | `echofile`                                                           |
 | 🟢 | `echo file`                                                          |
 | 🟢 | `echo no_file`                                                       |
@@ -436,7 +436,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `echo ''''''''''$USER''''''''''`                                     |
 | 🟢 | `echo """"""""$USER""""""""`                                         |
 | 🟢 | `echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''` |
-| 🔴 | `echo $USER '' $USER $USER '' $USER '' $USER -n $USER`               | bug printando apenas 1 vez
+| 🟢 | `echo $USER '' $USER $USER '' $USER '' $USER -n $USER`               | bug printando apenas 1 vez
 | 🟢 | `echo ' \' ' \'`                                                     |
 | 🔵 | `echo '\" ' " \"\""`                                                 |
 | 🔵 | `echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'`                      |
