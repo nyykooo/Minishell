@@ -6,11 +6,41 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/02 18:59:46 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/02 22:04:21 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
+
+void	update_underlinevar(t_minishell *shell)
+{
+	t_cmd	*current;
+	t_arg	*arg;
+	t_var	*underlinevar;
+	char	*underlinevar_value;
+
+	current = shell->commands;
+	while (current->next)
+		current = current->next;
+	if (!current->arguments)
+		underlinevar_value = ft_strdup(current->cmd);
+	else
+	{
+		arg = current->arguments;
+		while (arg->next)
+			arg = arg->next;
+		underlinevar_value = ft_strdup(arg->arg);
+	}
+	underlinevar = find_envvar(shell->envvars, "_");
+	update_existing_envvar(underlinevar, "_", underlinevar_value);
+	free(underlinevar_value);
+}
+
+void	update_vars(t_minishell *shell)
+{
+	update_questionvar(shell);
+	update_underlinevar(shell);
+}
 
 void	update_questionvar(t_minishell *shell)
 {

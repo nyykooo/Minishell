@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/27 10:46:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/02 22:00:35 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	minishell_loop(t_minishell *shell)
 		if (create_prompt(shell))
 		{
 			analyze_input(shell);
-			update_questionvar(shell);
+			update_vars(shell);
 			clear_shell(shell);
 		}
 	}
