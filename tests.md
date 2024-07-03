@@ -470,6 +470,33 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `echo "'"'ola'"'"`                                                   |
 | 🟢 | `echo "'"' ola '"'"`                                                 |
 
+#### PIPES AND REDIRECTS
+
+Redirecionamento Simples de Entrada e Saída:  
+| 🟢 | cat < input.txt > output.txt  
+| 🟢 | grep 'palavra' < arquivo.txt > resultados.txt  
+  
+Uso de Pipe Simples:  
+| 🟢 | ls | wc -l  
+| 🟢 | cat arquivo.txt | grep 'palavra'  
+  
+Combinação de Pipes:  
+| 🟢 | cat arquivo.txt | grep 'palavra' | sort | uniq  
+| 🟢 | ls -l | grep '^d' | wc -l  
+  
+Pipes com Redirecionamento de Entrada:  
+| 🟢 | grep 'palavra' < arquivo.txt | sort > resultados_ordenados.txt  
+| 🟢 | cat input.txt | wc -l > line_count.txt  
+|    | cat < input.txt | wc -l > line_count.txt  
+
+Pipes com Redirecionamento de Saída:  
+| 🟢 | ls -l | grep '^d' > diretorios.txt  
+| 🟢 | cat arquivo.txt | head -n 5 > primeiras_linhas.txt  
+  
+Redirecionamento de Erro:  
+|    | grep 'palavra' arquivo_inexistente.txt 2> erro.txt  
+|    | cat arquivo.txt 2> /dev/null  
+  
 ## NORMINETTE
 > At 42 School, it is expected that almost every project is written following the Norm, which is the coding standard of the school.
 

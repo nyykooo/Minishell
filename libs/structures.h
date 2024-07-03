@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/27 14:19:50 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:42:53 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_cmd
 	bool				rappend; // if the command is a right append
 	bool				lappend; // if the command is a left append
 	bool				rtrunc; // if the command is a right trunc
-	bool				ltrunc; // if the command is a left trunc
+	bool				input_file; // if the command is a input_file
 	enum e_types		type; // type of command
 	struct s_minishell	*shell; // pointer to shell structure
 	struct s_cmd		*next;

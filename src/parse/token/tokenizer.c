@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/28 17:04:45 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:42:53 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,11 @@ static void mark_redir(t_cmd *command)
 	if (temp)
 	{
 		if (temp->type == T_LTRUNC)
-			command->rtrunc = true;
+			command->input_file = true;
 		else if (temp->type == T_RTRUNC)
 			command->rtrunc = true;
 		else if (temp->type == T_LAPEND)
-			command->rappend = true;
+			command->lappend = true;
 		else if (temp->type == T_RAPEND)
 			command->rappend = true;
 	}

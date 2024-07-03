@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/02 08:54:29 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/03 10:39:41 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,78 +140,16 @@ int is_builtin(t_cmd *cmd)
     return 0; // Não é um built-in
 }
 
-/*void config_output_redirection(t_cmd *cmd)
-{
-	int	fd_out;
-	char	*error_msg;
-	t_cmd	*last_cmd;
-	
-	last_cmd = cmd;
-	// Encontrar o último comando de redirecionamento
-	while (last_cmd->next != NULL && (last_cmd->next->rtrunc || last_cmd->next->rappend))
-	{
-		last_cmd = last_cmd->next;
-	}
-
-	// Configurar redirecionamento baseado no último comando de redirecionamento encontrado
-	if (last_cmd->path != NULL) {
-		int flags = O_WRONLY | O_CREAT | (last_cmd->rtrunc ? O_TRUNC : O_APPEND);
-		fd_out = open(last_cmd->path, flags, 0644);
-		if (fd_out < 0) {
-			error_msg = error_msg_construct(4, "-minishell: ", last_cmd->path, ": ", strerror(errno));
-			put_error_msg(error_msg, fd_out); // Ajustar o EXIT_STATUS aqui
-			free(error_msg);
-			exit(EXIT_FAILURE);
-		}
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-	}
-}*/
-// testar ficheiro com pipe
 // testar pipeline com ficheiro sem permissoes = o retorno sera: permissoes negados
 // o retorno da open devido a falta de permissao eh < 0?
-/*void	config_output_redirection(t_cmd *cmd)
-{
-	int		fd_out;
-	char	*error_msg;
 
-	if (cmd->path != NULL)
-	{
-		if (cmd->next->rtrunc)
-		{
-			fd_out = open(cmd->next->path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd_out < 0)
-			{
-				error_msg = error_msg_construct(4, "-minishell: ", cmd->next->path, ": ", strerror(errno));
-				put_error_msg(error_msg, fd_out); //corrigir o EXIT_STATUS aqui
-				free(error_msg);
-				exit(EXIT_FAILURE);
-			}
-			dup2(fd_out, STDOUT_FILENO);
-			close(fd_out);
-		}
-		else if (cmd->next->rappend)
-		{
-			fd_out = open(cmd->next->path, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (fd_out < 0)
-			{
-				error_msg = error_msg_construct(4, "-minishell: ", cmd->next->path, ": ", strerror(errno));
-				put_error_msg(error_msg, fd_out); //corrigir o EXIT_STATUS aqui
-				free(error_msg);
-				exit(EXIT_FAILURE);
-			}
-			dup2(fd_out, STDOUT_FILENO);
-			close(fd_out);
-		}
-	}
-}*/
 
 void	analyze_input(t_minishell *shell)
 {
-	t_cmd *temp;
+	//t_cmd *temp;
 	
 	parsing_hub(shell);
-	temp = shell->commands;
+	/*temp = shell->commands;
 	while (temp)
 	{
 		printf("temp->cmd: %s\n", temp->cmd);
@@ -219,16 +157,18 @@ void	analyze_input(t_minishell *shell)
 		printf("temp->rtrunc: %d\n", temp->rtrunc);
 		printf("temp->rappend: %d\n", temp->rappend);
 		printf("temp->lappend: %d\n", temp->lappend);
-		printf("temp->ltrunc: %d\n", temp->ltrunc);
+		printf("temp->input_file: %d\n", temp->input_file);
 		printf("temp->path: %s\n", temp->path);
 		printf("----------------\n");
 		temp = temp->next;
-	}
+	}*/
 	// pensar em um loop para percorrer varios comandos relacionando com a quantidade de pipes e redirects
-	if (shell->n_cmd > 1)
+	if (shell->n_cmd > 1) //Isso implica que temos |, &&, ||, ;, (), {}.
 	{
-		handle_pipe(shell->commands);
 		//pipe_redir_hub(shell);
+		printf("entrou na handle_pipe\n");
+		//printf("shell->n_cmd: %d\n", shell->n_cmd);
+		handle_pipe(shell->commands);
 	}
 	else if (shell->commands)
 	{
@@ -238,5 +178,4 @@ void	analyze_input(t_minishell *shell)
 			handle_builtins(shell);
 	}
 	return ;
-}
 }
