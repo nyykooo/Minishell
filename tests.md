@@ -488,6 +488,7 @@ Pipes com Redirecionamento de Entrada:
 | 🟢 | grep 'palavra' < arquivo.txt | sort > resultados_ordenados.txt  
 | 🟢 | cat input.txt | wc -l > line_count.txt  
 |    | cat < input.txt | wc -l > line_count.txt  
+|    | grep "bb" < tfile.txt | wc -l
 
 Pipes com Redirecionamento de Saída:  
 | 🟢 | ls -l | grep '^d' > diretorios.txt  

@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/03 10:39:41 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:42:31 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,10 @@ int is_builtin(t_cmd *cmd)
 
 void	analyze_input(t_minishell *shell)
 {
-	//t_cmd *temp;
+	t_cmd *temp;
 	
 	parsing_hub(shell);
-	/*temp = shell->commands;
+	temp = shell->commands;
 	while (temp)
 	{
 		printf("temp->cmd: %s\n", temp->cmd);
@@ -161,8 +161,7 @@ void	analyze_input(t_minishell *shell)
 		printf("temp->path: %s\n", temp->path);
 		printf("----------------\n");
 		temp = temp->next;
-	}*/
-	// pensar em um loop para percorrer varios comandos relacionando com a quantidade de pipes e redirects
+	}
 	if (shell->n_cmd > 1) //Isso implica que temos |, &&, ||, ;, (), {}.
 	{
 		//pipe_redir_hub(shell);
