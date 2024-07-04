@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/27 22:32:24 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:58:17 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ t_var	*create_list(char **envp);
 void	handle_sigint(int sig);
 
 
-int	handle_pipe(t_cmd *commands);
+int	handle_pipe_and_redir(t_cmd *commands);
 
 #endif

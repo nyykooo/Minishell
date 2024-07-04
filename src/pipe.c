@@ -6,11 +6,29 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/03 14:12:00 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:43:06 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
+
+int is_builtin(t_cmd *cmd)
+{
+	int	i;
+    const char *builtins[] = {"cd", "exit", "export", "unset", "echo", NULL};
+
+	i = 0;
+    while (builtins[i] != NULL)
+	{
+		if(cmd->cmd != NULL)
+		{
+        	if (strcmp(cmd->cmd, builtins[i]) == 0)
+            	return 1; // É um built-in
+        }
+		i++;
+    }
+    return 0; // Não é um built-in
+}
 
 static char	*get_command_path(char *command)
 {
@@ -44,7 +62,7 @@ static char	*get_command_path(char *command)
 	return (NULL);
 }
 
-void	handle_input_redirection(t_cmd *cmd_temp)
+int	handle_input_redirection(t_cmd *cmd_temp)
 {
 	t_cmd	*current_cmd;
 	int		in_fd;
@@ -53,16 +71,16 @@ void	handle_input_redirection(t_cmd *cmd_temp)
 	current_cmd = cmd_temp;
 	while (current_cmd != NULL && current_cmd->type != T_PIPE)
 	{
-		printf("entrou no loop da input\n");
-		printf("e o current_cmd->cmd = %s\n", current_cmd->cmd);
-		printf("seu input_file eh : %d\n", current_cmd->input_file);
+		//printf("entrou no loop da input\n");
+		//printf("e o current_cmd->cmd = %s\n", current_cmd->cmd);
+		//printf("seu input_file eh : %d\n", current_cmd->input_file);
 		if (current_cmd->input_file == true)
 		{
-			printf("entrou no if da input\n");
+			//printf("entrou no if da input\n");
 			if (in_fd >= 0)
 				close(in_fd);
 			in_fd = open(current_cmd->cmd, O_RDONLY);
-			printf("in_fd = %d\n", in_fd);
+			//printf("in_fd = %d\n", in_fd);
 			if (in_fd < 0)
 			{
 				perror("open");
@@ -71,18 +89,19 @@ void	handle_input_redirection(t_cmd *cmd_temp)
 		}
 		current_cmd = current_cmd->next;
 	}
-	if (in_fd >= 0)
+	return (in_fd);
+	/*if (in_fd >= 0)
 	{
 		dup2(in_fd, STDIN_FILENO);
 		close(in_fd);
-	}
+	}*/
 }
 /*error_msg = error_msg_construct(4, "-minishell: ", last_cmd->path, ": ", strerror(errno));
 put_error_msg(error_msg, STDERR_FILENO); // Ajustar o EXIT_STATUS aqui
 free(error_msg);
 exit(EXIT_FAILURE);*/
 
-void	handle_output_redirection(t_cmd *cmd_temp)
+int	handle_output_redirection(t_cmd *cmd_temp)
 {
 	t_cmd	*current_cmd;
 	int		fd_out;
@@ -92,10 +111,10 @@ void	handle_output_redirection(t_cmd *cmd_temp)
 	current_cmd = cmd_temp;
 	while (current_cmd != NULL)
 	{
-		printf("entrou no loop da output\n");
+		//printf("entrou no loop da output\n");
 		if (current_cmd->rappend == true || current_cmd->rtrunc == true)
 		{
-			printf("entrou no if da output\n");
+			//printf("entrou no if da output\n");
 			flags = O_WRONLY | O_CREAT;
 			if (current_cmd->rappend == true)
 				flags |= O_APPEND;
@@ -112,14 +131,15 @@ void	handle_output_redirection(t_cmd *cmd_temp)
 		}
 		current_cmd = current_cmd->next;
 	}
-	if (fd_out >= 0)
+	return (fd_out);
+	/*if (fd_out >= 0)
 	{
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
-	}
+	}*/
 }
 
-int	handle_pipe(t_cmd *commands)
+int	handle_pipe_and_redir(t_cmd *commands)
 {
 	int		fd[2];
 	int		old_read_fd;
@@ -127,20 +147,32 @@ int	handle_pipe(t_cmd *commands)
 	t_cmd	*cmd_temp;
 	char	**arg_array;
 	char	*path;
+	int	out_fd = -1;
+	int	in_fd = -1;
 
 	cmd_temp = commands;
 	old_read_fd = 0;
-	while (cmd_temp != NULL && cmd_temp->type == T_COMMAND) // e nao for ficheiro!
-	{
-		//printf("entrou no loop principal\n");
+	while (cmd_temp != NULL)
+	{	
+		//printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
+		if ((ft_strcmp(cmd_temp->cmd, "tfile.txt") == 0) || \
+		(ft_strcmp(cmd_temp->cmd, "t2file.txt") == 0) || \
+		cmd_temp->type == T_RAPEND || cmd_temp->type == T_RTRUNC || \
+		cmd_temp->type == T_LTRUNC || cmd_temp->type == T_LAPEND || \
+		cmd_temp->type == T_PIPE)
+		{
+			cmd_temp = cmd_temp->next;
+			continue;
+		}
+		//preciso de uma funcao para avaliar se eh um builtin/comando do path ou nao.
+		
+		printf("entrou no loop principal\n");
 		if (pipe(fd) == -1)
 		{
 			perror("pipe");
 			exit(1);
 		}
-		//printf("pipe criado\n");
 		pid = fork();
-		//printf("fork criado\n");
 		if (pid < 0)
 		{
 			perror("fork");
@@ -148,41 +180,129 @@ int	handle_pipe(t_cmd *commands)
 		}
 		else if (pid == 0)
 		{
-			// Processo filho
-			handle_input_redirection(cmd_temp);
-			handle_output_redirection(cmd_temp);
-			// Configurar pipe
+			in_fd = handle_input_redirection(cmd_temp);
+			out_fd = handle_output_redirection(cmd_temp);
+			// setting necessario quando ha multiplos pipes
 			if (old_read_fd != 0)
 			{
 				dup2(old_read_fd, STDIN_FILENO);
 				close(old_read_fd);
 			}
-			// Variável para indicar se existe um T_PIPE em qualquer nó subsequente
 			int has_pipe = 0;
-			// Ponteiro temporário para iterar pela lista a partir do nó atual
 			t_cmd *temp = cmd_temp;
-
-			// Loop para percorrer os nós subsequentes
 			while (temp != NULL)
 			{
 				if (temp->type == T_PIPE)
 				{
-					has_pipe = 1; // Encontrou um T_PIPE
-					break; // Sai do loop, pois já encontrou o que precisava
+					has_pipe = 1;
+					break;
 				}
-				temp = temp->next; // Move para o próximo nó
+				temp = temp->next;
 			}
-			// Agora, usa a variável has_pipe para decidir se executa o código
-			if (has_pipe)
+			if (has_pipe && in_fd >= 0) // Se houver redirecionamento de input
+			{
+				printf("PIPE [x] REDIR [x]\n");
+				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
+				printf("tem pipe e in_fd >= 0\n");
+				printf("in_fd = %d\n", in_fd);
+				printf("out_fd = %d\n", out_fd);
+				printf("fd[0] = %d\n", fd[0]);
+				printf("fd[1] = %d\n", fd[1]);
+				close(fd[0]); // Não precisa do lado de leitura do pipe no filho
+				dup2(in_fd, STDIN_FILENO);
+				close(in_fd);
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[1]);
+				arg_array = ft_to_array(cmd_temp);
+				path = get_command_path(cmd_temp->cmd);
+				execve(path, arg_array, envvar_array(cmd_temp->shell));
+				exit(0); // Encerra o filho se execve falhar
+			}
+			if (has_pipe && in_fd == -1)
 			{
 				close(fd[0]); // Não precisa do lado de leitura do pipe no filho
 				dup2(fd[1], STDOUT_FILENO);
 				close(fd[1]);
+				arg_array = ft_to_array(cmd_temp);
+				path = get_command_path(cmd_temp->cmd);
+				execve(path, arg_array, envvar_array(cmd_temp->shell));
+				exit(0); // Encerra o filho se execve falhar
 			}
-			arg_array = ft_to_array(cmd_temp);
+			if (!has_pipe && in_fd >= 0)
+			{
+				printf("PIPE [ ] REDIR [x]\n");
+				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
+				printf("tem pipe e in_fd >= 0\n");
+				printf("in_fd = %d\n", in_fd);
+				printf("out_fd = %d\n", out_fd);
+				printf("fd[0] = %d\n", fd[0]);
+				printf("fd[1] = %d\n", fd[1]);
+				dup2(in_fd, STDIN_FILENO);
+				close(in_fd);
+				if (out_fd >= 0)
+				{
+					dup2(out_fd, STDOUT_FILENO);
+					close(out_fd);
+				}
+				arg_array = ft_to_array(cmd_temp);
+				path = get_command_path(cmd_temp->cmd);
+				execve(path, arg_array, envvar_array(cmd_temp->shell));
+				exit(0); // Encerra o filho se execve falhar
+			}
+			if (!has_pipe && in_fd == -1)
+			{
+				if (out_fd >= 0)
+				{
+					dup2(out_fd, STDOUT_FILENO);
+					close(out_fd);
+				}
+				arg_array = ft_to_array(cmd_temp);
+				path = get_command_path(cmd_temp->cmd);
+				execve(path, arg_array, envvar_array(cmd_temp->shell));
+				exit(0); // Encerra o filho se execve falhar
+			}
+			if (!has_pipe && out_fd == -1)
+			{
+				printf("PIPE [ ] OUT_REDIR [ ]\n");
+				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
+				printf("tem pipe e in_fd >= 0\n");
+				printf("in_fd = %d\n", in_fd);
+				printf("out_fd = %d\n", out_fd);
+				printf("fd[0] = %d\n", fd[0]);
+				printf("fd[1] = %d\n", fd[1]);
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[1]);
+				dup2(fd[0], STDIN_FILENO);
+				close(fd[0]);
+				arg_array = ft_to_array(cmd_temp);
+				path = get_command_path(cmd_temp->cmd);
+				execve(path, arg_array, envvar_array(cmd_temp->shell));
+				exit(0); // Encerra o filho se execve falhar
+			}
+			if (!has_pipe && out_fd >= 0)
+			{
+				printf("PIPE [ ] OUT_REDIR [X]\n");
+				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
+				printf("tem pipe e in_fd >= 0\n");
+				printf("in_fd = %d\n", in_fd);
+				printf("out_fd = %d\n", out_fd);
+				printf("fd[0] = %d\n", fd[0]);
+				printf("fd[1] = %d\n", fd[1]);
+				dup2(out_fd, STDOUT_FILENO);
+				close(out_fd);
+				close(in_fd);
+				close(fd[1]);
+				close(fd[0]);
+				arg_array = ft_to_array(cmd_temp);
+				path = get_command_path(cmd_temp->cmd);
+				execve(path, arg_array, envvar_array(cmd_temp->shell));
+				exit(0); // Encerra o filho se execve falhar
+			}
+			/*arg_array = ft_to_array(cmd_temp);
 			path = get_command_path(cmd_temp->cmd);
 			execve(path, arg_array, envvar_array(cmd_temp->shell));
-			exit(0); // Encerra o filho se execve falhar
+			exit(0); // Encerra o filho se execve falhar*/
+			printf("PASSOU POR TODOS OS CASOS\n");
 		}
 		else
 		{
@@ -196,9 +316,9 @@ int	handle_pipe(t_cmd *commands)
 		if (cmd_temp->next != NULL && (cmd_temp->next->type == T_PIPE \
 		|| cmd_temp->next->type == T_RAPEND || cmd_temp->next->type == T_RTRUNC || \
 		cmd_temp->next->type == T_LTRUNC || cmd_temp->next->type == T_LAPEND))
-			cmd_temp = cmd_temp->next->next; // Pula o cmd
+			cmd_temp = cmd_temp->next->next; // Pula se for >, <, | ou >>
 		else
-			cmd_temp = cmd_temp->next; // Sai do loop se não houver mais pipes
+			cmd_temp = cmd_temp->next;
 	}
 	if (old_read_fd != 0)
 		close(old_read_fd);

@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/03 11:42:31 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:17:59 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,23 +122,6 @@ static void	handle_builtins(t_minishell *shell)
 		cmd = cmd->next;
 	}
 }*/
-int is_builtin(t_cmd *cmd)
-{
-	int	i;
-    const char *builtins[] = {"cd", "exit", "export", "unset", "echo", NULL};
-
-	i = 0;
-    while (builtins[i] != NULL)
-	{
-		if(cmd->cmd != NULL)
-		{
-        	if (strcmp(cmd->cmd, builtins[i]) == 0)
-            	return 1; // É um built-in
-        }
-		i++;
-    }
-    return 0; // Não é um built-in
-}
 
 // testar pipeline com ficheiro sem permissoes = o retorno sera: permissoes negados
 // o retorno da open devido a falta de permissao eh < 0?
@@ -146,10 +129,10 @@ int is_builtin(t_cmd *cmd)
 
 void	analyze_input(t_minishell *shell)
 {
-	t_cmd *temp;
+	//t_cmd *temp;
 	
 	parsing_hub(shell);
-	temp = shell->commands;
+	/*temp = shell->commands;
 	while (temp)
 	{
 		printf("temp->cmd: %s\n", temp->cmd);
@@ -161,13 +144,13 @@ void	analyze_input(t_minishell *shell)
 		printf("temp->path: %s\n", temp->path);
 		printf("----------------\n");
 		temp = temp->next;
-	}
+	}*/
 	if (shell->n_cmd > 1) //Isso implica que temos |, &&, ||, ;, (), {}.
 	{
 		//pipe_redir_hub(shell);
-		printf("entrou na handle_pipe\n");
+		//printf("entrou na handle_pipe\n");
 		//printf("shell->n_cmd: %d\n", shell->n_cmd);
-		handle_pipe(shell->commands);
+		handle_pipe_and_redir(shell->commands);
 	}
 	else if (shell->commands)
 	{
