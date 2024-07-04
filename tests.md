@@ -481,6 +481,7 @@ Uso de Pipe Simples:
 | 🟢 | cat arquivo.txt | grep 'palavra'  
   
 Combinação de Pipes:  
+| 🟢 | seq 100 | grep "1" | sort -r | uniq | wc -l
 | 🟢 | cat arquivo.txt | grep 'palavra' | sort | uniq  
 | 🟢 | ls -l | grep '^d' | wc -l  
   

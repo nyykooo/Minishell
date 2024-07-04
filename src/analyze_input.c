@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/04 16:17:59 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/04 18:32:36 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	analyze_input(t_minishell *shell)
 		printf("----------------\n");
 		temp = temp->next;
 	}*/
-	if (shell->n_cmd > 1) //Isso implica que temos |, &&, ||, ;, (), {}.
+	if (shell->n_cmd > 1) //Isso implica que temos |, &&, ||, ;, (), {}. Ou apenas <, >, >>, <<.
 	{
 		//pipe_redir_hub(shell);
 		//printf("entrou na handle_pipe\n");

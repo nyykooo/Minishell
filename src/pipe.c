@@ -6,29 +6,11 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/04 17:43:06 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/04 19:14:58 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
-
-int is_builtin(t_cmd *cmd)
-{
-	int	i;
-    const char *builtins[] = {"cd", "exit", "export", "unset", "echo", NULL};
-
-	i = 0;
-    while (builtins[i] != NULL)
-	{
-		if(cmd->cmd != NULL)
-		{
-        	if (strcmp(cmd->cmd, builtins[i]) == 0)
-            	return 1; // É um built-in
-        }
-		i++;
-    }
-    return 0; // Não é um built-in
-}
 
 static char	*get_command_path(char *command)
 {
@@ -139,6 +121,24 @@ int	handle_output_redirection(t_cmd *cmd_temp)
 	}*/
 }
 
+static bool	is_pipe_or_redir(t_cmd *cmd)
+{
+	if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || \
+	cmd->type == T_LTRUNC || cmd->type == T_LAPEND || \
+	cmd->type == T_PIPE)
+		return (true);
+	return (false);
+}
+
+static bool is_file(t_cmd *cmd)
+{
+	if (cmd->prev != NULL && (cmd->prev->type == T_RAPEND || \
+	cmd->prev->type == T_RTRUNC || \
+	cmd->prev->type == T_LTRUNC || \
+	cmd->prev->type == T_LAPEND)) 
+		return (true);
+	return (false);
+}
 int	handle_pipe_and_redir(t_cmd *commands)
 {
 	int		fd[2];
@@ -155,18 +155,14 @@ int	handle_pipe_and_redir(t_cmd *commands)
 	while (cmd_temp != NULL)
 	{	
 		//printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
-		if ((ft_strcmp(cmd_temp->cmd, "tfile.txt") == 0) || \
-		(ft_strcmp(cmd_temp->cmd, "t2file.txt") == 0) || \
-		cmd_temp->type == T_RAPEND || cmd_temp->type == T_RTRUNC || \
-		cmd_temp->type == T_LTRUNC || cmd_temp->type == T_LAPEND || \
-		cmd_temp->type == T_PIPE)
+		if ((is_pipe_or_redir(cmd_temp) == true) || (is_file(cmd_temp) == true))
 		{
 			cmd_temp = cmd_temp->next;
 			continue;
 		}
+		//printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
 		//preciso de uma funcao para avaliar se eh um builtin/comando do path ou nao.
 		
-		printf("entrou no loop principal\n");
 		if (pipe(fd) == -1)
 		{
 			perror("pipe");
@@ -203,7 +199,6 @@ int	handle_pipe_and_redir(t_cmd *commands)
 			{
 				printf("PIPE [x] REDIR [x]\n");
 				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
-				printf("tem pipe e in_fd >= 0\n");
 				printf("in_fd = %d\n", in_fd);
 				printf("out_fd = %d\n", out_fd);
 				printf("fd[0] = %d\n", fd[0]);
@@ -230,9 +225,8 @@ int	handle_pipe_and_redir(t_cmd *commands)
 			}
 			if (!has_pipe && in_fd >= 0)
 			{
-				printf("PIPE [ ] REDIR [x]\n");
+				printf("PIPE [ ] IN_REDIR [x]\n");
 				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
-				printf("tem pipe e in_fd >= 0\n");
 				printf("in_fd = %d\n", in_fd);
 				printf("out_fd = %d\n", out_fd);
 				printf("fd[0] = %d\n", fd[0]);
@@ -250,7 +244,13 @@ int	handle_pipe_and_redir(t_cmd *commands)
 				exit(0); // Encerra o filho se execve falhar
 			}
 			if (!has_pipe && in_fd == -1)
-			{
+			{	
+				printf("PIPE [ ] REDIR [ ]\n");
+				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
+				printf("in_fd = %d\n", in_fd);
+				printf("out_fd = %d\n", out_fd);
+				printf("fd[0] = %d\n", fd[0]);
+				printf("fd[1] = %d\n", fd[1]);
 				if (out_fd >= 0)
 				{
 					dup2(out_fd, STDOUT_FILENO);
@@ -265,7 +265,6 @@ int	handle_pipe_and_redir(t_cmd *commands)
 			{
 				printf("PIPE [ ] OUT_REDIR [ ]\n");
 				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
-				printf("tem pipe e in_fd >= 0\n");
 				printf("in_fd = %d\n", in_fd);
 				printf("out_fd = %d\n", out_fd);
 				printf("fd[0] = %d\n", fd[0]);
@@ -312,13 +311,12 @@ int	handle_pipe_and_redir(t_cmd *commands)
 				close(old_read_fd);
 			old_read_fd = fd[0];
 			close(fd[1]); // Fecha o lado de escrita do pipe no pai
+			//pq nao posso fechar o fd[0] aqui?
 		}
-		if (cmd_temp->next != NULL && (cmd_temp->next->type == T_PIPE \
-		|| cmd_temp->next->type == T_RAPEND || cmd_temp->next->type == T_RTRUNC || \
-		cmd_temp->next->type == T_LTRUNC || cmd_temp->next->type == T_LAPEND))
-			cmd_temp = cmd_temp->next->next; // Pula se for >, <, | ou >>
-		else
+		if (cmd_temp->next != NULL)
 			cmd_temp = cmd_temp->next;
+		else
+			break;
 	}
 	if (old_read_fd != 0)
 		close(old_read_fd);
