@@ -145,7 +145,9 @@ void	analyze_input(t_minishell *shell)
 		printf("----------------\n");
 		temp = temp->next;
 	}*/
-	if (shell->n_cmd > 1) //Isso implica que temos |, &&, ||, ;, (), {}. Ou apenas <, >, >>, <<.
+	//printf("n_cmd = %d", shell->n_cmd);
+	//printf("shell->cmd = %s", shell->commands->cmd);
+	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0)) //Isso implica que temos |, &&, ||, ;, (), {}. Ou apenas <, >, >>, <<.
 	{
 		//pipe_redir_hub(shell);
 		//printf("entrou na handle_pipe\n");

@@ -121,8 +121,13 @@ int	handle_output_redirection(t_cmd *cmd_temp)
 	}*/
 }
 
-static bool	is_pipe_or_redir(t_cmd *cmd)
+static bool	is_pipe_or_redir(t_cmd *cmd, int i)
 {
+	if (i == 0 && cmd->type == T_RTRUNC)
+	{
+		printf("entrou");
+		return (false);
+	}
 	if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || \
 	cmd->type == T_LTRUNC || cmd->type == T_LAPEND || \
 	cmd->type == T_PIPE)
@@ -139,6 +144,7 @@ static bool is_file(t_cmd *cmd)
 		return (true);
 	return (false);
 }
+
 int	handle_pipe_and_redir(t_cmd *commands)
 {
 	int		fd[2];
@@ -149,20 +155,20 @@ int	handle_pipe_and_redir(t_cmd *commands)
 	char	*path;
 	int	out_fd = -1;
 	int	in_fd = -1;
+	int	i = 0;
 
 	cmd_temp = commands;
 	old_read_fd = 0;
+	//printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
 	while (cmd_temp != NULL)
 	{	
-		//printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
-		if ((is_pipe_or_redir(cmd_temp) == true) || (is_file(cmd_temp) == true))
+		printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
+		if ((is_pipe_or_redir(cmd_temp, i) == true) || (is_file(cmd_temp) == true))
 		{
 			cmd_temp = cmd_temp->next;
 			continue;
 		}
-		//printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
-		//preciso de uma funcao para avaliar se eh um builtin/comando do path ou nao.
-		
+		i++;
 		if (pipe(fd) == -1)
 		{
 			perror("pipe");
@@ -297,11 +303,6 @@ int	handle_pipe_and_redir(t_cmd *commands)
 				execve(path, arg_array, envvar_array(cmd_temp->shell));
 				exit(0); // Encerra o filho se execve falhar
 			}
-			/*arg_array = ft_to_array(cmd_temp);
-			path = get_command_path(cmd_temp->cmd);
-			execve(path, arg_array, envvar_array(cmd_temp->shell));
-			exit(0); // Encerra o filho se execve falhar*/
-			printf("PASSOU POR TODOS OS CASOS\n");
 		}
 		else
 		{
