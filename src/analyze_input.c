@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-static char	*get_command_path(char *command)
+char	*get_command_path(char *command)
 {
 	char	*path;
 	char	**dirs;

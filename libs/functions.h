@@ -122,7 +122,7 @@ t_var	*create_list(char **envp);
 //SIGNALS
 void	handle_sigint(int sig);
 
-
-int	handle_pipe_and_redir(t_cmd *commands);
+char	*get_command_path(char *command);
+int     handle_pipe_and_redir(t_cmd *commands);
 
 #endif
