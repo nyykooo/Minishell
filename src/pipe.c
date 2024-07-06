@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/06 15:06:31 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:44:30 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,13 +154,6 @@ bool ft_has_pipe(t_cmd *cmd_temp)
 	}
 	return (has_pipe);
 }
-/*
-printf("PIPE [x] REDIR [x]\n");
-				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
-				printf("in_fd = %d\n", in_fd);
-				printf("out_fd = %d\n", out_fd);
-				printf("fd[0] = %d\n", fd[0]);
-				printf("fd[1] = %d\n", fd[1]);*/
 
 void	ft_nopipe(int in_fd, int out_fd, int fd1, int fd0)
 {
@@ -278,6 +271,15 @@ void manage_parent(int pid, int *old_read_fd, int fd[2])
 	*old_read_fd = fd[0];
 	close(fd[1]);
 }
+bool check_and_advance_cmd(t_cmd **cmd_temp, int *i)
+{
+	if ((is_pipe_or_redir(*cmd_temp, (*i)++) == true) || (is_file(*cmd_temp) == true))
+	{
+		*cmd_temp = (*cmd_temp)->next;
+		return (true);
+	}
+	return (false);
+}
 
 int	handle_pipe_and_redir(t_cmd *commands)
 {
@@ -292,21 +294,15 @@ int	handle_pipe_and_redir(t_cmd *commands)
 	old_read_fd = 0;
 	while (cmd_temp != NULL)
 	{	
-		if ((is_pipe_or_redir(cmd_temp, i++) == true) || (is_file(cmd_temp) == true))
-		{
-			cmd_temp = cmd_temp->next;
+		if (check_and_advance_cmd(&cmd_temp, &i))
 			continue;
-		}
 		create_pipe(fd);
 		pid = create_child_process();
 		if (pid == 0)
 			manage_child(cmd_temp, old_read_fd, fd);
 		else
 			manage_parent(pid, &old_read_fd, fd);
-		if (cmd_temp->next != NULL)
-			cmd_temp = cmd_temp->next;
-		else
-			break;
+		cmd_temp = cmd_temp->next;
 	}
 	if (old_read_fd != 0)
 		close(old_read_fd);
