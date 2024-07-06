@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/06 13:46:51 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:06:31 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,7 @@ int	handle_output_redirection(t_cmd *cmd_temp)
 static bool	is_pipe_or_redir(t_cmd *cmd, int i)
 {
 	if (i == 0 && cmd->type == T_RTRUNC)
-	{
-		printf("entrou");
 		return (false);
-	}
 	if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || \
 	cmd->type == T_LTRUNC || cmd->type == T_LAPEND || \
 	cmd->type == T_PIPE)
@@ -165,113 +162,147 @@ printf("PIPE [x] REDIR [x]\n");
 				printf("fd[0] = %d\n", fd[0]);
 				printf("fd[1] = %d\n", fd[1]);*/
 
+void	ft_nopipe(int in_fd, int out_fd, int fd1, int fd0)
+{
+	if (in_fd >= 0)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+		if (out_fd >= 0)
+		{
+			dup2(out_fd, STDOUT_FILENO);
+			close(out_fd);
+		}
+		return ;
+	}
+	if (in_fd == -1)
+	{	
+		if (out_fd >= 0)
+		{
+			dup2(out_fd, STDOUT_FILENO);
+			close(out_fd);
+		}
+		return ;
+	}
+	if (out_fd == -1)
+	{
+		dup2(fd1, STDOUT_FILENO);
+		close(fd1);
+		dup2(fd1, STDIN_FILENO);
+		close(fd0);
+		return ;
+	}
+	if (out_fd >= 0)
+	{
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+		close(in_fd);
+		close(fd1);
+		close(fd0);
+		return ;
+	}
+}
+
+void ft_haspipe(int in_fd, int fd1, int fd0)
+{
+	if (in_fd >= 0)
+	{
+		close(fd0);
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+		dup2(fd1, STDOUT_FILENO);
+		close(fd1);
+		return ;
+	}	
+	if (in_fd == -1)
+	{
+		close(fd0);
+		dup2(fd1, STDOUT_FILENO);
+		close(fd1);
+		return ;
+	}
+}
+
+void	create_pipe(int fd[2])
+{
+	if (pipe(fd) == -1)
+	{
+		perror("pipe");
+		exit(1);
+	}
+}
+
+pid_t create_child_process()
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		exit(2);
+	}
+	return (pid);
+}
+
+void manage_child(t_cmd *cmd_temp, int old_read_fd, int fd[2])
+{
+	int in_fd;
+	int out_fd;
+
+	in_fd = handle_input_redirection(cmd_temp);
+	out_fd = handle_output_redirection(cmd_temp);
+	if (old_read_fd != 0) // setting necessário quando há múltiplos pipes
+	{
+		dup2(old_read_fd, STDIN_FILENO);
+		close(old_read_fd);
+	}
+	int has_pipe = ft_has_pipe(cmd_temp);
+	if (has_pipe)
+	{
+		ft_haspipe(in_fd, fd[1], fd[0]);
+		ft_exec(cmd_temp);
+	}
+	else
+	{
+		ft_nopipe(in_fd, out_fd, fd[1], fd[0]);
+		ft_exec(cmd_temp);
+	}
+}
+
+void manage_parent(int pid, int *old_read_fd, int fd[2])
+{
+	waitpid(pid, NULL, 0);
+	if (*old_read_fd != 0)
+		close(*old_read_fd);
+	*old_read_fd = fd[0];
+	close(fd[1]);
+}
 
 int	handle_pipe_and_redir(t_cmd *commands)
 {
 	int		fd[2];
 	int		old_read_fd;
+	int		i;
 	pid_t	pid;
 	t_cmd	*cmd_temp;
-	int		out_fd = -1;
-	int		in_fd = -1;
-	int		i = 0;
-	int		has_pipe;
 
+	i = 0;
 	cmd_temp = commands;
 	old_read_fd = 0;
 	while (cmd_temp != NULL)
 	{	
-		if ((is_pipe_or_redir(cmd_temp, i) == true) || (is_file(cmd_temp) == true))
+		if ((is_pipe_or_redir(cmd_temp, i++) == true) || (is_file(cmd_temp) == true))
 		{
 			cmd_temp = cmd_temp->next;
 			continue;
 		}
-		i++;
-		if (pipe(fd) == -1)
-		{
-			perror("pipe");
-			exit(1);
-		}
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			exit(2);
-		}
-		else if (pid == 0)
-		{
-			in_fd = handle_input_redirection(cmd_temp);
-			out_fd = handle_output_redirection(cmd_temp);
-			if (old_read_fd != 0) // setting necessario quando ha multiplos pipes
-			{
-				dup2(old_read_fd, STDIN_FILENO);
-				close(old_read_fd);
-			}
-			has_pipe = ft_has_pipe(cmd_temp);
-			if (has_pipe && in_fd >= 0) // Se houver redirecionamento de input
-			{
-				close(fd[0]);
-				dup2(in_fd, STDIN_FILENO);
-				close(in_fd);
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-				ft_exec(cmd_temp);
-			}
-			if (has_pipe && in_fd == -1)
-			{
-				close(fd[0]);
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-				ft_exec(cmd_temp);
-			}
-			if (!has_pipe && in_fd >= 0)
-			{
-				dup2(in_fd, STDIN_FILENO);
-				close(in_fd);
-				if (out_fd >= 0)
-				{
-					dup2(out_fd, STDOUT_FILENO);
-					close(out_fd);
-				}
-				ft_exec(cmd_temp);
-			}
-			if (!has_pipe && in_fd == -1)
-			{	
-				if (out_fd >= 0)
-				{
-					dup2(out_fd, STDOUT_FILENO);
-					close(out_fd);
-				}
-				ft_exec(cmd_temp);
-			}
-			if (!has_pipe && out_fd == -1)
-			{
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-				dup2(fd[0], STDIN_FILENO);
-				close(fd[0]);
-				ft_exec(cmd_temp);
-				
-			}
-			if (!has_pipe && out_fd >= 0)
-			{
-				dup2(out_fd, STDOUT_FILENO);
-				close(out_fd);
-				close(in_fd);
-				close(fd[1]);
-				close(fd[0]);
-				ft_exec(cmd_temp);
-			}
-		}
+		create_pipe(fd);
+		pid = create_child_process();
+		if (pid == 0)
+			manage_child(cmd_temp, old_read_fd, fd);
 		else
-		{
-			waitpid(pid, NULL, 0);
-			if (old_read_fd != 0)
-				close(old_read_fd);
-			old_read_fd = fd[0];
-			close(fd[1]); // Fecha o lado de escrita do pipe no pai
-			//pq nao posso fechar o fd[0] aqui?
-		}
+			manage_parent(pid, &old_read_fd, fd);
 		if (cmd_temp->next != NULL)
 			cmd_temp = cmd_temp->next;
 		else
