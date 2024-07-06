@@ -73,6 +73,9 @@ fclean: clean
 
 re: fclean all
 
+valgrind:
+		valgrind --suppressions=study/readline.supp --leak-check=full --trace-children=yes --track-fds=yes --show-leak-kinds=all ./${NAME}
+
 .PHONY: all clean fclean re
 
 .SILENT:

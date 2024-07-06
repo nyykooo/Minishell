@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 11:09:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:06:31 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
-
-/*int	exec_pipes(t_minishell *shell)
-{
-	t_cmd	*cmd;
-	int		fds[2];
-	int		old_pipe;
-
-	old_pipe = 0;
-	cmd = shell->commands;
-	while (shell->commands != NULL)
-	{
-		if (shell->commands->cmd != NULL)
-		{
-			pipe(fds);
-			exec_pipe_cmd(shell, fds, &old_pipe);
-		}
-		shell->commands = shell->commands->next;
-	}
-	shell->commands = cmd;
-	return (0);
-}*/
 
 static char	*get_command_path(char *command)
 {
@@ -65,87 +44,271 @@ static char	*get_command_path(char *command)
 	return (NULL);
 }
 
-int	handle_pipe(t_cmd *commands)
+int	handle_input_redirection(t_cmd *cmd_temp)
 {
-	int	fd[2];
-	int	pid1;
-	int	pid2;
-	char **arg_array1;
-	char **arg_array2;
-	t_cmd *temp;
-	char *path1;
-	char *path2;
-	//int old_read_fd;
-	int	i = 0;
+	t_cmd	*current_cmd;
+	int		in_fd;
 
+	in_fd = -1;
+	current_cmd = cmd_temp;
+	while (current_cmd != NULL && current_cmd->type != T_PIPE)
+	{
+		if (current_cmd->input_file == true)
+		{
+			if (in_fd >= 0)
+				close(in_fd);
+			in_fd = open(current_cmd->cmd, O_RDONLY);
+			if (in_fd < 0)
+			{
+				perror("open");
+				exit(1);
+			}
+		}
+		current_cmd = current_cmd->next;
+	}
+	return (in_fd);
+}
+/*error_msg = error_msg_construct(4, "-minishell: ", last_cmd->path, ": ", strerror(errno));
+put_error_msg(error_msg, STDERR_FILENO); // Ajustar o EXIT_STATUS aqui
+free(error_msg);
+exit(EXIT_FAILURE);*/
 
-	temp = commands;
+int	handle_output_redirection(t_cmd *cmd_temp)
+{
+	t_cmd	*current_cmd;
+	int		fd_out;
+	int		flags;
+
+	fd_out = -1;
+	current_cmd = cmd_temp;
+	while (current_cmd != NULL)
+	{
+		if (current_cmd->rappend == true || current_cmd->rtrunc == true)
+		{
+			flags = O_WRONLY | O_CREAT;
+			if (current_cmd->rappend == true)
+				flags |= O_APPEND;
+			else
+				flags |= O_TRUNC;
+			if (fd_out >= 0)
+				close(fd_out);
+			fd_out = open(current_cmd->cmd, flags, 0644);
+			if (fd_out < 0)
+			{
+				perror("open");
+				exit(1);
+			}
+		}
+		current_cmd = current_cmd->next;
+	}
+	return (fd_out);
+}
+
+static bool	is_pipe_or_redir(t_cmd *cmd, int i)
+{
+	if (i == 0 && cmd->type == T_RTRUNC)
+		return (false);
+	if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || \
+	cmd->type == T_LTRUNC || cmd->type == T_LAPEND || \
+	cmd->type == T_PIPE)
+		return (true);
+	return (false);
+}
+
+static bool is_file(t_cmd *cmd)
+{
+	if (cmd->prev != NULL && (cmd->prev->type == T_RAPEND || \
+	cmd->prev->type == T_RTRUNC || \
+	cmd->prev->type == T_LTRUNC || \
+	cmd->prev->type == T_LAPEND)) 
+		return (true);
+	return (false);
+}
+
+void	ft_exec(t_cmd *cmd_temp)
+{
+	char	**arg_array;
+	char	*path;
+
+	arg_array = ft_to_array(cmd_temp);
+	path = get_command_path(cmd_temp->cmd);
+	execve(path, arg_array, envvar_array(cmd_temp->shell));
+	exit(0);
+}
+
+bool ft_has_pipe(t_cmd *cmd_temp)
+{
+	int		has_pipe;
+	t_cmd	*temp;
+
+	has_pipe = 0;
+	temp = cmd_temp;
 	while (temp != NULL)
 	{
-		printf("temp->cmd: %s\n", temp->cmd);
+		if (temp->type == T_PIPE)
+		{
+			has_pipe = 1;
+			break;
+		}
 		temp = temp->next;
 	}
-	temp = commands;
-	arg_array1 = ft_to_array(commands);
-	temp = temp->next->next;
-	arg_array2 = ft_to_array(temp);
-	path1 = get_command_path(commands->cmd);
-	path2 = get_command_path(temp->cmd);
-	printf("path1: %s\n", path1);
-	printf("path2: %s\n", path2);
-	while (arg_array1[i] != NULL)
+	return (has_pipe);
+}
+/*
+printf("PIPE [x] REDIR [x]\n");
+				printf("cmd_temp->cmd = %s\n", cmd_temp->cmd);
+				printf("in_fd = %d\n", in_fd);
+				printf("out_fd = %d\n", out_fd);
+				printf("fd[0] = %d\n", fd[0]);
+				printf("fd[1] = %d\n", fd[1]);*/
+
+void	ft_nopipe(int in_fd, int out_fd, int fd1, int fd0)
+{
+	if (in_fd >= 0)
 	{
-		printf("arg_array1: %s\n", arg_array1[i]);
-		i++;
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+		if (out_fd >= 0)
+		{
+			dup2(out_fd, STDOUT_FILENO);
+			close(out_fd);
+		}
+		return ;
 	}
-	i = 0;
-	while (arg_array2[i] != NULL)
+	if (in_fd == -1)
+	{	
+		if (out_fd >= 0)
+		{
+			dup2(out_fd, STDOUT_FILENO);
+			close(out_fd);
+		}
+		return ;
+	}
+	if (out_fd == -1)
 	{
-		printf("arg_array2: %s\n", arg_array2[i]);
-		i++;
+		dup2(fd1, STDOUT_FILENO);
+		close(fd1);
+		dup2(fd1, STDIN_FILENO);
+		close(fd0);
+		return ;
 	}
+	if (out_fd >= 0)
+	{
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+		close(in_fd);
+		close(fd1);
+		close(fd0);
+		return ;
+	}
+}
+
+void ft_haspipe(int in_fd, int fd1, int fd0)
+{
+	if (in_fd >= 0)
+	{
+		close(fd0);
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+		dup2(fd1, STDOUT_FILENO);
+		close(fd1);
+		return ;
+	}	
+	if (in_fd == -1)
+	{
+		close(fd0);
+		dup2(fd1, STDOUT_FILENO);
+		close(fd1);
+		return ;
+	}
+}
+
+void	create_pipe(int fd[2])
+{
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
-		exit (1);
+		exit(1);
 	}
-	pid1 = fork();
-	if (pid1 < 0)
+}
+
+pid_t create_child_process()
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
 	{
 		perror("fork");
-		exit (2);
+		exit(2);
 	}
-	if (pid1 == 0)
+	return (pid);
+}
+
+void manage_child(t_cmd *cmd_temp, int old_read_fd, int fd[2])
+{
+	int in_fd;
+	int out_fd;
+
+	in_fd = handle_input_redirection(cmd_temp);
+	out_fd = handle_output_redirection(cmd_temp);
+	if (old_read_fd != 0) // setting necessário quando há múltiplos pipes
 	{
-		// Estamos no processo para a execucao do comando a esquerda do pipe
-		// Fechar o descritor de leitura.
-		close(fd[0]);
-		// Redirecionar a saida padrao para o descritor de escrita da pipe.
-		dup2(fd[1], STDOUT_FILENO); // STDOUT_FILENO = 1
-		close(fd[1]);
-		execve(path1, arg_array1, envvar_array(commands->shell));
+		dup2(old_read_fd, STDIN_FILENO);
+		close(old_read_fd);
 	}
-	// Todo o codigo apos a execve() nao sera executado (pelo filho), pois o processo filho foi substituido pelo ping.
-	pid2 = fork();
-	if (pid2 == -1)
+	int has_pipe = ft_has_pipe(cmd_temp);
+	if (has_pipe)
 	{
-		perror("fork");
-		exit (3);
+		ft_haspipe(in_fd, fd[1], fd[0]);
+		ft_exec(cmd_temp);
 	}
-	if (pid2 == 0)
+	else
 	{
-		// Estamos no processo filho para a execucao do comando a direita do pipe.	
-		// Fechar o descritor de escrita criado pela pipe.
-		close(fd[1]);
-		// Redirecionar a entrada padrao para o descritor de leitura da pipe.
-		dup2(fd[0], STDIN_FILENO); // STDIN_FILENO = 0
-		close(fd[0]);
-		execve(path2, arg_array2, envvar_array(commands->shell));
+		ft_nopipe(in_fd, out_fd, fd[1], fd[0]);
+		ft_exec(cmd_temp);
 	}
-	// Estamos no processo pai
-	close(fd[0]);
+}
+
+void manage_parent(int pid, int *old_read_fd, int fd[2])
+{
+	waitpid(pid, NULL, 0);
+	if (*old_read_fd != 0)
+		close(*old_read_fd);
+	*old_read_fd = fd[0];
 	close(fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+}
+
+int	handle_pipe_and_redir(t_cmd *commands)
+{
+	int		fd[2];
+	int		old_read_fd;
+	int		i;
+	pid_t	pid;
+	t_cmd	*cmd_temp;
+
+	i = 0;
+	cmd_temp = commands;
+	old_read_fd = 0;
+	while (cmd_temp != NULL)
+	{	
+		if ((is_pipe_or_redir(cmd_temp, i++) == true) || (is_file(cmd_temp) == true))
+		{
+			cmd_temp = cmd_temp->next;
+			continue;
+		}
+		create_pipe(fd);
+		pid = create_child_process();
+		if (pid == 0)
+			manage_child(cmd_temp, old_read_fd, fd);
+		else
+			manage_parent(pid, &old_read_fd, fd);
+		if (cmd_temp->next != NULL)
+			cmd_temp = cmd_temp->next;
+		else
+			break;
+	}
+	if (old_read_fd != 0)
+		close(old_read_fd);
 	return (0);
 }

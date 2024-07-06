@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/01 18:00:08 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:31:23 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,11 @@ static void mark_redir(t_cmd *command)
 	if (temp)
 	{
 		if (temp->type == T_LTRUNC)
-			command->rtrunc = true;
+			command->input_file = true;
 		else if (temp->type == T_RTRUNC)
 			command->rtrunc = true;
 		else if (temp->type == T_LAPEND)
-			command->rappend = true;
+			command->lappend = true;
 		else if (temp->type == T_RAPEND)
 			command->rappend = true;
 	}

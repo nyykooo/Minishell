@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/02 22:04:46 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:31:16 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_var	*create_list(char **envp);
 //SIGNALS
 void	handle_sigint(int sig);
 
-
-int	handle_pipe(t_cmd *commands);
+//char	*get_command_path(char *command);
+int     handle_pipe_and_redir(t_cmd *commands);
 
 #endif

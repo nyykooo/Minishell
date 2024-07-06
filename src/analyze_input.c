@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/30 18:39:26 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:32:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-static char	*get_command_path(char *command)
+char	*get_command_path(char *command)
 {
 	char	*path;
 	char	**dirs;
@@ -123,14 +123,36 @@ static void	handle_builtins(t_minishell *shell)
 	}
 }*/
 
+// testar pipeline com ficheiro sem permissoes = o retorno sera: permissoes negados
+// o retorno da open devido a falta de permissao eh < 0?
+
+
 void	analyze_input(t_minishell *shell)
-{	
+{
+	//t_cmd *temp;
+	
 	parsing_hub(shell);
-	// pensar em um loop para percorrer varios comandos relacionando com a quantidade de pipes e redirects
-	if (shell->n_cmd > 1)
+	/*temp = shell->commands;
+	while (temp)
 	{
-		handle_pipe(shell->commands);
+		printf("temp->cmd: %s\n", temp->cmd);
+		printf("temp->type: %d\n", temp->type);
+		printf("temp->rtrunc: %d\n", temp->rtrunc);
+		printf("temp->rappend: %d\n", temp->rappend);
+		printf("temp->lappend: %d\n", temp->lappend);
+		printf("temp->input_file: %d\n", temp->input_file);
+		printf("temp->path: %s\n", temp->path);
+		printf("----------------\n");
+		temp = temp->next;
+	}*/
+	//printf("n_cmd = %d", shell->n_cmd);
+	//printf("shell->cmd = %s", shell->commands->cmd);
+	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0)) //Isso implica que temos |, &&, ||, ;, (), {}. Ou apenas <, >, >>, <<.
+	{
 		//pipe_redir_hub(shell);
+		//printf("entrou na handle_pipe\n");
+		//printf("shell->n_cmd: %d\n", shell->n_cmd);
+		handle_pipe_and_redir(shell->commands);
 	}
 	else if (shell->commands)
 	{
