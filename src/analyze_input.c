@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/04 18:32:36 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/06 17:13:59 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-char	*get_command_path(char *command)
+static char	*get_command_path(char *command)
 {
 	char	*path;
 	char	**dirs;
@@ -22,16 +22,16 @@ char	*get_command_path(char *command)
 	int		i;
 
 	if (access(command, X_OK) == 0)
-			return (command);
+		return (command);
 	path = getenv ("PATH");
 	dirs = ft_split (path, ':');
 	i = -1;
 	while (dirs[++i] != NULL)
 	{
-		possible_path = malloc (strlen(dirs[i]) + strlen(command) + 2);
-		strcpy (possible_path, dirs[i]);
-		strcat (possible_path, "/");
-		strcat (possible_path, command);
+		possible_path = malloc (ft_strlen(dirs[i]) + ft_strlen(command) + 2);
+		ft_strcpy (possible_path, dirs[i]);
+		ft_strcat (possible_path, "/");
+		ft_strcat (possible_path, command);
 		if (access(possible_path, X_OK) == 0)
 		{
 			free(dirs);
@@ -105,28 +105,6 @@ static void	handle_builtins(t_minishell *shell)
 			handle_command(shell->commands, shell);
 }
 
-/*static void	pipe_redir_hub(t_minishell *shell)
-{
-	t_cmd	*cmd;
-	
-	cmd = shell->commands;
-	while (cmd)
-	{
-		if (cmd->type == T_PIPE)
-			printf("im a pipe\n");
-		else if (cmd->type >= T_RTRUNC && cmd->type <= T_LAPEND)
-			// handle_redir(cmd, shell);
-			printf("im a redir\n)");
-		else
-			handle_builtins(shell);
-		cmd = cmd->next;
-	}
-}*/
-
-// testar pipeline com ficheiro sem permissoes = o retorno sera: permissoes negados
-// o retorno da open devido a falta de permissao eh < 0?
-
-
 void	analyze_input(t_minishell *shell)
 {
 	//t_cmd *temp;
@@ -145,15 +123,8 @@ void	analyze_input(t_minishell *shell)
 		printf("----------------\n");
 		temp = temp->next;
 	}*/
-	//printf("n_cmd = %d", shell->n_cmd);
-	//printf("shell->cmd = %s", shell->commands->cmd);
-	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0)) //Isso implica que temos |, &&, ||, ;, (), {}. Ou apenas <, >, >>, <<.
-	{
-		//pipe_redir_hub(shell);
-		//printf("entrou na handle_pipe\n");
-		//printf("shell->n_cmd: %d\n", shell->n_cmd);
+	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0)) //Isso implica que temos |, &&, ||, ;, (), {}. Ou merameante <, >, >>, <<.
 		handle_pipe_and_redir(shell->commands);
-	}
 	else if (shell->commands)
 	{
 		if (shell->commands->type == T_EQUAL)

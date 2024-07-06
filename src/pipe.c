@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/06 15:44:30 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/06 17:14:01 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ static char	*get_command_path(char *command)
 	int		i;
 
 	if (access(command, X_OK) == 0)
-			return (command);
+		return (command);
 	path = getenv ("PATH");
 	dirs = ft_split (path, ':');
 	i = -1;
 	while (dirs[++i] != NULL)
 	{
-		possible_path = malloc (strlen(dirs[i]) + strlen(command) + 2);
-		strcpy (possible_path, dirs[i]);
-		strcat (possible_path, "/");
-		strcat (possible_path, command);
+		possible_path = malloc (ft_strlen(dirs[i]) + ft_strlen(command) + 2);
+		ft_strcpy (possible_path, dirs[i]);
+		ft_strcat (possible_path, "/");
+		ft_strcat (possible_path, command);
 		if (access(possible_path, X_OK) == 0)
 		{
 			free(dirs);
@@ -73,6 +73,18 @@ put_error_msg(error_msg, STDERR_FILENO); // Ajustar o EXIT_STATUS aqui
 free(error_msg);
 exit(EXIT_FAILURE);*/
 
+int determine_flags(t_cmd *cmd_temp)
+{
+	int	flags;
+
+	flags = O_WRONLY | O_CREAT;
+	if (cmd_temp->rappend == true)
+		flags |= O_APPEND;
+	else
+		flags |= O_TRUNC;
+	return (flags);
+}
+
 int	handle_output_redirection(t_cmd *cmd_temp)
 {
 	t_cmd	*current_cmd;
@@ -85,11 +97,7 @@ int	handle_output_redirection(t_cmd *cmd_temp)
 	{
 		if (current_cmd->rappend == true || current_cmd->rtrunc == true)
 		{
-			flags = O_WRONLY | O_CREAT;
-			if (current_cmd->rappend == true)
-				flags |= O_APPEND;
-			else
-				flags |= O_TRUNC;
+			flags = determine_flags(current_cmd);
 			if (fd_out >= 0)
 				close(fd_out);
 			fd_out = open(current_cmd->cmd, flags, 0644);
@@ -115,12 +123,12 @@ static bool	is_pipe_or_redir(t_cmd *cmd, int i)
 	return (false);
 }
 
-static bool is_file(t_cmd *cmd)
+static bool	is_file(t_cmd *cmd)
 {
 	if (cmd->prev != NULL && (cmd->prev->type == T_RAPEND || \
 	cmd->prev->type == T_RTRUNC || \
 	cmd->prev->type == T_LTRUNC || \
-	cmd->prev->type == T_LAPEND)) 
+	cmd->prev->type == T_LAPEND))
 		return (true);
 	return (false);
 }
@@ -136,7 +144,7 @@ void	ft_exec(t_cmd *cmd_temp)
 	exit(0);
 }
 
-bool ft_has_pipe(t_cmd *cmd_temp)
+bool	ft_has_pipe(t_cmd *cmd_temp)
 {
 	int		has_pipe;
 	t_cmd	*temp;
@@ -148,55 +156,28 @@ bool ft_has_pipe(t_cmd *cmd_temp)
 		if (temp->type == T_PIPE)
 		{
 			has_pipe = 1;
-			break;
+			break ;
 		}
 		temp = temp->next;
 	}
 	return (has_pipe);
 }
 
-void	ft_nopipe(int in_fd, int out_fd, int fd1, int fd0)
+void	ft_nopipe(int in_fd, int out_fd)
 {
 	if (in_fd >= 0)
 	{
 		dup2(in_fd, STDIN_FILENO);
 		close(in_fd);
-		if (out_fd >= 0)
-		{
-			dup2(out_fd, STDOUT_FILENO);
-			close(out_fd);
-		}
-		return ;
-	}
-	if (in_fd == -1)
-	{	
-		if (out_fd >= 0)
-		{
-			dup2(out_fd, STDOUT_FILENO);
-			close(out_fd);
-		}
-		return ;
-	}
-	if (out_fd == -1)
-	{
-		dup2(fd1, STDOUT_FILENO);
-		close(fd1);
-		dup2(fd1, STDIN_FILENO);
-		close(fd0);
-		return ;
 	}
 	if (out_fd >= 0)
 	{
 		dup2(out_fd, STDOUT_FILENO);
 		close(out_fd);
-		close(in_fd);
-		close(fd1);
-		close(fd0);
-		return ;
 	}
 }
 
-void ft_haspipe(int in_fd, int fd1, int fd0)
+void	ft_haspipe(int in_fd, int fd1, int fd0)
 {
 	if (in_fd >= 0)
 	{
@@ -206,7 +187,7 @@ void ft_haspipe(int in_fd, int fd1, int fd0)
 		dup2(fd1, STDOUT_FILENO);
 		close(fd1);
 		return ;
-	}	
+	}
 	if (in_fd == -1)
 	{
 		close(fd0);
@@ -225,7 +206,7 @@ void	create_pipe(int fd[2])
 	}
 }
 
-pid_t create_child_process()
+pid_t	create_child_process(void)
 {
 	pid_t	pid;
 
@@ -238,19 +219,28 @@ pid_t create_child_process()
 	return (pid);
 }
 
-void manage_child(t_cmd *cmd_temp, int old_read_fd, int fd[2])
+void	ft_close_filefds(int in_fd, int out_fd)
 {
-	int in_fd;
-	int out_fd;
+	if (in_fd >= 0)
+		close(in_fd);
+	if (out_fd >= 0)
+		close(out_fd);
+}
+
+void	manage_child(t_cmd *cmd_temp, int old_read_fd, int fd[2])
+{
+	int	in_fd;
+	int	out_fd;
+	int	has_pipe;
 
 	in_fd = handle_input_redirection(cmd_temp);
 	out_fd = handle_output_redirection(cmd_temp);
-	if (old_read_fd != 0) // setting necessário quando há múltiplos pipes
+	if (old_read_fd != 0)
 	{
 		dup2(old_read_fd, STDIN_FILENO);
 		close(old_read_fd);
 	}
-	int has_pipe = ft_has_pipe(cmd_temp);
+	has_pipe = ft_has_pipe(cmd_temp);
 	if (has_pipe)
 	{
 		ft_haspipe(in_fd, fd[1], fd[0]);
@@ -258,12 +248,13 @@ void manage_child(t_cmd *cmd_temp, int old_read_fd, int fd[2])
 	}
 	else
 	{
-		ft_nopipe(in_fd, out_fd, fd[1], fd[0]);
+		ft_nopipe(in_fd, out_fd);
 		ft_exec(cmd_temp);
 	}
+	ft_close_filefds(in_fd, out_fd);
 }
 
-void manage_parent(int pid, int *old_read_fd, int fd[2])
+void	manage_parent(int pid, int *old_read_fd, int fd[2])
 {
 	waitpid(pid, NULL, 0);
 	if (*old_read_fd != 0)
@@ -271,14 +262,26 @@ void manage_parent(int pid, int *old_read_fd, int fd[2])
 	*old_read_fd = fd[0];
 	close(fd[1]);
 }
-bool check_and_advance_cmd(t_cmd **cmd_temp, int *i)
+
+bool	check_and_advance_cmd(t_cmd **cmd_temp, int *i)
 {
-	if ((is_pipe_or_redir(*cmd_temp, (*i)++) == true) || (is_file(*cmd_temp) == true))
+	if ((is_pipe_or_redir(*cmd_temp, (*i)++) == true) || \
+	(is_file(*cmd_temp) == true))
 	{
 		*cmd_temp = (*cmd_temp)->next;
 		return (true);
 	}
 	return (false);
+}
+
+void	ft_close_pipefds(int fd[2], int old_read_fd)
+{
+	if (old_read_fd != 0)
+		close(old_read_fd);
+	if (fd[1] != 0)
+		close(fd[1]);
+	if (fd[0] != 0)
+		close(fd[0]);
 }
 
 int	handle_pipe_and_redir(t_cmd *commands)
@@ -293,9 +296,9 @@ int	handle_pipe_and_redir(t_cmd *commands)
 	cmd_temp = commands;
 	old_read_fd = 0;
 	while (cmd_temp != NULL)
-	{	
+	{
 		if (check_and_advance_cmd(&cmd_temp, &i))
-			continue;
+			continue ;
 		create_pipe(fd);
 		pid = create_child_process();
 		if (pid == 0)
@@ -304,7 +307,6 @@ int	handle_pipe_and_redir(t_cmd *commands)
 			manage_parent(pid, &old_read_fd, fd);
 		cmd_temp = cmd_temp->next;
 	}
-	if (old_read_fd != 0)
-		close(old_read_fd);
+	ft_close_pipefds(fd, old_read_fd);
 	return (0);
 }
