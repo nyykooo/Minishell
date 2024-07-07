@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 13:53:14 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/06 17:38:55 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,6 @@ static void check_arg(t_arg *input)
 			input->equal = true;
 	}
 }
-
-// static void expand_quotes(t_arg *argument)
-// {
-// 	char *new;
-// 	int i;
-// 	bool flag;
-
-// 	i = -1;
-// 	flag = false;
-// 	if (argument->arg == NULL)
-// 		return ;
-// 	while (argument->arg[++i] != '\0')
-// 		if ((argument->arg[i] == N_DQUOTE || argument->arg[i] == N_SQUOTE)
-// 			&& ((argument->arg[i + 1] == '\0') || (i != 0)))
-// 				break ;
-// 			else if (argument->arg[i] == N_DQUOTE || argument->arg[i] == N_SQUOTE)
-// 				flag = true;
-// 	if (argument->arg[i] == 0)
-// 		return ;
-// 	if (flag)
-// 		i++;
-// 	new = ft_strdup(argument->arg + i);
-// 	argument->next = (t_arg *)malloc(sizeof(t_arg));
-// 	if (!argument->next)
-// 		return ;
-// 	argument->next->arg = new;
-// 	argument->next->next = NULL;
-// 	argument->arg[i] = '\0';
-// 	if (new[ft_strlen(new)] == 0)
-// 		return ;
-// 	expand_quotes(argument->next);
-// }
 
 // include arg is a function that includes the new argument in the linked list (in the correct position)
 

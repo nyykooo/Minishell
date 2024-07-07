@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
+#    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/25 21:11:03 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/07/06 18:59:13 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,6 @@ SRC_FREE_ERROR_EXIT = free error
 SRC_PARSE = parsing
 
 SRC_PARSE_TOKEN = tokenizer token_creation token_analyze
-
-SRC_PARSE_REDIRECT = left_append left_trunc right_append right_trunc
 
 SRC_PARSE_QUOTES = quotes_functions
 
