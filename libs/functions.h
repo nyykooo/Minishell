@@ -126,6 +126,6 @@ t_var	*create_list(char **envp);
 void	handle_sigint(int sig);
 
 //char	*get_command_path(char *command);
-int     handle_pipe_and_redir(t_cmd *commands);
+int     handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
 
 #endif
