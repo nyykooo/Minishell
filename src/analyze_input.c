@@ -124,7 +124,7 @@ void	analyze_input(t_minishell *shell)
 		temp = temp->next;
 	}*/
 	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0)) //Isso implica que temos |, &&, ||, ;, (), {}. Ou merameante <, >, >>, <<.
-		handle_pipe_and_redir(shell->commands);
+		handle_pipe_and_redir(shell, shell->commands);
 	else if (shell->commands)
 	{
 		if (shell->commands->type == T_EQUAL)

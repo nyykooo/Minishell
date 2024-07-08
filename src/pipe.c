@@ -132,12 +132,43 @@ static bool	is_file(t_cmd *cmd)
 		return (true);
 	return (false);
 }
+bool	is_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "cd") == 0 || \
+	ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || \
+	ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0 || \
+	ft_strcmp(cmd, "exit") == 0)
+		return (true);
+	return (false);
+}
+void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
+{
+		if (ft_strcmp(cmd_temp->cmd, "cd") == 0)
+			handle_cd(cmd_temp, shell);
+		else if (ft_strcmp(cmd_temp->cmd, "echo") == 0)
+			handle_echo(cmd_temp);
+		else if (ft_strcmp(cmd_temp->cmd, "exit") == 0)
+			handle_exit(cmd_temp, shell);
+		else if (ft_strcmp(cmd_temp->cmd, "export") == 0)
+			handle_export(shell);
+		else if (ft_strcmp(cmd_temp->cmd, "unset") == 0)
+			handle_unset(cmd_temp, &shell->envvars);
+		else if (ft_strcmp(cmd_temp->cmd, "env") == 0)
+			handle_env(shell->envvars, shell);
+		else if (ft_strcmp(cmd_temp->cmd, "pwd") == 0)
+			handle_pwd(shell);
+}
 
-void	ft_exec(t_cmd *cmd_temp)
+void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 {
 	char	**arg_array;
 	char	*path;
 
+	if (is_builtin(cmd_temp->cmd) == true)
+	{
+		ft_exec_builtin(shell, cmd_temp); //implementar o envio para o pai do exit_status e de erro
+		exit(0);
+	}
 	arg_array = ft_to_array(cmd_temp);
 	path = get_command_path(cmd_temp->cmd);
 	execve(path, arg_array, envvar_array(cmd_temp->shell));
@@ -227,7 +258,7 @@ void	ft_close_filefds(int in_fd, int out_fd)
 		close(out_fd);
 }
 
-void	manage_child(t_cmd *cmd_temp, int old_read_fd, int fd[2])
+void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2])
 {
 	int	in_fd;
 	int	out_fd;
@@ -244,12 +275,12 @@ void	manage_child(t_cmd *cmd_temp, int old_read_fd, int fd[2])
 	if (has_pipe)
 	{
 		ft_haspipe(in_fd, fd[1], fd[0]);
-		ft_exec(cmd_temp);
+		ft_exec(shell, cmd_temp);
 	}
 	else
 	{
 		ft_nopipe(in_fd, out_fd);
-		ft_exec(cmd_temp);
+		ft_exec(shell, cmd_temp);
 	}
 	ft_close_filefds(in_fd, out_fd);
 }
@@ -284,7 +315,7 @@ void	ft_close_pipefds(int fd[2], int old_read_fd)
 		close(fd[0]);
 }
 
-int	handle_pipe_and_redir(t_cmd *commands)
+int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 {
 	int		fd[2];
 	int		old_read_fd;
@@ -302,7 +333,7 @@ int	handle_pipe_and_redir(t_cmd *commands)
 		create_pipe(fd);
 		pid = create_child_process();
 		if (pid == 0)
-			manage_child(cmd_temp, old_read_fd, fd);
+			manage_child(shell, cmd_temp, old_read_fd, fd);
 		else
 			manage_parent(pid, &old_read_fd, fd);
 		cmd_temp = cmd_temp->next;
