@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/02 22:04:21 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:02:30 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	create_questionvar(t_var *envvar)
 	new_node->name = ft_strdup("?");
 	new_node->value = ft_strdup(questionvar);
 	ft_varadd_back(&envvar, new_node);
+	free(questionvar);
 }
 
 static void	set_underline(t_var *envvar)
@@ -99,6 +100,7 @@ t_var *create_list(char **envp)
 		{
 			shlvl_value = ft_itoa(ft_atoi(new_node->value) + 1);
 			update_existing_envvar(new_node, "SHLVL", shlvl_value);
+			free(shlvl_value);
 		}
 	}
 	create_questionvar(head);

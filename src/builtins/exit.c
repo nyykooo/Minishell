@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/27 18:17:07 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:27:13 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ static int	analyze_exit_arguments(t_cmd *command)
 void	handle_exit(t_cmd *command, t_minishell *shell)
 {
 	printf("exit\n");
+	rl_clear_history();
 	if (command)
 		shell->exit_status = analyze_exit_arguments(command);
 	else

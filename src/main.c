@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/06 15:31:58 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:29:27 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ static bool	create_prompt(t_minishell *shell)
 		handle_exit(shell->commands, shell); //saber se eh preciso diferenciar o ctrl + D do erro
 	if (input[0] == 0)
 		return (false);
-	add_history(input);
-	shell->input = ft_strdup(input);
-	if (input != NULL)
+	if (input)
+	{
+		add_history(input);
+		shell->input = ft_strdup(input);
 		free(input);
+	}
 	return (true);
 }
 
@@ -102,6 +104,5 @@ int	main(int argc, char **argv, char **envp)
 		printf("bug\n");
 	minishell_loop(&shell);
 	free_var(shell.envvars);
-	clear_history();
 	return (0);
 }
