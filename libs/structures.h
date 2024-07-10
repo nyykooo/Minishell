@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/02 13:42:53 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:02:10 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_cmd
 	bool				pipe; // if the command is a pipe
 	bool				rappend; // if the command is a right append
 	bool				lappend; // if the command is a left append
+	int					here_doc_fd; // here doc file descriptor
 	bool				rtrunc; // if the command is a right trunc
 	bool				input_file; // if the command is a input_file
 	enum e_types		type; // type of command

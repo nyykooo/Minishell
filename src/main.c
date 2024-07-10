@@ -6,11 +6,13 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/28 11:21:34 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:39:13 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
+
+int	g_sig;
 
 static char	*get_pathname(void)
 {
@@ -88,6 +90,7 @@ int	main(int argc, char **argv, char **envp)
 	static t_minishell	shell; // conversar com o Nyko sobre o static
 	t_var *envvar;
 
+	g_sig = 0; //apenas iniciando a global
 	(void)argv;
 	if (argc != 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/06 13:47:16 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/10 09:55:22 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ void	handle_sigint(int sig);
 
 //char	*get_command_path(char *command);
 int     handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
+void	heredoc(t_minishell *shell);
 
 #endif
