@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 18:23:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:13:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,7 +355,7 @@ static char *prepare_value(char *content)
 	count_meta = 0;
 	while (content[++i] != '\0')
 	{
-	if (content[i] == '\"' || content[i] == '\\' || content[i] == '$' || content[i] == '`')
+		if (content[i] == '\"' || content[i] == '\\' || content[i] == '$' || content[i] == '`')
 			count_meta++;
 	}
 	value = malloc(sizeof(char)*(ft_strlen(content) + count_meta + 1));
@@ -369,6 +369,7 @@ static char *prepare_value(char *content)
 			value[j++] = '\\';
 		value[j++] = content[i];
 	}
+	value[j] = '\0';
 	return (value);
 }
 
