@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/09 19:33:21 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:11:48 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static char *get_name(char *input, int start)
 			&& input[start + i] != '$' && input[start + i] != '='
 			&& input[start + i] != '/')
 		i++;
+	printf("after while\n");
 	return (ft_substr(input, start, i));
 }
 
@@ -130,8 +131,9 @@ void	expand_dolar(char **input, t_minishell *shell)
 			if (var)
 				var_value = ft_strdup(var->value);
 			(*input) = ft_strreplace((*input), i, var_value, 0);
-			free(var_name);
-			if (var_value)
+			if (var_name)
+				free(var_name);
+			if (var_value && var_value[0] != '\0')
 				free(var_value);
 		}
 	}
