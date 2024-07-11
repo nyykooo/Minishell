@@ -17,6 +17,8 @@ static char *get_name(char *input, int start)
 	int	i;
 	
 	i = 0;
+	if (input[start] == 0)
+		return (ft_strdup(""));
 	if (ft_isalpha(input[start]) == 0 && input[start] != '_' && input[start] != '?')
 		return (ft_substr(input, start, 1));
 	while (input[start + i] != '\0' && input[start + i] != ' '
@@ -24,7 +26,6 @@ static char *get_name(char *input, int start)
 			&& input[start + i] != '$' && input[start + i] != '='
 			&& input[start + i] != '/')
 		i++;
-	printf("after while\n");
 	return (ft_substr(input, start, i));
 }
 
@@ -36,8 +37,8 @@ static char	*ft_strreplace(char *src, int i, char *insert, int flag)
 	int		size;
 	char	*name;
 
-	if (!src || !insert)
-		return (NULL);
+	if (src[i + 1] == '\0')
+		insert = ft_strdup("$");
 	insert_len = ft_strlen(insert);
 	del_len = 0;
 	name = get_name(src, i + 1);

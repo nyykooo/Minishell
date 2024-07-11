@@ -48,10 +48,10 @@ static char	*get_command_path(char *command)
 
 static void	get_path(t_cmd *commands)
 {
-	if (access(commands->cmd, X_OK) == 0)
-		commands->path = ft_strdup(commands->cmd);
-	else
+	if (access(commands->cmd, X_OK) != 0)
 		commands->path = get_command_path(commands->cmd);
+	else
+		commands->path = ft_strdup(commands->cmd);
 }
 
 static void	handle_command(t_cmd *commands, t_minishell *shell)

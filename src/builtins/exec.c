@@ -22,7 +22,8 @@ char **envvar_array(t_minishell *shell)
 	temp = shell->envvars;
 	while (temp)
 	{
-		i++;
+		if (temp->env == true)
+			i++;
 		temp = temp->next;
 	}
 	env_var = (char **)malloc(sizeof(char *) * (i + 1));
@@ -36,10 +37,11 @@ char **envvar_array(t_minishell *shell)
 	i = -1;
 	while (temp)
 	{
-		env_var[++i] = ft_strdup(temp->content);
+		if (temp->env)
+			env_var[++i] = ft_strdup(temp->content);
 		temp = temp->next;
 	}
-	env_var[i] = NULL;
+	env_var[++i] = NULL;
 	return (env_var);
 }
 
