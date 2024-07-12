@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:09:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 16:10:20 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:13:23 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char **envvar_array(t_minishell *shell)
 	while (temp)
 	{
 		if (temp->env)
-			env_var[++i] = ft_strdup(temp->content);
+			env_var[++i] = ft_strdup(temp->content);	
 		temp = temp->next;
 	}
 	env_var[++i] = NULL;

@@ -279,7 +279,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `export =a=42` 		  	 	 	| not a valid identifier
 | 🟢 | `export a==42` 		  		  	| its possible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
 | 🟢 | `export "a=42"` 		 		   	| its possbile - value nao esta ficando entre "" na lista export
-| 🔴 | `export _=42` 		 		   	| O _=aaaaaaa n deve fazer nada. Fazer tratamento especial pra evitar aparecer na lista exp
+| 🟢 | `export _=42` 		 		   	| O _=aaaaaaa n deve fazer nada. Fazer tratamento especial pra evitar aparecer na lista exp
 | 🟢 | `export 42=42`		  		  	|
 | 🟢 | `export a b = 42`	  		  	|
 | 🟢 | `export a= b= 42`	    	    |

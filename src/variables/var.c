@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/08 16:02:30 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/12 10:29:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ void	update_underlinevar(t_minishell *shell)
 	t_var	*underlinevar;
 	char	*underlinevar_value;
 
+	printf("update_underlinevar\n");
 	current = shell->commands;
 	while (current->next)
 		current = current->next;
 	if (!current->arguments)
-		underlinevar_value = ft_strdup(current->cmd);
+		underlinevar_value = ft_strdup(current->path);
 	else
 	{
 		arg = current->arguments;
@@ -39,7 +40,6 @@ void	update_underlinevar(t_minishell *shell)
 void	update_vars(t_minishell *shell)
 {
 	update_questionvar(shell);
-	update_underlinevar(shell);
 }
 
 void	update_questionvar(t_minishell *shell)

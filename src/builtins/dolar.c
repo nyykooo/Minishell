@@ -6,11 +6,12 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/10 20:11:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/12 14:53:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
+
 
 static char *get_name(char *input, int start)
 {
@@ -134,7 +135,7 @@ void	expand_dolar(char **input, t_minishell *shell)
 			(*input) = ft_strreplace((*input), i, var_value, 0);
 			if (var_name)
 				free(var_name);
-			if (var_value && var_value[0] != '\0')
+			if (var_value[0] != '\0')
 				free(var_value);
 		}
 	}

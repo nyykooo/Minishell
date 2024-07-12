@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/08 16:00:08 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/12 10:36:34 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 	char	**arguments;
 	char	**env_var;
 
+	get_path(commands);
+	update_underlinevar(shell);
 	pid = fork();
 	if (pid == 0)
 	{
-		get_path(commands);
 		arguments = ft_to_array(commands);
 		env_var = envvar_array(shell);
 		if (commands->path == NULL || execve(commands->path, arguments, env_var) == -1)
