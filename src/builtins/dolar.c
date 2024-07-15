@@ -6,12 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/12 14:53:14 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/15 23:34:43 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
-
 
 static char *get_name(char *input, int start)
 {
@@ -30,35 +29,52 @@ static char *get_name(char *input, int start)
 	return (ft_substr(input, start, i));
 }
 
-static char	*ft_strreplace(char *src, int i, char *insert, int flag)
-{
-	char	*new;
-	int		del_len;
-	int		insert_len;
-	int		size;
-	char	*name;
+//copy until str/join str and expanded/ and join the rest of the str
 
-	if (src[i + 1] == '\0')
-		insert = ft_strdup("$");
-	insert_len = ft_strlen(insert);
-	del_len = 0;
-	name = get_name(src, i + 1);
-	del_len = ft_strlen(name) + 1;
-	if (flag == 1)
-		del_len = 1;
-	size = ft_strlen(src) - del_len + insert_len + 1;
-	new = (char *)malloc(sizeof(char) * \
-	(size));
-	if (!new)
-		return (NULL);
-	ft_strlcpy(new, src, i);
-	ft_strlcpy(new + i, insert, insert_len);
-	ft_strlcpy(new + i + insert_len, \
-	src + i + del_len, ft_strlen(src) - del_len);
+static char	*ft_strreplace(char *src, int i, char *insert, char *name)
+{
+	char	*str_frag;
+	char	*tmp;
+	char	*new;
+
+	str_frag = ft_substr(src, 0, i);
+	tmp = ft_strjoin(str_frag, insert);
+	new = ft_strjoin(tmp, src + i + ft_strlen(name) + 1);
+	free(str_frag);
+	free(tmp);
 	free(src);
-	free(name);
 	return (new);
 }
+
+// static char	*ft_strreplace(char *src, int i, char *insert, int flag)
+// {
+// 	char	*new;
+// 	int		del_len;
+// 	int		insert_len;
+// 	int		size;
+// 	char	*name;
+
+// 	if (src[i + 1] == '\0')
+// 		insert = ft_strdup("$");
+// 	insert_len = ft_strlen(insert);
+// 	del_len = 0;
+// 	name = get_name(src, i + 1);
+// 	del_len = ft_strlen(name) + 1;
+// 	if (flag == 1)
+// 		del_len = 1;
+// 	size = ft_strlen(src) - del_len + insert_len + 1;
+// 	new = (char *)malloc(sizeof(char) * 
+// 	(size));
+// 	if (!new)
+// 		return (NULL);
+// 	ft_strlcpy(new, src, i);
+// 	ft_strlcpy(new + i, insert, insert_len);
+// 	ft_strlcpy(new + i + insert_len, 
+// 	src + i + del_len, ft_strlen(src) - del_len);
+// 	free(src);
+// 	free(name);
+// 	return (new);
+// }
 
 void	expand_tildes(char **input, t_minishell *shell)
 {
@@ -81,7 +97,7 @@ void	expand_tildes(char **input, t_minishell *shell)
 			var = find_envvar(shell->envvars, "HOME");
 			if (var)
 				var_value = ft_strdup(var->value);
-			(*input) = ft_strreplace((*input), i, var_value, 1);
+			(*input) = ft_strreplace((*input), i, var_value, "~");
 		}
 	}
 }
@@ -113,26 +129,18 @@ void	expand_dolar(char **input, t_minishell *shell)
 	t_var	*var;
 	char	*var_value;
 	char	*var_name;
-	bool	squote;
-	bool	dquote;
 
 	i = -1;
-	squote = false;
-	dquote = false;
 	while ((*input)[++i])
 	{
 		var_value = "";
-		if ((*input)[i] == '"' && squote == false)
-			dquote = !dquote;
-		if ((*input)[i] == '\'' && dquote == false)
-			squote = !squote;
-		if ((*input)[i] == '$' && squote == false)
+		if ((*input)[i] == '$' && is_inside_quotes((*input), i) != 1 && (*input)[i + 1] != '\0')
 		{
 			var_name = get_name((*input), i + 1);
 			var = find_envvar(shell->envvars, var_name);
 			if (var)
 				var_value = ft_strdup(var->value);
-			(*input) = ft_strreplace((*input), i, var_value, 0);
+			(*input) = ft_strreplace((*input), i, var_value, var_name);
 			if (var_name)
 				free(var_name);
 			if (var_value[0] != '\0')
