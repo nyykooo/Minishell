@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/15 23:34:43 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:16:29 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,6 @@ static char	*ft_strreplace(char *src, int i, char *insert, char *name)
 	free(src);
 	return (new);
 }
-
-// static char	*ft_strreplace(char *src, int i, char *insert, int flag)
-// {
-// 	char	*new;
-// 	int		del_len;
-// 	int		insert_len;
-// 	int		size;
-// 	char	*name;
-
-// 	if (src[i + 1] == '\0')
-// 		insert = ft_strdup("$");
-// 	insert_len = ft_strlen(insert);
-// 	del_len = 0;
-// 	name = get_name(src, i + 1);
-// 	del_len = ft_strlen(name) + 1;
-// 	if (flag == 1)
-// 		del_len = 1;
-// 	size = ft_strlen(src) - del_len + insert_len + 1;
-// 	new = (char *)malloc(sizeof(char) * 
-// 	(size));
-// 	if (!new)
-// 		return (NULL);
-// 	ft_strlcpy(new, src, i);
-// 	ft_strlcpy(new + i, insert, insert_len);
-// 	ft_strlcpy(new + i + insert_len, 
-// 	src + i + del_len, ft_strlen(src) - del_len);
-// 	free(src);
-// 	free(name);
-// 	return (new);
-// }
 
 void	expand_tildes(char **input, t_minishell *shell)
 {
@@ -145,6 +115,7 @@ void	expand_dolar(char **input, t_minishell *shell)
 				free(var_name);
 			if (var_value[0] != '\0')
 				free(var_value);
+			i = -1;
 		}
 	}
 }
