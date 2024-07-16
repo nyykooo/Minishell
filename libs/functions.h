@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/06 15:31:16 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:57:27 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ void	handle_sigint(int sig);
 
 //char	*get_command_path(char *command);
 int     handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
+void	heredoc(t_minishell *shell);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/07/08 16:09:39 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/07/16 16:56:56 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC_DIR = main analyze_input envvar_handler signals pipe
+SRC_DIR = main analyze_input envvar_handler signals pipe heredoc
 
 SRC_BUILTINS = cd dolar echo env equal export unset exec pwd exit
 

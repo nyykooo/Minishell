@@ -6,12 +6,14 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 18:06:48 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:28:52 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADERS_H
 # define HEADERS_H
+
+extern int	g_sig;
 
 # include <readline/readline.h>
 # include <readline/history.h>

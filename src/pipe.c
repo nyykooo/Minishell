@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/12 11:18:39 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:57:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ int	handle_input_redirection(t_cmd *cmd_temp)
 				perror("open");
 				exit(1);
 			}
+		}
+		if (current_cmd->type == T_LAPEND)
+		{
+			if (in_fd >= 0)
+				close(in_fd);
+			if (current_cmd->prev)
+				in_fd = current_cmd->prev->here_doc_fd;
 		}
 		current_cmd = current_cmd->next;
 	}
@@ -309,8 +316,8 @@ void	ft_close_pipefds(int fd[2], int old_read_fd)
 {
 	if (old_read_fd != 0)
 		close(old_read_fd);
-	if (fd[1] != 0)
-		close(fd[1]);
+	if (fd[1] != 0) //verificar melhor essa condição
+		close(fd[1]); 
 	if (fd[0] != 0)
 		close(fd[0]);
 }

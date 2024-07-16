@@ -6,7 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/12 10:36:34 by ncampbel         ###   ########.fr       */
+=======
+/*   Updated: 2024/07/10 14:44:11 by brunhenr         ###   ########.fr       */
+>>>>>>> fix_bruno
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +115,10 @@ void	analyze_input(t_minishell *shell)
 	//t_cmd *temp;
 	
 	parsing_hub(shell);
-	/*temp = shell->commands;
-	while (temp)
+	heredoc(shell);
+	//temp = shell->commands;
+	//printf("NUMERO DE CMDS: %d\n", shell->n_cmd);
+	/*while (temp)
 	{
 		printf("temp->cmd: %s\n", temp->cmd);
 		printf("temp->type: %d\n", temp->type);
@@ -121,6 +127,7 @@ void	analyze_input(t_minishell *shell)
 		printf("temp->lappend: %d\n", temp->lappend);
 		printf("temp->input_file: %d\n", temp->input_file);
 		printf("temp->path: %s\n", temp->path);
+		printf("temp->here_doc_fd: %d\n", temp->here_doc_fd);
 		printf("----------------\n");
 		temp = temp->next;
 	}*/
