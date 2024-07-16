@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/15 12:34:26 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:29:20 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static bool	create_prompt(t_minishell *shell)
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
-		handle_exit(shell->commands, shell); //saber se eh preciso diferenciar o ctrl + D do erro
+		handle_exit(shell->commands, shell);
 	if (input[0] == 0)
 		return (false);
 	add_history(input);
@@ -82,15 +82,17 @@ void	minishell_loop(t_minishell *shell)
 			// update_questionvar(shell);
 			clear_shell(shell);
 		}
+		else
+			break ;	
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	static t_minishell	shell; // conversar com o Nyko sobre o static
+	static t_minishell	shell;
 	t_var *envvar;
 
-	g_sig = 0; //apenas iniciando a global
+	g_sig = 0;
 	(void)argv;
 	if (argc != 1)
 	{
@@ -103,7 +105,7 @@ int	main(int argc, char **argv, char **envp)
 	if (envvar->exp)
 		printf("bug\n");
 	minishell_loop(&shell);
-	free_var(shell.envvars);
+	free_var(shell.envvars); // a execucao nunca chega nessa linha?
 	clear_history();
 	return (0);
 }

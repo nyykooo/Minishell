@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/16 13:51:11 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:08:23 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	config_signals(int process_type);
 
 
 //char	*get_command_path(char *command);
-int		create_pipe(int fd[2]);
+void		create_pipe(int fd[2]);
 int     handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
 int	heredoc(t_minishell *shell);
 
