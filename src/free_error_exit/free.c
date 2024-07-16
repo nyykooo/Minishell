@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/08 16:06:40 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:43:09 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	free_commands(t_cmd *commands)
 
 void	free_shell(t_minishell *shell)
 {
+	rl_clear_history();
+	clear_history();
 	if (shell->envvars != NULL)
 		free_var(shell->envvars);
 	if (shell->tokens != NULL)
