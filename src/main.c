@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/16 17:45:07 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:58:39 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	minishell_loop(t_minishell *shell)
 			update_vars(shell);
 			clear_shell(shell);
 		}
-		else
-			break ;	
 	}
 }
 

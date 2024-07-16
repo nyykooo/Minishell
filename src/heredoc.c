@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:52:35 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/16 16:22:46 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:56:03 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	process_heredoc_cmds(t_minishell *shell, struct sigaction *sa_original)
 				close(fd[1]);
 			if (current->prev)
 				current->prev->here_doc_fd = fd[0];
-			close(fd[0]);
+			//close(fd[0]);
 		}
 		current = current->next;
 	}
