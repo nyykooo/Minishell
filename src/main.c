@@ -6,13 +6,13 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/10 10:39:13 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:34:26 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
 
-int	g_sig;
+volatile sig_atomic_t	g_sig;
 
 static char	*get_pathname(void)
 {
@@ -97,8 +97,7 @@ int	main(int argc, char **argv, char **envp)
 		write(2, "usage: ./minishell\n", 20);
 		return (EXIT_FAILURE);
 	}
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handle_sigint);
+	config_signals(0);
 	shell.envvars = create_list(envp);
 	envvar = find_envvar(shell.envvars, "?");
 	if (envvar->exp)
