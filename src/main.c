@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/16 17:58:39 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:59:51 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,7 @@ void	minishell_loop(t_minishell *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	static t_minishell	shell; // conversar com o Nyko sobre o static
 	static t_minishell	shell;
-	t_var *envvar;
 
 	g_sig = 0;
 	(void)argv;
@@ -103,7 +101,6 @@ int	main(int argc, char **argv, char **envp)
 	config_signals(0);
 	shell.envvars = create_list(envp);
 	minishell_loop(&shell);
-	free_var(shell.envvars);
 	free_var(shell.envvars); // a execucao nunca chega nessa linha?
 	clear_history();
 	return (0);
