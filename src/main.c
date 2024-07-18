@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/18 21:14:18 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:27:12 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	minishell_loop(t_minishell *shell)
 int	main(int argc, char **argv, char **envp)
 {
 	static t_minishell	shell;
-	t_var *envvar;
 
 	g_sig = 0;
 	(void)argv;
