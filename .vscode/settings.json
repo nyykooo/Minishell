@@ -54,6 +54,7 @@
 		"termios.h": "c",
 		"stdio.h": "c",
 		"structures.h": "c",
-		"types.h": "c"
+		"types.h": "c",
+		"signal.h": "c"
 	}
 }

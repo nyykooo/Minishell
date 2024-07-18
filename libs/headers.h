@@ -6,14 +6,13 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/10 10:28:52 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:59:49 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADERS_H
 # define HEADERS_H
 
-extern int	g_sig;
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -36,4 +35,5 @@ extern int	g_sig;
 # include "libft/libft.h" // to include the libft library
 # include <stdarg.h> // to use the va_list type to error_msg_construct
 
+extern volatile sig_atomic_t	g_sig;
 #endif
