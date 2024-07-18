@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/18 21:11:54 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:14:36 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,13 @@ void	analyze_input(t_minishell *shell)
 	status = 0;
 	parsing_hub(shell);
 	status = heredoc(shell);
-	printf("status: %d\n", status);
+	/*printf("status: %d\n", status);
 	printf("WIFEXITED: %d\n", WIFEXITED(status));
 	if (WIFEXITED(status))
 		printf("WEXITSTATUS: %d\n", WEXITSTATUS(status));
 	printf("WIFSIGNALED: %d\n", WIFSIGNALED(status));
 	if (WIFSIGNALED(status))
-		printf("WTERMSIG: %d\n", WTERMSIG(status));
+		printf("WTERMSIG: %d\n", WTERMSIG(status));*/
 	if (WIFEXITED(status) == true && WEXITSTATUS(status) == 8)
 			return ;
 	//temp = shell->commands;
