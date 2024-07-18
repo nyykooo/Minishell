@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/18 21:11:10 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:11:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static bool	create_prompt(t_minishell *shell)
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
-		handle_exit(shell->commands, shell); //saber se eh preciso diferenciar o ctrl + D do erro
+		handle_exit(shell->commands, shell);
 	if (input[0] == 0)
 		return (false);
 	if (input)
@@ -84,14 +84,21 @@ void	minishell_loop(t_minishell *shell)
 			update_vars(shell);
 			clear_shell(shell);
 		}
+		else
+			break ;	
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+<<<<<<< HEAD
 	static t_minishell	shell; // conversar com o Nyko sobre o static
+=======
+	static t_minishell	shell;
+	t_var *envvar;
+>>>>>>> 9b692a9 (to join our fix versions)
 
-	g_sig = 0; //apenas iniciando a global
+	g_sig = 0;
 	(void)argv;
 	if (argc != 1)
 	{
@@ -101,6 +108,11 @@ int	main(int argc, char **argv, char **envp)
 	config_signals(0);
 	shell.envvars = create_list(envp);
 	minishell_loop(&shell);
+<<<<<<< HEAD
 	free_var(shell.envvars);
+=======
+	free_var(shell.envvars); // a execucao nunca chega nessa linha?
+	clear_history();
+>>>>>>> 9b692a9 (to join our fix versions)
 	return (0);
 }

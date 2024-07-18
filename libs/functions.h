@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/18 21:10:58 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:12:26 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	config_signals(int process_type);
 
 
 //char	*get_command_path(char *command);
-int		create_pipe(int fd[2]);
+void		create_pipe(int fd[2]);
 int     handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
 int	heredoc(t_minishell *shell);
 
