@@ -17,8 +17,8 @@ static char *get_name(char *input, int start)
 	int	i;
 	
 	i = 0;
-	if (input[start] == 0)
-		return (ft_strdup(""));
+	if (input[start] == '?')
+		return (ft_strdup("?"));
 	if (ft_isalpha(input[start]) == 0 && input[start] != '_' && input[start] != '?')
 		return (ft_substr(input, start, 1));
 	while (input[start + i] != '\0' && input[start + i] != ' '
