@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/16 17:08:41 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:42:44 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ static int	analyze_exit_arguments(t_cmd *command)
 void	handle_exit(t_cmd *command, t_minishell *shell)
 {
 	printf("exit\n");
+	rl_clear_history();
 	if (command)
 		shell->exit_status = analyze_exit_arguments(command);
 	else

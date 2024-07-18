@@ -224,7 +224,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `/bin/cd`          | OK! Path not found in bash nor in our
 | 🟢 | `/bin/export`      | OK! Path not found in bash nor in our
 | 🟢 | `/bin/exit`        | OK! Path not found in bash nor in our
-| 🔴 | `/bin/env`         | IMPORTANT!
+| 🟢 | `/bin/env`         | IMPORTANT!
 
 #### PWD
 > Locating the present directory through the pwd command in Minishell.
@@ -279,7 +279,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `export =a=42` 		  	 	 	| not a valid identifier
 | 🟢 | `export a==42` 		  		  	| its possible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
 | 🟢 | `export "a=42"` 		 		   	| its possbile - value nao esta ficando entre "" na lista export
-| 🔴 | `export _=42` 		 		   	| O _=aaaaaaa n deve fazer nada. Fazer tratamento especial pra evitar aparecer na lista exp
+| 🟢 | `export _=42` 		 		   	| O _=aaaaaaa n deve fazer nada. Fazer tratamento especial pra evitar aparecer na lista exp
 | 🟢 | `export 42=42`		  		  	|
 | 🟢 | `export a b = 42`	  		  	|
 | 🟢 | `export a= b= 42`	    	    |
@@ -388,8 +388,8 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | ` echo`                                                              |
 | 🟢 | `  echo  `                                                           |
 | 🟢 | `echo .`                                                             |
-| 🟢 | `echo ~`                                                             | expand ~ to home
-| 🟢 | `echo echo ~`                                                        | expand ~ to home
+| 🟢 | `echo ~`                                                             |
+| 🟢 | `echo echo ~`                                                        |
 | 🟢 | `"echo test"`                                                        |
 | 🟢 | `echo "~"`                                                           |
 | 🟢 | `echo '~'`                                                           |
@@ -397,7 +397,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `echo 123~`                                                          |
 | 🟢 | `echo ~/123`                                                         |
 | 🟢 | `echo ~/123/456`                                                     |
-| 🟡 | `echo #`                                                             |
+| 🟢 | `echo #`                                                             |
 | 🟢 | `echofile`                                                           |
 | 🟢 | `echo file`                                                          |
 | 🟢 | `echo no_file`                                                       |
@@ -426,17 +426,17 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `echo -n -n -n file test`                                            |
 | 🟢 | `echo $USER`                                                         |
 | 🟢 | `echo "$USER"`                                                       |
-| 🔴 | `echo "'$USER'"`                                                     | erro aspas simples dentro de duplas
-| 🔴 | `echo " '$USER' "`                                                   | erro aspas simples dentro de duplas
+| 🟢 | `echo "'$USER'"`                                                     | erro aspas simples dentro de duplas
+| 🟢 | `echo " '$USER' "`                                                   | erro aspas simples dentro de duplas
 | 🟢 | `echo text"$USER"`                                                   |
-| 🔴 | `echo text"'$USER'" ' $USER '`                                       | erro aspas simples dentro de duplas
+| 🟢 | `echo text"'$USER'" ' $USER '`                                       | erro aspas simples dentro de duplas
 | 🟢 | `echo "text"   "$USER"    "$USER"`                                   |
 | 🟢 | `echo '              $USER          '`                               |
 | 🟢 | `echo               text "$USER"            "$USER"text`             |
 | 🟢 | `echo ''''''''''$USER''''''''''`                                     |
 | 🟢 | `echo """"""""$USER""""""""`                                         |
 | 🟢 | `echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''` |
-| 🔴 | `echo $USER '' $USER $USER '' $USER '' $USER -n $USER`               | bug printando apenas 1 vez
+| 🟢 | `echo $USER '' $USER $USER '' $USER '' $USER -n $USER`               | bug printando apenas 1 vez
 | 🟢 | `echo ' \' ' \'`                                                     |
 | 🔵 | `echo '\" ' " \"\""`                                                 |
 | 🔵 | `echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'`                      |
@@ -456,14 +456,14 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `echo $USER`                                                         |
 | 🟢 | `echo $?`                                                            |
 | 🟢 | `echo $USER213`                                                      |
-| 🔴 | `echo $USER$12USER$USER=4$USER12`                                    |
-| 🔴 | `echo $USER $123456789USER $USER123456789`                           |
-| 🔴 | `echo $USER $9999USER $8888USER $7777USER`                           |
-| 🔴 | `echo $USER $USER9999 $USER8888 $USER7777`                           |
-| 🔴 | `echo $USER $USER9999 $USER8888 $USER7777 "$USER"`                   |
-| 🔴 | `echo "$USER=12$USER"`                                               |
-| 🔴 | `echo "$9USER" "'$USER=12$SOMETHING'"`                               |
-| 🔴 | `echo $PWD/file`                                                     |
+| 🟢 | `echo $USER$12USER$USER=4$USER12`                                    |
+| 🟢 | `echo $USER $123456789USER $USER123456789`                           |
+| 🟢 | `echo $USER $9999USER $8888USER $7777USER`                           |
+| 🟢 | `echo $USER $USER9999 $USER8888 $USER7777`                           |
+| 🟢 | `echo $USER $USER9999 $USER8888 $USER7777 "$USER"`                   |
+| 🟢 | `echo "$USER=12$USER"`                                               |
+| 🟢 | `echo "$9USER" "'$USER=12$SOMETHING'"`                               |
+| 🟢 | `echo $PWD/file`                                                     |
 | 🟢 | `echo "$PWD/file`                                                    | error unmatched quotes
 | 🟢 | `echo "text" "text$USER" ... "$USER`                                 |
 | 🟢 | `echo $PW`                                                           |

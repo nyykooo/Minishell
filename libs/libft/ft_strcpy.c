@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:19:04 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/25 11:38:36 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/12 10:35:34 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_strcpy(char *dest, char *src)
 {
+	if (!src)
+		return ;
 	while (*src)
 	{
 		*dest = *src;

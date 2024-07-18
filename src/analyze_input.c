@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/16 17:29:46 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:15:57 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static char	*get_command_path(char *command)
 
 static void	get_path(t_cmd *commands)
 {
-	if (access(commands->cmd, X_OK) == 0)
-		commands->path = ft_strdup(commands->cmd);
-	else
+	if (access(commands->cmd, X_OK) != 0)
 		commands->path = get_command_path(commands->cmd);
+	else
+		commands->path = ft_strdup(commands->cmd);
 }
 
 static void	handle_command(t_cmd *commands, t_minishell *shell)
@@ -60,10 +60,11 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 	char	**arguments;
 	char	**env_var;
 
+	get_path(commands);
+	update_underlinevar(shell);
 	pid = fork();
 	if (pid == 0)
 	{
-		get_path(commands);
 		arguments = ft_to_array(commands);
 		env_var = envvar_array(shell);
 		if (commands->path == NULL || execve(commands->path, arguments, env_var) == -1)

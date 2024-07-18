@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/10 09:45:47 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:57:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 	cmd->shell = shell;
 	cmd->here_doc_fd = -1;
 	tokens = tokens->next;
-	while (tokens && tokens->type == T_ARG)
+	while (tokens && (tokens->type == T_ARG || tokens->type == T_EMPTY))
 	{
 		init_arg(cmd, tokens->content);
 		tokens = tokens->next;

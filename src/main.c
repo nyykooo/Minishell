@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/16 17:54:10 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:59:51 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,12 @@ static bool	create_prompt(t_minishell *shell)
 		handle_exit(shell->commands, shell);
 	if (input[0] == 0)
 		return (false);
-	add_history(input);
-	shell->input = ft_strdup(input);
-	if (input != NULL)
+	if (input)
+	{
+		add_history(input);
+		shell->input = ft_strdup(input);
 		free(input);
+	}
 	return (true);
 }
 
@@ -79,7 +81,7 @@ void	minishell_loop(t_minishell *shell)
 		if (create_prompt(shell))
 		{
 			analyze_input(shell);
-			// update_questionvar(shell);
+			update_vars(shell);
 			clear_shell(shell);
 		}
 	}
@@ -88,7 +90,6 @@ void	minishell_loop(t_minishell *shell)
 int	main(int argc, char **argv, char **envp)
 {
 	static t_minishell	shell;
-	t_var *envvar;
 
 	g_sig = 0;
 	(void)argv;
@@ -99,9 +100,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	config_signals(0);
 	shell.envvars = create_list(envp);
-	envvar = find_envvar(shell.envvars, "?");
-	if (envvar->exp)
-		printf("bug\n");
 	minishell_loop(&shell);
 	free_var(shell.envvars); // a execucao nunca chega nessa linha?
 	clear_history();

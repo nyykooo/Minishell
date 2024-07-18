@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/26 18:23:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:04:20 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	new_var = ft_calloc(1, sizeof(t_var));
 	if (new_var == NULL)
 		return (1);
-	new_var->content = strdup(argument->arg);
-	new_var->name = strdup(argument->arg);
+	new_var->content = ft_strdup(argument->arg);
+	new_var->name = ft_strdup(argument->arg);
 	new_var->exp = true;
 	ft_varadd_back(&shell->envvars, new_var);
 	return (0);
@@ -194,8 +194,8 @@ static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
 	}
 	if (equal_pos == -1)
 		return (1);
-	name = strndup(argument->arg, equal_pos);
-	value = strdup(argument->arg + equal_pos + 1);
+	name = ft_strndup(argument->arg, equal_pos);
+	value = ft_strdup(argument->arg + equal_pos + 1);
 	var = shell->envvars;
 	while (var != NULL)
 	{
@@ -355,7 +355,7 @@ static char *prepare_value(char *content)
 	count_meta = 0;
 	while (content[++i] != '\0')
 	{
-	if (content[i] == '\"' || content[i] == '\\' || content[i] == '$' || content[i] == '`')
+		if (content[i] == '\"' || content[i] == '\\' || content[i] == '$' || content[i] == '`')
 			count_meta++;
 	}
 	value = malloc(sizeof(char)*(ft_strlen(content) + count_meta + 1));
@@ -369,6 +369,7 @@ static char *prepare_value(char *content)
 			value[j++] = '\\';
 		value[j++] = content[i];
 	}
+	value[j] = '\0';
 	return (value);
 }
 

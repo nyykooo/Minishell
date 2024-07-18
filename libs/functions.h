@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/16 17:08:23 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:44:11 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		is_inside_quotes(char *str, size_t index);
 // NEW PARSING - DOLLAR
 void	expand_dolar(char **input , t_minishell *shell);
 void	expand_tildes(char **input, t_minishell *shell);
+void	expand_hashtag(char **input);
 
 // FREE_ERROR_EXIT
 void	free_shell(t_minishell *shell);
@@ -91,7 +92,9 @@ char	*create_envvar_content(char *name, char *value);
 t_var	*find_envvar(t_var *envvar_list, char *name);
 void	remove_envvar(t_var **envvar_list, t_var *envvar);
 char	*get_value(t_var *envvar_list, char *name);
+void	update_vars(t_minishell *shell);
 void	update_questionvar(t_minishell *shell);
+void	update_underlinevar(t_minishell *shell);
 
 // BUILTINS
 void	handle_cd(t_cmd *command, t_minishell *shell);
