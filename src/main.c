@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/18 21:11:49 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:13:37 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	minishell_loop(t_minishell *shell)
 			update_vars(shell);
 			clear_shell(shell);
 		}
-		else
-			break ;	
 	}
 }
 
