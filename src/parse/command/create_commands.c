@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/01 17:53:36 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:02:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 	cmd->cmd = ft_strdup(tokens->content);
 	cmd->type = tokens->type;
 	cmd->shell = shell;
+	cmd->here_doc_fd = -1;
 	tokens = tokens->next;
 	while (tokens && (tokens->type == T_ARG || tokens->type == T_EMPTY))
 	{
