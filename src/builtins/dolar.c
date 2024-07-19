@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/18 22:46:35 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:14:07 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	ft_is_sep(char sep)
 {
 	if (sep == ' ' || sep == '\0' || sep == '"' || sep == '\''
-		|| sep == '$' || sep == '=' || sep == '/')
+		|| sep == '=' || sep == '/')
 		return (true);
 	return (false);
 }
@@ -31,7 +31,7 @@ static char *get_name(char *input, int start)
 		return (ft_strdup("?"));
 	if (ft_isalpha(input[start]) == 0 && input[start] != '_' && input[start] != '?')
 		return (ft_substr(input, start, 1));
-	while (ft_is_sep(input[start + i]) == false)
+	while (ft_is_sep(input[start + i]) == false && input[start + i] != '$')
 		i++;
 	return (ft_substr(input, start, i));
 }

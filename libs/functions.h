@@ -6,7 +6,7 @@
 /*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 14:48:22 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/19 16:00:59 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ char *quote_del(char *input, t_minishell *shell);
 int	skip_quotes(char *input, int *i);
 int	skip_nquotes(char *input, int *i);
 int		is_inside_quotes(char *str, size_t index);
+
+// NEW PARSING - EQUAL
+bool    ft_check_equal(t_token *token);
 
 // NEW PARSING - DOLLAR
 void	expand_dolar(char **input , t_minishell *shell);
