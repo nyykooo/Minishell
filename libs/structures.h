@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/10 11:02:10 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:53:06 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_cmd
 typedef struct s_minishell
 {
 	char		*input;
+	char		*error_msg;
 	int			n_cmd; // number of commands
 	int			n_pipe; // number of pipes
 	int			exit_status; // status of the last command

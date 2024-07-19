@@ -3,24 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/28 16:32:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:08:23 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static void	 change_directory(char *dir, int should_free)
+static void	 change_directory(char *dir, int should_free, t_minishell *shell)
 {
-	char	*error;
-
 	if (chdir(dir) == -1)
 	{
-		error = error_msg_construct(4, "-minishell: cd: ", dir, ": ", "No such file or directory\n");
-		put_error_msg(error, 1);
-		free(error);
+		shell->error_msg = error_msg_construct(4, "-minishell: cd: ", dir, ": ", "No such file or directory\n");
+		shell->exit_status = put_error_msg(shell->error_msg, 1);
 	}
 	if (should_free == 1)
 		free(dir);
@@ -36,7 +33,7 @@ static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 		dir = get_value(envvar_list, "OLDPWD");
 		if (dir == NULL)
 		{
-			write(2, "cd: OLDPWD not set\n", 19);
+			error_msg_construct(3, "-minishell: cd: too many arguments\n");
 			return (NULL);
 		}
 	}
@@ -82,8 +79,8 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 	should_free = 0;
 	if (ft_argsize(command->arguments) >= 2)
 	{
-		write(2, "-minishell: cd: too many arguments\n", 36);
-		return ;
+		shell->error_msg = error_msg_construct(3, "-minishell: ", command->cmd, ": too many arguments\n");
+		shell->exit_status = put_error_msg(shell->error_msg, 1);
 	}
 	else if (command->arguments == NULL || \
 	ft_strcmp(command->arguments->arg, "--") == 0)
@@ -98,6 +95,8 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 	else if (command->arguments->arg != NULL && command->arguments->next == NULL)
 		dir = get_dir(command->arguments->arg, &should_free, shell->envvars);
 	if (dir != NULL)
-		change_directory(dir, should_free);
+		change_directory(dir, should_free, shell);
+	else
+		shell->exit_status = 1;
 	pwds_update(&shell->envvars, dir);
 }

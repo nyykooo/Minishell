@@ -6,7 +6,7 @@
 /*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 14:48:50 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/19 16:17:14 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	free_commands(t_cmd *commands)
 void	free_shell(t_minishell *shell)
 {
 	rl_clear_history();
-	clear_history();
 	if (shell->envvars != NULL)
 		free_var(shell->envvars);
 	if (shell->tokens != NULL)

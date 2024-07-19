@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/12 10:29:49 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:09:55 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	update_underlinevar(t_minishell *shell)
 	t_var	*underlinevar;
 	char	*underlinevar_value;
 
-	printf("update_underlinevar\n");
 	current = shell->commands;
 	while (current->next)
 		current = current->next;

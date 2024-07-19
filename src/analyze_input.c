@@ -6,7 +6,7 @@
 /*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/19 14:48:29 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/19 16:40:11 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,27 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 	pid_t	pid;
 	char	**arguments;
 	char	**env_var;
+	char	*error_msg;
 
 	get_path(commands);
 	update_underlinevar(shell);
 	pid = fork();
+	error_msg = NULL;
 	if (pid == 0)
 	{
 		arguments = ft_to_array(commands);
 		env_var = envvar_array(shell);
-		if (commands->path == NULL || execve(commands->path, arguments, env_var) == -1)
+		if (commands->path == NULL)
 		{
-			printf("%s: command not found\n", commands->cmd);
-			//perror("minishell");
-			if (commands->path != NULL)
-				free(commands->path);
-			exit(EXIT_FAILURE);
+			error_msg = error_msg_construct(3, "-minishell: ", commands->cmd, ": command not found\n");
+			shell->exit_status = put_error_msg(error_msg, 127);
+			exit(shell->exit_status);
+		}
+		if (execve(commands->path, arguments, env_var) == -1)
+		{
+			error_msg = error_msg_construct(3, "-minishell: ", commands->cmd, ": Is a directory\n");
+			shell->exit_status = put_error_msg(error_msg, 126);
+			exit(shell->exit_status);
 		}
 		free(commands->path);
 		free(arguments);
