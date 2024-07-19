@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   equal.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 23:52:51 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:09:16 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@
 // 	return (false);
 
 // }
+
+bool ft_check_equal(t_token *token)
+{
+	int i;
+
+	i = -1;
+	while (token->content[++i])
+	{
+		if (token->content[i] == EQUAL)
+		{
+			token->content[i] = '=';
+			return (true);
+		}
+	}
+	return (false);
+}
 
 void	handle_equal(t_minishell *shell, t_cmd *command)
 {

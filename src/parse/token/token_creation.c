@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 13:43:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:10:44 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,10 @@ static void check_token(t_token *input)
 			input->sq = true;
 		else if (input->content[i] == N_DOLLAR)
 			input->dol = true;
-		else if (input->content[i] == N_EQUAL)
+		else if (input->content[i] == EQUAL)
 			input->equal = true;
 	}
 	
-}
-
-static bool check_equal(t_token *token)
-{
-	int i;
-
-	i = -1;
-	while (token->content[++i])
-	{
-		if (token->content[i] == N_EQUAL)
-		{
-			token->content[i] = '=';
-			return (true);
-		}
-	}
-	return (false);
 }
 
 static void	get_type(t_token *token)
@@ -63,7 +47,7 @@ static void	get_type(t_token *token)
 		token->type = T_LAPEND;
 	else if (ft_strcmp(token->content, "|") == 0)
 		token->type = T_PIPE;
-	else if (check_equal(token) && (!token->prev
+	else if (ft_check_equal(token) && (!token->prev
 		|| (token->prev->type >= T_RTRUNC)))
 		token->type = T_EQUAL;
 	else if (!token->prev || token->prev->type >= T_RTRUNC)
