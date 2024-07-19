@@ -6,25 +6,32 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/16 16:16:29 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:46:35 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
+
+static bool	ft_is_sep(char sep)
+{
+	if (sep == ' ' || sep == '\0' || sep == '"' || sep == '\''
+		|| sep == '$' || sep == '=' || sep == '/')
+		return (true);
+	return (false);
+}
 
 static char *get_name(char *input, int start)
 {
 	int	i;
 	
 	i = 0;
-	if (input[start] == 0)
-		return (ft_strdup(""));
+	if (ft_is_sep(input[start]) == true)
+		return (NULL);
+	if (input[start] == '?')
+		return (ft_strdup("?"));
 	if (ft_isalpha(input[start]) == 0 && input[start] != '_' && input[start] != '?')
 		return (ft_substr(input, start, 1));
-	while (input[start + i] != '\0' && input[start + i] != ' '
-			&& input[start + i] != '"' && input[start + i] != '\''
-			&& input[start + i] != '$' && input[start + i] != '='
-			&& input[start + i] != '/')
+	while (ft_is_sep(input[start + i]) == false)
 		i++;
 	return (ft_substr(input, start, i));
 }
@@ -76,19 +83,11 @@ void	expand_hashtag(char **input)
 {
 	
 	int		i;
-	bool	squote;
-	bool	dquote;
 
 	i = -1;
-	squote = false;
-	dquote = false;
 	while ((*input)[++i])
 	{
-		if ((*input)[i] == '"' && squote == false)
-			dquote = !dquote;
-		if ((*input)[i] == '\'')
-			squote = !squote;
-		if ((*input)[i] == '#' && squote == false)
+		if ((*input)[i] == '#' && is_inside_quotes((*input), i) == 0)
 			(*input)[i] = 0;
 	}
 }
@@ -104,9 +103,12 @@ void	expand_dolar(char **input, t_minishell *shell)
 	while ((*input)[++i])
 	{
 		var_value = "";
-		if ((*input)[i] == '$' && is_inside_quotes((*input), i) != 1 && (*input)[i + 1] != '\0')
+		if ((*input)[i] == '$' && is_inside_quotes((*input), i) != 1
+			&& (*input)[i + 1] != '\0')
 		{
 			var_name = get_name((*input), i + 1);
+			if (var_name == NULL)
+				continue ;
 			var = find_envvar(shell->envvars, var_name);
 			if (var)
 				var_value = ft_strdup(var->value);

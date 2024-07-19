@@ -24,7 +24,7 @@ static bool	look_for_flag(t_arg *argument)
 		j++;
 		while (argument->arg[j] == 'n')
 			j++;
-		if (argument->arg[j] == '\0')
+		if (argument->arg[j] == '\0' && j > 1)
 		{
 			argument = argument->next;
 			return (true);

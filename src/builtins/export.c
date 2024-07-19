@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/12 11:04:20 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:45:01 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,6 +394,7 @@ int	handle_export(t_minishell *shell)
 		sort_content(current);
 		while (current != NULL)
 		{
+			value = NULL;
 			if (current->exp == true && current->env == true && \
 			current->value != NULL)
 			{
@@ -408,6 +409,8 @@ int	handle_export(t_minishell *shell)
 			else if (current->exp == true && current->value == NULL)
 				printf("declare -x %s\n", current->name);
 			current = current->next;
+			if (value)
+				free(value);
 		}
 		return (0);
 	}
