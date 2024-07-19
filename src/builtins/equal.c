@@ -6,7 +6,7 @@
 /*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 15:09:16 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/19 15:54:33 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool ft_check_equal(t_token *token)
 	i = -1;
 	while (token->content[++i])
 	{
-		if (token->content[i] == EQUAL)
+		if (token->content[i] == N_EQUAL)
 		{
 			token->content[i] = '=';
 			return (true);

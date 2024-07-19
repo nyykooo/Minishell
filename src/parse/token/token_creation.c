@@ -6,7 +6,7 @@
 /*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 15:10:44 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/19 15:54:48 by guest            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void check_token(t_token *input)
 			input->sq = true;
 		else if (input->content[i] == N_DOLLAR)
 			input->dol = true;
-		else if (input->content[i] == EQUAL)
+		else if (input->content[i] == N_EQUAL)
 			input->equal = true;
 	}
 	
