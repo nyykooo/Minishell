@@ -12,8 +12,29 @@
 
 #include "../../libs/headers.h"
 
-bool	is_valid_arg(const char *arg)
+bool	is_valid_arg(const char *arg, bool has_equal)
 {
+	int	i;
+
+	i = 0;
+	if (has_equal == true)
+	{
+		while (arg[i] != '=')
+		{
+			if (arg[i] == '-')
+				return (false);
+			i++;
+		}
+	}
+	else if (has_equal == false)
+	{
+		while (arg[i] != '\0')
+		{
+			if (arg[i] == '-')
+				return (false);
+			i++;
+		}
+	}
 	return (arg[0] == '_' || (arg[0] >= 'A' && arg[0] <= 'Z') || \
 	(arg[0] >= 'a' && arg[0] <= 'z'));
 }
@@ -229,6 +250,7 @@ static int	handle_export_args(t_minishell *shell)
 {
 	t_arg	*temp;
 	int		exit_status;
+	char	*error_msg;
 
 	exit_status = 0;
 	temp = shell->commands->arguments;
@@ -236,9 +258,11 @@ static int	handle_export_args(t_minishell *shell)
 	{
 		if (temp->arg[0] == '_' && temp->arg[1] == '=')
 			return (0);
-		if (is_valid_arg(temp->arg) == false)
-			printf("minishell: export: `%s': not a valid identifier\n", \
-			temp->arg);
+		if (is_valid_arg(temp->arg, temp->equal) == false)
+		{
+			error_msg = error_msg_construct(3, "-minishell: export: ", temp->arg, ": not a valid identifier\n");
+			exit_status = put_error_msg(error_msg, 1);
+		}
 		else
 		{
 			if (temp->equal == false)

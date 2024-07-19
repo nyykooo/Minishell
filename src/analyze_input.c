@@ -95,7 +95,7 @@ static void	handle_builtins(t_minishell *shell)
 		else if (ft_strcmp(shell->commands->cmd, "exit") == 0)
 			handle_exit(shell->commands, shell);
 		else if (ft_strcmp(shell->commands->cmd, "export") == 0)
-			handle_export(shell);
+			shell->exit_status = handle_export(shell);
 		else if (ft_strcmp(shell->commands->cmd, "unset") == 0)
 			handle_unset(shell->commands, &shell->envvars);
 		else if (ft_strcmp(shell->commands->cmd, "env") == 0)
