@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/22 17:49:58 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:28:47 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ void	analyze_input(t_minishell *shell)
 	
 	status = 0;
 	parsing_hub(shell);
+	if (shell->n_cmd == 0)
+		return ;
 	status = heredoc(shell);
 	/*printf("status: %d\n", status);
 	printf("WIFEXITED: %d\n", WIFEXITED(status));
