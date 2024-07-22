@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 16:00:59 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/22 16:14:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ char	*get_value(t_var *envvar_list, char *name);
 void	update_vars(t_minishell *shell);
 void	update_questionvar(t_minishell *shell);
 void	update_underlinevar(t_minishell *shell);
+void	add_new_envvar(t_var **envvar_list, char *name, char *value, int flag);
 
 // BUILTINS
 void	handle_cd(t_cmd *command, t_minishell *shell);
@@ -124,6 +125,7 @@ void	edit_termios(void);
 // VARIABLES
 void	ft_varadd_back(t_var **lst, t_var *new);
 t_var	*create_list(char **envp);
+t_var	*create_envvar_list(char **envp);
 
 //SIGNALS
 void	handle_sigint(int sig);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envvar_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/19 17:07:53 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/22 16:45:16 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,13 @@ char	*create_envvar_content(char *name, char *value)
 		return NULL;
 	ft_strcpy(content, name);
 	content[name_len] = '=';
-	ft_strcpy(content + name_len + 1, value);
+	if (value_len > 0)
+		ft_strcpy(content + name_len + 1, value);
+	else
+		content[name_len + 1] = '\0';
 	return (content);
 }
+
 void	update_existing_envvar(t_var *envvar, char *name, char *value)
 {
 	free(envvar->name);
@@ -97,7 +101,7 @@ void	update_existing_envvar(t_var *envvar, char *name, char *value)
 	envvar->content = create_envvar_content(name, value);
 }
 
-static void add_new_envvar(t_var **envvar_list, char *name, char *value, int flag)
+void add_new_envvar(t_var **envvar_list, char *name, char *value, int flag)
 {
 	t_var	*envvar;
 
@@ -119,6 +123,7 @@ static void add_new_envvar(t_var **envvar_list, char *name, char *value, int fla
 	envvar->value = strdup(value);
 	ft_varadd_back(envvar_list, envvar);
 }
+
 void set_envvar(t_var **envvar_list, char *name, char *value, int flag)
 {
 	t_var *envvar;

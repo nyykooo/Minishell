@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:39:12 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/06/25 18:14:37 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:56:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*error_msg_construct(int nbr, ...)
 	i = -1;
 	va_start(arg, nbr);
 	while (++i < nbr)
-		error_msg = ft_strjoin(error_msg, va_arg(arg, char *));
+		error_msg = ft_strjoin_free(error_msg, va_arg(arg, char *));
 	va_end(arg);
 	return (error_msg);
 }

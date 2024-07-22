@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 16:09:55 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/22 16:56:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@ void	update_questionvar(t_minishell *shell)
 	char	*questionvar_value;
 
 	questionvar = find_envvar(shell->envvars, "?");
+	if (!questionvar)
+	{
+		printf("Error: $? not found\n");
+	}
 	questionvar_value = ft_itoa(shell->exit_status);
 	update_existing_envvar(questionvar, "?", questionvar_value);
 	free(questionvar_value);
 }
 
-static void	create_questionvar(t_var *envvar)
+static void	create_questionvar(t_var **envvar)
 {
 	t_var	*new_node;
 	char	*questionvar;
@@ -62,18 +66,55 @@ static void	create_questionvar(t_var *envvar)
 	new_node->content = ft_strjoin("?=", questionvar);
 	new_node->name = ft_strdup("?");
 	new_node->value = ft_strdup(questionvar);
-	ft_varadd_back(&envvar, new_node);
+	ft_varadd_back(envvar, new_node);
 	free(questionvar);
 }
 
-static void	set_underline(t_var *envvar)
+static void	set_pwd(t_var **envvar)
+{
+	t_var	*node;
+	char	*pwd;
+
+	node = find_envvar(*envvar, "PWD");
+	if (!node)
+	{
+		pwd = getcwd(NULL, 0);
+		add_new_envvar(envvar, "PWD", pwd, 1);
+		free(pwd);
+	}
+}
+
+static void	set_underline(t_var **envvar)
 {
 	t_var	*node;
 
-	node = find_envvar(envvar, "_");
+	node = find_envvar(*envvar, "_");
+	if (!node)
+		add_new_envvar(envvar, "_", "./minishell", 1);
+	else
+		update_existing_envvar(node, "_", "./minishell");
 	if (!node)
 		return ;
 	node->exp = false;
+}
+
+static void		set_shlvl(t_var **envvar)
+{
+	t_var	*node;
+	char	*shlvl_value;
+
+	node = find_envvar(*envvar, "SHLVL");
+	if (node)
+	{
+		shlvl_value = ft_itoa(ft_atoi(node->value) + 1);
+		update_existing_envvar(node, "SHLVL", shlvl_value);
+	}
+	else
+	{	
+		shlvl_value = ft_strdup("1");
+		add_new_envvar(envvar, "SHLVL", shlvl_value, 1);
+	}
+	free(shlvl_value);
 }
 
 t_var *create_list(char **envp)
@@ -81,7 +122,6 @@ t_var *create_list(char **envp)
 	char	**current;
 	t_var	*new_node;
 	t_var	*head;
-	char	*shlvl_value;
 
 	head = NULL;
 	current = envp;
@@ -95,14 +135,21 @@ t_var *create_list(char **envp)
 		new_node->exp = true;
 		ft_varadd_back(&head, new_node);
 		current++;
-		if (ft_strcmp(new_node->name, "SHLVL") == 0)
-		{
-			shlvl_value = ft_itoa(ft_atoi(new_node->value) + 1);
-			update_existing_envvar(new_node, "SHLVL", shlvl_value);
-			free(shlvl_value);
-		}
 	}
-	create_questionvar(head);
-	set_underline(head);
 	return (head);
+}
+
+t_var	*create_envvar_list(char **envp)
+{
+	t_var	*envvar;
+	
+	if (envp)
+		envvar = create_list(envp);
+	else
+		envvar = NULL;
+	create_questionvar(&envvar);
+	set_underline(&envvar);
+	set_shlvl(&envvar);
+	set_pwd(&envvar);
+	return (envvar);
 }

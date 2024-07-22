@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 17:34:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:58:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ char	**ft_array_insert_extra(char **array, char *insert, char *extra, int index)
 int		ft_arraylcpy(char **dst, const char **src, int size);
 void	ft_arraycpy(char **dest, char **src);
 char	*ft_strcutstr(const char *big, const char *little);
+char	*ft_strjoin_free(char const *s1, char const *s2);
 
 int		ft_argsize(t_arg *lst);
 int		ft_varsize(t_var *lst);

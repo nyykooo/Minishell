@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 09:59:57 by ncampbel          #+#    #+#              #
-#    Updated: 2024/06/24 17:43:09 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/07/22 10:59:12 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,8 @@ SRC= ft_isalpha.c \
 		ft_strcpy.c \
 		ft_strndup.c \
 		ft_array_insert_extra.c \
-		ft_to_array.c
+		ft_to_array.c \
+		ft_strjoin_free.c
 
 OBJ= $(SRC:.c=.o)
 
