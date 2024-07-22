@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/16 18:06:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 23:09:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,21 @@ static int input_cleaner(char *input)
 	return (0);
 }
 
-void	input_manager(t_minishell *shell)
+int	input_manager(t_minishell *shell)
 {
 	if (quote_check(shell->input)) // check if the quotes match
-	{
-		// free everything and exit
-		printf("Error: unmatched quote\n");
-		exit(1);
+	{	
+		shell->error_msg = error_msg_construct(1, "-minishell: unmatched quote\n");
+		put_error_msg(shell->error_msg, 2);
+		return (1);
 	}
 	if (input_cleaner(shell->input) == -1) // trim the input of extra spaces
 	{
 		// free everything and exit
-		printf("Error: failed to allocate memory\n");
+		free_shell(shell);
+		shell->error_msg = error_msg_construct(1, "-minishell: failed to allocate memory\n");
+		put_error_msg(shell->error_msg, 2);
 		exit(1);
 	}
-	return ;
+	return (0);
 }

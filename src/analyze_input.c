@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/22 20:33:17 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:52:25 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ static char	*get_command_path(char *command)
 		ft_strcat (possible_path, command);
 		if (access(possible_path, X_OK) == 0)
 		{
+			i = 0;
+			while (dirs[i] != NULL)
+				free(dirs[i++]);
 			free(dirs);
 			return (possible_path);
 		}

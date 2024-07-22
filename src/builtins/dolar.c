@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 15:14:07 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/22 21:20:46 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ void	expand_dolar(char **input, t_minishell *shell)
 				free(var_name);
 			if (var_value[0] != '\0')
 				free(var_value);
-			i = -1;
+			if ((*input)[i] != '$')
+				i--;
 		}
 	}
 }

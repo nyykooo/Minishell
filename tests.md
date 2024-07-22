@@ -189,8 +189,8 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | :------ | :------ |
 | 🟢 | `<empty>`  |
 | 🟢 | `<spaces>` |
-| 🟢 | `../../`   | Diff error message
-| 🟢 | `$`        | Diff error message	
+| 🟢 | `../../`   |
+| 🟢 | `$`        |	
 
 #### SIGNALS
 > Understanding system signals, showcasing the shell's adaptability in various scenarios.
@@ -226,6 +226,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `/bin/exit`        | OK! Path not found in bash nor in our
 | 🟢 | `/bin/env`         | IMPORTANT!
 
+
 #### PWD
 > Locating the present directory through the pwd command in Minishell.
 
@@ -234,6 +235,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `pwd`         |
 | 🟢 | `pwd a`       |
 | 🟢 | `pwd a b c d` |
+
 
 #### EXPORT, ENV AND UNSET
 > Harnessing environment variables via export, env, and unset commands in Minishell.
@@ -272,7 +274,7 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `export a='$'`               	|                                 
 | 🟢 | `export a='\t'`              	|                                    
 | 🟢 | `export a='''` 		 	        | 
-| 🟢 | `export =` 		             	| not a valid identifier
+| 🟢 | `export =` 		             	|
 | 🟢 | `export ==`		            	| not a valid identifier
 | 🟢 | `export a=` 		            	| its possbible
 | 🟢 | `export a=42=` 		    		| its possbible - nesse caso como o = eh impresso eh preciso altera-lo (*-1)
@@ -286,6 +288,8 @@ Thanks to Minishell, I travelled through time and came back to problems people f
 | 🟢 | `export a=42 % b=42 @ c=42`  	|
 | 🟢 | `export A=a B=b C=c D=d E=e` 	|
 | 🔵 | `export _=a; echo $_a` 		    |
+
+# all tested in valgrind until here
 
 #### EXIT
 > Concluding Minishell's operations gracefully using the exit command.

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/06 17:27:30 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:47:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	mark_tokens(char *input)
 	{
 		if (input[i] == '\'' || input[i] == '\"')
 			i = skip_quotes(input, &i);
-		if (input[i] == ' ' || input[i] == '=')
+		if (input[i] == ' ')
 			input[i] *= -1;
 	}
 }

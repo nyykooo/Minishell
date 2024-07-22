@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/22 16:14:53 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 23:08:21 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	parsing_hub(t_minishell *shell);
 
 // NEW PARSING - INPUT
 
-void	input_manager(t_minishell *shell);
+int		input_manager(t_minishell *shell);
 void	expand_pipes_redir(t_minishell *shell);
 
 // NEW PARSING - TOKENS
