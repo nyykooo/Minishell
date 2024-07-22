@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/22 10:53:28 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:49:58 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,23 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 	pid = fork();
 	if (pid == 0)
 	{
-		arguments = ft_to_array(commands);
-		env_var = envvar_array(shell);
 		if (commands->path == NULL)
 		{
 			shell->error_msg = error_msg_construct(3, "-minishell: ", commands->cmd, ": command not found\n");
 			shell->exit_status = put_error_msg(shell->error_msg, 127);
+			free_shell(shell);
 			exit(shell->exit_status);
 		}
+		arguments = ft_to_array(commands);
+		env_var = envvar_array(shell);
 		if (execve(commands->path, arguments, env_var) == -1)
 		{
 			shell->error_msg = error_msg_construct(3, "-minishell: ", commands->cmd, ": Is a directory\n");
 			shell->exit_status = put_error_msg(shell->error_msg, 126);
+			free(commands->path);
+			free(arguments);
 			exit(shell->exit_status);
 		}
-		free(commands->path);
-		free(arguments);
 	}
 	else if (pid < 0)
 		perror ("minishell");
@@ -88,6 +89,7 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 		waitpid (pid, &(shell->exit_status), WUNTRACED);
 	if (WIFEXITED(shell->exit_status))
 		shell->exit_status = WEXITSTATUS(shell->exit_status);
+	free(commands->path);
 }
 
 static void	handle_builtins(t_minishell *shell)

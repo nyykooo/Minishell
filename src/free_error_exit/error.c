@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:39:12 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/22 10:56:17 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:25:26 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int	put_error_msg(char *error_msg, int exit_status)
 {
 	if (error_msg)
 		ft_putstr_fd(error_msg, STDERR_FILENO);
+	free(error_msg);
 	return (exit_status);
 }
