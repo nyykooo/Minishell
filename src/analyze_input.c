@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/22 20:28:47 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:33:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 			shell->exit_status = put_error_msg(shell->error_msg, 126);
 			free(commands->path);
 			free(arguments);
+			free_array(env_var);
+			free_shell(shell);
 			exit(shell->exit_status);
 		}
 	}
