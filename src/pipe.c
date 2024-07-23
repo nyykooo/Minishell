@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/19 14:48:36 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/23 22:14:00 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,12 +273,16 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 
 	in_fd = handle_input_redirection(cmd_temp);
 	out_fd = handle_output_redirection(cmd_temp);
+	//printf("in_fd: %d\n", in_fd);
+	//printf("out_fd: %d\n", out_fd);
+	//printf("old_read_fd: %d\n", old_read_fd);
 	if (old_read_fd != 0)
 	{
 		dup2(old_read_fd, STDIN_FILENO);
 		close(old_read_fd);
 	}
 	has_pipe = ft_has_pipe(cmd_temp);
+	//printf("has_pipe: %d\n", has_pipe);
 	if (has_pipe)
 	{
 		ft_haspipe(in_fd, fd[1], fd[0]);
@@ -294,7 +298,8 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 
 void	manage_parent(int pid, int *old_read_fd, int fd[2])
 {
-	waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, WNOHANG);
+	//printf("pid: %d\n", pid);
 	if (*old_read_fd != 0)
 		close(*old_read_fd);
 	*old_read_fd = fd[0];
@@ -329,6 +334,7 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	int		i;
 	pid_t	pid;
 	t_cmd	*cmd_temp;
+	pid_t	last_child_pid = -1;
 
 	i = 0;
 	cmd_temp = commands;
@@ -337,13 +343,22 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	{
 		if (check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
+		//printf("cmd_temp->cmd: %s\n", cmd_temp->cmd);
 		create_pipe(fd);
 		pid = create_child_process();
 		if (pid == 0)
 			manage_child(shell, cmd_temp, old_read_fd, fd);
 		else
+		{
 			manage_parent(pid, &old_read_fd, fd);
+			last_child_pid = pid;
+		}
 		cmd_temp = cmd_temp->next;
+	}
+	if (last_child_pid != -1)
+	{
+		int status;
+		waitpid(last_child_pid, &status, 0); // Espera especificamente pelo último filho
 	}
 	ft_close_pipefds(fd, old_read_fd);
 	return (0);

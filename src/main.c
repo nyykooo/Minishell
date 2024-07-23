@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 14:48:34 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/23 22:14:14 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	minishell_loop(t_minishell *shell)
 		if (create_prompt(shell))
 		{
 			analyze_input(shell);
+			//printf("saiu da analyze_input\n");
 			update_vars(shell);
 			clear_shell(shell);
 		}
