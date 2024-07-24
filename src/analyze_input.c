@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/19 16:40:11 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/24 11:33:33 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static void	handle_builtins(t_minishell *shell)
 		else if (ft_strcmp(shell->commands->cmd, "unset") == 0)
 			handle_unset(shell->commands, &shell->envvars);
 		else if (ft_strcmp(shell->commands->cmd, "env") == 0)
-			handle_env(shell->envvars, shell);
+			handle_env(shell->envvars, shell, shell->commands);
 		else if (ft_strcmp(shell->commands->cmd, "pwd") == 0)
 			handle_pwd(shell);
 		else if (shell->commands != NULL)
@@ -129,9 +129,9 @@ void	analyze_input(t_minishell *shell)
 		printf("WTERMSIG: %d\n", WTERMSIG(status));*/
 	if (WIFEXITED(status) == true && WEXITSTATUS(status) == 8)
 			return ;
-	//temp = shell->commands;
-	//printf("NUMERO DE CMDS: %d\n", shell->n_cmd);
-	/*while (temp)
+	/*temp = shell->commands;
+	printf("NUMERO DE CMDS: %d\n", shell->n_cmd);
+	while (temp)
 	{
 		printf("temp->cmd: %s\n", temp->cmd);
 		printf("temp->type: %d\n", temp->type);
@@ -141,6 +141,8 @@ void	analyze_input(t_minishell *shell)
 		printf("temp->input_file: %d\n", temp->input_file);
 		printf("temp->path: %s\n", temp->path);
 		printf("temp->here_doc_fd: %d\n", temp->here_doc_fd);
+		if (temp->arguments)
+			printf("temp->arguments->arg: %s\n", temp->arguments->arg);
 		printf("----------------\n");
 		temp = temp->next;
 	}*/

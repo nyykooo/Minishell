@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/23 22:14:00 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:33:33 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
 		else if (ft_strcmp(cmd_temp->cmd, "unset") == 0)
 			handle_unset(cmd_temp, &shell->envvars);
 		else if (ft_strcmp(cmd_temp->cmd, "env") == 0)
-			handle_env(shell->envvars, shell);
+			handle_env(shell->envvars, shell, cmd_temp);
 		else if (ft_strcmp(cmd_temp->cmd, "pwd") == 0)
 			handle_pwd(shell);
 }
@@ -178,8 +178,11 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 	}
 	arg_array = ft_to_array(cmd_temp);
 	path = get_command_path(cmd_temp->cmd);
-	execve(path, arg_array, envvar_array(cmd_temp->shell));
-	exit(0);
+	if (execve(path, arg_array, envvar_array(cmd_temp->shell)) == -1)
+	{
+    	perror("execve");
+    	exit(EXIT_FAILURE);
+	}
 }
 
 bool	ft_has_pipe(t_cmd *cmd_temp)
@@ -296,9 +299,9 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 	ft_close_filefds(in_fd, out_fd);
 }
 
-void	manage_parent(int pid, int *old_read_fd, int fd[2])
+void	manage_parent(int pid, int *old_read_fd, int fd[2], int *status)
 {
-	waitpid(pid, NULL, WNOHANG);
+	waitpid(pid, status, WNOHANG);
 	//printf("pid: %d\n", pid);
 	if (*old_read_fd != 0)
 		close(*old_read_fd);
@@ -335,6 +338,8 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	pid_t	pid;
 	t_cmd	*cmd_temp;
 	pid_t	last_child_pid = -1;
+	int		status;
+
 
 	i = 0;
 	cmd_temp = commands;
@@ -350,16 +355,16 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 			manage_child(shell, cmd_temp, old_read_fd, fd);
 		else
 		{
-			manage_parent(pid, &old_read_fd, fd);
+			manage_parent(pid, &old_read_fd, fd, &status);
 			last_child_pid = pid;
 		}
 		cmd_temp = cmd_temp->next;
 	}
 	if (last_child_pid != -1)
 	{
-		int status;
 		waitpid(last_child_pid, &status, 0); // Espera especificamente pelo último filho
 	}
+	shell->exit_status = WEXITSTATUS(status);
 	ft_close_pipefds(fd, old_read_fd);
 	return (0);
 }
