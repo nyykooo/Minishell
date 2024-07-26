@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/19 17:08:23 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/26 19:21:40 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
-
-static void	 change_directory(char *dir, int should_free, t_minishell *shell)
-{
-	if (chdir(dir) == -1)
-	{
-		shell->error_msg = error_msg_construct(4, "-minishell: cd: ", dir, ": ", "No such file or directory\n");
-		shell->exit_status = put_error_msg(shell->error_msg, 1);
-	}
-	if (should_free == 1)
-		free(dir);
-}
 
 static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 {
@@ -70,6 +59,19 @@ void	pwds_update(t_var **envvar_list, char *dir)
 	free(pwd);
 }
 
+static void	 change_directory(char *dir, int should_free, t_minishell *shell)
+{
+	if (chdir(dir) == -1)
+	{
+		shell->error_msg = error_msg_construct(4, "-minishell: cd: ", dir, ": ", "No such file or directory\n");
+		shell->exit_status = put_error_msg(shell->error_msg, 1);
+	}
+	else
+		pwds_update(&shell->envvars, dir);
+	if (should_free == 1)
+		free(dir);
+}
+
 void	handle_cd(t_cmd *command, t_minishell *shell)
 {
 	char	*dir;
@@ -98,5 +100,4 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 		change_directory(dir, should_free, shell);
 	else
 		shell->exit_status = 1;
-	pwds_update(&shell->envvars, dir);
 }
