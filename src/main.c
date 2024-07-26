@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/22 16:12:46 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:51:02 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static char	*get_pathname(void)
 
 	i = 0;
 	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
+		return (ft_strdup(" $ "));
 	while ((pwd)[i] != '\0')
 		i++;
 	while ((pwd)[--i] != '/')

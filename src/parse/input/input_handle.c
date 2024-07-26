@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/22 23:09:53 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/22 23:12:06 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	input_manager(t_minishell *shell)
 	}
 	if (input_cleaner(shell->input) == -1) // trim the input of extra spaces
 	{
-		// free everything and exit
 		free_shell(shell);
 		shell->error_msg = error_msg_construct(1, "-minishell: failed to allocate memory\n");
 		put_error_msg(shell->error_msg, 2);
