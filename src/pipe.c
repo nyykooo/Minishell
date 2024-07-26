@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/24 11:33:33 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/26 10:53:29 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	handle_input_redirection(t_cmd *cmd_temp)
 {
 	t_cmd	*current_cmd;
 	int		in_fd;
+	//char	*error_msg;
 
 	in_fd = -1;
 	current_cmd = cmd_temp;
@@ -60,8 +61,28 @@ int	handle_input_redirection(t_cmd *cmd_temp)
 			in_fd = open(current_cmd->cmd, O_RDONLY);
 			if (in_fd < 0)
 			{
+				if (current_cmd->prev->prev != NULL)
+				{
+					open(current_cmd->prev->prev->cmd, O_WRONLY | O_TRUNC);
+				}
+				//error_msg_construct(4, "-minishell: ", current_cmd->cmd, ": ", strerror(errno));
+				//put_error_msg(error_msg, 1); //verificar qual status deve ser usado
+				//printf("current_cmd->cmd: %s nao eh um ficheiro\n", current_cmd->cmd);
 				perror("open");
 				exit(1);
+			}
+			while (current_cmd->arguments)
+			{
+				//analisar cada arg e tentar abrir. Se nao abrir, retorna erro. Se abrir, verificar se 
+				//eh o ultimo arg, se nao for, segue.
+				in_fd = open(current_cmd->arguments->arg, O_RDONLY);
+				/*if (in_fd < 0)
+				{
+					printf("current_cmd->arguments->arg: %s nao eh um ficheiro\n", current_cmd->arguments->arg);
+					perror("open");
+					exit(1);
+				}*/
+				current_cmd->arguments = current_cmd->arguments->next;
 			}
 		}
 		if (current_cmd->type == T_LAPEND)
@@ -355,14 +376,24 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 			manage_child(shell, cmd_temp, old_read_fd, fd);
 		else
 		{
-			manage_parent(pid, &old_read_fd, fd, &status);
+			//manage_parent(pid, &old_read_fd, fd, &status);
+			if (old_read_fd != 0)
+				close(old_read_fd);
+			old_read_fd = fd[0];
+			close(fd[1]);
 			last_child_pid = pid;
 		}
 		cmd_temp = cmd_temp->next;
 	}
 	if (last_child_pid != -1)
 	{
-		waitpid(last_child_pid, &status, 0); // Espera especificamente pelo último filho
+		waitpid(last_child_pid, &status, 0); // Espera especificamente pelo último filho justamente para captar o status de saída
+	}
+	int	waitpid_return;
+	waitpid_return = 0;
+	while (waitpid_return != -1)
+	{
+		waitpid_return = waitpid(-1, NULL, WNOHANG);
 	}
 	shell->exit_status = WEXITSTATUS(status);
 	ft_close_pipefds(fd, old_read_fd);
