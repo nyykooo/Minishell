@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/22 22:52:25 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/28 22:24:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*get_command_path(char *command)
 	return (NULL);
 }
 
-static void	get_path(t_cmd *commands)
+static void	ft_get_path(t_cmd *commands)
 {
 	if (access(commands->cmd, X_OK) != 0)
 		commands->path = get_command_path(commands->cmd);
@@ -63,8 +63,8 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 	char	**arguments;
 	char	**env_var;
 
-	get_path(commands);
-	update_underlinevar(shell);
+	ft_get_path(commands);
+	ft_update_underlinevar(shell);
 	pid = fork();
 	if (pid == 0)
 	{

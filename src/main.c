@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/25 20:51:02 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/28 22:18:51 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	minishell_loop(t_minishell *shell)
 		if (create_prompt(shell))
 		{
 			analyze_input(shell);
-			update_vars(shell);
+			ft_update_questionvar(shell);
 			clear_shell(shell);
 		}
 	}
@@ -103,7 +103,5 @@ int	main(int argc, char **argv, char **envp)
 	config_signals(0);
 	shell.envvars = create_envvar_list(envp);
 	minishell_loop(&shell);
-	free_var(shell.envvars); // a execucao nunca chega nessa linha?
-	clear_history();
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/07/22 16:55:25 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/07/28 22:16:33 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRC_PARSE_COMMAND = create_commands analyze_argument
 
 SRC_PARSE_EXPANSION = expansion
 
-SRC_VARIABLES = var
+SRC_VARIABLES = var underline_var question_var
 
 SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/builtins/, $(SRC_BUILTINS))) \
