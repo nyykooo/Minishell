@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/26 10:53:29 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:44:10 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,22 @@ static char	*get_command_path(char *command)
 	free(dirs);
 	return (NULL);
 }
+void	add_argument(t_arg **main_cmd_args, t_arg *new_node)
+{
+	t_arg	*temp;
+
+	temp = *main_cmd_args;
+	if (!temp)
+		*main_cmd_args = new_node;
+	else
+	{
+		while (temp->next)
+		{
+			temp = temp->next;
+        }
+        temp->next = new_node;
+    }
+}
 
 int	handle_input_redirection(t_cmd *cmd_temp)
 {
@@ -71,8 +87,16 @@ int	handle_input_redirection(t_cmd *cmd_temp)
 				perror("open");
 				exit(1);
 			}
+			add_argument(&current_cmd->prev->prev->arguments, current_cmd->arguments);
+			/*t_arg *temp = current_cmd->prev->prev->arguments;
+			while (temp)
+			{
+				printf("temp->arg: %s\n", temp->arg);
+				temp = temp->next;
+			}*/
 			while (current_cmd->arguments)
 			{
+				//aqui cada node arguments sera enviado a linked list de argumentos do current_cmd->prev->prev
 				//analisar cada arg e tentar abrir. Se nao abrir, retorna erro. Se abrir, verificar se 
 				//eh o ultimo arg, se nao for, segue.
 				in_fd = open(current_cmd->arguments->arg, O_RDONLY);
@@ -121,7 +145,7 @@ int	handle_output_redirection(t_cmd *cmd_temp)
 
 	fd_out = -1;
 	current_cmd = cmd_temp;
-	while (current_cmd != NULL)
+	while (current_cmd != NULL && current_cmd->type != T_PIPE)
 	{
 		if (current_cmd->rappend == true || current_cmd->rtrunc == true)
 		{
@@ -134,6 +158,8 @@ int	handle_output_redirection(t_cmd *cmd_temp)
 				perror("open");
 				exit(1);
 			}
+			if (current_cmd->prev->prev != NULL && current_cmd->arguments != NULL)
+				add_argument(&current_cmd->prev->prev->arguments, current_cmd->arguments);
 		}
 		current_cmd = current_cmd->next;
 	}
@@ -239,7 +265,7 @@ void	ft_nopipe(int in_fd, int out_fd)
 	}
 }
 
-void	ft_haspipe(int in_fd, int fd1, int fd0)
+void	ft_haspipe(int in_fd, int out_fd, int fd1, int fd0)
 {
 	if (in_fd >= 0)
 	{
@@ -252,6 +278,15 @@ void	ft_haspipe(int in_fd, int fd1, int fd0)
 	}
 	if (in_fd == -1)
 	{
+		if (out_fd >= 0)
+		{
+			//printf("oiiiiiiiii! o out_fd eh: %d\n", out_fd);
+			close(fd1);
+			close(fd0);
+			dup2(out_fd, STDOUT_FILENO);
+			close(out_fd);
+			return ;
+		}
 		close(fd0);
 		dup2(fd1, STDOUT_FILENO);
 		close(fd1);
@@ -309,7 +344,7 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 	//printf("has_pipe: %d\n", has_pipe);
 	if (has_pipe)
 	{
-		ft_haspipe(in_fd, fd[1], fd[0]);
+		ft_haspipe(in_fd, out_fd, fd[1], fd[0]);
 		ft_exec(shell, cmd_temp);
 	}
 	else
@@ -317,7 +352,7 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 		ft_nopipe(in_fd, out_fd);
 		ft_exec(shell, cmd_temp);
 	}
-	ft_close_filefds(in_fd, out_fd);
+	//ft_close_filefds(in_fd, out_fd);
 }
 
 void	manage_parent(int pid, int *old_read_fd, int fd[2], int *status)
