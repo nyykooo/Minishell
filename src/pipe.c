@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/19 14:48:36 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/26 10:53:29 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	handle_input_redirection(t_cmd *cmd_temp)
 {
 	t_cmd	*current_cmd;
 	int		in_fd;
+	//char	*error_msg;
 
 	in_fd = -1;
 	current_cmd = cmd_temp;
@@ -60,8 +61,28 @@ int	handle_input_redirection(t_cmd *cmd_temp)
 			in_fd = open(current_cmd->cmd, O_RDONLY);
 			if (in_fd < 0)
 			{
+				if (current_cmd->prev->prev != NULL)
+				{
+					open(current_cmd->prev->prev->cmd, O_WRONLY | O_TRUNC);
+				}
+				//error_msg_construct(4, "-minishell: ", current_cmd->cmd, ": ", strerror(errno));
+				//put_error_msg(error_msg, 1); //verificar qual status deve ser usado
+				//printf("current_cmd->cmd: %s nao eh um ficheiro\n", current_cmd->cmd);
 				perror("open");
 				exit(1);
+			}
+			while (current_cmd->arguments)
+			{
+				//analisar cada arg e tentar abrir. Se nao abrir, retorna erro. Se abrir, verificar se 
+				//eh o ultimo arg, se nao for, segue.
+				in_fd = open(current_cmd->arguments->arg, O_RDONLY);
+				/*if (in_fd < 0)
+				{
+					printf("current_cmd->arguments->arg: %s nao eh um ficheiro\n", current_cmd->arguments->arg);
+					perror("open");
+					exit(1);
+				}*/
+				current_cmd->arguments = current_cmd->arguments->next;
 			}
 		}
 		if (current_cmd->type == T_LAPEND)
@@ -161,7 +182,7 @@ void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
 		else if (ft_strcmp(cmd_temp->cmd, "unset") == 0)
 			handle_unset(cmd_temp, &shell->envvars);
 		else if (ft_strcmp(cmd_temp->cmd, "env") == 0)
-			handle_env(shell->envvars, shell);
+			handle_env(shell->envvars, shell, cmd_temp);
 		else if (ft_strcmp(cmd_temp->cmd, "pwd") == 0)
 			handle_pwd(shell);
 }
@@ -178,8 +199,11 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 	}
 	arg_array = ft_to_array(cmd_temp);
 	path = get_command_path(cmd_temp->cmd);
-	execve(path, arg_array, envvar_array(cmd_temp->shell));
-	exit(0);
+	if (execve(path, arg_array, envvar_array(cmd_temp->shell)) == -1)
+	{
+    	perror("execve");
+    	exit(EXIT_FAILURE);
+	}
 }
 
 bool	ft_has_pipe(t_cmd *cmd_temp)
@@ -273,12 +297,16 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 
 	in_fd = handle_input_redirection(cmd_temp);
 	out_fd = handle_output_redirection(cmd_temp);
+	//printf("in_fd: %d\n", in_fd);
+	//printf("out_fd: %d\n", out_fd);
+	//printf("old_read_fd: %d\n", old_read_fd);
 	if (old_read_fd != 0)
 	{
 		dup2(old_read_fd, STDIN_FILENO);
 		close(old_read_fd);
 	}
 	has_pipe = ft_has_pipe(cmd_temp);
+	//printf("has_pipe: %d\n", has_pipe);
 	if (has_pipe)
 	{
 		ft_haspipe(in_fd, fd[1], fd[0]);
@@ -292,9 +320,10 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 	ft_close_filefds(in_fd, out_fd);
 }
 
-void	manage_parent(int pid, int *old_read_fd, int fd[2])
+void	manage_parent(int pid, int *old_read_fd, int fd[2], int *status)
 {
-	waitpid(pid, NULL, 0);
+	waitpid(pid, status, WNOHANG);
+	//printf("pid: %d\n", pid);
 	if (*old_read_fd != 0)
 		close(*old_read_fd);
 	*old_read_fd = fd[0];
@@ -329,6 +358,9 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	int		i;
 	pid_t	pid;
 	t_cmd	*cmd_temp;
+	pid_t	last_child_pid = -1;
+	int		status;
+
 
 	i = 0;
 	cmd_temp = commands;
@@ -337,14 +369,33 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	{
 		if (check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
+		//printf("cmd_temp->cmd: %s\n", cmd_temp->cmd);
 		create_pipe(fd);
 		pid = create_child_process();
 		if (pid == 0)
 			manage_child(shell, cmd_temp, old_read_fd, fd);
 		else
-			manage_parent(pid, &old_read_fd, fd);
+		{
+			//manage_parent(pid, &old_read_fd, fd, &status);
+			if (old_read_fd != 0)
+				close(old_read_fd);
+			old_read_fd = fd[0];
+			close(fd[1]);
+			last_child_pid = pid;
+		}
 		cmd_temp = cmd_temp->next;
 	}
+	if (last_child_pid != -1)
+	{
+		waitpid(last_child_pid, &status, 0); // Espera especificamente pelo último filho justamente para captar o status de saída
+	}
+	int	waitpid_return;
+	waitpid_return = 0;
+	while (waitpid_return != -1)
+	{
+		waitpid_return = waitpid(-1, NULL, WNOHANG);
+	}
+	shell->exit_status = WEXITSTATUS(status);
 	ft_close_pipefds(fd, old_read_fd);
 	return (0);
 }
