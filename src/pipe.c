@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/28 20:44:10 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:47:35 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	handle_input_redirection(t_cmd *cmd_temp)
 			{
 				if (current_cmd->prev->prev != NULL)
 				{
-					open(current_cmd->prev->prev->cmd, O_WRONLY | O_TRUNC);
+					open(current_cmd->prev->prev->cmd, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 				}
 				//error_msg_construct(4, "-minishell: ", current_cmd->cmd, ": ", strerror(errno));
 				//put_error_msg(error_msg, 1); //verificar qual status deve ser usado
@@ -170,6 +170,8 @@ static bool	is_pipe_or_redir(t_cmd *cmd, int i)
 {
 	if (i == 0 && cmd->type == T_RTRUNC)
 		return (false);
+	if (cmd->type == T_RTRUNC && cmd->prev->type == T_PIPE)
+		return (false); //nova condição
 	if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || \
 	cmd->type == T_LTRUNC || cmd->type == T_LAPEND || \
 	cmd->type == T_PIPE)
@@ -329,12 +331,13 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 	int	in_fd;
 	int	out_fd;
 	int	has_pipe;
-
+	
 	in_fd = handle_input_redirection(cmd_temp);
 	out_fd = handle_output_redirection(cmd_temp);
-	//printf("in_fd: %d\n", in_fd);
-	//printf("out_fd: %d\n", out_fd);
-	//printf("old_read_fd: %d\n", old_read_fd);
+	/*printf("in_fd: %d\n", in_fd);
+	printf("out_fd: %d\n", out_fd);
+	printf("old_read_fd: %d\n", old_read_fd);
+	printf("-----------------\n");*/
 	if (old_read_fd != 0)
 	{
 		dup2(old_read_fd, STDIN_FILENO);
@@ -402,9 +405,10 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	old_read_fd = 0;
 	while (cmd_temp != NULL)
 	{
+		//printf("ANTES DA CHECK: cmd_temp->cmd: %s\n", cmd_temp->cmd);
 		if (check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
-		//printf("cmd_temp->cmd: %s\n", cmd_temp->cmd);
+		//printf("DENTRO DA HANDLE: cmd_temp->cmd: %s\n", cmd_temp->cmd);
 		create_pipe(fd);
 		pid = create_child_process();
 		if (pid == 0)
