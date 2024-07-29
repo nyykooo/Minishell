@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/29 14:47:35 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:40:06 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,14 +326,77 @@ void	ft_close_filefds(int in_fd, int out_fd)
 		close(out_fd);
 }
 
+int	define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
+{
+    t_cmd	*current_cmd;
+    int		flags;
+
+    *in_fd = -1;
+    *out_fd = -1;
+    current_cmd = cmd_temp;
+    while (current_cmd != NULL && current_cmd->type != T_PIPE)
+    {
+        // Handle input redirection
+        if (current_cmd->input_file == true)
+        {
+            if (*in_fd >= 0)
+                close(*in_fd);
+            *in_fd = open(current_cmd->cmd, O_RDONLY);
+            if (*in_fd < 0)
+            {
+                if (current_cmd->prev->prev != NULL)
+                {
+                    open(current_cmd->prev->prev->cmd, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+                }
+                perror("open");
+                exit(1);
+            }
+            add_argument(&current_cmd->prev->prev->arguments, current_cmd->arguments);
+            while (current_cmd->arguments)
+            {
+                *in_fd = open(current_cmd->arguments->arg, O_RDONLY);
+                current_cmd->arguments = current_cmd->arguments->next;
+            }
+        }
+        if (current_cmd->type == T_LAPEND)
+        {
+            if (*in_fd >= 0)
+                close(*in_fd);
+            if (current_cmd->prev)
+                *in_fd = current_cmd->prev->here_doc_fd;
+        }
+
+        // Handle output redirection
+        if (current_cmd->rappend == true || current_cmd->rtrunc == true)
+        {
+            flags = determine_flags(current_cmd);
+            if (*out_fd >= 0)
+                close(*out_fd);
+            *out_fd = open(current_cmd->cmd, flags, 0644);
+            if (*out_fd < 0)
+            {
+                perror("open");
+                exit(1);
+            }
+            if (current_cmd->prev->prev != NULL && current_cmd->arguments != NULL)
+                add_argument(&current_cmd->prev->prev->arguments, current_cmd->arguments);
+        }
+
+        current_cmd = current_cmd->next;
+    }
+    return 0;
+}
+
 void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2])
 {
 	int	in_fd;
 	int	out_fd;
 	int	has_pipe;
 	
-	in_fd = handle_input_redirection(cmd_temp);
-	out_fd = handle_output_redirection(cmd_temp);
+	define_in_out_fd(cmd_temp, &in_fd, &out_fd);
+
+	//in_fd = handle_input_redirection(cmd_temp);
+	//out_fd = handle_output_redirection(cmd_temp);
 	/*printf("in_fd: %d\n", in_fd);
 	printf("out_fd: %d\n", out_fd);
 	printf("old_read_fd: %d\n", old_read_fd);
