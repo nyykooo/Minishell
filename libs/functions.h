@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 18:31:21 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:57:03 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void expand_quotes(t_token *argument, t_minishell *shell);
 char *quote_del(char *input, t_minishell *shell);
 int	skip_quotes(char *input, int *i);
 int	skip_nquotes(char *input, int *i);
-int		is_inside_quotes(char *str, size_t index);
+int		ft_is_inside_quotes(char *str, size_t index);
 
 // NEW PARSING - EQUAL
 bool    ft_check_equal(t_token *token);

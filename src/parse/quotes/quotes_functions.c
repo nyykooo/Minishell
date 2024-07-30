@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 14:40:02 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 15:06:29 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/30 18:57:28 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	skip_nquotes(char *input, int *i)
 	return ((*i));
 }
 
-int	is_inside_quotes(char *str, size_t index)
+int	ft_is_inside_quotes(char *str, size_t index)
 {
 	char	c;
 

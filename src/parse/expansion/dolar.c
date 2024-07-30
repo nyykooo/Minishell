@@ -6,11 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 17:23:44 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:57:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libs/headers.h"
+#include "../../../libs/headers.h"
 
 static bool	ft_is_sep(char sep)
 {
@@ -20,7 +20,7 @@ static bool	ft_is_sep(char sep)
 	return (false);
 }
 
-static char *get_name(char *input, int start)
+static char *ft_get_name(char *input, int start)
 {
 	int	i;
 	
@@ -36,62 +36,6 @@ static char *get_name(char *input, int start)
 	return (ft_substr(input, start, i));
 }
 
-//copy until str/join str and expanded/ and join the rest of the str
-
-static char	*ft_strreplace(char *src, int i, char *insert, char *name)
-{
-	char	*str_frag;
-	char	*tmp;
-	char	*new;
-
-	str_frag = ft_substr(src, 0, i);
-	tmp = ft_strjoin(str_frag, insert);
-	new = ft_strjoin(tmp, src + i + ft_strlen(name) + 1);
-	free(str_frag);
-	free(tmp);
-	free(src);
-	return (new);
-}
-
-void	expand_tildes(char **input, t_minishell *shell)
-{
-	int		i;
-	t_var	*var;
-	char	*var_value;
-	bool	squote;
-
-	i = -1;
-	var_value = "";
-	squote = false;
-	while ((*input)[++i])
-	{
-		if ((*input)[i] == '\'')
-			squote = !squote;
-		if ((*input)[i] == '~' && squote == false && (*input)[i - 1] == ' ' &&
-			((*input)[i + 1] == ' ' || (*input)[i + 1] == '\0'
-			|| (*input)[i + 1] == '/'))
-		{
-			var = ft_find_envvar(shell->envvars, "HOME");
-			if (var)
-				var_value = ft_strdup(var->value);
-			(*input) = ft_strreplace((*input), i, var_value, "~");
-		}
-	}
-}
-
-void	expand_hashtag(char **input)
-{
-	
-	int		i;
-
-	i = -1;
-	while ((*input)[++i])
-	{
-		if ((*input)[i] == '#' && is_inside_quotes((*input), i) == 0)
-			(*input)[i] = 0;
-	}
-}
-
 void	expand_dolar(char **input, t_minishell *shell)
 {
 	int		i;
@@ -103,10 +47,10 @@ void	expand_dolar(char **input, t_minishell *shell)
 	while ((*input)[++i])
 	{
 		var_value = "";
-		if ((*input)[i] == '$' && is_inside_quotes((*input), i) != 1
+		if ((*input)[i] == '$' && ft_is_inside_quotes((*input), i) != 1
 			&& (*input)[i + 1] != '\0')
 		{
-			var_name = get_name((*input), i + 1);
+			var_name = ft_get_name((*input), i + 1);
 			if (var_name == NULL)
 				continue ;
 			var = ft_find_envvar(shell->envvars, var_name);

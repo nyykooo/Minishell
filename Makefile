@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/07/30 18:35:17 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/07/30 18:53:41 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC_DIR = main analyze_input signals pipe heredoc
 
-SRC_BUILTINS = cd dolar echo env equal export unset exec pwd exit
+SRC_BUILTINS = cd echo env equal export unset exec pwd exit
 
 SRC_FREE_ERROR_EXIT = free error
 
@@ -32,7 +32,7 @@ SRC_PARSE_INPUT = input_handle
 
 SRC_PARSE_COMMAND = create_commands analyze_argument
 
-SRC_PARSE_EXPANSION = expansion
+SRC_PARSE_EXPANSION = expansion dolar tildes hashtag
 
 SRC_VARIABLES = var underline_var question_var var_operations1 var_operations2
 
