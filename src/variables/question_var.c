@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 22:16:41 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/28 22:17:37 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:29:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ft_update_questionvar(t_minishell *shell)
 	t_var	*questionvar;
 	char	*questionvar_value;
 
-	questionvar = find_envvar(shell->envvars, "?");
+	questionvar = ft_find_envvar(shell->envvars, "?");
 	questionvar_value = ft_itoa(shell->exit_status);
-	update_existing_envvar(questionvar, "?", questionvar_value);
+	ft_update_existing_envvar(questionvar, "?", questionvar_value);
 	free(questionvar_value);
 }
 

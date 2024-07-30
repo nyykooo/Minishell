@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/19 15:49:05 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/30 17:28:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	t_var	*temp;
 	t_var	*new_var;
 
-	temp = find_envvar(shell->envvars, argument->arg);
+	temp = ft_find_envvar(shell->envvars, argument->arg);
 	if (temp != NULL)
 	{
 		temp->exp = true;
@@ -61,139 +61,6 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	return (0);
 }
 
-// static int	handle_no_equal(t_minishell *shell, t_arg *argument)
-// {
-// 	t_var	*temp;
-// 	t_var	*new_var;
-
-// 	temp = shell->envvars;
-// 	while (temp != NULL)
-// 	{
-// 		if (strcmp(temp->name, argument->arg) == 0)
-// 			return (0);
-// 		temp = temp->next;
-// 	}
-// 	new_var = malloc(sizeof(t_var));
-// 	if (new_var == NULL)
-// 		return (1);
-// 	new_var->content = strdup(argument->arg);
-// 	new_var->name = strdup(argument->arg);
-// 	new_var->value = NULL;
-// 	new_var->env = false;
-// 	new_var->exp = true;
-// 	new_var->prev = NULL;
-// 	if (shell->envvars != NULL)
-// 		shell->envvars->prev = new_var;
-// 	new_var->next = shell->envvars;
-// 	shell->envvars = new_var;
-// 	return (0);
-// }
-
-/*static int	find_equal_position(char *arg)
-{
-	int i = 0;
-	while (arg[i] != '\0')
-	{
-		if (arg[i] == '=')
-			return i;
-		i++;
-	}
-	return (-1);
-}*/
-
-/*static int update_var(t_minishell *shell, char *name, char *value)
-{
-	t_var *var;
-
-	var = shell->envvars;
-	while (var != NULL)
-	{
-		if (strcmp(var->name, name) == 0)
-		{
-			free(var->value);
-			var->value = value;
-			free(name); // Nome não é mais necessário
-			return 0; // Sucesso
-		}
-		var = var->next;
-	}
-	return -1; // Não encontrou a variável para atualizar
-}
-
-static int	create_var(t_minishell *shell, char *name, char *value)
-{
-	t_var *var;
-
-	var = malloc(sizeof(t_var));
-	if (!var)
-	{
-		free(name);
-		free(value);
-		return 1; // Erro de alocação
-	}
-	var->name = name;
-	var->value = value;
-	var->env = true;
-	var->exp = true;
-	var->content = create_envvar_content(name, value);
-	var->next = shell->envvars; // Adiciona no início da lista
-	shell->envvars = var;
-	return 0;
-}
-
-static int update_or_create_var(t_minishell *shell, char *name, char *value)
-{
-	if (update_var(shell, name, value) == 0)
-		return 0; // Variável atualizada com sucesso
-	// Se a variável não foi atualizada, tenta criar uma nova
-	return (create_var(shell, name, value));
-}
-
-static int	update_or_create_var(t_minishell *shell, char *name, char *value)
-{
-	t_var *var;
-
-	var = shell->envvars;
-	while (var != NULL)
-	{
-		if (strcmp(var->name, name) == 0)
-		{
-			free(var->value);
-			var->value = value;
-			free(name); // Nome não é mais necessário
-			return 0; // Sucesso
-		}
-		var = var->next;
-	}
-	var = malloc(sizeof(t_var));
-	if (!var) {
-		free(name);
-		free(value);
-		return 1; // Erro de alocação
-	}
-	var->name = name;
-	var->value = value;
-	var->env = true;
-	var->exp = true;
-	var->content = create_envvar_content(name, value);
-	var->next = shell->envvars; // Adiciona no início da lista
-	shell->envvars = var;
-	return 0;
-}
-
-static int handle_with_equal(t_minishell *shell, t_arg *argument)
-{
-	int	equal_pos;
-	char *name;
-	char *value;
-
-	equal_pos = find_equal_position(argument->arg);
-	if (equal_pos == -1)
-		return 1;
-	name = strndup(argument->arg, equal_pos);
-	value = strdup(argument->arg + equal_pos + 1);
-	return (update_or_create_var(shell, name, value));
-}*/
 static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
 {
 	char	*name;
@@ -240,7 +107,7 @@ static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
 	var->value = value;
 	var->env = true;
 	var->exp = true;
-	var->content = create_envvar_content(name, value);
+	var->content = ft_create_envvar_content(name, value);
 	var->next = shell->envvars;
 	shell->envvars = var;
 	return (0);
@@ -299,50 +166,6 @@ void	swap_nodes(t_var *a, t_var *b)
 	b->exp = temp_exp;
 	b->env = temp_env;
 }
-
-
-// curr --> next --> next->next || curr->next = next->next; next->next->prev = curr; curr->prev = next; next->next = curr;
-// next --> curr --> next->next
-
-// void	swap_nodes(t_var *curr, t_var *next)
-// {
-// 	t_var	*temp;
-
-// 	temp = next->next;
-// 	if (curr->prev != NULL)
-// 		curr->prev->next = next;
-// 	if (temp != NULL)
-// 		temp->prev = curr;
-// 	next->prev = curr->prev;
-// 	curr->prev = next;
-// 	curr->next = temp;
-// 	next->next = curr;
-// }
-
-// void	sort_content(t_var *envvar_list)
-// {
-// 	t_var	*current;
-// 	t_var	*next;
-
-// 	if (envvar_list == NULL)
-// 		return ;
-// 	current = envvar_list;
-// 	while (current != NULL)
-// 	{
-// 		next = current->next;
-// 		while (next != NULL)
-// 		{
-// 			if (ft_strcmp(current->content, next->content) > 0)
-// 			{
-// 				swap_nodes(current, next);
-// 				break ;
-// 			}
-// 			else
-// 				next = next->next;
-// 		}
-// 		current = current->next;
-// 	}
-// }
 
 void	sort_content(t_var *envvar)
 {

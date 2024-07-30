@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/22 22:57:47 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:23:48 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	handle_equal(t_minishell *shell, t_cmd *command)
 	while (command->cmd[equal] != '=')
 		equal++;
 	name = ft_substr(command->cmd, 0, equal);
-	var = find_envvar(shell->envvars, name);
+	var = ft_find_envvar(shell->envvars, name);
 	if (var)
 	{
 		free(var->value);

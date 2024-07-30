@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 16:48:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:30:45 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static void	ft_set_pwd(t_var **envvar)
 	t_var	*node;
 	char	*pwd;
 
-	node = find_envvar(*envvar, "PWD");
+	node = ft_find_envvar(*envvar, "PWD");
 	if (!node)
 	{
 		pwd = getcwd(NULL, 0);
-		add_new_envvar(envvar, "PWD", pwd, 1);
+		ft_add_new_envvar(envvar, "PWD", pwd, 1);
 		free(pwd);
 	}
 }
@@ -31,16 +31,16 @@ static void		ft_set_shlvl(t_var **envvar)
 	t_var	*node;
 	char	*shlvl_value;
 
-	node = find_envvar(*envvar, "SHLVL");
+	node = ft_find_envvar(*envvar, "SHLVL");
 	if (node)
 	{
 		shlvl_value = ft_itoa(ft_atoi(node->value) + 1);
-		update_existing_envvar(node, "SHLVL", shlvl_value);
+		ft_update_existing_envvar(node, "SHLVL", shlvl_value);
 	}
 	else
 	{	
 		shlvl_value = ft_strdup("1");
-		add_new_envvar(envvar, "SHLVL", shlvl_value, 1);
+		ft_add_new_envvar(envvar, "SHLVL", shlvl_value, 1);
 	}
 	free(shlvl_value);
 }

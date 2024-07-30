@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 22:12:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/28 22:25:28 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:30:39 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_update_underlinevar(t_minishell *shell)
 			arg = arg->next;
 		underlinevar_value = ft_strdup(arg->arg);
 	}
-	underlinevar = find_envvar(shell->envvars, "_");
-	update_existing_envvar(underlinevar, "_", underlinevar_value);
+	underlinevar = ft_find_envvar(shell->envvars, "_");
+	ft_update_existing_envvar(underlinevar, "_", underlinevar_value);
 	free(underlinevar_value);
 }
 
@@ -45,11 +45,11 @@ void	ft_set_underline(t_var **envvar)
 {
 	t_var	*node;
 
-	node = find_envvar(*envvar, "_");
+	node = ft_find_envvar(*envvar, "_");
 	if (!node)
-		add_new_envvar(envvar, "_", "./minishell", 1);
+		ft_add_new_envvar(envvar, "_", "./minishell", 1);
 	else
-		update_existing_envvar(node, "_", "./minishell");
+		ft_update_existing_envvar(node, "_", "./minishell");
 	if (!node)
 		return ;
 	node->exp = false;

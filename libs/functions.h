@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 16:48:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:31:09 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,24 +91,21 @@ int		put_error_msg(char *error_msg, int exit_status);
 
 //ENVVAR_FTS
 
-char	*create_envvar_content(char *name, char *value);
-t_var	*find_envvar(t_var *envvar_list, char *name);
-void	remove_envvar(t_var **envvar_list, t_var *envvar);
-char	*get_value(t_var *envvar_list, char *name);
+char	*ft_create_envvar_content(char *name, char *value);
+char	*ft_get_value(t_var *envvar_list, char *name);
 void	update_vars(t_minishell *shell);
-void	add_new_envvar(t_var **envvar_list, char *name, char *value, int flag);
+void	ft_add_new_envvar(t_var **envvar_list, char *name, char *value, int flag);
 void	ft_update_underlinevar(t_minishell *shell);
 void	ft_set_underline(t_var **envvar);
 void	ft_update_questionvar(t_minishell *shell);
 void	ft_create_questionvar(t_var **envvar);
 
 //ENVVAR_FTS
-t_var	*find_envvar(t_var *envvar_list, char *name);
-void	remove_envvar(t_var **envvar_list, t_var *envvar);
+t_var	*ft_find_envvar(t_var *envvar_list, char *name);
+void	ft_remove_envvar(t_var **envvar_list, t_var *envvar);
 void	set_envvar(t_var **envvar_list, char *name, char *value, int flag);
-char	*get_value(t_var *envvar_list, char *name);
 char	**envvar_array(t_minishell *shell);
-void	update_existing_envvar(t_var *envvar, char *name, char *value);
+void	ft_update_existing_envvar(t_var *envvar, char *name, char *value);
 
 // BUILTINS
 void	handle_cd(t_cmd *command, t_minishell *shell);

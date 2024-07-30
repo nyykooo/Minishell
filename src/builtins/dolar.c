@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/22 21:20:46 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:23:44 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	expand_tildes(char **input, t_minishell *shell)
 			((*input)[i + 1] == ' ' || (*input)[i + 1] == '\0'
 			|| (*input)[i + 1] == '/'))
 		{
-			var = find_envvar(shell->envvars, "HOME");
+			var = ft_find_envvar(shell->envvars, "HOME");
 			if (var)
 				var_value = ft_strdup(var->value);
 			(*input) = ft_strreplace((*input), i, var_value, "~");
@@ -109,7 +109,7 @@ void	expand_dolar(char **input, t_minishell *shell)
 			var_name = get_name((*input), i + 1);
 			if (var_name == NULL)
 				continue ;
-			var = find_envvar(shell->envvars, var_name);
+			var = ft_find_envvar(shell->envvars, var_name);
 			if (var)
 				var_value = ft_strdup(var->value);
 			(*input) = ft_strreplace((*input), i, var_value, var_name);

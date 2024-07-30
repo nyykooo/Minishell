@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/26 19:21:40 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:31:24 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 	dir = NULL;
 	if (ft_strcmp(arg, "-") == 0)
 	{
-		dir = get_value(envvar_list, "OLDPWD");
+		dir = ft_get_value(envvar_list, "OLDPWD");
 		if (dir == NULL)
 		{
 			error_msg_construct(3, "-minishell: cd: too many arguments\n");
@@ -52,7 +52,7 @@ void	pwds_update(t_var **envvar_list, char *dir)
 		set_envvar(envvar_list, "OLDPWD", pwd, 1); // oldpwd deve ir para env se nao existe enquanto a pwd nao deve ir
 		return ;
 	}
-	oldpwd = get_value(*envvar_list, "PWD");
+	oldpwd = ft_get_value(*envvar_list, "PWD");
 	if (oldpwd != NULL)
 		set_envvar(envvar_list, "OLDPWD", oldpwd, 1);
 	set_envvar(envvar_list, "PWD", pwd, 0);
@@ -87,7 +87,7 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 	else if (command->arguments == NULL || \
 	ft_strcmp(command->arguments->arg, "--") == 0)
 	{
-		dir = get_value(shell->envvars, "HOME");
+		dir = ft_get_value(shell->envvars, "HOME");
 		if (dir == NULL)
 		{
 			write(2, "cd: HOME not set\n", 17);
