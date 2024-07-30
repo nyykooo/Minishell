@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 17:23:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:31:29 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ bool ft_check_equal(t_token *token)
 	return (false);
 }
 
-void	handle_equal(t_minishell *shell, t_cmd *command)
+void	ft_handle_equal(t_minishell *shell, t_cmd *command)
 {
 	t_var	*var;
 	char 	*name;
+	char	*value;
 	int		equal;
 	
 	equal = 0;
@@ -61,13 +62,8 @@ void	handle_equal(t_minishell *shell, t_cmd *command)
 		free(name);
 		return ;
 	}
-	var = ft_calloc(1, sizeof(t_var));
-	if (var == NULL)
-	{
-		write(2, "Error: malloc failed\n", 21);
-		return ;
-	}
-	var->content = ft_strdup(command->cmd);
-	var->value = ft_substr(command->cmd, equal + 1, ft_strlen(command->cmd) - equal - 1);
-	ft_varadd_back(&shell->envvars, var);
+	value = ft_substr(command->cmd, equal + 1, ft_strlen(command->cmd) - equal - 1);
+	ft_set_envvar(&shell->envvars, name, value, 0);
+	free(name);
+	free(value);
 }

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/30 17:31:24 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:17:56 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	pwds_update(t_var **envvar_list, char *dir)
 	}
 	if (ft_strcmp(dir, ".") == 0)
 	{
-		set_envvar(envvar_list, "OLDPWD", pwd, 1); // oldpwd deve ir para env se nao existe enquanto a pwd nao deve ir
+		ft_set_envvar(envvar_list, "OLDPWD", pwd, 1); // oldpwd deve ir para env se nao existe enquanto a pwd nao deve ir
 		return ;
 	}
 	oldpwd = ft_get_value(*envvar_list, "PWD");
 	if (oldpwd != NULL)
-		set_envvar(envvar_list, "OLDPWD", oldpwd, 1);
-	set_envvar(envvar_list, "PWD", pwd, 0);
+		ft_set_envvar(envvar_list, "OLDPWD", oldpwd, 1);
+	ft_set_envvar(envvar_list, "PWD", pwd, 0);
 	free(pwd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 17:31:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:31:21 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,14 @@ void	ft_create_questionvar(t_var **envvar);
 //ENVVAR_FTS
 t_var	*ft_find_envvar(t_var *envvar_list, char *name);
 void	ft_remove_envvar(t_var **envvar_list, t_var *envvar);
-void	set_envvar(t_var **envvar_list, char *name, char *value, int flag);
+void	ft_set_envvar(t_var **envvar_list, char *name, char *value, int flag);
 char	**envvar_array(t_minishell *shell);
 void	ft_update_existing_envvar(t_var *envvar, char *name, char *value);
 
 // BUILTINS
 void	handle_cd(t_cmd *command, t_minishell *shell);
 void	handle_echo(t_cmd *command);
-void	handle_equal(t_minishell *shell, t_cmd *command);
+void	ft_handle_equal(t_minishell *shell, t_cmd *command);
 int		handle_export(t_minishell *shell);
 void	handle_env(t_var *envvar_list, t_minishell *shell, t_cmd *command);
 void	handle_unset(t_cmd *command, t_var **envvar_list);

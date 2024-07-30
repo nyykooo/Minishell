@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/30 17:31:13 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:17:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void ft_add_new_envvar(t_var **envvar_list, char *name, char *value, int flag)
 	ft_varadd_back(envvar_list, envvar);
 }
 
-void set_envvar(t_var **envvar_list, char *name, char *value, int flag)
+void ft_set_envvar(t_var **envvar_list, char *name, char *value, int flag)
 {
 	t_var *envvar;
 	envvar = ft_find_envvar(*envvar_list, name);
