@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 16:00:53 by guest            ###   ########.fr       */
+/*   Updated: 2024/07/27 22:28:41 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	create_command(t_token *tokens, t_minishell *shell)
 
 	tmp = tokens;
 	init_cmd(shell, tmp);
+	//if (shell->commands->arguments)
+	//	ft_arglast(shell->commands->arguments)->next = NULL;
 	if (!shell->commands)
 	{
 		//free everything

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/28 22:32:01 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:11:35 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ static void	handle_builtins(t_minishell *shell)
 void	analyze_input(t_minishell *shell)
 {
 	//t_cmd *temp;
+	//t_arg *temp_arg;
 	int	status;
 	
 	status = 0;
@@ -148,8 +149,12 @@ void	analyze_input(t_minishell *shell)
 		printf("temp->input_file: %d\n", temp->input_file);
 		printf("temp->path: %s\n", temp->path);
 		printf("temp->here_doc_fd: %d\n", temp->here_doc_fd);
-		if (temp->arguments)
-			printf("temp->arguments->arg: %s\n", temp->arguments->arg);
+		temp_arg = temp->arguments;
+		while (temp_arg)
+		{
+			printf("temp->arguments->arg: %s\n", temp_arg->arg);
+			temp_arg = temp_arg->next;
+		}
 		printf("----------------\n");
 		temp = temp->next;
 	}*/
