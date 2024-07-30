@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/28 22:28:21 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:48:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structures.h"
 
-void	analyze_input(t_minishell *shell);
+void	ft_analyze_input(t_minishell *shell);
 
 // PARSING
 
@@ -127,8 +127,7 @@ void	edit_termios(void);
 
 // VARIABLES
 void	ft_varadd_back(t_var **lst, t_var *new);
-t_var	*create_list(char **envp);
-t_var	*create_envvar_list(char **envp);
+t_var	*ft_create_envvar_list(char **envp);
 
 //SIGNALS
 void	handle_sigint(int sig);

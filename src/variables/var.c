@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/28 22:22:04 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:48:48 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void		ft_set_shlvl(t_var **envvar)
 	free(shlvl_value);
 }
 
-t_var *create_list(char **envp)
+static t_var *ft_create_list(char **envp)
 {
 	char	**current;
 	t_var	*new_node;
@@ -67,12 +67,12 @@ t_var *create_list(char **envp)
 	return (head);
 }
 
-t_var	*create_envvar_list(char **envp)
+t_var	*ft_create_envvar_list(char **envp)
 {
 	t_var	*envvar;
 	
 	if (envp)
-		envvar = create_list(envp);
+		envvar = ft_create_list(envp);
 	else
 		envvar = NULL;
 	ft_create_questionvar(&envvar);

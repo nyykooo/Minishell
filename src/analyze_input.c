@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/30 16:11:35 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:46:52 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static void	handle_builtins(t_minishell *shell)
 		free(shell->commands->path);
 }
 
-void	analyze_input(t_minishell *shell)
+void	ft_analyze_input(t_minishell *shell)
 {
 	//t_cmd *temp;
 	//t_arg *temp_arg;

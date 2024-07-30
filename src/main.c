@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/28 22:28:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:47:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 volatile sig_atomic_t	g_sig;
 
-static char	*get_pathname(void)
+static char	*ft_get_pathname(void)
 {
 	int		i;
 	char	*substr;
@@ -40,12 +40,12 @@ static char	*get_pathname(void)
 	return (result);
 }
 
-static bool	create_prompt(t_minishell *shell)
+static bool	ft_create_prompt(t_minishell *shell)
 {
 	char	*prompt;
 	char	*input;
 
-	prompt = get_pathname();
+	prompt = ft_get_pathname();
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
@@ -61,7 +61,7 @@ static bool	create_prompt(t_minishell *shell)
 	return (true);
 }
 
-static void	clear_shell(t_minishell *shell)
+static void	ft_clear_shell(t_minishell *shell)
 {
 	if (shell->tokens != NULL)
 		free_tokens(shell->tokens);
@@ -76,15 +76,15 @@ static void	clear_shell(t_minishell *shell)
 	shell->n_pipe = 0;
 }
 
-void	minishell_loop(t_minishell *shell)
+static void	ft_minishell_loop(t_minishell *shell)
 {
 	while (true)
 	{
-		if (create_prompt(shell))
+		if (ft_create_prompt(shell))
 		{
-			analyze_input(shell);
+			ft_analyze_input(shell);
 			ft_update_questionvar(shell);
-			clear_shell(shell);
+			ft_clear_shell(shell);
 		}
 	}
 }
@@ -101,7 +101,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	config_signals(0);
-	shell.envvars = create_envvar_list(envp);
-	minishell_loop(&shell);
+	shell.envvars = ft_create_envvar_list(envp);
+	ft_minishell_loop(&shell);
 	return (0);
 }
