@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/07/28 22:16:33 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/07/30 18:35:17 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC_DIR = main analyze_input envvar_handler signals pipe heredoc
+SRC_DIR = main analyze_input signals pipe heredoc
 
 SRC_BUILTINS = cd dolar echo env equal export unset exec pwd exit
 
@@ -34,7 +34,7 @@ SRC_PARSE_COMMAND = create_commands analyze_argument
 
 SRC_PARSE_EXPANSION = expansion
 
-SRC_VARIABLES = var underline_var question_var
+SRC_VARIABLES = var underline_var question_var var_operations1 var_operations2
 
 SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/builtins/, $(SRC_BUILTINS))) \
