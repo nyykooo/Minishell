@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/29 17:40:06 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:46:14 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 {
 	char	**arg_array;
 	char	*path;
+	char	*error_msg;
 
 	if (is_builtin(cmd_temp->cmd) == true)
 	{
@@ -229,8 +230,9 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 	path = get_command_path(cmd_temp->cmd);
 	if (execve(path, arg_array, envvar_array(cmd_temp->shell)) == -1)
 	{
-    	perror("execve");
-    	exit(EXIT_FAILURE);
+		error_msg = error_msg_construct(2, cmd_temp->cmd, ": command not found\n");
+    	//perror("execve");
+    	exit(put_error_msg(error_msg, 1));
 	}
 }
 
@@ -330,6 +332,7 @@ int	define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 {
     t_cmd	*current_cmd;
     int		flags;
+	char	*error_msg;
 
     *in_fd = -1;
     *out_fd = -1;
@@ -348,8 +351,10 @@ int	define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
                 {
                     open(current_cmd->prev->prev->cmd, O_WRONLY | O_TRUNC | O_CREAT, 0644);
                 }
-                perror("open");
-                exit(1);
+				error_msg = error_msg_construct(5, "-minishell: ", current_cmd->cmd, ": ", strerror(errno), "\n");
+                //perror("open");
+				exit (put_error_msg(error_msg, 1)); //verificar qual status deve ser usado
+                //exit(1);
             }
             add_argument(&current_cmd->prev->prev->arguments, current_cmd->arguments);
             while (current_cmd->arguments)
