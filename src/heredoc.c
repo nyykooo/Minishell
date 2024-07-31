@@ -19,7 +19,7 @@ void	write_line_to_pipe(char *line, int fd[2])
 	free(line);
 }
 
-void	loop_heredoc(t_cmd *current, int fd[2])
+void	loop_heredoc(t_cmd *current, int fd[2], t_minishell *shell)
 {
 	char	*line;
 
@@ -43,12 +43,13 @@ void	loop_heredoc(t_cmd *current, int fd[2])
 			free(line);
 			break ;
 		}
+		expand_dolar(&line, shell);
 		write_line_to_pipe(line, fd);
 	}
 }
 
 
-int	fork_and_execute_heredoc(t_cmd *current, int fd[2])
+int	fork_and_execute_heredoc(t_cmd *current, int fd[2], t_minishell *shell)
 {
 	pid_t	pid;
 
@@ -61,7 +62,7 @@ int	fork_and_execute_heredoc(t_cmd *current, int fd[2])
 	if (pid == 0)
 	{
 		config_signals(1);
-		loop_heredoc(current, fd);
+		loop_heredoc(current, fd, shell);
 		close(fd[0]);
 		close(fd[1]);
 		exit(0);
@@ -85,7 +86,7 @@ int	process_heredoc_cmds(t_minishell *shell, struct sigaction *sa_original)
 			if (current->here_doc_fd > 2)
 				close(current->here_doc_fd);
 			create_pipe(fd);
-			pid = fork_and_execute_heredoc(current, fd);
+			pid = fork_and_execute_heredoc(current, fd, shell);
 			waitpid(pid, &status, 0);
 			sigaction(SIGINT, sa_original, NULL);
 			if (fd[1] > 2)
