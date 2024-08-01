@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/30 17:28:17 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:26:48 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ static int	handle_export_args(t_minishell *shell)
 			return (0);
 		if (is_valid_arg(temp->arg, temp->equal) == false)
 		{
+			// ft_print_error_and_free(shell, false, 1, 3, "-minishell: export: ", temp->arg, ": not a valid identifier\n");
 			error_msg = error_msg_construct(3, "-minishell: export: ", temp->arg, ": not a valid identifier\n");
 			exit_status = put_error_msg(error_msg, 1);
 		}

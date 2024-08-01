@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:04 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/12 15:27:09 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:38:01 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@
 
 void	handle_sigint(int sig)
 {
+	t_minishell *shell;
+
+	shell = ft_get_shell();
 	if (sig == SIGINT)
 	{
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		shell->exit_status = 130;
 	}
 }
 

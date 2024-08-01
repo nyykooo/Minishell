@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 16:17:12 by guest            ###   ########.fr       */
+/*   Updated: 2024/08/01 16:27:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,16 @@ static int	exit_number_analyze(char *arg)
 
 static int	analyze_exit_arguments(t_cmd *command)
 {
-	char *error_msg;
+	char *error_msg;	
 
 	if (!command->arguments)
 		return (0);
 	if (!is_number(command->arguments->arg)
 		|| !long_number(command->arguments->arg))
 	{
-		
-		error_msg = error_msg_construct(3, "-minishell: exit: ", command->arguments->arg,
-			 ": numeric argument required\n");
+		// ft_print_error_and_free(command->shell, false, 2, 3, "-minishell: exit: ", command->arguments->arg,
+		// 	 ": numeric argument required\n");
+		error_msg = error_msg_construct(3, "-minishell: exit: ", command->arguments->arg, ": numeric argument required\n");
 		put_error_msg(error_msg, 2);
 		return (2);
 	}
@@ -107,6 +107,7 @@ static int	analyze_exit_arguments(t_cmd *command)
 	{
 		if (command->arguments->next)
 		{
+			// ft_print_error_and_free(command->shell, false, 1, 1, "-minishell: exit: too many arguments\n");
 			error_msg = error_msg_construct(1, "-minishell: exit: too many arguments\n");
 			put_error_msg(error_msg, 1);
 			return (1);
