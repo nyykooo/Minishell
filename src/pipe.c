@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/31 15:46:14 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:56:37 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,7 +399,6 @@ void	manage_child(t_minishell *shell, t_cmd *cmd_temp, int old_read_fd, int fd[2
 	int	has_pipe;
 	
 	define_in_out_fd(cmd_temp, &in_fd, &out_fd);
-
 	//in_fd = handle_input_redirection(cmd_temp);
 	//out_fd = handle_output_redirection(cmd_temp);
 	/*printf("in_fd: %d\n", in_fd);
@@ -457,6 +456,61 @@ void	ft_close_pipefds(int fd[2], int old_read_fd)
 		close(fd[0]);
 }
 
+void	ignore_some_signals()
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+/*void	child_sigquit(int signal)
+{
+	g_sig = signal;
+	//close(STDIN_FILENO);
+}
+
+void	child_sigint(int signal)
+{
+	g_sig = signal;
+	//close(STDIN_FILENO);
+}*/
+static void	redefine_child_signals()
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+/*void	redefine_child_signals()
+{
+	struct sigaction	sigint;
+	struct sigaction	sigquit;
+
+	sigemptyset(&sigint.sa_mask);
+	sigemptyset(&sigquit.sa_mask);
+	sigquit.sa_handler = child_sigquit;
+	sigint.sa_handler = child_sigint;
+	sigint.sa_flags = 0;
+	sigquit.sa_flags = 0;
+	sigaction(SIGINT, &sigint, NULL);
+	sigaction(SIGQUIT, &sigquit, NULL);
+}*/
+
+void	parent_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		printf("\n");
+	}
+}
+
+void	redefine_parent_signals()
+{
+	struct sigaction	sigint;
+
+	sigemptyset(&sigint.sa_mask);
+	sigint.sa_handler = parent_handler;
+	sigint.sa_flags = 0;
+	sigaction(SIGINT, &sigint, NULL);
+}
+
 int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 {
 	int		fd[2];
@@ -467,7 +521,7 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	pid_t	last_child_pid = -1;
 	int		status;
 
-
+	ignore_some_signals(); // ignorar no pai
 	i = 0;
 	cmd_temp = commands;
 	old_read_fd = 0;
@@ -480,10 +534,15 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 		create_pipe(fd);
 		pid = create_child_process();
 		if (pid == 0)
+		{
+			redefine_child_signals(); // para poder configurar no filho
 			manage_child(shell, cmd_temp, old_read_fd, fd);
+		}
 		else
 		{
 			//manage_parent(pid, &old_read_fd, fd, &status);
+			// se o pai receber sigint ou sigquit ele apenas quebra uma linha
+			redefine_parent_signals();
 			if (old_read_fd != 0)
 				close(old_read_fd);
 			old_read_fd = fd[0];
@@ -502,7 +561,23 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	{
 		waitpid_return = waitpid(-1, NULL, WNOHANG);
 	}
-	shell->exit_status = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+			shell->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status) || WIFSTOPPED(status))
+	{	
+		if (WTERMSIG(status) == SIGQUIT)
+		{
+			shell->exit_status = 131;
+			printf("\n");
+		}
+		else if (WTERMSIG(status) == SIGINT)
+		{
+			shell->exit_status = 130;
+			printf("\n");
+		}
+	}
+	//shell->exit_status = WEXITSTATUS(status);
 	ft_close_pipefds(fd, old_read_fd);
+	config_signals(0); // e voltar ao normal no pai
 	return (0);
 }
