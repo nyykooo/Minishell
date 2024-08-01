@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/31 17:10:39 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/01 17:55:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,54 @@ static void	ft_get_path(t_cmd *commands)
 		commands->path = ft_strdup(commands->cmd);
 }
 
+static void	ignore_some_signals()
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+	
+static void	redefine_child_signals()
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
 static void	handle_command(t_cmd *commands, t_minishell *shell)
 {
 	pid_t	pid;
 
+	ignore_some_signals(); // ignorar no pai
 	pid = fork();
 	if (pid == 0)
+	{
+		redefine_child_signals();
 		ft_analyze_cmd(commands);
+	}
 	else if (pid < 0)
 		perror ("minishell");
 	else
+	{
 		waitpid (pid, &(shell->exit_status), WUNTRACED);
-	if (WIFEXITED(shell->exit_status))
-		shell->exit_status = WEXITSTATUS(shell->exit_status);
+		if (WIFEXITED(shell->exit_status))
+			shell->exit_status = WEXITSTATUS(shell->exit_status);
+		else if (WIFSIGNALED(shell->exit_status) || WIFSTOPPED(shell->exit_status))
+		{	
+			if (WTERMSIG(shell->exit_status) == SIGQUIT)
+			{
+				shell->exit_status = 131;
+				printf("Quit\n");
+			}
+			else if (WTERMSIG(shell->exit_status) == SIGINT)
+			{
+				shell->exit_status = 130;
+				printf("\n");
+			}
+		}
+	}
+	config_signals(0); // volta a configurar o padrao
 }
 
-static void	handle_builtins(t_minishell *shell)
+static void	handle_cmds(t_minishell *shell)
 {
 		ft_get_path(shell->commands);
 		ft_update_underlinevar(shell);
@@ -143,7 +175,7 @@ void	ft_analyze_input(t_minishell *shell)
 		if (shell->commands->type == T_EQUAL)
 			ft_handle_equal(shell, shell->commands);
 		if (shell->commands->type == T_COMMAND)
-			handle_builtins(shell);
+			handle_cmds(shell);
 	}
 	return ;
 }
