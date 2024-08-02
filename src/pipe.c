@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/01 17:41:59 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/02 12:39:50 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -493,7 +493,7 @@ static void	redefine_child_signals()
 	sigaction(SIGQUIT, &sigquit, NULL);
 }*/
 
-void	parent_handler(int signal)
+/*void	parent_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -509,7 +509,7 @@ void	redefine_parent_signals()
 	sigint.sa_handler = parent_handler;
 	sigint.sa_flags = 0;
 	sigaction(SIGINT, &sigint, NULL);
-}
+}*/
 
 int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 {
@@ -542,7 +542,7 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 		{
 			//manage_parent(pid, &old_read_fd, fd, &status);
 			// se o pai receber sigint ou sigquit ele apenas quebra uma linha
-			redefine_parent_signals();
+			//redefine_parent_signals();
 			if (old_read_fd != 0)
 				close(old_read_fd);
 			old_read_fd = fd[0];
@@ -568,7 +568,7 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 		if (WTERMSIG(status) == SIGQUIT)
 		{
 			shell->exit_status = 131;
-			printf("\n");
+			printf("Quit\n");
 		}
 		else if (WTERMSIG(status) == SIGINT)
 		{
@@ -576,7 +576,6 @@ int	handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 			printf("\n");
 		}
 	}
-	//shell->exit_status = WEXITSTATUS(status);
 	ft_close_pipefds(fd, old_read_fd);
 	config_signals(0); // e voltar ao normal no pai
 	return (0);
