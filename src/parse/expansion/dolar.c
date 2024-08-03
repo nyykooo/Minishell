@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 18:57:07 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 11:45:43 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	expand_dolar(char **input, t_minishell *shell)
 				free(var_name);
 			if (var_value[0] != '\0')
 				free(var_value);
-			if ((*input)[i] != '$')
-				i--;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/01 16:40:18 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 10:31:12 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,15 @@ static void	ft_minishell_loop(t_minishell *shell)
 	}
 }
 
+static void	ft_launch_minishell(t_minishell *shell, char *input)
+{
+	shell->input = ft_strdup(input);
+	ft_update_questionvar(shell);
+	ft_analyze_input(shell);
+	ft_clear_shell(shell);
+	exit(shell->exit_status);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	*shell;
@@ -97,13 +106,15 @@ int	main(int argc, char **argv, char **envp)
 
 	g_sig = 0;
 	(void)argv;
-	if (argc != 1)
-	{
-		write(2, "usage: ./minishell\n", 20);
-		return (EXIT_FAILURE);
-	}
 	config_signals(0);
 	shell->envvars = ft_create_envvar_list(envp);
+	if (argc >= 3 && ft_strncmp(argv[1], "-c", 3) == 0)
+		ft_launch_minishell(shell, argv[2]);
+	// if (argc != 1)
+	// {
+	// 	write(2, "usage: ./minishell\n", 20);
+	// 	return (EXIT_FAILURE);
+	// }
 	ft_minishell_loop(shell);
 	return (0);
 }

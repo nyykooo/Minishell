@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/22 22:47:49 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 11:25:26 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,36 @@ static void	get_command_path(t_minishell *shell)
 	}
 }
 
+static bool ft_verify_unexpected_token(t_minishell *shell)
+{
+	t_token *token;
+
+	token = shell->tokens;
+	while (token)
+	{
+		if (token->type >= T_RTRUNC && token->type <= T_PIPE)
+		{
+			if (token->type == T_PIPE && (!token->prev || token->next->type == T_PIPE))
+			{
+				ft_print_error_and_free(shell, false, 2, 1, "minishell: syntax error near unexpected token `|'\n");
+				return (false);
+			}
+			if (!token->next)
+			{
+				ft_print_error_and_free(shell, false, 2, 1, "minishell: syntax error near unexpected token `newline'\n");
+				return (false);
+			}
+			if (token->next->type >= T_RTRUNC)
+			{
+				ft_print_error_and_free(shell, false, 2, 3, "minishell: syntax error near unexpected token `", token->next->content, "'\n");
+				return (false);
+			}
+		}
+		token = token->next;
+	}
+	return (true);
+}
+
 void	tokenizer(t_minishell *shell)
 {
 	char **array;
@@ -104,9 +134,12 @@ void	tokenizer(t_minishell *shell)
 	}
 	// analyze_array(&array, shell); // analyze array to create tokens
 	token_creation(array, shell); // create tokens
-	analyze_tokens(shell->tokens, shell); // analyze tokens to create commands
-	reset_shell(shell);
-	clear_commands(shell->commands, shell);
-	get_command_path(shell); // get paths for commands
-	free_array(array);
+	if (ft_verify_unexpected_token(shell) == true) 
+	{
+		analyze_tokens(shell->tokens, shell); // analyze tokens to create commands
+		reset_shell(shell);
+		clear_commands(shell->commands, shell);
+		get_command_path(shell); // get paths for commands
+		free_array(array);
+	}
 }

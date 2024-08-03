@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:06:10 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 18:57:17 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 10:34:31 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,13 @@ static int	count_spaces(char *str)
 	add_space = 0;
 	while (str[i])
 	{
-		while (str[i] && (!is_pipe_redir(str[i])
-				|| ft_is_inside_quotes(str, i)))
-			i++;
+		while (str[i])
+		{
+			if (!is_pipe_redir(str[i]) || ft_is_inside_quotes(str, i))
+				i++;
+			else if (is_pipe_redir(str[i]) || !ft_is_inside_quotes(str, i))
+				i++;
+		}
 		count_space_pr_differ(str, &i, &add_space);
 	}
 	return (add_space);

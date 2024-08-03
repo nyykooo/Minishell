@@ -6,11 +6,26 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:50:43 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 19:02:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 11:46:42 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
+
+static char	*ft_strreplace_tilde(char *src, int i, char *insert, char *name)
+{
+	char	*str_frag;
+	char	*tmp;
+	char	*new;
+
+	str_frag = ft_substr(src, 0, i);
+	tmp = ft_strjoin(str_frag, insert);
+	new = ft_strjoin(tmp, src + i + ft_strlen(name));
+	free(str_frag);
+	free(tmp);
+	free(src);
+	return (new);
+}
 
 void	expand_tildes(char **input, t_minishell *shell)
 {
@@ -29,7 +44,7 @@ void	expand_tildes(char **input, t_minishell *shell)
 			var = ft_find_envvar(shell->envvars, "HOME");
 			if (var)
 				var_value = ft_strdup(var->value);
-			(*input) = ft_strreplace((*input), i, var_value, "~");
+			(*input) = ft_strreplace_tilde((*input), i, var_value, "~");
 		}
 	}
 }
