@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/01 16:30:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 12:18:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	handle_exec(t_minishell *shell, t_cmd *cmd);
 void	handle_pwd(t_minishell *shell);
 void	handle_exit(t_cmd *command, t_minishell *shell);
 
+// OPTIONS
+bool	ft_check_options(t_minishell *shell, t_arg *arg);
 
 //TTY
 void	edit_termios(void);

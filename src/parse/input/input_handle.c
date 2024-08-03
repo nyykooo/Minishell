@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/01 16:21:18 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 12:20:55 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	input_manager(t_minishell *shell)
 {
 	if (quote_check(shell->input)) // check if the quotes match
 	{
-		ft_print_error_and_free(shell, false, 2, 1, "-minishell: unmatched quote\n");
+		ft_print_error_and_free(shell, false, 0, 1, "-minishell: unmatched quote\n");
 		// shell->error_msg = error_msg_construct(1, "-minishell: unmatched quote\n");
 		// put_error_msg(shell->error_msg, 2);
 		return (1);

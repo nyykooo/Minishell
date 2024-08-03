@@ -6,38 +6,84 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/01 16:26:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 14:24:49 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-bool	is_valid_arg(const char *arg, bool has_equal)
+bool	ft_check_options(t_minishell *shell, t_arg *argument)
 {
-	int	i;
+	char	*error_msg;
+	
+	if (argument->arg[0] == '-')
+	{
+		error_msg = ft_substr(argument->arg, 0, 2);
+		ft_print_error_and_free(shell, false, 2, 3, "-minishell: export: ", error_msg, ": invalid option\n");
+		free(error_msg);
+		return (true);
+	}
+	return (false);
+}
+
+static bool	ft_is_valid_arg(const char *arg, bool has_equal)
+{
+	int		i;
+	bool	before_equal;
 
 	i = 0;
-	if (has_equal == true)
+	before_equal = true;
+	if ((arg[0] >= '0' && arg[0] <= '9'))
+		return (false);
+	if(has_equal)	
 	{
-		while (arg[i] != '=')
+		while (arg[i] != EQUAL || before_equal)
 		{
-			if (arg[i] == '-')
+			if (arg[i] != '_' && !(arg[i] >= 'A' && arg[i] <= 'Z')
+				&& !(arg[i] >= 'a' && arg[i] <= 'z') && !(arg[i] >= '0' && arg[i] <= '9') && arg[i] != '\\')
 				return (false);
-			i++;
+			if (arg[++i] == EQUAL)
+				before_equal = false;
 		}
 	}
-	else if (has_equal == false)
+	if(!has_equal)
 	{
-		while (arg[i] != '\0')
+		while (arg[++i] != 0)
 		{
-			if (arg[i] == '-')
+			if (arg[i] != '_' && !(arg[i] >= 'A' && arg[i] <= 'Z')
+				&& !(arg[i] >= 'a' && arg[i] <= 'z') && !(arg[i] >= '0' && arg[i] <= '9') && arg[i] != '\\')
 				return (false);
-			i++;
 		}
 	}
-	return (arg[0] == '_' || (arg[0] >= 'A' && arg[0] <= 'Z') || \
-	(arg[0] >= 'a' && arg[0] <= 'z'));
+	return (true);
 }
+
+// bool	is_valid_arg(const char *arg, bool has_equal)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (has_equal == true)
+// 	{
+// 		while (arg[i] != '=')
+// 		{
+// 			if (arg[i] == '-')
+// 				return (false);
+// 			i++;
+// 		}
+// 	}
+// 	else if (has_equal == false)
+// 	{
+// 		while (arg[i] != '\0')
+// 		{
+// 			if (arg[i] == '-')
+// 				return (false);
+// 			i++;
+// 		}
+// 	}
+// 	return (arg[0] == '_' || (arg[0] >= 'A' && arg[0] <= 'Z') || 
+// 	(arg[0] >= 'a' && arg[0] <= 'z'));
+// }
 
 static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 {
@@ -53,7 +99,7 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	}
 	new_var = ft_calloc(1, sizeof(t_var));
 	if (new_var == NULL)
-		return (1);
+		ft_print_error_and_free(shell, true, 2, 1, "-minishell: failed to allocate memory\n");
 	new_var->content = ft_strdup(argument->arg);
 	new_var->name = ft_strdup(argument->arg);
 	new_var->exp = true;
@@ -123,12 +169,14 @@ static int	handle_export_args(t_minishell *shell)
 	temp = shell->commands->arguments;
 	while (temp != NULL)
 	{
+		if (ft_check_options(shell, temp))
+			return (shell->exit_status);
 		if (temp->arg[0] == '_' && temp->arg[1] == '=')
 			return (0);
-		if (is_valid_arg(temp->arg, temp->equal) == false)
+		if (!ft_is_valid_arg(temp->arg, temp->equal))
 		{
 			// ft_print_error_and_free(shell, false, 1, 3, "-minishell: export: ", temp->arg, ": not a valid identifier\n");
-			error_msg = error_msg_construct(3, "-minishell: export: ", temp->arg, ": not a valid identifier\n");
+			error_msg = error_msg_construct(3, "-minishell: export: `", temp->arg, "': not a valid identifier\n");
 			exit_status = put_error_msg(error_msg, 1);
 		}
 		else
