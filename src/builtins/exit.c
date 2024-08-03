@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/01 16:27:07 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/03 18:45:13 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,13 @@ static int	analyze_exit_arguments(t_cmd *command)
 
 void	handle_exit(t_cmd *command, t_minishell *shell)
 {
-	printf("exit\n");
 	if (command)
 		shell->exit_status = analyze_exit_arguments(command);
 	else
 		shell->exit_status = 0;
+	if (shell->exit_status == 2 || shell->exit_status == 1)
+		return ;
+	printf("exit\n");
 	free_shell(shell);
 	exit(shell->exit_status);
 }
