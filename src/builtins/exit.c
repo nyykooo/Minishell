@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/03 18:45:13 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/04 12:32:21 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
+
+static bool ft_isnt_limits(const char *nbr)
+{
+	if (ft_strlen(nbr) >= 19)
+	{
+		if (ft_strcmp(nbr, "9223372036854775807") == 0)
+			return (true);
+		else if (ft_strcmp(nbr, "-9223372036854775808") == 0)
+			return (true);
+		return (false);
+	}
+	return (true);
+}
 
 static bool	long_number(const char *nbr)
 {
@@ -24,13 +37,13 @@ static bool	long_number(const char *nbr)
 	while (nbr[i] == ' ')
 		i++;
 	if (nbr[i] == '-' || nbr[i] == '+')
-		i++;
+		new_nbr[j++] = nbr[i++];
 	while (nbr[i] == '0')
 		i++;
 	while (ft_isdigit(nbr[i]))
 		new_nbr[j++] = nbr[i++];
 	new_nbr[j] = '\0';
-	if (ft_strlen(new_nbr) >= 19)
+	if (!ft_isnt_limits(new_nbr))
 	{
 		free(new_nbr);
 		return (false);
