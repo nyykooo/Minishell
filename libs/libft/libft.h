@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/04 12:17:57 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/04 12:35:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_htoi(char *hex);
 int		ft_array_len(char **array);
 long	ft_atol(const char *nbr);
-long	ft_strtol(const char *nbr, char **end);
 bool	int_number(const char *nbr);
 void	ft_error_print(char *error);
 int		get_charlen(char c);

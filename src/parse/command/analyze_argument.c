@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/06 17:38:55 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/04 12:41:23 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void check_arg(t_arg *input)
 			input->dol = true;
 		else if (input->arg[i] == EQUAL)
 			input->equal = true;
+		else if (input->arg[i] == N_EQUAL)
+			input->arg[i] = EQUAL;
 	}
 }
 
