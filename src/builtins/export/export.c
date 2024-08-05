@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 17:24:57 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:21:10 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,66 +27,55 @@ bool	ft_check_options(t_minishell *shell, t_arg *argument)
 	return (false);
 }
 
-static bool	ft_is_valid_arg(const char *arg, bool has_equal)
+static bool	ft_verify_equal_arg(const char *arg)
 {
 	int		i;
 	bool	before_equal;
 
-	i = 0;
 	before_equal = true;
-	if ((arg[0] >= '0' && arg[0] <= '9'))
-		return (false);
-	if (has_equal)
+	i = 0;
+	while (arg[i] != EQUAL || before_equal)
 	{
-		while (arg[i] != EQUAL || before_equal)
-		{
-			if (arg[i] != '_' && !(arg[i] >= 'A' && arg[i] <= 'Z')
-				&& !(arg[i] >= 'a' && arg[i] <= 'z') && !(arg[i] >= '0' && arg[i] <= '9') && arg[i] != '\\')
-				return (false);
-			if (arg[++i] == EQUAL)
-				before_equal = false;
-		}
-	}
-	if (!has_equal)
-	{
-		while (arg[++i] != 0)
-		{
-			if (arg[i] != '_' && !(arg[i] >= 'A' && arg[i] <= 'Z')
-				&& !(arg[i] >= 'a' && arg[i] <= 'z') && !(arg[i] >= '0' && arg[i] <= '9') && arg[i] != '\\')
-				return (false);
-		}
+		if (arg[i] != '_' && !(arg[i] >= 'A' && arg[i] <= 'Z')
+			&& !(arg[i] >= 'a' && arg[i] <= 'z') && !(arg[i] >= '0'
+				&& arg[i] <= '9') && arg[i] != '\\')
+			return (false);
+		if (arg[++i] == EQUAL)
+			before_equal = false;
 	}
 	return (true);
 }
 
-// bool	is_valid_arg(const char *arg, bool has_equal)
-// {
-// 	int	i;
+static bool	ft_verify_noequal_arg(const char *arg)
+{
+	int		i;
 
-// 	i = 0;
-// 	if (has_equal == true)
-// 	{
-// 		while (arg[i] != '=')
-// 		{
-// 			if (arg[i] == '-')
-// 				return (false);
-// 			i++;
-// 		}
-// 	}
-// 	else if (has_equal == false)
-// 	{
-// 		while (arg[i] != '\0')
-// 		{
-// 			if (arg[i] == '-')
-// 				return (false);
-// 			i++;
-// 		}
-// 	}
-// 	return (arg[0] == '_' || (arg[0] >= 'A' && arg[0] <= 'Z') || 
-// 	(arg[0] >= 'a' && arg[0] <= 'z'));
-// }
+	i = 0;
+	while (arg[++i] != 0)
+	{
+		if (arg[i] != '_' && !(arg[i] >= 'A' && arg[i] <= 'Z')
+			&& !(arg[i] >= 'a' && arg[i] <= 'z') && !(arg[i] >= '0'
+				&& arg[i] <= '9') && arg[i] != '\\')
+			return (false);
+	}
+	return (true);
+}
 
-static int	handle_no_equal(t_minishell *shell, t_arg *argument)
+static bool	ft_is_valid_arg(const char *arg, bool has_equal)
+{
+	bool	return_value;
+
+	return_value = true;
+	if ((arg[0] >= '0' && arg[0] <= '9'))
+		return (false);
+	if (has_equal)
+		return_value = ft_verify_equal_arg(arg);
+	else
+		return_value = ft_verify_noequal_arg(arg);
+	return (return_value);
+}
+
+static int	ft_handle_no_equal(t_minishell *shell, t_arg *argument)
 {
 	t_var	*temp;
 	t_var	*new_var;
@@ -109,7 +98,7 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	return (0);
 }
 
-static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
+static bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument)
 {
 	char	*name;
 	char	*value;
@@ -133,7 +122,7 @@ static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
 	return (0);
 }
 
-static int	handle_export_args(t_minishell *shell)
+static int	ft_handle_export_args(t_minishell *shell)
 {
 	t_arg	*temp;
 
@@ -150,9 +139,9 @@ static int	handle_export_args(t_minishell *shell)
 		else
 		{
 			if (temp->equal == false)
-				shell->exit_status = handle_no_equal(shell, temp);
+				shell->exit_status = ft_handle_no_equal(shell, temp);
 			else
-				handle_with_equal(shell, temp);
+				ft_handle_with_equal(shell, temp);
 		}
 		temp = temp->next;
 	}
@@ -211,6 +200,13 @@ void	sort_content(t_var *envvar)
 	}
 }
 
+static bool	ft_check_separator(char c)
+{
+	if (c == '\"' || c == '\\' || c == '$' || c == '`')
+		return (true);
+	return (false);
+}
+
 static char	*prepare_value(char *content)
 {
 	char	*value;
@@ -222,8 +218,7 @@ static char	*prepare_value(char *content)
 	count_meta = 0;
 	while (content[++i] != '\0')
 	{
-		if (content[i] == '\"' || content[i] == '\\'
-			|| content[i] == '$' || content[i] == '`')
+		if (ft_check_separator(content[i]))
 			count_meta++;
 	}
 	value = malloc(sizeof(char) * (ft_strlen(content) + count_meta + 1));
@@ -233,8 +228,7 @@ static char	*prepare_value(char *content)
 	j = 0;
 	while (content[++i] != '\0')
 	{
-		if (content[i] == '\"' || content[i] == '\\'
-			|| content[i] == '$' || content[i] == '`')
+		if (ft_check_separator(content[i]))
 			value[j++] = '\\';
 		value[j++] = content[i];
 	}
@@ -244,12 +238,33 @@ static char	*prepare_value(char *content)
 
 // pensar sobre criar uma variadic function para montar a string que printa o export
 
+static	void	ft_print_export(t_var *current)
+{
+	char	*value;
+
+	value = NULL;
+	if (current->exp == true && current->env == true && \
+		current->value != NULL)
+	{
+		value = prepare_value(current->value);
+		printf("declare -x %s=\"%s\"\n", current->name, value);
+	}
+	else if (current->exp == true && current->value)
+	{
+		value = prepare_value(current->value);
+		printf("declare -x %s=\"%s\"\n", current->name, value);
+	}
+	else if (current->exp == true && current->value == NULL)
+		printf("declare -x %s\n", current->name);
+	if (value)
+		free(value);
+}
+
 int	handle_export(t_minishell *shell)
 {
 	t_var	*current;
 	t_arg	*temp;
 	t_arg	*temp2;
-	char	*value;
 
 	temp2 = shell->commands->arguments;
 	while (temp2 != NULL)
@@ -263,26 +278,11 @@ int	handle_export(t_minishell *shell)
 		sort_content(current);
 		while (current != NULL)
 		{
-			value = NULL;
-			if (current->exp == true && current->env == true && \
-			current->value != NULL)
-			{
-				value = prepare_value(current->value);
-				printf("declare -x %s=\"%s\"\n", current->name, value);
-			}
-			else if (current->exp == true && current->value)
-			{
-				value = prepare_value(current->value);
-				printf("declare -x %s=\"%s\"\n", current->name, value);
-			}
-			else if (current->exp == true && current->value == NULL)
-				printf("declare -x %s\n", current->name);
+			ft_print_export(current);
 			current = current->next;
-			if (value)
-				free(value);
 		}
 		return (0);
 	}
 	else
-		return (handle_export_args(shell));
+		return (ft_handle_export_args(shell));
 }
