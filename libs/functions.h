@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/01 16:30:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:14:18 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,25 @@ t_var	*ft_create_envvar_list(char **envp);
 //SIGNALS
 void	handle_sigint(int sig);
 void	config_signals(int process_type);
+void	redefine_child_signals(void);
+void	ignore_some_signals(void);
 
+// FTS_PIPE_REDIR_UTILS
+bool	is_pipe_or_redir(t_cmd *cmd, int i);
+bool	is_file(t_cmd *cmd);
+bool	ft_has_pipe(t_cmd *cmd_temp);
+void	ft_nopipe(int in_fd, int out_fd);
+void	ft_haspipe(int in_fd, int out_fd, int fd1, int fd0);
+
+void	create_pipe(int fd[2]);
 
 //char	*get_command_path(char *command);
+void	define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd);
 void		create_pipe(int fd[2]);
-int     handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
-int	heredoc(t_minishell *shell);
-
+void		handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
+int			heredoc(t_minishell *shell);
+int			ft_pipe_redir_loop(t_minishell *shell, t_cmd *commands, int fd[2], int old_read_fd);
+bool		is_file(t_cmd *cmd);
+bool	is_pipe_or_redir(t_cmd *cmd, int i);
+void	ft_exec(t_minishell *shell, t_cmd *cmd_temp);
 #endif

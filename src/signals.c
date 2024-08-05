@@ -3,17 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:04 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/01 16:38:01 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:49:01 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
-//#include <termios.h>
 
-//struct termios original_termios, new_termios, check_termios;
+void	redefine_child_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	ignore_some_signals(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
 
 void	handle_sigint(int sig)
 {
@@ -56,19 +65,3 @@ void	config_signals(int process_type)
 	sigaction(SIGINT, &sigint, NULL);
 	sigaction(SIGQUIT, &sigquit, NULL);
 }
-
-/*void	edit_termios(void)
-{
-	if (tcgetattr(STDIN_FILENO, &original_termios) == -1)
-		perror("tcgetattr");
-	new_termios = original_termios;
-	new_termios.c_lflag &= ~ISIG;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &new_termios) == -1)
-		perror("tcsetattr");
-	if (tcgetattr(STDIN_FILENO, &check_termios) == -1)
-        perror("tcgetattr to check");
-    if (check_termios.c_lflag & ISIG)
-        printf("ISIG is still enabled\n");
-    else
-        printf("ISIG is disabled\n");
-}*/
