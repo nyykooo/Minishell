@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 18:27:14 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 21:53:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static bool ft_verify_unexpected_token(t_minishell *shell)
 				ft_print_error(shell, false, 2, 1, "minishell: syntax error near unexpected token `newline'\n");
 				return (false);
 			}
-			if (token->next->type >= T_RTRUNC)
+			if (token->type != T_PIPE && token->next->type >= T_RTRUNC)
 			{
 				ft_print_error(shell, false, 2, 3, "minishell: syntax error near unexpected token `", token->next->content, "'\n");
 				return (false);
