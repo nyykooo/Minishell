@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/05 17:24:49 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/05 17:54:30 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC_DIR = main analyze_input signals pipe heredoc shell
+SRC_DIR = main analyze_input signals heredoc shell
 
 SRC_BUILTINS = cd echo env equal unset exec pwd exit
 
@@ -38,6 +38,8 @@ SRC_PARSE_EXPANSION = expansion dolar tildes hashtag
 
 SRC_VARIABLES = var underline_var question_var var_operations1 var_operations2
 
+SRC_PIPE_REDIR = utils_pipe_redir pipe_redir_loop exec_pipe_redir define_in_out_fd handle_pipe_redir
+
 SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/builtins/, $(SRC_BUILTINS))) \
 	$(addsuffix .c, $(addprefix src/builtins/export/, $(SRC_BUILTINS_EXPORT))) \
@@ -50,7 +52,9 @@ SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/parse/input/, $(SRC_PARSE_INPUT))) \
 	$(addsuffix .c, $(addprefix src/parse/command/, $(SRC_PARSE_COMMAND))) \
 	$(addsuffix .c, $(addprefix src/parse/expansion/, $(SRC_PARSE_EXPANSION))) \
-	$(addsuffix .c, $(addprefix src/variables/, $(SRC_VARIABLES)))
+	$(addsuffix .c, $(addprefix src/variables/, $(SRC_VARIABLES))) \
+	$(addsuffix .c, $(addprefix src/pipe_redir/, $(SRC_PIPE_REDIR)))
+
 
 LIBFT = "libs/libft/libft.a"
 

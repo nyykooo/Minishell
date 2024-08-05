@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/04 12:47:23 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:54:24 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	ft_get_path(t_cmd *commands)
 		commands->path = ft_strdup(commands->cmd);
 }
 
-static void	ignore_some_signals()
+/*static void	ignore_some_signals()
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
@@ -67,7 +67,7 @@ static void	redefine_child_signals()
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-}
+}*/
 
 static void	handle_command(t_cmd *commands, t_minishell *shell)
 {
