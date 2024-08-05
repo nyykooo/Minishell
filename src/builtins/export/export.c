@@ -6,20 +6,21 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:24:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libs/headers.h"
+#include "../../../libs/headers.h"
 
 bool	ft_check_options(t_minishell *shell, t_arg *argument)
 {
 	char	*error_msg;
-	
+
 	if (argument->arg[0] == '-')
 	{
 		error_msg = ft_substr(argument->arg, 0, 2);
-		ft_print_error(shell, false, 2, 3, "-minishell: export: ", error_msg, ": invalid option\n");
+		ft_print_error(shell, false, 2, 3,
+			"-minishell: export: ", error_msg, ": invalid option\n");
 		free(error_msg);
 		return (true);
 	}
@@ -35,7 +36,7 @@ static bool	ft_is_valid_arg(const char *arg, bool has_equal)
 	before_equal = true;
 	if ((arg[0] >= '0' && arg[0] <= '9'))
 		return (false);
-	if(has_equal)	
+	if (has_equal)
 	{
 		while (arg[i] != EQUAL || before_equal)
 		{
@@ -46,7 +47,7 @@ static bool	ft_is_valid_arg(const char *arg, bool has_equal)
 				before_equal = false;
 		}
 	}
-	if(!has_equal)
+	if (!has_equal)
 	{
 		while (arg[++i] != 0)
 		{
@@ -99,7 +100,8 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	}
 	new_var = ft_calloc(1, sizeof(t_var));
 	if (new_var == NULL)
-		ft_print_error(shell, true, 2, 1, "-minishell: failed to allocate memory\n");
+		ft_print_error(shell, true, 2, 1,
+			"-minishell: failed to allocate memory\n");
 	new_var->content = ft_strdup(argument->arg);
 	new_var->name = ft_strdup(argument->arg);
 	new_var->exp = true;
@@ -113,59 +115,28 @@ static bool	handle_with_equal(t_minishell *shell, t_arg *argument)
 	char	*value;
 	t_var	*var;
 	int		equal_pos;
-	int		i;
 
-	equal_pos = -1;
-	i = 0;
-	while (argument->arg[i] != '\0')
-	{	
-		if (argument->arg[i] == '=')
-		{
-			equal_pos = i;
-			break ;
-		}
-		i++;
-	}
+	equal_pos = ft_find_char(argument->arg, EQUAL);
 	if (equal_pos == -1)
-		return (1);
+		return (false);
 	name = ft_strndup(argument->arg, equal_pos);
 	value = ft_strdup(argument->arg + equal_pos + 1);
-	var = shell->envvars;
-	while (var != NULL)
+	var = ft_find_envvar(shell->envvars, name);
+	if (var != NULL)
 	{
-		if (strcmp(var->name, name) == 0)
-		{
-			free(var->value);
-			var->value = value;
-			free(name);
-			return (0);
-		}
-		var = var->next;
-	}
-	var = malloc(sizeof(t_var));
-	if (!var)
-	{
+		free(var->value);
+		var->value = value;
 		free(name);
-		free(value);
-		return (1);
 	}
-	var->name = name;
-	var->value = value;
-	var->env = true;
-	var->exp = true;
-	var->content = ft_create_envvar_content(name, value);
-	var->next = shell->envvars;
-	shell->envvars = var;
+	else
+		ft_add_new_envvar(&shell->envvars, name, value, 0);
 	return (0);
 }
 
 static int	handle_export_args(t_minishell *shell)
 {
 	t_arg	*temp;
-	int		exit_status;
-	char	*error_msg;
 
-	exit_status = 0;
 	temp = shell->commands->arguments;
 	while (temp != NULL)
 	{
@@ -174,31 +145,28 @@ static int	handle_export_args(t_minishell *shell)
 		if (temp->arg[0] == '_' && temp->arg[1] == '=')
 			return (0);
 		if (!ft_is_valid_arg(temp->arg, temp->equal))
-		{
-			// ft_print_error(shell, false, 1, 3, "-minishell: export: ", temp->arg, ": not a valid identifier\n");
-			error_msg = error_msg_construct(3, "-minishell: export: `", temp->arg, "': not a valid identifier\n");
-			exit_status = put_error_msg(error_msg, 1);
-		}
+			ft_print_error(shell, false, 1, 3, "-minishell: export: ",
+				temp->arg, ": not a valid identifier\n");
 		else
 		{
 			if (temp->equal == false)
-				exit_status = handle_no_equal(shell, temp);
+				shell->exit_status = handle_no_equal(shell, temp);
 			else
 				handle_with_equal(shell, temp);
 		}
 		temp = temp->next;
 	}
-	return (exit_status);
+	return (shell->exit_status);
 }
 
 void	swap_nodes(t_var *a, t_var *b)
 {
-	char *temp_content;
-	char *temp_name;
-	char *temp_value;
-	bool temp_exp;
-	bool temp_env;
-	
+	char	*temp_content;
+	char	*temp_name;
+	char	*temp_value;
+	bool	temp_exp;
+	bool	temp_env;
+
 	temp_content = a->content;
 	temp_name = a->name;
 	temp_value = a->value;
@@ -218,29 +186,32 @@ void	swap_nodes(t_var *a, t_var *b)
 
 void	sort_content(t_var *envvar)
 {
-	int swapped = 1;
-    t_var *temp;
-    t_var *last_verified = NULL;
+	t_var			*temp;
+	t_var			*last_verified;
+	int				swapped;
 
-    if (envvar == NULL)
-        return;
-
-    while (swapped) {
-        swapped = 0;
-        temp = envvar;
-
-        while (temp->next != last_verified) {
-            if (ft_strcmp(temp->content, temp->next->content) > 0) { 
-                swap_nodes(temp, temp->next);
-                swapped = 1;
-            }
-            temp = temp->next;
-        }
-        last_verified = temp;
-    }
+	swapped = 1;
+	last_verified = NULL;
+	if (envvar == NULL)
+		return ;
+	while (swapped)
+	{
+		swapped = 0;
+		temp = envvar;
+		while (temp->next != last_verified)
+		{
+			if (ft_strcmp(temp->content, temp->next->content) > 0)
+			{
+				swap_nodes(temp, temp->next);
+				swapped = 1;
+			}
+			temp = temp->next;
+		}
+		last_verified = temp;
+	}
 }
 
-static char *prepare_value(char *content)
+static char	*prepare_value(char *content)
 {
 	char	*value;
 	int		i;
@@ -251,17 +222,19 @@ static char *prepare_value(char *content)
 	count_meta = 0;
 	while (content[++i] != '\0')
 	{
-		if (content[i] == '\"' || content[i] == '\\' || content[i] == '$' || content[i] == '`')
+		if (content[i] == '\"' || content[i] == '\\'
+			|| content[i] == '$' || content[i] == '`')
 			count_meta++;
 	}
-	value = malloc(sizeof(char)*(ft_strlen(content) + count_meta + 1));
+	value = malloc(sizeof(char) * (ft_strlen(content) + count_meta + 1));
 	if (value == NULL)
 		return (NULL);
 	i = -1;
 	j = 0;
 	while (content[++i] != '\0')
 	{
-		if (content[i] == '\"' || content[i] == '\\' || content[i] == '$' || content[i] == '`')
+		if (content[i] == '\"' || content[i] == '\\'
+			|| content[i] == '$' || content[i] == '`')
 			value[j++] = '\\';
 		value[j++] = content[i];
 	}

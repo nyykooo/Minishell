@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/05 16:44:25 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/05 17:24:49 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC_DIR = main analyze_input signals pipe heredoc shell
 
-SRC_BUILTINS = cd echo env equal export unset exec pwd exit
+SRC_BUILTINS = cd echo env equal unset exec pwd exit
+
+SRC_BUILTINS_EXPORT = export
 
 SRC_FREE_ERROR_EXIT = free error cmd_errors
 
@@ -38,6 +40,7 @@ SRC_VARIABLES = var underline_var question_var var_operations1 var_operations2
 
 SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/builtins/, $(SRC_BUILTINS))) \
+	$(addsuffix .c, $(addprefix src/builtins/export/, $(SRC_BUILTINS_EXPORT))) \
 	$(addsuffix .c, $(addprefix src/free_error_exit/, $(SRC_FREE_ERROR_EXIT))) \
 	$(addsuffix .c, $(addprefix src/parse/, $(SRC_PARSE))) \
 	$(addsuffix .c, $(addprefix src/parse/token/, $(SRC_PARSE_TOKEN))) \
