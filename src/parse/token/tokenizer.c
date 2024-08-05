@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:27:14 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ static bool ft_verify_fn(t_minishell *shell)
 	t_token	*token;
 
 	token = shell->tokens;
+	if (!token)
+		return (false);
 	if (!token->next && ft_strcmp(token->content, ".") == 0)
 	{
 		ft_print_error(shell, false, 2, 1, "minishell: .: filename argument required\n");
