@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:32:02 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 		dir = ft_get_value(envvar_list, "OLDPWD");
 		if (dir == NULL)
 		{
-			// ft_print_error(NULL, false, 3, 1, "-minishell: cd: too many arguments\n");
-			error_msg_construct(3, "-minishell: cd: too many arguments\n");
+			ft_print_error(NULL, false, 3, 1,
+				"-minishell: cd: too many arguments\n");
 			return (NULL);
 		}
 	}
@@ -35,8 +35,6 @@ static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 	return (dir);
 }
 
-// dar um jeito de criar a variavel caso ela nao exista
-
 void	pwds_update(t_var **envvar_list, char *dir)
 {
 	char	*pwd;
@@ -45,12 +43,13 @@ void	pwds_update(t_var **envvar_list, char *dir)
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 	{
-		write(2, "cd: error retrieving current directory using getcwd\n", 53);
+		ft_print_error(NULL, false, 3, 1,
+			"cd: error retrieving current directory using getcwd\n");
 		return ;
 	}
 	if (ft_strcmp(dir, ".") == 0)
 	{
-		ft_set_envvar(envvar_list, "OLDPWD", pwd, 1); // oldpwd deve ir para env se nao existe enquanto a pwd nao deve ir
+		ft_set_envvar(envvar_list, "OLDPWD", pwd, 1);
 		return ;
 	}
 	oldpwd = ft_get_value(*envvar_list, "PWD");
@@ -60,14 +59,11 @@ void	pwds_update(t_var **envvar_list, char *dir)
 	free(pwd);
 }
 
-static void	 change_directory(char *dir, int should_free, t_minishell *shell)
+static void	change_directory(char *dir, int should_free, t_minishell *shell)
 {
 	if (chdir(dir) == -1)
-	{
-		// ft_print_error(NULL, false, 1, 3, "-minishell: cd: ", dir, ": No such file or directory\n");
-		shell->error_msg = error_msg_construct(4, "-minishell: cd: ", dir, ": ", "No such file or directory\n");
-		shell->exit_status = put_error_msg(shell->error_msg, 1);
-	}
+		ft_print_error(shell, false, 1, 3,
+			"-minishell: cd: ", dir, ": No such file or directory\n");
 	else
 		pwds_update(&shell->envvars, dir);
 	if (should_free == 1)
@@ -82,22 +78,18 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 	dir = NULL;
 	should_free = 0;
 	if (ft_argsize(command->arguments) >= 2)
-	{
-		// ft_print_error(NULL, false, 1, 3, "-minishell: ", command->cmd, ": too many arguments\n");
-		shell->error_msg = error_msg_construct(3, "-minishell: ", command->cmd, ": too many arguments\n");
-		shell->exit_status = put_error_msg(shell->error_msg, 1);
-	}
+		ft_print_error(shell, false, 1, 3,
+			"-minishell: ", command->cmd, ": too many arguments\n");
 	else if (command->arguments == NULL || \
 	ft_strcmp(command->arguments->arg, "--") == 0)
 	{
 		dir = ft_get_value(shell->envvars, "HOME");
 		if (dir == NULL)
-		{
-			write(2, "cd: HOME not set\n", 17);
-			return ;
-		}
+			ft_print_error(shell, false, 1, 1,
+				"-minishell: cd: HOME not set\n");
 	}
-	else if (command->arguments->arg != NULL && command->arguments->next == NULL)
+	else if (command->arguments->arg != NULL
+		&& command->arguments->next == NULL)
 		dir = get_dir(command->arguments->arg, &should_free, shell->envvars);
 	if (dir != NULL)
 		change_directory(dir, should_free, shell);
