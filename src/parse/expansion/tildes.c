@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:50:43 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/03 11:46:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:38:50 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ void	expand_tildes(char **input, t_minishell *shell)
 	var_value = "";
 	while ((*input)[++i])
 	{
-		if ((*input)[i] == '~' && ft_is_inside_quotes((*input), i) == 0 && (*input)[i - 1] == ' ' &&
-			((*input)[i + 1] == ' ' || (*input)[i + 1] == '\0'
+		if ((*input)[i] == '~' && ft_is_inside_quotes((*input), i) == 0
+			&& ((*input)[i - 1] == ' ' || i == 0)
+			&& ((*input)[i + 1] == ' ' || (*input)[i + 1] == '\0'
 			|| (*input)[i + 1] == '/'))
 		{
 			var = ft_find_envvar(shell->envvars, "HOME");

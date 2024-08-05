@@ -6,13 +6,13 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/04 12:32:21 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:19:37 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static bool ft_isnt_limits(const char *nbr)
+static bool	ft_isnt_limits(const char *nbr)
 {
 	if (ft_strlen(nbr) >= 19)
 	{
@@ -25,11 +25,11 @@ static bool ft_isnt_limits(const char *nbr)
 	return (true);
 }
 
-static bool	long_number(const char *nbr)
+static bool	ft_long_number(const char *nbr)
 {
-	int	i;
-	int	j;
-	char *new_nbr;
+	int		i;
+	int		j;
+	char	*new_nbr;
 
 	i = 0;
 	j = 0;
@@ -52,7 +52,7 @@ static bool	long_number(const char *nbr)
 	return (true);
 }
 
-static int	negative_to_binary(int negative)
+static int	ft_negative_to_binary(int negative)
 {
 	unsigned int	num;
 
@@ -60,7 +60,7 @@ static int	negative_to_binary(int negative)
 	return (num);
 }
 
-static bool is_number(char *str)
+static bool	ft_is_number(char *str)
 {
 	int	i;
 
@@ -93,36 +93,30 @@ static int	exit_number_analyze(char *arg)
 
 	number = ft_atoi(arg);
 	if (number < 0)
-		return (negative_to_binary(number));
+		return (ft_negative_to_binary(number));
 	else if (number >= 0 && number <= 255)
 		return (number);
 	else
 		return (number % 256);
-		
 }
 
-static int	analyze_exit_arguments(t_cmd *command)
+static int	ft_analyze_exit_arguments(t_cmd *command)
 {
-	char *error_msg;	
-
 	if (!command->arguments)
 		return (0);
-	if (!is_number(command->arguments->arg)
-		|| !long_number(command->arguments->arg))
+	if (!ft_is_number(command->arguments->arg)
+		|| !ft_long_number(command->arguments->arg))
 	{
-		// ft_print_error_and_free(command->shell, false, 2, 3, "-minishell: exit: ", command->arguments->arg,
-		// 	 ": numeric argument required\n");
-		error_msg = error_msg_construct(3, "-minishell: exit: ", command->arguments->arg, ": numeric argument required\n");
-		put_error_msg(error_msg, 2);
+		ft_print_error(command->shell, false, 2, 3, "-minishell: exit: ",
+			command->arguments->arg, ": numeric argument required\n");
 		return (2);
 	}
 	else if (command->arguments->arg)
 	{
 		if (command->arguments->next)
 		{
-			// ft_print_error_and_free(command->shell, false, 1, 1, "-minishell: exit: too many arguments\n");
-			error_msg = error_msg_construct(1, "-minishell: exit: too many arguments\n");
-			put_error_msg(error_msg, 1);
+			ft_print_error(command->shell, false, 1, 1,
+				"-minishell: exit: too many arguments\n");
 			return (1);
 		}
 		else
@@ -134,12 +128,12 @@ static int	analyze_exit_arguments(t_cmd *command)
 void	handle_exit(t_cmd *command, t_minishell *shell)
 {
 	if (command)
-		shell->exit_status = analyze_exit_arguments(command);
+		shell->exit_status = ft_analyze_exit_arguments(command);
 	else
 		shell->exit_status = 0;
 	if (shell->exit_status == 2 || shell->exit_status == 1)
 		return ;
-	printf("exit\n");
+	// printf("exit\n");
 	free_shell(shell);
 	exit(shell->exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/01 16:27:43 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 		dir = ft_get_value(envvar_list, "OLDPWD");
 		if (dir == NULL)
 		{
-			// ft_print_error_and_free(NULL, false, 3, 1, "-minishell: cd: too many arguments\n");
+			// ft_print_error(NULL, false, 3, 1, "-minishell: cd: too many arguments\n");
 			error_msg_construct(3, "-minishell: cd: too many arguments\n");
 			return (NULL);
 		}
@@ -64,7 +64,7 @@ static void	 change_directory(char *dir, int should_free, t_minishell *shell)
 {
 	if (chdir(dir) == -1)
 	{
-		// ft_print_error_and_free(NULL, false, 1, 3, "-minishell: cd: ", dir, ": No such file or directory\n");
+		// ft_print_error(NULL, false, 1, 3, "-minishell: cd: ", dir, ": No such file or directory\n");
 		shell->error_msg = error_msg_construct(4, "-minishell: cd: ", dir, ": ", "No such file or directory\n");
 		shell->exit_status = put_error_msg(shell->error_msg, 1);
 	}
@@ -83,7 +83,7 @@ void	handle_cd(t_cmd *command, t_minishell *shell)
 	should_free = 0;
 	if (ft_argsize(command->arguments) >= 2)
 	{
-		// ft_print_error_and_free(NULL, false, 1, 3, "-minishell: ", command->cmd, ": too many arguments\n");
+		// ft_print_error(NULL, false, 1, 3, "-minishell: ", command->cmd, ": too many arguments\n");
 		shell->error_msg = error_msg_construct(3, "-minishell: ", command->cmd, ": too many arguments\n");
 		shell->exit_status = put_error_msg(shell->error_msg, 1);
 	}

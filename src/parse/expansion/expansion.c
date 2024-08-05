@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:06:10 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/03 10:34:31 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:55:47 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,27 @@
 static bool	is_pipe_redir(char pr)
 {
 	if (pr && (pr == '>' || pr == '<' || pr == '|'))
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
 static int	what_redir(char *str)
 {
-	if (str && *str && is_pipe_redir(*str))
+	if (str[0] != str[1])
 	{
-		if (str[0] != str[1])
-		{
-			if (*str == '<')
-				return (T_LTRUNC);
-			else if (*str == '>')
-				return (T_RTRUNC);
-			else if (*str == '|')
-				return (T_PIPE);
-		}
-		else
-		{
-			if (*str == '<')
-				return (T_LAPEND);
-			else if (*str == '>')
-				return (T_RAPEND);
-		}
+		if (*str == '<')
+			return (T_LTRUNC);
+		else if (*str == '>')
+			return (T_RTRUNC);
+		else if (*str == '|')
+			return (T_PIPE);
+	}
+	else
+	{
+		if (*str == '<')
+			return (T_LAPEND);
+		else if (*str == '>')
+			return (T_RAPEND);
 	}
 	return (0);
 }
@@ -50,8 +47,8 @@ static int	what_redir(char *str)
 
 static void	count_space_pr_differ(char *input, int *i, int *add_space)
 {
-	if (what_redir(&input[*i]) == T_RAPEND
-		|| what_redir(&input[*i]) == T_LAPEND)
+	if (what_redir(&(input[*i])) == T_RAPEND
+		|| what_redir(&(input[*i])) == T_LAPEND)
 	{
 		if (!input[*i] || !input[(*i) + 2])
 			return ;
@@ -82,14 +79,9 @@ static int	count_spaces(char *str)
 	add_space = 0;
 	while (str[i])
 	{
-		while (str[i])
-		{
-			if (!is_pipe_redir(str[i]) || ft_is_inside_quotes(str, i))
-				i++;
-			else if (is_pipe_redir(str[i]) || !ft_is_inside_quotes(str, i))
-				i++;
-		}
-		count_space_pr_differ(str, &i, &add_space);
+		if (is_pipe_redir(str[i]) && !ft_is_inside_quotes(str, i))
+			count_space_pr_differ(str, &i, &add_space);
+		i++;
 	}
 	return (add_space);
 }

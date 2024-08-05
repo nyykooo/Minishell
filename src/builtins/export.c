@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/03 14:24:49 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	ft_check_options(t_minishell *shell, t_arg *argument)
 	if (argument->arg[0] == '-')
 	{
 		error_msg = ft_substr(argument->arg, 0, 2);
-		ft_print_error_and_free(shell, false, 2, 3, "-minishell: export: ", error_msg, ": invalid option\n");
+		ft_print_error(shell, false, 2, 3, "-minishell: export: ", error_msg, ": invalid option\n");
 		free(error_msg);
 		return (true);
 	}
@@ -99,7 +99,7 @@ static int	handle_no_equal(t_minishell *shell, t_arg *argument)
 	}
 	new_var = ft_calloc(1, sizeof(t_var));
 	if (new_var == NULL)
-		ft_print_error_and_free(shell, true, 2, 1, "-minishell: failed to allocate memory\n");
+		ft_print_error(shell, true, 2, 1, "-minishell: failed to allocate memory\n");
 	new_var->content = ft_strdup(argument->arg);
 	new_var->name = ft_strdup(argument->arg);
 	new_var->exp = true;
@@ -175,7 +175,7 @@ static int	handle_export_args(t_minishell *shell)
 			return (0);
 		if (!ft_is_valid_arg(temp->arg, temp->equal))
 		{
-			// ft_print_error_and_free(shell, false, 1, 3, "-minishell: export: ", temp->arg, ": not a valid identifier\n");
+			// ft_print_error(shell, false, 1, 3, "-minishell: export: ", temp->arg, ": not a valid identifier\n");
 			error_msg = error_msg_construct(3, "-minishell: export: `", temp->arg, "': not a valid identifier\n");
 			exit_status = put_error_msg(error_msg, 1);
 		}

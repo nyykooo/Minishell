@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/04 12:38:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,19 @@ static void	get_command_path(t_minishell *shell)
 	}
 }
 
+static bool ft_verify_fn(t_minishell *shell)
+{
+	t_token	*token;
+
+	token = shell->tokens;
+	if (!token->next && ft_strcmp(token->content, ".") == 0)
+	{
+		ft_print_error(shell, false, 2, 1, "minishell: .: filename argument required\n");
+		return (false);
+	}
+	return	(true);
+}
+
 static bool ft_verify_unexpected_token(t_minishell *shell)
 {
 	t_token *token;
@@ -98,17 +111,17 @@ static bool ft_verify_unexpected_token(t_minishell *shell)
 		{
 			if (token->type == T_PIPE && (!token->prev || token->next->type == T_PIPE))
 			{
-				ft_print_error_and_free(shell, false, 2, 1, "minishell: syntax error near unexpected token `|'\n");
+				ft_print_error(shell, false, 2, 1, "minishell: syntax error near unexpected token `|'\n");
 				return (false);
 			}
 			if (!token->next)
 			{
-				ft_print_error_and_free(shell, false, 2, 1, "minishell: syntax error near unexpected token `newline'\n");
+				ft_print_error(shell, false, 2, 1, "minishell: syntax error near unexpected token `newline'\n");
 				return (false);
 			}
 			if (token->next->type >= T_RTRUNC)
 			{
-				ft_print_error_and_free(shell, false, 2, 3, "minishell: syntax error near unexpected token `", token->next->content, "'\n");
+				ft_print_error(shell, false, 2, 3, "minishell: syntax error near unexpected token `", token->next->content, "'\n");
 				return (false);
 			}
 		}
@@ -134,7 +147,7 @@ void	tokenizer(t_minishell *shell)
 	}
 	// analyze_array(&array, shell); // analyze array to create tokens
 	token_creation(array, shell); // create tokens
-	if (ft_verify_unexpected_token(shell) == true) 
+	if (ft_verify_unexpected_token(shell) && ft_verify_fn(shell)) 
 	{
 		analyze_tokens(shell->tokens, shell); // analyze tokens to create commands
 		reset_shell(shell);

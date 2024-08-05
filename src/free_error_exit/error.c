@@ -6,14 +6,14 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:39:12 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/01 16:30:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
 
-void	ft_print_error_and_free(t_minishell *shell, bool must_free, int exit_status, int nbr, ...)
+void	ft_print_error(t_minishell *shell, bool must_free, int exit_status, int nbr, ...)
 {
 	va_list	arg;
 	int		i;

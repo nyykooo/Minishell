@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:06:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/01 16:27:22 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_env(t_var *envvar_list, t_minishell *shell, t_cmd *command)
 
 	if (command->arguments != NULL)
 	{
-		// ft_print_error_and_free(shell, false, 127, 3, "env: ", command->arguments->arg, ": No such file or directory\n");
+		// ft_print_error(shell, false, 127, 3, "env: ", command->arguments->arg, ": No such file or directory\n");
 		error = error_msg_construct(3, "env: `", command->arguments->arg, "`: No such file or directory\n");
 		shell->exit_status = put_error_msg(error, 127);
 		return ;

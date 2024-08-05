@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/03 12:18:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	free_commands(t_cmd *commands);
 char	*error_msg_construct(int nbr, ...);
 int		put_error_msg(char *error_msg, int exit_status);
 void	ft_analyze_cmd(t_cmd *command);
-void	ft_print_error_and_free(t_minishell *shell, bool must_free, int exit_status, int nbr, ...);
+void	ft_print_error(t_minishell *shell, bool must_free, int exit_status, int nbr, ...);
 
 //ENVVAR_FTS
 

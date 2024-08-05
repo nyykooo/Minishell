@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/03 10:31:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:34:20 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static void	ft_minishell_loop(t_minishell *shell)
 
 static void	ft_launch_minishell(t_minishell *shell, char *input)
 {
+	if (input[0] == 0)
+		exit(shell->exit_status);
 	shell->input = ft_strdup(input);
 	ft_update_questionvar(shell);
 	ft_analyze_input(shell);
