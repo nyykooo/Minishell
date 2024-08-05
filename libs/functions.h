@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 17:54:16 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 22:49:06 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,14 @@ void	handle_unset(t_cmd *command, t_var **envvar_list);
 void	ft_handle_exec(t_minishell *shell, t_cmd *cmd);
 void	handle_pwd(t_minishell *shell);
 void	handle_exit(t_cmd *command, t_minishell *shell);
+
+// EXPORT
+void	ft_print_export(t_var *current);
+void	ft_sort_content(t_var *envvar);
+int		ft_handle_export_args(t_minishell *shell);
+int		ft_handle_no_equal(t_minishell *shell, t_arg *argument);
+bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument);
+
 
 // OPTIONS
 bool	ft_check_options(t_minishell *shell, t_arg *arg);

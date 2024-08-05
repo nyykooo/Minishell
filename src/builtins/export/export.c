@@ -6,76 +6,13 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 18:21:10 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/05 22:49:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
 
-bool	ft_check_options(t_minishell *shell, t_arg *argument)
-{
-	char	*error_msg;
-
-	if (argument->arg[0] == '-')
-	{
-		error_msg = ft_substr(argument->arg, 0, 2);
-		ft_print_error(shell, false, 2, 3,
-			"-minishell: export: ", error_msg, ": invalid option\n");
-		free(error_msg);
-		return (true);
-	}
-	return (false);
-}
-
-static bool	ft_verify_equal_arg(const char *arg)
-{
-	int		i;
-	bool	before_equal;
-
-	before_equal = true;
-	i = 0;
-	while (arg[i] != EQUAL || before_equal)
-	{
-		if (arg[i] != '_' && !(arg[i] >= 'A' && arg[i] <= 'Z')
-			&& !(arg[i] >= 'a' && arg[i] <= 'z') && !(arg[i] >= '0'
-				&& arg[i] <= '9') && arg[i] != '\\')
-			return (false);
-		if (arg[++i] == EQUAL)
-			before_equal = false;
-	}
-	return (true);
-}
-
-static bool	ft_verify_noequal_arg(const char *arg)
-{
-	int		i;
-
-	i = 0;
-	while (arg[++i] != 0)
-	{
-		if (arg[i] != '_' && !(arg[i] >= 'A' && arg[i] <= 'Z')
-			&& !(arg[i] >= 'a' && arg[i] <= 'z') && !(arg[i] >= '0'
-				&& arg[i] <= '9') && arg[i] != '\\')
-			return (false);
-	}
-	return (true);
-}
-
-static bool	ft_is_valid_arg(const char *arg, bool has_equal)
-{
-	bool	return_value;
-
-	return_value = true;
-	if ((arg[0] >= '0' && arg[0] <= '9'))
-		return (false);
-	if (has_equal)
-		return_value = ft_verify_equal_arg(arg);
-	else
-		return_value = ft_verify_noequal_arg(arg);
-	return (return_value);
-}
-
-static int	ft_handle_no_equal(t_minishell *shell, t_arg *argument)
+int	ft_handle_no_equal(t_minishell *shell, t_arg *argument)
 {
 	t_var	*temp;
 	t_var	*new_var;
@@ -98,7 +35,7 @@ static int	ft_handle_no_equal(t_minishell *shell, t_arg *argument)
 	return (0);
 }
 
-static bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument)
+bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument)
 {
 	char	*name;
 	char	*value;
@@ -119,145 +56,22 @@ static bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument)
 	}
 	else
 		ft_add_new_envvar(&shell->envvars, name, value, 0);
-	return (0);
+	return (true);
 }
 
-static int	ft_handle_export_args(t_minishell *shell)
+bool	ft_check_options(t_minishell *shell, t_arg *argument)
 {
-	t_arg	*temp;
+	char	*error_msg;
 
-	temp = shell->commands->arguments;
-	while (temp != NULL)
+	if (argument->arg[0] == '-')
 	{
-		if (ft_check_options(shell, temp))
-			return (shell->exit_status);
-		if (temp->arg[0] == '_' && temp->arg[1] == '=')
-			return (0);
-		if (!ft_is_valid_arg(temp->arg, temp->equal))
-			ft_print_error(shell, false, 1, 3, "-minishell: export: ",
-				temp->arg, ": not a valid identifier\n");
-		else
-		{
-			if (temp->equal == false)
-				shell->exit_status = ft_handle_no_equal(shell, temp);
-			else
-				ft_handle_with_equal(shell, temp);
-		}
-		temp = temp->next;
-	}
-	return (shell->exit_status);
-}
-
-void	swap_nodes(t_var *a, t_var *b)
-{
-	char	*temp_content;
-	char	*temp_name;
-	char	*temp_value;
-	bool	temp_exp;
-	bool	temp_env;
-
-	temp_content = a->content;
-	temp_name = a->name;
-	temp_value = a->value;
-	temp_exp = a->exp;
-	temp_env = a->env;
-	a->content = b->content;
-	a->name = b->name;
-	a->value = b->value;
-	a->exp = b->exp;
-	a->env = b->env;
-	b->content = temp_content;
-	b->name = temp_name;
-	b->value = temp_value;
-	b->exp = temp_exp;
-	b->env = temp_env;
-}
-
-void	sort_content(t_var *envvar)
-{
-	t_var			*temp;
-	t_var			*last_verified;
-	int				swapped;
-
-	swapped = 1;
-	last_verified = NULL;
-	if (envvar == NULL)
-		return ;
-	while (swapped)
-	{
-		swapped = 0;
-		temp = envvar;
-		while (temp->next != last_verified)
-		{
-			if (ft_strcmp(temp->content, temp->next->content) > 0)
-			{
-				swap_nodes(temp, temp->next);
-				swapped = 1;
-			}
-			temp = temp->next;
-		}
-		last_verified = temp;
-	}
-}
-
-static bool	ft_check_separator(char c)
-{
-	if (c == '\"' || c == '\\' || c == '$' || c == '`')
+		error_msg = ft_substr(argument->arg, 0, 2);
+		ft_print_error(shell, false, 2, 3,
+			"-minishell: export: ", error_msg, ": invalid option\n");
+		free(error_msg);
 		return (true);
+	}
 	return (false);
-}
-
-static char	*prepare_value(char *content)
-{
-	char	*value;
-	int		i;
-	int		j;
-	int		count_meta;
-
-	i = -1;
-	count_meta = 0;
-	while (content[++i] != '\0')
-	{
-		if (ft_check_separator(content[i]))
-			count_meta++;
-	}
-	value = malloc(sizeof(char) * (ft_strlen(content) + count_meta + 1));
-	if (value == NULL)
-		return (NULL);
-	i = -1;
-	j = 0;
-	while (content[++i] != '\0')
-	{
-		if (ft_check_separator(content[i]))
-			value[j++] = '\\';
-		value[j++] = content[i];
-	}
-	value[j] = '\0';
-	return (value);
-}
-
-// pensar sobre criar uma variadic function para montar a string que printa o export
-
-static	void	ft_print_export(t_var *current)
-{
-	char	*value;
-
-	value = NULL;
-	if (current->exp == true && current->env == true && \
-		current->value != NULL)
-	{
-		value = prepare_value(current->value);
-		printf("declare -x %s=\"%s\"\n", current->name, value);
-	}
-	else if (current->exp == true && current->value)
-	{
-		value = prepare_value(current->value);
-		printf("declare -x %s=\"%s\"\n", current->name, value);
-	}
-	else if (current->exp == true && current->value == NULL)
-		printf("declare -x %s\n", current->name);
-	if (value)
-		free(value);
 }
 
 int	handle_export(t_minishell *shell)
@@ -275,7 +89,7 @@ int	handle_export(t_minishell *shell)
 	if (temp == NULL)
 	{
 		current = shell->envvars;
-		sort_content(current);
+		ft_sort_content(current);
 		while (current != NULL)
 		{
 			ft_print_export(current);

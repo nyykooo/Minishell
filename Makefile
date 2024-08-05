@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/05 17:54:30 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/05 22:35:42 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC_DIR = main analyze_input signals heredoc shell
 
 SRC_BUILTINS = cd echo env equal unset exec pwd exit
 
-SRC_BUILTINS_EXPORT = export
+SRC_BUILTINS_EXPORT = export export_arg export_print export_sort
 
 SRC_FREE_ERROR_EXIT = free error cmd_errors
 
