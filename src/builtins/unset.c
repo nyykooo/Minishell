@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:09:55 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/06 15:13:53 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:07:19 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle_unset(t_cmd *command, t_var **envvar_list)
 	if (command->arguments == NULL)
 		return ;
 	temp = command->arguments;
-	if (ft_check_options(command->shell, temp))
+	if (ft_check_options(temp))
 		return ;
 	while (temp != NULL)
 	{

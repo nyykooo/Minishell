@@ -6,19 +6,20 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:39:12 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 17:13:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:01:19 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-
-void	ft_print_error(t_minishell *shell, bool must_free, int exit_status, int nbr, ...)
+void	ft_print_error(bool must_free, int exit_status, int nbr, ...)
 {
-	va_list	arg;
-	int		i;
-	char	*error_msg;
+	va_list		arg;
+	int			i;
+	char		*error_msg;
+	t_minishell	*shell;
 
+	shell = ft_get_shell();
 	error_msg = ft_strdup("");
 	i = -1;
 	va_start(arg, nbr);

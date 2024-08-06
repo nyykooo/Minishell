@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/06 15:42:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:57:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	free_commands(t_cmd *commands);
 char	*error_msg_construct(int nbr, ...);
 int		put_error_msg(char *error_msg, int exit_status);
 void	ft_analyze_cmd(t_cmd *command);
-void	ft_print_error(t_minishell *shell, bool must_free, int exit_status, int nbr, ...);
+void	ft_print_error(bool must_free, int exit_status, int nbr, ...);
 
 //ENVVAR_FTS
 
@@ -118,7 +118,7 @@ void	handle_cd(t_cmd *command, t_minishell *shell);
 void	handle_echo(t_cmd *command);
 void	ft_handle_equal(t_minishell *shell, t_cmd *command);
 int		handle_export(t_minishell *shell);
-void	handle_env(t_var *envvar_list, t_minishell *shell, t_cmd *command);
+void	handle_env(t_var *envvar_list, t_cmd *command);
 void	handle_unset(t_cmd *command, t_var **envvar_list);
 void	ft_handle_exec(t_minishell *shell, t_cmd *cmd);
 void	handle_pwd(t_minishell *shell);
@@ -133,7 +133,7 @@ bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument);
 
 
 // OPTIONS
-bool	ft_check_options(t_minishell *shell, t_arg *arg);
+bool	ft_check_options(t_arg *arg);
 
 //TTY
 void	edit_termios(void);

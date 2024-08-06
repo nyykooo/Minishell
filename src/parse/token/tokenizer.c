@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 21:53:14 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:51:08 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static bool ft_verify_fn(t_minishell *shell)
 		return (false);
 	if (!token->next && ft_strcmp(token->content, ".") == 0)
 	{
-		ft_print_error(shell, false, 2, 1, "minishell: .: filename argument required\n");
+		ft_print_error(false, 2, 1, "minishell: .: filename argument required\n");
 		return (false);
 	}
 	return	(true);
@@ -113,17 +113,17 @@ static bool ft_verify_unexpected_token(t_minishell *shell)
 		{
 			if (token->type == T_PIPE && (!token->prev || token->next->type == T_PIPE))
 			{
-				ft_print_error(shell, false, 2, 1, "minishell: syntax error near unexpected token `|'\n");
+				ft_print_error(false, 2, 1, "minishell: syntax error near unexpected token `|'\n");
 				return (false);
 			}
 			if (!token->next)
 			{
-				ft_print_error(shell, false, 2, 1, "minishell: syntax error near unexpected token `newline'\n");
+				ft_print_error(false, 2, 1, "minishell: syntax error near unexpected token `newline'\n");
 				return (false);
 			}
 			if (token->type != T_PIPE && token->next->type >= T_RTRUNC)
 			{
-				ft_print_error(shell, false, 2, 3, "minishell: syntax error near unexpected token `", token->next->content, "'\n");
+				ft_print_error(false, 2, 3, "minishell: syntax error near unexpected token `", token->next->content, "'\n");
 				return (false);
 			}
 		}

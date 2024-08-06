@@ -1,64 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_functions1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/06 12:01:17 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:34:01 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-void	free_list(t_var *head)
+static void	close_survivors_fds(void)
 {
-	t_var	*current;
-	t_var	*next;
-
-	current = head;
-	while (current)
-	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = next;
-	}
-}
-
-void	free_commands(t_cmd *commands)
-{
-	t_cmd *tmp;
-	t_arg *tmp_arg;
-
-	while (commands)
-	{
-		if (commands->cmd != NULL)
-			free(commands->cmd);
-		while (commands->arguments)
-		{
-			tmp_arg = commands->arguments;
-			commands->arguments = commands->arguments->next;
-			free(tmp_arg->arg);
-			free(tmp_arg);
-		}
-		tmp = commands;
-		commands = commands->next;
-		free(tmp);
-	}
-}
-void close_survivors_fds()
-{	
 	int	fd;
 
-	fd = 3;	
-    while (1)
+	fd = 3;
+	while (1)
 	{
-        if (close(fd) == -1 && errno == EBADF)
-            break;
+		if (close(fd) == -1 && errno == EBADF)
+			break ;
 		fd++;
-    }
+	}
 }
 
 void	free_shell(t_minishell *shell)
@@ -74,28 +38,12 @@ void	free_shell(t_minishell *shell)
 		free_commands(shell->commands);
 	close_survivors_fds();
 }
-
-
-void	free_arguments(t_arg **arguments)
-{
-	int i;
-
-	i = 0;
-	while (arguments[i] != NULL)
-	{
-		if (arguments[i]->arg != NULL)
-			free(arguments[i]->arg);
-		free(arguments[i]);
-		i++;
-	}
-}
 // as there is no more t_tokens, everywere this function was being used should be updated to free_array
 
 void	free_tokens(t_token *tokens)
 {
-	t_token *tmp;
-	
-	
+	t_token	*tmp;
+
 	while (tokens)
 	{
 		tmp = tokens;
@@ -107,7 +55,7 @@ void	free_tokens(t_token *tokens)
 
 void	free_array(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i] != NULL)
