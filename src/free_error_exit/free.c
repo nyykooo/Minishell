@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 16:17:14 by guest            ###   ########.fr       */
+/*   Updated: 2024/08/06 12:01:17 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,18 @@ void	free_commands(t_cmd *commands)
 		free(tmp);
 	}
 }
+void close_survivors_fds()
+{	
+	int	fd;
+
+	fd = 3;	
+    while (1)
+	{
+        if (close(fd) == -1 && errno == EBADF)
+            break;
+		fd++;
+    }
+}
 
 void	free_shell(t_minishell *shell)
 {
@@ -60,6 +72,7 @@ void	free_shell(t_minishell *shell)
 		free(shell->input);
 	if (shell->commands != NULL)
 		free_commands(shell->commands);
+	close_survivors_fds();
 }
 
 
