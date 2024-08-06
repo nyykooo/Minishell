@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:00:04 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 16:49:01 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:15:08 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ignore_some_signals(void)
 
 void	handle_sigint(int sig)
 {
-	t_minishell *shell;
+	t_minishell	*shell;
 
 	shell = ft_get_shell();
 	if (sig == SIGINT)
