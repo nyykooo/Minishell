@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/05 22:35:42 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/06 15:38:02 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,11 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC_DIR = main analyze_input signals heredoc shell
 
-SRC_BUILTINS = cd echo env equal unset exec pwd exit
+SRC_BUILTINS = cd echo env equal unset exec pwd
 
 SRC_BUILTINS_EXPORT = export export_arg export_print export_sort
+
+SRC_BUILTINS_EXIT = exit
 
 SRC_FREE_ERROR_EXIT = free error cmd_errors
 
@@ -43,6 +45,7 @@ SRC_PIPE_REDIR = utils_pipe_redir pipe_redir_loop exec_pipe_redir define_in_out_
 SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/builtins/, $(SRC_BUILTINS))) \
 	$(addsuffix .c, $(addprefix src/builtins/export/, $(SRC_BUILTINS_EXPORT))) \
+	$(addsuffix .c, $(addprefix src/builtins/exit/, $(SRC_BUILTINS_EXIT))) \
 	$(addsuffix .c, $(addprefix src/free_error_exit/, $(SRC_FREE_ERROR_EXIT))) \
 	$(addsuffix .c, $(addprefix src/parse/, $(SRC_PARSE))) \
 	$(addsuffix .c, $(addprefix src/parse/token/, $(SRC_PARSE_TOKEN))) \

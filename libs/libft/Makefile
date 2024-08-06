@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 09:59:57 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/05 17:08:42 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/06 15:24:04 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,9 @@ SRC= ft_isalpha.c \
 		ft_to_array.c \
 		ft_strjoin_free.c \
 		ft_strreplace.c \
-		ft_find_char.c
+		ft_find_char.c \
+		ft_itoui.c \
+		ft_is_number.c
 
 OBJ= $(SRC:.c=.o)
 

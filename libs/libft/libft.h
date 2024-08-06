@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 17:08:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:23:42 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ t_var	*ft_varlast(t_var *lst);
 char	**ft_to_array(t_cmd *command);
 
 int		ft_find_char(const char *str, char c);
+
+int		ft_itoui(int negative);
+
+bool	ft_is_number(char *str);
 
 
 #endif

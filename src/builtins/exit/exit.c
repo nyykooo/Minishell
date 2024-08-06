@@ -6,11 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 16:19:37 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:37:50 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libs/headers.h"
+#include "../../../libs/headers.h"
 
 static bool	ft_isnt_limits(const char *nbr)
 {
@@ -52,48 +52,13 @@ static bool	ft_long_number(const char *nbr)
 	return (true);
 }
 
-static int	ft_negative_to_binary(int negative)
-{
-	unsigned int	num;
-
-	num = (unsigned int)negative;
-	return (num);
-}
-
-static bool	ft_is_number(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] == ' ')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	if (str[i] == '\0')
-		return (false);
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-		{
-			while (str[i] == ' ')
-				i++;
-			if (str[i] == '\0')
-				return (true);
-			else
-				return (false);
-		}
-		i++;
-	}
-	return (true);
-}
-
 static int	exit_number_analyze(char *arg)
 {
 	int	number;
 
 	number = ft_atoi(arg);
 	if (number < 0)
-		return (ft_negative_to_binary(number));
+		return (ft_itoui(number));
 	else if (number >= 0 && number <= 255)
 		return (number);
 	else
