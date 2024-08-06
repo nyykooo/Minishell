@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 17:14:18 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 14:57:10 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define FUNCTIONS_H
 
 # include "structures.h"
+
+# define HRDC_EOF "-minishell: Warning: here-document delimited by end-of-file\n"
 
 t_minishell	*ft_get_shell(void);
 
@@ -150,6 +152,7 @@ void	define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd);
 void		create_pipe(int fd[2]);
 void		handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
 int			heredoc(t_minishell *shell);
+int			process_heredoc_cmds(t_minishell *shell, struct sigaction *sa_original);
 int			ft_pipe_redir_loop(t_minishell *shell, t_cmd *commands, int fd[2], int old_read_fd);
 bool		is_file(t_cmd *cmd);
 bool	is_pipe_or_redir(t_cmd *cmd, int i);

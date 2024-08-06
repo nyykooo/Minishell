@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 17:12:57 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:07:12 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,6 @@ static void	ft_get_path(t_cmd *commands)
 	else
 		commands->path = ft_strdup(commands->cmd);
 }
-
-/*static void	ignore_some_signals()
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
-	
-static void	redefine_child_signals()
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}*/
 
 static void	handle_command(t_cmd *commands, t_minishell *shell)
 {
@@ -129,8 +117,6 @@ static void	handle_cmds(t_minishell *shell)
 
 void	ft_analyze_input(t_minishell *shell)
 {
-	//t_cmd *temp;
-	//t_arg *temp_arg;
 	int	status;
 	
 	status = 0;
@@ -138,37 +124,12 @@ void	ft_analyze_input(t_minishell *shell)
 	if (shell->n_cmd == 0)
 		return ;
 	status = heredoc(shell);
-	/*printf("status: %d\n", status);
-	printf("WIFEXITED: %d\n", WIFEXITED(status));
-	if (WIFEXITED(status))
-		printf("WEXITSTATUS: %d\n", WEXITSTATUS(status));
-	printf("WIFSIGNALED: %d\n", WIFSIGNALED(status));
-	if (WIFSIGNALED(status))
-		printf("WTERMSIG: %d\n", WTERMSIG(status));*/
-	if (WIFEXITED(status) == true && WEXITSTATUS(status) == 8)
-			return ;
-	/*temp = shell->commands;
-	printf("NUMERO DE CMDS: %d\n", shell->n_cmd);
-	while (temp)
+	if (WIFEXITED(status) == true && WEXITSTATUS(status) == 130)
 	{
-		printf("temp->cmd: %s\n", temp->cmd);
-		printf("temp->type: %d\n", temp->type);
-		printf("temp->rtrunc: %d\n", temp->rtrunc);
-		printf("temp->rappend: %d\n", temp->rappend);
-		printf("temp->lappend: %d\n", temp->lappend);
-		printf("temp->input_file: %d\n", temp->input_file);
-		printf("temp->path: %s\n", temp->path);
-		printf("temp->here_doc_fd: %d\n", temp->here_doc_fd);
-		temp_arg = temp->arguments;
-		while (temp_arg)
-		{
-			printf("temp->arguments->arg: %s\n", temp_arg->arg);
-			temp_arg = temp_arg->next;
-		}
-		printf("----------------\n");
-		temp = temp->next;
-	}*/
-	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0)) //Isso implica que temos |, &&, ||, ;, (), {}. Ou merameante <, >, >>, <<.
+			shell->exit_status = 130;
+			return ;
+	}
+	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0))
 		handle_pipe_and_redir(shell, shell->commands);
 	else if (shell->commands)
 	{
