@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/06 15:43:06 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:08:20 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-static char	*get_command_path(char *command)
+/*static char	*get_command_path(char *command)
 {
 	char	*path;
 	char	**dirs;
@@ -47,7 +47,7 @@ static char	*get_command_path(char *command)
 		free(dirs[i++]);
 	free(dirs);
 	return (NULL);
-}
+}*/
 
 static void	ft_get_path(t_cmd *commands)
 {

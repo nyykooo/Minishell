@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 21:53:14 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:13:55 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void mark_redir(t_cmd *command)
 	}
 }
 
-static void	get_command_path(t_minishell *shell)
+static void	get_cmd_path(t_minishell *shell)
 {
 	t_cmd *commands;
 
@@ -154,7 +154,7 @@ void	tokenizer(t_minishell *shell)
 		analyze_tokens(shell->tokens, shell); // analyze tokens to create commands
 		reset_shell(shell);
 		clear_commands(shell->commands, shell);
-		get_command_path(shell); // get paths for commands
+		get_cmd_path(shell); // get paths for commands
 		free_array(array);
 	}
 }

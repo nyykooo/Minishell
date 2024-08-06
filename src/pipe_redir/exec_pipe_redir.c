@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 17:23:14 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:12:42 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_dirs(char **dirs)
 	free(dirs);
 }
 
-static char	*get_command_path(char *command)
+char	*get_command_path(char *command)
 {
 	char	*path;
 	char	**dirs;
