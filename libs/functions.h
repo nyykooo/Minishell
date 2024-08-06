@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/06 19:12:38 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:29:38 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ void	ft_haspipe(int in_fd, int out_fd, int fd1, int fd0);
 
 void	create_pipe(int fd[2]);
 
+void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var);
+void	ft_get_path(t_cmd *commands);
 char	*get_command_path(char *command);
 void	define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd);
 void		create_pipe(int fd[2]);

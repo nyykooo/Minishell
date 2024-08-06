@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/06 19:08:20 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:42:39 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-/*static char	*get_command_path(char *command)
-{
-	char	*path;
-	char	**dirs;
-	char	*possible_path;
-	int		i;
-
-	if (access(command, X_OK) == 0)
-		return (command);
-	path = getenv ("PATH");
-	dirs = ft_split (path, ':');
-	i = -1;
-	while (dirs[++i] != NULL)
-	{
-		possible_path = malloc (ft_strlen(dirs[i]) + ft_strlen(command) + 2);
-		ft_strcpy (possible_path, dirs[i]);
-		ft_strcat (possible_path, "/");
-		ft_strcat (possible_path, command);
-		if (access(possible_path, X_OK) == 0)
-		{
-			i = 0;
-			while (dirs[i] != NULL)
-				free(dirs[i++]);
-			free(dirs);
-			return (possible_path);
-		}
-		free (possible_path);
-	}
-	i = 0;
-	while (dirs[i] != NULL)
-		free(dirs[i++]);
-	free(dirs);
-	return (NULL);
-}*/
-
-static void	ft_get_path(t_cmd *commands)
+void	ft_get_path(t_cmd *commands)
 {
 	if (access(commands->cmd, X_OK) != 0)
 		commands->path = get_command_path(commands->cmd);

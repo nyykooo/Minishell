@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:32:13 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 17:20:09 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 20:51:19 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int old_read_fd, int fd[2])
 	{
 		ft_haspipe(in_fd, out_fd, fd[1], fd[0]);
 		ft_exec(shell, cmd_temp);
+
 	}
 	else
 	{

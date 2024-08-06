@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:01 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 16:19:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:06:22 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var)
+void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var)
 {
 	if (execve(command->path, arguments, env_var) == -1)
 		{

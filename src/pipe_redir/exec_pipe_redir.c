@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/06 19:12:42 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:46:55 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ char	*get_command_path(char *command)
 	char	*possible_path;
 	int		i;
 
-	if (access(command, X_OK) == 0)
-		return (command);
 	path = getenv ("PATH");
 	dirs = ft_split (path, ':');
 	i = -1;
@@ -84,20 +82,13 @@ void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
 void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 {
 	char	**arg_array;
-	char	*path;
-	char	*error_msg;
 
 	if (is_builtin(cmd_temp->cmd) == true)
 	{
 		ft_exec_builtin(shell, cmd_temp);
-		exit(0);
+		exit(shell->exit_status);
 	}
 	arg_array = ft_to_array(cmd_temp);
-	path = get_command_path(cmd_temp->cmd);
-	if (execve(path, arg_array, envvar_array(cmd_temp->shell)) == -1)
-	{
-		error_msg = error_msg_construct(2, cmd_temp->cmd, \
-		": command not found\n");
-		exit(put_error_msg(error_msg, 1));
-	}
+	ft_get_path(cmd_temp);
+	ft_execute_cmd(cmd_temp, arg_array, envvar_array(shell));
 }
