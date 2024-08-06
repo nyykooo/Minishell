@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
+#    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/06 15:43:16 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/06 22:35:22 by brunhenr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC_DIR = main analyze_input signals shell
 
-SRC_BUILTINS = cd echo env equal unset exec pwd
+SRC_BUILTINS = cd echo env equal unset pwd
 
 SRC_BUILTINS_EXPORT = export export_arg export_print export_sort
 
