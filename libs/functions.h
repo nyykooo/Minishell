@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/06 16:57:53 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:47:45 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**check_right_trunc(char **tokens, t_minishell *shell);
 // NEW PARSING - COMMANDS
 
 void	create_command(t_token *tokens, t_minishell *shell);
-void	include_arg(t_minishell *shell, char *input, t_arg *argument);
+void	ft_include_arg(t_minishell *shell, char *input, t_arg *argument);
 
 // NEW PARSING - ARGUMENTS
 

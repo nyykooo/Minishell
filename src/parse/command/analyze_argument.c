@@ -6,18 +6,15 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/04 12:41:23 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:46:19 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
 
-// separar aqui as dqs e sqs em argument->next
-// para remover as quotes podemos verificar se há duas Nquotes seguidas e fazer um split das strings
-
-static void check_arg(t_arg *input)
+static void	ft_check_arg(t_arg *input)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (input->arg == NULL)
@@ -37,12 +34,10 @@ static void check_arg(t_arg *input)
 	}
 }
 
-// include arg is a function that includes the new argument in the linked list (in the correct position)
-
-void include_arg(t_minishell *shell, char *input, t_arg *argument)
+void	ft_include_arg(t_minishell *shell, char *input, t_arg *argument)
 {
-	t_arg *new;
-	t_arg *curr;
+	t_arg	*new;
+	t_arg	*curr;
 
 	new = (t_arg *)malloc(sizeof(t_arg));
 	if (!new)
@@ -66,20 +61,15 @@ void include_arg(t_minishell *shell, char *input, t_arg *argument)
 		new->next->prev = new;
 }
 
-// analyze_arguments is a function that analyzes the arguments and expands the quotes and dolar signs
-
 void	analyze_arguments(t_minishell *shell, t_cmd *cmd)
 {
-	t_arg *tmp;
+	t_arg	*tmp;
 
 	(void)shell;
 	tmp = cmd->arguments;
 	while (tmp != NULL)
 	{
-		// expand_quotes(tmp, shell);
-		check_arg(tmp);
-		// tmp->arg = quote_del(tmp->arg, shell);
-		// expand_dolar(tmp, shell);
+		ft_check_arg(tmp);
 		tmp = tmp->next;
 	}
 }

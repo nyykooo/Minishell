@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/31 13:36:12 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:54:12 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	void	init_arg(t_cmd *command, char *argument)
 {
-	t_arg *arg;
+	t_arg	*arg;
 
 	arg = ft_calloc(1, sizeof(t_arg));
 	ft_argadd_back(&command->arguments, arg);
@@ -35,7 +35,7 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 	while (tokens && (tokens->type == T_ARG || tokens->type == T_EMPTY))
 	{
 		if (tokens->prev->prev && tokens->prev->prev->type == T_LAPEND)
-			break;
+			break ;
 		init_arg(cmd, tokens->content);
 		tokens = tokens->next;
 	}
@@ -43,17 +43,10 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 
 void	create_command(t_token *tokens, t_minishell *shell)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = tokens;
 	init_cmd(shell, tmp);
-	//if (shell->commands->arguments)
-	//	ft_arglast(shell->commands->arguments)->next = NULL;
 	if (!shell->commands)
-	{
-		//free everything
-		printf("Error: malloc failed create commands\n");
-		exit (1);
-	}
-	
+		ft_print_error(true, 0, 1, "Error: malloc failed create commands\n");
 }
