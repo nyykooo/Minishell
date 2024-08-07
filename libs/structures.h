@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:10:30 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 13:14:30 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:47:16 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ typedef struct s_var
 typedef struct s_arg
 {
 	char			*arg;
-	bool			dq;	// if the argument has a double quote
-	bool			sq; // if the argument has a single quote
-	bool			dol; // if the argument has a dollar sign
-	bool			equal; // if the argument has an equal sign
+	bool			dq;
+	bool			sq;
+	bool			dol;
+	bool			equal;
 	bool			expanded;
 	struct s_arg	*next;
 	struct s_arg	*prev;
@@ -38,51 +38,48 @@ typedef struct s_arg
 
 typedef struct s_token
 {
-	char				*content; // token content
-	bool				dq;	// if the argument has a double quote
-	bool				sq; // if the argument has a single quote
-	bool				dol; // if the argument has a dollar sign
-	bool				equal; // if the argument has an equal sign
+	char				*content;
+	bool				dq;
+	bool				sq;
+	bool				dol;
+	bool				equal;
 	bool				expanded;
-	enum e_types		type; //e_num type
+	enum e_types		type;
 	struct s_token		*next;
 	struct s_token		*prev;
 }	t_token;
 
 typedef struct s_cmd
 {
-	char				*cmd; // command
-	t_arg				*arguments; // array of arguments
-	char				*path; // path to the command
-	char				*redirect_in; // input file descriptor
-	char				*redirect_out; // output file descriptor
-	char				*redirect_append; // append file descriptor	
-	bool				exec; // if the command is an executable
-	bool				pipe; // if the command is a pipe
-	bool				rappend; // if the command is a right append
-	bool				lappend; // if the command is a left append
-	int					here_doc_fd; // here doc file descriptor
-	bool				rtrunc; // if the command is a right trunc
-	bool				input_file; // if the command is a input_file
-	enum e_types		type; // type of command
-	struct s_minishell	*shell; // pointer to shell structure
+	char				*cmd;
+	t_arg				*arguments;
+	char				*path;
+	char				*redirect_in;
+	char				*redirect_out;
+	char				*redirect_append;
+	bool				exec;
+	bool				pipe;
+	bool				rappend;
+	bool				lappend;
+	int					here_doc_fd;
+	bool				rtrunc;
+	bool				input_file;
+	enum e_types		type;
+	struct s_minishell	*shell;
 	struct s_cmd		*next;
 	struct s_cmd		*prev;
 }	t_cmd;
-
-// tokens -> cmds -> args
-// t_cmd->cmd = cmd / t_cmd->args = until next cmd
 
 typedef struct s_minishell
 {
 	char		*input;
 	char		*error_msg;
-	int			n_cmd; // number of commands
-	int			n_pipe; // number of pipes
-	int			exit_status; // status of the last command
+	int			n_cmd;
+	int			n_pipe;
+	int			exit_status;
 	t_var		*envvars;
 	t_cmd		*commands;
-	t_token		*tokens; // whole input tokenized
+	t_token		*tokens;
 }	t_minishell;
 
 #endif
