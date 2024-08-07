@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:31:55 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 16:39:50 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:52:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,32 @@ void	ft_free_arguments(t_arg **arguments)
 			free(arguments[i]->arg);
 		free(arguments[i]);
 		i++;
+	}
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i] != NULL)
+		free(array[i++]);
+	free(array);
+}
+
+void	free_var(t_var *head)
+{
+	t_var	*current;
+	t_var	*next;
+
+	current = head;
+	while (current)
+	{
+		next = current->next;
+		free(current->content);
+		free(current->name);
+		free(current->value);
+		free(current);
+		current = next;
 	}
 }

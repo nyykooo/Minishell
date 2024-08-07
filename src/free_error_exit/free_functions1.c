@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 16:25:01 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:52:37 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,32 +85,5 @@ void	free_tokens(t_token *tokens)
 		tokens = tokens->next;
 		free(tmp->content);
 		free(tmp);
-	}
-}
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
-		free(array[i++]);
-	free(array);
-}
-
-void	free_var(t_var *head)
-{
-	t_var	*current;
-	t_var	*next;
-
-	current = head;
-	while (current)
-	{
-		next = current->next;
-		free(current->content);
-		free(current->name);
-		free(current->value);
-		free(current);
-		current = next;
 	}
 }

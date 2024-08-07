@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:36:36 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 18:08:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:53:43 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,7 @@ char	**envvar_array(t_minishell *shell)
 	}
 	env_var = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!env_var)
-	{
-		free_shell(shell);
-		printf("Error: failed to allocate memory %s\n", strerror(errno));
-		exit (1);
-	}
+		ft_print_error(true, 1, 1, "Error: failed to allocate memory");
 	temp = shell->envvars;
 	i = -1;
 	while (temp)

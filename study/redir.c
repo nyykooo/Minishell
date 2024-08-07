@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 10:56:44 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/28 17:10:51 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:55:09 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 // O_CREAT: create file if it doesn't exist (feature to include)
 // O_TRUNC: truncate file to 0 length (> or < operator)
 // O_APPEND: append to file (>> operator)
-// which permissions should be given to the file? (0777 -> octal to represent permissions, in decimal 511)
+// which permissions should be given to the file? 
+// 0777 -> octal to represent permissions, in decimal 511)
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	int fd;
+	int	fd;
 	int	i;
 
 	if (ac != 2)
