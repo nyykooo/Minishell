@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:17:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/06 15:23:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:18:21 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ bool	ft_isspace(char c);
 void	ft_strcpy(char *dest, char *src);
 void	ft_strcat(char *dest, char *src);
 char	*ft_strndup(const char *s, size_t n);
-char	**ft_array_insert_extra(char **array, char *insert, char *extra, int index);
+char	**ft_array_insert_extra(char **array, char *insert, \
+char *extra, int index);
 int		ft_arraylcpy(char **dst, const char **src, int size);
 void	ft_arraycpy(char **dest, char **src);
 char	*ft_strcutstr(const char *big, const char *little);
@@ -113,6 +114,5 @@ int		ft_find_char(const char *str, char c);
 int		ft_itoui(int negative);
 
 bool	ft_is_number(char *str);
-
 
 #endif

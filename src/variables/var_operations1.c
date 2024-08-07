@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_operations1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:04:17 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/07/30 18:37:22 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:10:14 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ void	ft_remove_envvar(t_var **envvar_list, t_var *envvar)
 
 char	*ft_create_envvar_content(char *name, char *value)
 {
-	size_t name_len;
-	size_t value_len;
+	size_t	name_len;
+	size_t	value_len;
 	char	*content;
 
 	name_len = ft_strlen(name);
 	value_len = ft_strlen(value);
 	content = malloc(name_len + value_len + 2);
-	if (content == NULL) 
-		return NULL;
+	if (content == NULL)
+		return (NULL);
 	ft_strcpy(content, name);
 	content[name_len] = '=';
 	if (value_len > 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 17:30:45 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:11:45 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_set_pwd(t_var **envvar)
 	}
 }
 
-static void		ft_set_shlvl(t_var **envvar)
+static void	ft_set_shlvl(t_var **envvar)
 {
 	t_var	*node;
 	char	*shlvl_value;
@@ -38,14 +38,14 @@ static void		ft_set_shlvl(t_var **envvar)
 		ft_update_existing_envvar(node, "SHLVL", shlvl_value);
 	}
 	else
-	{	
+	{
 		shlvl_value = ft_strdup("1");
 		ft_add_new_envvar(envvar, "SHLVL", shlvl_value, 1);
 	}
 	free(shlvl_value);
 }
 
-static t_var *ft_create_list(char **envp)
+static t_var	*ft_create_list(char **envp)
 {
 	char	**current;
 	t_var	*new_node;
@@ -57,7 +57,8 @@ static t_var *ft_create_list(char **envp)
 	{
 		new_node = ft_calloc(1, sizeof(t_var));
 		new_node->content = ft_strdup(*current);
-		new_node->name = ft_strndup(*current, ft_strchr(*current, '=') - *current);
+		new_node->name = ft_strndup(*current, \
+		ft_strchr(*current, '=') - *current);
 		new_node->value = ft_strdup(ft_strchr(*current, '=') + 1);
 		new_node->env = true;
 		new_node->exp = true;
@@ -70,7 +71,7 @@ static t_var *ft_create_list(char **envp)
 t_var	*ft_create_envvar_list(char **envp)
 {
 	t_var	*envvar;
-	
+
 	if (envp)
 		envvar = ft_create_list(envp);
 	else

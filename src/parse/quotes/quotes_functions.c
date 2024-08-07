@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 14:40:02 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/04 12:38:40 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:54:09 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
 
-static int count_quotes(char *input)
+static int	count_quotes(char *input)
 {
-	int i;
-	int quotes;
+	int	i;
+	int	quotes;
 
 	i = -1;
 	quotes = 0;
@@ -27,19 +27,19 @@ static int count_quotes(char *input)
 	return (quotes);
 }
 
-char *quote_del(char *input, t_minishell *shell)
+char	*quote_del(char *input, t_minishell *shell)
 {
-	int	i;
-	int size;
-	char *new;
-	int quotes;
-	
+	int		i;
+	int		size;
+	char	*new;
+	int		quotes;
+
 	size = ft_strlen(input);
 	quotes = count_quotes(input);
 	new = (char *)malloc((sizeof(char) * size) - quotes + 1);
 	if (!new)
 	{
-		//free everything
+		free_shell(shell);
 		printf("Error: failed to allocate memory %s\n", shell->input);
 		exit (1);
 	}
@@ -60,11 +60,11 @@ char *quote_del(char *input, t_minishell *shell)
 // expand_quotes is a function that expands the quotes in the arguments
 // think if it makes more sense to expand the quotes in the tokenizer
 
-void expand_quotes(t_token *token, t_minishell *shell)
+void	expand_quotes(t_token *token, t_minishell *shell)
 {
 	int		i;
 	bool	flag;
-	t_token *curr;
+	t_token	*curr;
 
 	i = -1;
 	flag = false;

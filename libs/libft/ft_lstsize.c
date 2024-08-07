@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 19:34:14 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/26 17:34:45 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:18:57 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_lstsize(t_list *lst)
 	return (i);
 }
 
-int ft_varsize(t_var *lst)
+int	ft_varsize(t_var *lst)
 {
 	int	i;
 

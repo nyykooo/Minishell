@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guest <guest@student.42.fr>                +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 11:43:58 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/19 16:53:06 by guest            ###   ########.fr       */
+/*   Created: 2024/08/07 13:10:30 by brunhenr          #+#    #+#             */
+/*   Updated: 2024/08/07 13:14:30 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,10 @@ typedef struct s_arg
 	bool			sq; // if the argument has a single quote
 	bool			dol; // if the argument has a dollar sign
 	bool			equal; // if the argument has an equal sign
-	bool			expanded; // if the argument has been expanded (no space between prev and current argument)
+	bool			expanded;
 	struct s_arg	*next;
 	struct s_arg	*prev;
-} t_arg;
-
-
-// use this struct to store the tokens and differ them by type to implement yuris function
+}	t_arg;
 
 typedef struct s_token
 {
@@ -46,14 +43,11 @@ typedef struct s_token
 	bool				sq; // if the argument has a single quote
 	bool				dol; // if the argument has a dollar sign
 	bool				equal; // if the argument has an equal sign
-	bool				expanded; // if the argument has been expanded (no space between prev and current argument)
+	bool				expanded;
 	enum e_types		type; //e_num type
-	struct s_token 		*next;
-	struct s_token 		*prev;
-} t_token;
-
-
-// pensar na ideia de incluir o shell dentro do cmd para facilitar a expansão de variaveis e argumentos do comando
+	struct s_token		*next;
+	struct s_token		*prev;
+}	t_token;
 
 typedef struct s_cmd
 {
@@ -73,9 +67,8 @@ typedef struct s_cmd
 	enum e_types		type; // type of command
 	struct s_minishell	*shell; // pointer to shell structure
 	struct s_cmd		*next;
-	struct s_cmd		*prev; // prev and next will help to deal with pipes and redirects, aswell it will allow us to expand things correctly
-} t_cmd;
-
+	struct s_cmd		*prev;
+}	t_cmd;
 
 // tokens -> cmds -> args
 // t_cmd->cmd = cmd / t_cmd->args = until next cmd
@@ -88,8 +81,8 @@ typedef struct s_minishell
 	int			n_pipe; // number of pipes
 	int			exit_status; // status of the last command
 	t_var		*envvars;
-	t_cmd		*commands; // array of commands | work with linked list is easier then arrays (insert and expand commands)
+	t_cmd		*commands;
 	t_token		*tokens; // whole input tokenized
-} t_minishell;
+}	t_minishell;
 
 #endif

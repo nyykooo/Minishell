@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:06:10 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 15:55:47 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:44:36 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	what_redir(char *str)
 	}
 	return (0);
 }
-
 
 static void	count_space_pr_differ(char *input, int *i, int *add_space)
 {
@@ -95,8 +94,8 @@ static void	insert_spaces(char *input, char *new)
 	j = 0;
 	while (input[i])
 	{
-		while (input[i] && ((!is_pipe_redir(input[i])
-			|| ft_is_inside_quotes(input, i))))
+		while (input[i] && \
+		((!is_pipe_redir(input[i]) || ft_is_inside_quotes(input, i))))
 			new[j++] = input[i++];
 		if (!input[i])
 			break ;
@@ -114,9 +113,9 @@ static void	insert_spaces(char *input, char *new)
 
 void	expand_pipes_redir(t_minishell *shell)
 {
-	int	add_space;
-	int	len;
-	char *new_str;
+	int		add_space;
+	int		len;
+	char	*new_str;
 
 	add_space = count_spaces(shell->input);
 	if (add_space == 0)

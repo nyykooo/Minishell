@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/06 12:01:17 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:48:26 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	free_list(t_var *head)
 
 void	free_commands(t_cmd *commands)
 {
-	t_cmd *tmp;
-	t_arg *tmp_arg;
+	t_cmd	*tmp;
+	t_arg	*tmp_arg;
 
 	while (commands)
 	{
@@ -48,17 +48,18 @@ void	free_commands(t_cmd *commands)
 		free(tmp);
 	}
 }
-void close_survivors_fds()
-{	
+
+void	close_survivors_fds(void)
+{
 	int	fd;
 
-	fd = 3;	
-    while (1)
+	fd = 3;
+	while (1)
 	{
-        if (close(fd) == -1 && errno == EBADF)
-            break;
+		if (close(fd) == -1 && errno == EBADF)
+			break ;
 		fd++;
-    }
+	}
 }
 
 void	free_shell(t_minishell *shell)
@@ -75,10 +76,9 @@ void	free_shell(t_minishell *shell)
 	close_survivors_fds();
 }
 
-
 void	free_arguments(t_arg **arguments)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arguments[i] != NULL)
@@ -89,13 +89,11 @@ void	free_arguments(t_arg **arguments)
 		i++;
 	}
 }
-// as there is no more t_tokens, everywere this function was being used should be updated to free_array
 
 void	free_tokens(t_token *tokens)
 {
-	t_token *tmp;
-	
-	
+	t_token	*tmp;
+
 	while (tokens)
 	{
 		tmp = tokens;
@@ -107,7 +105,7 @@ void	free_tokens(t_token *tokens)
 
 void	free_array(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i] != NULL)

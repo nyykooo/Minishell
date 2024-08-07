@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:39:12 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 17:13:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:50:42 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
-
 
 void	ft_print_error(t_minishell *shell, bool must_free, int exit_status, int nbr, ...)
 {

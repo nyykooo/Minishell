@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:57:21 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/06/25 16:48:54 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:51:44 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**check_pipe(char **tokens, t_minishell *shell)
 				exit (1);
 			}
 			printf("pipe found\n");
-			check_pipe(new_tokens, shell);		
+			check_pipe(new_tokens, shell);
 			return (new_tokens);
 		}
 	}
