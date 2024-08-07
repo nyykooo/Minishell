@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 12:56:36 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:46:32 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@ void	ft_get_path(t_cmd *commands)
 		commands->path = get_command_path(commands->cmd);
 	else
 		commands->path = ft_strdup(commands->cmd);
+}
+
+void	define_exit_status(t_minishell *shell)
+{
+	if (WTERMSIG(shell->exit_status) == SIGQUIT)
+	{
+		shell->exit_status = 131;
+		printf("Quit\n");
+	}
+	else if (WTERMSIG(shell->exit_status) == SIGINT)
+	{
+		shell->exit_status = 130;
+		printf("\n");
+	}
 }
 
 static void	handle_command(t_cmd *commands, t_minishell *shell)
@@ -43,16 +57,7 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 		else if (WIFSIGNALED(shell->exit_status) \
 		|| WIFSTOPPED(shell->exit_status))
 		{
-			if (WTERMSIG(shell->exit_status) == SIGQUIT)
-			{
-				shell->exit_status = 131;
-				printf("Quit\n");
-			}
-			else if (WTERMSIG(shell->exit_status) == SIGINT)
-			{
-				shell->exit_status = 130;
-				printf("\n");
-			}
+			define_exit_status(shell);
 		}
 	}
 	config_signals(0);

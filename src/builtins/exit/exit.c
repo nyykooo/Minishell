@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/06 15:37:50 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:38:40 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	handle_exit(t_cmd *command, t_minishell *shell)
 		shell->exit_status = 0;
 	if (shell->exit_status == 2 || shell->exit_status == 1)
 		return ;
-	// printf("exit\n");
 	free_shell(shell);
 	exit(shell->exit_status);
 }
