@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 12:01:49 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:35:42 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static bool	ft_verify_unexpected_token(t_minishell *shell)
 	{
 		if (token->type >= T_RTRUNC && token->type <= T_PIPE)
 		{
-			if (token->type == T_PIPE && (!token->prev || token->next->type == T_PIPE))
+			if (token->type == T_PIPE && (!token->prev || (token->next && token->next->type == T_PIPE)))
 			{
 				ft_print_error(shell, false, 2, 1, \
 				"minishell: syntax error near unexpected token `|'\n");
@@ -152,12 +152,12 @@ void	tokenizer(t_minishell *shell)
 		exit(1);
 	}
 	token_creation(array, shell);
+	free_array(array);
 	if (ft_verify_unexpected_token(shell) && ft_verify_fn(shell))
 	{
 		analyze_tokens(shell->tokens, shell);
 		reset_shell(shell);
 		clear_commands(shell->commands, shell);
 		get_cmd_path(shell);
-		free_array(array);
 	}
 }
