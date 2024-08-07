@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 19:26:44 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:15:25 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,4 +173,8 @@ t_cmd *commands, int fd[2], int old_read_fd);
 bool		is_file(t_cmd *cmd);
 bool		is_pipe_or_redir(t_cmd *cmd, int i);
 void		ft_exec(t_minishell *shell, t_cmd *cmd_temp);
+bool		ft_verify_unexpected_token(t_minishell *shell);
+bool		ft_verify_fn(t_minishell *shell);
+void		ft_mark_commands(t_minishell *shell);
+
 #endif

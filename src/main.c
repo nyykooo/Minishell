@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 16:21:39 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:16:24 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,16 @@ static void	ft_minishell_loop(t_minishell *shell)
 	}
 }
 
-static void	ft_launch_minishell(t_minishell *shell, char *input)
-{
-	if (input[0] == 0)
-		exit(shell->exit_status);
-	shell->input = ft_strdup(input);
-	ft_update_questionvar(shell);
-	ft_analyze_input(shell);
-	ft_clear_shell(shell);
-	exit(shell->exit_status);
-}
+// static void	ft_launch_minishell(t_minishell *shell, char *input)
+// {
+// 	if (input[0] == 0)
+// 		exit(shell->exit_status);
+// 	shell->input = ft_strdup(input);
+// 	ft_update_questionvar(shell);
+// 	ft_analyze_input(shell);
+// 	ft_clear_shell(shell);
+// 	exit(shell->exit_status);
+// }
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/07 19:04:02 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/07 20:13:43 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC_FREE_ERROR_EXIT = free_functions1 free_functions2 error cmd_errors
 
 SRC_PARSE = parsing
 
-SRC_PARSE_TOKEN = tokenizer token_creation token_analyze
+SRC_PARSE_TOKEN = tokenizer token_creation token_analyze token_verify
 
 SRC_PARSE_QUOTES = quotes_functions
 

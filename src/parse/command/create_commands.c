@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 16:18:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:15:02 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,37 @@ static	void	init_cmd(t_minishell *shell, t_token *tokens)
 			break ;
 		init_arg(cmd, tokens->content);
 		tokens = tokens->next;
+	}
+}
+
+static void	ft_mark_redir(t_cmd *command)
+{
+	t_cmd	*temp;
+
+	temp = command->prev;
+	if (temp)
+	{
+		if (temp->type == T_LTRUNC)
+			command->input_file = true;
+		else if (temp->type == T_RTRUNC)
+			command->rtrunc = true;
+		else if (temp->type == T_LAPEND)
+			command->lappend = true;
+		else if (temp->type == T_RAPEND)
+			command->rappend = true;
+	}
+}
+
+void	ft_mark_commands(t_minishell *shell)
+{
+	t_cmd	*commands;
+
+	commands = shell->commands;
+	while (commands)
+	{
+		if (commands->cmd)
+			ft_mark_redir(commands);
+		commands = commands->next;
 	}
 }
 

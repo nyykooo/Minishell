@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 19:27:22 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:14:20 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,82 +56,6 @@ static void	reset_shell(t_minishell *shell)
 	}
 }
 
-static void	mark_redir(t_cmd *command)
-{
-	t_cmd	*temp;
-
-	temp = command->prev;
-	if (temp)
-	{
-		if (temp->type == T_LTRUNC)
-			command->input_file = true;
-		else if (temp->type == T_RTRUNC)
-			command->rtrunc = true;
-		else if (temp->type == T_LAPEND)
-			command->lappend = true;
-		else if (temp->type == T_RAPEND)
-			command->rappend = true;
-	}
-}
-
-static void	get_cmd_path(t_minishell *shell)
-{
-	t_cmd	*commands;
-
-	commands = shell->commands;
-	while (commands)
-	{
-		if (commands->cmd)
-			mark_redir(commands);
-		commands = commands->next;
-	}
-}
-
-static bool	ft_verify_fn(t_minishell *shell)
-{
-	t_token	*token;
-
-	token = shell->tokens;
-	if (!token)
-		return (false);
-	if (!token->next && ft_strcmp(token->content, ".") == 0)
-	{
-		ft_print_error(false, 2, 1, "minishell: .: filename argument required\n");
-		return (false);
-	}
-	return (true);
-}
-
-static bool	ft_verify_unexpected_token(t_minishell *shell)
-{
-	t_token	*token;
-
-	token = shell->tokens;
-	while (token)
-	{
-		if (token->type >= T_RTRUNC && token->type <= T_PIPE)
-		{
-			if (token->type == T_PIPE && (!token->prev || (token->next && token->next->type == T_PIPE)))
-			{
-				ft_print_error(false, 2, 1, "minishell: syntax error near unexpected token `|'\n");
-				return (false);
-			}
-			if (!token->next)
-			{
-				ft_print_error(false, 2, 1, "minishell: syntax error near unexpected token `newline'\n");
-				return (false);
-			}
-			if (token->type != T_PIPE && token->next->type >= T_RTRUNC)
-			{
-				ft_print_error(false, 2, 3, "minishell: syntax error near unexpected token `", token->next->content, "'\n");
-				return (false);
-			}
-		}
-		token = token->next;
-	}
-	return (true);
-}
-
 void	tokenizer(t_minishell *shell)
 {
 	char	**array;
@@ -154,6 +78,6 @@ void	tokenizer(t_minishell *shell)
 		analyze_tokens(shell->tokens, shell);
 		reset_shell(shell);
 		clear_commands(shell->commands);
-		get_cmd_path(shell);
+		ft_mark_commands(shell);
 	}
 }
