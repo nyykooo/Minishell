@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/07 16:21:53 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/07 19:04:02 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,6 @@ SRC_PARSE_TOKEN = tokenizer token_creation token_analyze
 
 SRC_PARSE_QUOTES = quotes_functions
 
-SRC_PARSE_PIPE = handle_pipe
-
 SRC_PARSE_INPUT = input_handle
 
 SRC_PARSE_COMMAND = create_commands analyze_argument
@@ -53,7 +51,6 @@ SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/parse/token/, $(SRC_PARSE_TOKEN))) \
 	$(addsuffix .c, $(addprefix src/parse/redirect/, $(SRC_PARSE_REDIRECT))) \
 	$(addsuffix .c, $(addprefix src/parse/quotes/, $(SRC_PARSE_QUOTES))) \
-	$(addsuffix .c, $(addprefix src/parse/pipe/, $(SRC_PARSE_PIPE))) \
 	$(addsuffix .c, $(addprefix src/parse/input/, $(SRC_PARSE_INPUT))) \
 	$(addsuffix .c, $(addprefix src/parse/command/, $(SRC_PARSE_COMMAND))) \
 	$(addsuffix .c, $(addprefix src/parse/expansion/, $(SRC_PARSE_EXPANSION))) \
