@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 16:20:19 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:51:39 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*get_command_path(char *command)
 	int		i;
 
 	path = getenv ("PATH");
+	if (!path)
+		return (NULL);
 	dirs = ft_split (path, ':');
 	i = -1;
 	while (dirs[++i] != NULL)
