@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:36:36 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 16:20:40 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:08:52 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_update_existing_envvar(t_var *envvar, char *name, char *value)
 void	ft_add_new_envvar(t_var **envvar_list,
 			char *name, char *value, int flag)
 {
-	t_var	*envvar;
+	t_var		*envvar;
 
 	envvar = ft_calloc(1, sizeof(t_var));
 	if (!envvar)

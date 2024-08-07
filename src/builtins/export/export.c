@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/06 16:54:58 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:11:45 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument)
 		free(name);
 	}
 	else
-		ft_add_new_envvar(&shell->envvars, name, value, 0);
+		ft_add_new_envvar(&shell->envvars, name, value, 1);
 	return (true);
 }
 
