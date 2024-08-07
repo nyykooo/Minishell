@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 11:18:46 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:38:25 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,12 @@ int	input_manager(t_minishell *shell)
 {
 	if (quote_check(shell->input))
 	{
-		ft_print_error(shell, false, 0, 1, "-minishell: unmatched quote\n");
+		ft_print_error(false, 0, 1, "-minishell: unmatched quote\n");
 		return (1);
 	}
 	if (input_cleaner(shell->input) == -1)
 	{
-		ft_print_error(shell, true, 2, 1, \
-		"-minishell: failed to allocate memory\n");
+		ft_print_error(true, 2, 1, "-minishell: failed to allocate memory\n");
 	}
 	return (0);
 }

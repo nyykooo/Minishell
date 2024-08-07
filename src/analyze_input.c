@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 13:46:32 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:21:31 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,25 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 
 static void	handle_cmds(t_minishell *shell)
 {
-	ft_get_path(shell->commands);
-	ft_update_underlinevar(shell);
-	if (ft_strcmp(shell->commands->cmd, "cd") == 0)
-		handle_cd(shell->commands, shell);
-	else if (ft_strcmp(shell->commands->cmd, "echo") == 0)
-		handle_echo(shell->commands);
-	else if (ft_strcmp(shell->commands->cmd, "exit") == 0)
-		handle_exit(shell->commands, shell);
-	else if (ft_strcmp(shell->commands->cmd, "export") == 0)
-		shell->exit_status = handle_export(shell);
-	else if (ft_strcmp(shell->commands->cmd, "unset") == 0)
-		handle_unset(shell->commands, &shell->envvars);
-	else if (ft_strcmp(shell->commands->cmd, "env") == 0)
-		handle_env(shell->envvars, shell, shell->commands);
-	else if (ft_strcmp(shell->commands->cmd, "pwd") == 0)
-		handle_pwd(shell);
-	else if (shell->commands != NULL)
-		handle_command(shell->commands, shell);
-	free(shell->commands->path);
+		ft_get_path(shell->commands);
+		ft_update_underlinevar(shell);
+		if (ft_strcmp(shell->commands->cmd, "cd") == 0)
+			handle_cd(shell->commands, shell);
+		else if (ft_strcmp(shell->commands->cmd, "echo") == 0)
+			handle_echo(shell->commands);
+		else if (ft_strcmp(shell->commands->cmd, "exit") == 0)
+			handle_exit(shell->commands, shell);
+		else if (ft_strcmp(shell->commands->cmd, "export") == 0)
+			shell->exit_status = handle_export(shell);
+		else if (ft_strcmp(shell->commands->cmd, "unset") == 0)
+			handle_unset(shell->commands, &shell->envvars);
+		else if (ft_strcmp(shell->commands->cmd, "env") == 0)
+			handle_env(shell->envvars, shell->commands);
+		else if (ft_strcmp(shell->commands->cmd, "pwd") == 0)
+			handle_pwd(shell);
+		else if (shell->commands != NULL)
+			handle_command(shell->commands, shell);
+		free(shell->commands->path);
 }
 
 void	ft_analyze_input(t_minishell *shell)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
+#    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/06 22:35:22 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/08/07 16:21:53 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC_BUILTINS_EXPORT = export export_arg export_print export_sort
 
 SRC_BUILTINS_EXIT = exit
 
-SRC_FREE_ERROR_EXIT = free error cmd_errors
+SRC_FREE_ERROR_EXIT = free_functions1 free_functions2 error cmd_errors
 
 SRC_PARSE = parsing
 

@@ -1,31 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_functions1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 12:48:26 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:25:01 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
-
-void	free_list(t_var *head)
-{
-	t_var	*current;
-	t_var	*next;
-
-	current = head;
-	while (current)
-	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = next;
-	}
-}
 
 void	free_commands(t_cmd *commands)
 {

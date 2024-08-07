@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 12:44:04 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:18:30 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
 
-static void	check_arg(t_arg *input)
+static void	ft_check_arg(t_arg *input)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ static void	check_arg(t_arg *input)
 	}
 }
 
-void	include_arg(t_minishell *shell, char *input, t_arg *argument)
+void	ft_include_arg(t_minishell *shell, char *input, t_arg *argument)
 {
 	t_arg	*new;
 	t_arg	*curr;
@@ -69,7 +69,7 @@ void	analyze_arguments(t_minishell *shell, t_cmd *cmd)
 	tmp = cmd->arguments;
 	while (tmp != NULL)
 	{
-		check_arg(tmp);
+		ft_check_arg(tmp);
 		tmp = tmp->next;
 	}
 }

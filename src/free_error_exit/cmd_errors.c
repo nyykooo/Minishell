@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:01 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 12:54:25 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:17:37 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var)
 {
 	if (execve(command->path, arguments, env_var) == -1)
 	{
-		ft_print_error(command->shell, false, 127, 3, \
-		"-minishell: ", command->cmd, ": command not found\n");
+		ft_print_error(false, 127, 3,
+			"-minishell: ", command->cmd, ": command not found\n");
 		free(command->path);
 		free(arguments);
 		free_array(env_var);
@@ -29,8 +29,8 @@ void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var)
 static void	ft_verify_path(t_cmd *command)
 {
 	if (command->path == NULL)
-		ft_print_error(command->shell, true, 127, 3, \
-		"-minishell: ", command->cmd, ": command not found\n");
+		ft_print_error(true, 127, 3,
+			"-minishell: ", command->cmd, ": command not found\n");
 }
 
 static void	ft_analyze_cmd_stat(t_cmd *command)
@@ -39,20 +39,20 @@ static void	ft_analyze_cmd_stat(t_cmd *command)
 
 	if (stat(command->cmd, &buf) == 0)
 	{
-		if (buf.st_mode & __S_IFDIR && \
-		(ft_strncmp(command->cmd, "./", 2) == 0 || command->cmd[0] == '/'))
-			ft_print_error(command->shell, true, 126, 3, \
-			"-minishell: ", command->cmd, ": Is a directory\n");
-		else if (access(command->cmd, X_OK) != 0 && \
-		ft_strncmp(command->cmd, "./", 2) == 0)
-			ft_print_error(command->shell, true, 126, 3, \
-			"-minishell: ", command->cmd, ": Permission denied\n");
+		if (buf.st_mode & __S_IFDIR && (ft_strncmp(command->cmd, "./", 2) == 0
+				|| command->cmd[0] == '/'))
+			ft_print_error(true, 126, 3,
+				"-minishell: ", command->cmd, ": Is a directory\n");
+		else if (access(command->cmd, X_OK) != 0
+			&& ft_strncmp(command->cmd, "./", 2) == 0)
+			ft_print_error(true, 126, 3,
+				"-minishell: ", command->cmd, ": Permission denied\n");
 	}
 	else
 	{
 		if (ft_strncmp(command->cmd, "./", 2) == 0 || command->cmd[0] == '/')
-			ft_print_error(command->shell, true, 127, 3, \
-			"-minishell: ", command->cmd, ": No such file or directory\n");
+			ft_print_error(true, 127, 3,
+				"-minishell: ", command->cmd, ": No such file or directory\n");
 		ft_verify_path(command);
 	}
 }

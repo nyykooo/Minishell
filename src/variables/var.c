@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 11:11:45 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:20:56 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ static t_var	*ft_create_list(char **envp)
 	{
 		new_node = ft_calloc(1, sizeof(t_var));
 		new_node->content = ft_strdup(*current);
-		new_node->name = ft_strndup(*current, \
-		ft_strchr(*current, '=') - *current);
+		new_node->name = ft_strndup(*current,
+				ft_strchr(*current, '=') - *current);
 		new_node->value = ft_strdup(ft_strchr(*current, '=') + 1);
 		new_node->env = true;
 		new_node->exp = true;

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 22:49:53 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:54:58 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_handle_no_equal(t_minishell *shell, t_arg *argument)
 	}
 	new_var = ft_calloc(1, sizeof(t_var));
 	if (new_var == NULL)
-		ft_print_error(shell, true, 2, 1,
+		ft_print_error(true, 2, 1,
 			"-minishell: failed to allocate memory\n");
 	new_var->content = ft_strdup(argument->arg);
 	new_var->name = ft_strdup(argument->arg);
@@ -59,14 +59,14 @@ bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument)
 	return (true);
 }
 
-bool	ft_check_options(t_minishell *shell, t_arg *argument)
+bool	ft_check_options(t_arg *argument)
 {
 	char	*error_msg;
 
 	if (argument->arg[0] == '-')
 	{
 		error_msg = ft_substr(argument->arg, 0, 2);
-		ft_print_error(shell, false, 2, 3,
+		ft_print_error(false, 2, 3,
 			"-minishell: export: ", error_msg, ": invalid option\n");
 		free(error_msg);
 		return (true);

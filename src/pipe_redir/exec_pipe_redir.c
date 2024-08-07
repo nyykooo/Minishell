@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 11:03:07 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:20:19 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
 	else if (ft_strcmp(cmd_temp->cmd, "unset") == 0)
 		handle_unset(cmd_temp, &shell->envvars);
 	else if (ft_strcmp(cmd_temp->cmd, "env") == 0)
-		handle_env(shell->envvars, shell, cmd_temp);
+		handle_env(shell->envvars, cmd_temp);
 	else if (ft_strcmp(cmd_temp->cmd, "pwd") == 0)
 		handle_pwd(shell);
 }

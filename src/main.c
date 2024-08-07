@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 12:49:31 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:21:39 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,11 @@ int	main(int argc, char **argv, char **envp)
 	shell->envvars = ft_create_envvar_list(envp);
 	if (argc >= 3 && ft_strncmp(argv[1], "-c", 3) == 0)
 		ft_launch_minishell(shell, argv[2]);
-	// if (argc != 1)
-	// {
-	// 	write(2, "usage: ./minishell\n", 20);
-	// 	return (EXIT_FAILURE);
-	// }
+	if (argc != 1)
+	{
+		write(2, "usage: ./minishell\n", 20);
+		return (EXIT_FAILURE);
+	}
 	ft_minishell_loop(shell);
 	return (0);
 }

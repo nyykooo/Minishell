@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_operations2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:36:36 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 11:08:40 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:20:40 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	ft_update_existing_envvar(t_var *envvar, char *name, char *value)
 	envvar->content = ft_create_envvar_content(name, value);
 }
 
-void	ft_add_new_envvar(t_var **envvar_list, \
-char *name, char *value, int flag)
+void	ft_add_new_envvar(t_var **envvar_list,
+			char *name, char *value, int flag)
 {
 	t_var	*envvar;
 

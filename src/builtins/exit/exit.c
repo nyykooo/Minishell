@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 13:38:40 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:16:26 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	ft_analyze_exit_arguments(t_cmd *command)
 	if (!ft_is_number(command->arguments->arg)
 		|| !ft_long_number(command->arguments->arg))
 	{
-		ft_print_error(command->shell, false, 2, 3, "-minishell: exit: ",
+		ft_print_error(false, 2, 3, "-minishell: exit: ",
 			command->arguments->arg, ": numeric argument required\n");
 		return (2);
 	}
@@ -80,7 +80,7 @@ static int	ft_analyze_exit_arguments(t_cmd *command)
 	{
 		if (command->arguments->next)
 		{
-			ft_print_error(command->shell, false, 1, 1,
+			ft_print_error(false, 1, 1,
 				"-minishell: exit: too many arguments\n");
 			return (1);
 		}
