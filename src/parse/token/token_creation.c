@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 11:57:11 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:26:21 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	token_creation(char **array, t_minishell *shell)
 	while (tmp)
 	{
 		check_token(tmp);
-		tmp->content = quote_del(tmp->content, shell);
+		tmp->content = quote_del(tmp->content);
 		get_type(tmp);
 		tmp = tmp->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:06:10 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 11:44:36 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:31:42 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 // copiar a string original para a nova string com os espaços extras
 
 #include "../../../libs/headers.h"
-
-static bool	is_pipe_redir(char pr)
-{
-	if (pr && (pr == '>' || pr == '<' || pr == '|'))
-		return (true);
-	return (false);
-}
 
 static int	what_redir(char *str)
 {
@@ -78,7 +71,7 @@ static int	count_spaces(char *str)
 	add_space = 0;
 	while (str[i])
 	{
-		if (is_pipe_redir(str[i]) && !ft_is_inside_quotes(str, i))
+		if (ft_is_pipe_redir(str[i]) && !ft_is_inside_quotes(str, i))
 			count_space_pr_differ(str, &i, &add_space);
 		i++;
 	}
@@ -95,7 +88,7 @@ static void	insert_spaces(char *input, char *new)
 	while (input[i])
 	{
 		while (input[i] && \
-		((!is_pipe_redir(input[i]) || ft_is_inside_quotes(input, i))))
+		((!ft_is_pipe_redir(input[i]) || ft_is_inside_quotes(input, i))))
 			new[j++] = input[i++];
 		if (!input[i])
 			break ;
@@ -123,10 +116,7 @@ void	expand_pipes_redir(t_minishell *shell)
 	len = ft_strlen(shell->input) + add_space + 1;
 	new_str = malloc(len);
 	if (!new_str)
-	{
-		printf("error: malloc failed\n");
-		exit (1);
-	}
+		ft_print_error(true, 1, 1, "Error: failed to allocate memory\n");
 	insert_spaces(shell->input, new_str);
 	free(shell->input);
 	shell->input = new_str;
