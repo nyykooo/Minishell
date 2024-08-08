@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 20:16:24 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:45:20 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	config_signals(0);
 	shell->envvars = ft_create_envvar_list(envp);
-	if (argc >= 3 && ft_strncmp(argv[1], "-c", 3) == 0)
-		ft_launch_minishell(shell, argv[2]);
+	// if (argc >= 3 && ft_strncmp(argv[1], "-c", 3) == 0)
+	// 	ft_launch_minishell(shell, argv[2]);
 	if (argc != 1)
 	{
 		write(2, "usage: ./minishell\n", 20);

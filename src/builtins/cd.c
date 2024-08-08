@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/06 16:50:01 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:27:16 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	pwds_update(t_var **envvar_list, char *dir)
 	if (ft_strcmp(dir, ".") == 0)
 	{
 		ft_set_envvar(envvar_list, "OLDPWD", pwd, 1);
+		free(pwd);
 		return ;
 	}
 	oldpwd = ft_get_value(*envvar_list, "PWD");

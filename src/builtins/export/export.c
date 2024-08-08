@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 18:11:45 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:16:56 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ bool	ft_handle_with_equal(t_minishell *shell, t_arg *argument)
 	if (var != NULL)
 	{
 		free(var->value);
-		var->value = value;
-		free(name);
+		var->value = ft_strdup(value);
 	}
 	else
 		ft_add_new_envvar(&shell->envvars, name, value, 1);
+	free(name);
+	free(value);
 	return (true);
 }
 

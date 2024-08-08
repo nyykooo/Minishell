@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 11:25:52 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:59:59 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ void	expand_dolar(char **input, t_minishell *shell)
 	t_var	*var;
 	char	*var_value;
 	char	*var_name;
+	bool	should_free;
 
 	i = -1;
+	should_free = false;
 	while ((*input)[++i])
 	{
 		var_value = "";
@@ -56,12 +58,17 @@ void	expand_dolar(char **input, t_minishell *shell)
 				continue ;
 			var = ft_find_envvar(shell->envvars, var_name);
 			if (var)
+			{
 				var_value = ft_strdup(var->value);
+				should_free = true;
+			}
 			(*input) = ft_strreplace((*input), i, var_value, var_name);
-			if (var_name)
-				free(var_name);
-			if (var_value[0] != '\0')
+			if (should_free)
+			{
 				free(var_value);
+				should_free	= false;
+			}
+			i = 0;
 		}
 	}
 }
