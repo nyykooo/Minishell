@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strreplace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:52:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 13:19:25 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:50:33 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ char	*ft_strreplace(char *src, int i, char *insert, char *name)
 	free(str_frag);
 	free(tmp);
 	free(src);
+	free(name);
 	return (new);
 }
