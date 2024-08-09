@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 00:50:32 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 13:21:56 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:31:11 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ char *extra, int index)
 		new_array[i] = ft_strdup(array[index++]);
 		i++;
 	}
-	free_array(array);
+	ft_free_array(array);
 	return (new_array);
 }

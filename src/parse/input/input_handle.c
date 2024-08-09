@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:37:26 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 16:38:25 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:25:25 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	input_cleaner(char *input)
 	return (0);
 }
 
-int	input_manager(t_minishell *shell)
+int	ft_input_manager(t_minishell *shell)
 {
 	if (quote_check(shell->input))
 	{

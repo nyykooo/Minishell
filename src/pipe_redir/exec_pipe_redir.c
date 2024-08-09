@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/08 20:41:35 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 17:46:08 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-void	free_dirs(char **dirs)
+void	ft_free_dirs(char **dirs)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ void	free_dirs(char **dirs)
 	free(dirs);
 }
 
-char	*get_command_path(char *command)
+char	*ft_get_command_path(char *command)
 {
 	char	*path;
 	char	**dirs;
@@ -44,16 +44,16 @@ char	*get_command_path(char *command)
 		ft_strcat (possible_path, command);
 		if (access(possible_path, X_OK) == 0)
 		{
-			free_dirs(dirs);
+			ft_free_dirs(dirs);
 			return (possible_path);
 		}
 		free (possible_path);
 	}
-	free_dirs(dirs);
+	ft_free_dirs(dirs);
 	return (NULL);
 }
 
-bool	is_builtin(char *cmd)
+bool	ft_is_builtin(char *cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "cd") == 0 || \
 	ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || \
@@ -66,29 +66,33 @@ bool	is_builtin(char *cmd)
 void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
 {
 	if (ft_strcmp(cmd_temp->cmd, "cd") == 0)
-		handle_cd(cmd_temp, shell);
+		ft_handle_cd(cmd_temp, shell);
 	else if (ft_strcmp(cmd_temp->cmd, "echo") == 0)
-		handle_echo(cmd_temp);
+		ft_handle_echo(cmd_temp);
 	else if (ft_strcmp(cmd_temp->cmd, "exit") == 0)
-		handle_exit(cmd_temp, shell);
+		ft_handle_exit(cmd_temp, shell);
 	else if (ft_strcmp(cmd_temp->cmd, "export") == 0)
-		handle_export(shell);
+		ft_handle_export(shell);
 	else if (ft_strcmp(cmd_temp->cmd, "unset") == 0)
-		handle_unset(cmd_temp, &shell->envvars);
+		ft_handle_unset(cmd_temp, &shell->envvars);
 	else if (ft_strcmp(cmd_temp->cmd, "env") == 0)
-		handle_env(shell->envvars, cmd_temp);
+		ft_handle_env(shell->envvars, cmd_temp);
 	else if (ft_strcmp(cmd_temp->cmd, "pwd") == 0)
-		handle_pwd(shell);
+		ft_handle_pwd(shell);
 }
 
 void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 {
 	char	**arg_array;
 
-	if (is_builtin(cmd_temp->cmd) == true)
+	if (ft_is_builtin(cmd_temp->cmd) == true)
 	{
 		ft_exec_builtin(shell, cmd_temp);
 		exit(shell->exit_status);
+	}
+	if (!cmd_temp->prev && strcmp(cmd_temp->cmd, ">") == 0)
+	{
+		exit(0); //arrumar exit_status
 	}
 	arg_array = ft_to_array(cmd_temp);
 	ft_get_path(cmd_temp);

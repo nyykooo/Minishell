@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:06:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/08 20:12:15 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:33:02 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-void	handle_env(t_var *envvar_list, t_cmd *command)
+void	ft_handle_env(t_var *envvar_list, t_cmd *command)
 {
 	t_var	*current;
 

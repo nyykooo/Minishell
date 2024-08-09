@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 16:16:26 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:33:38 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	ft_analyze_exit_arguments(t_cmd *command)
 	return (0);
 }
 
-void	handle_exit(t_cmd *command, t_minishell *shell)
+void	ft_handle_exit(t_cmd *command, t_minishell *shell)
 {
 	if (command)
 		shell->exit_status = ft_analyze_exit_arguments(command);
@@ -98,6 +98,6 @@ void	handle_exit(t_cmd *command, t_minishell *shell)
 		shell->exit_status = 0;
 	if (shell->exit_status == 2 || shell->exit_status == 1)
 		return ;
-	free_shell(shell);
+	ft_free_shell(shell);
 	exit(shell->exit_status);
 }

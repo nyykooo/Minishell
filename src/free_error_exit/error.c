@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:39:12 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 16:17:43 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:32:04 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	ft_print_error(bool must_free, int exit_status, int nbr, ...)
 	free(error_msg);
 	if (must_free == true)
 	{
-		free_shell(shell);
+		ft_free_shell(shell);
 		exit(exit_status);
 	}
 	shell->exit_status = exit_status;
 }
 
-char	*error_msg_construct(int nbr, ...)
+char	*ft_error_msg_construct(int nbr, ...)
 {
 	va_list	arg;
 	int		i;
@@ -51,7 +51,7 @@ char	*error_msg_construct(int nbr, ...)
 	return (error_msg);
 }
 
-int	put_error_msg(char *error_msg, int exit_status)
+int	ft_put_error_msg(char *error_msg, int exit_status)
 {
 	if (error_msg)
 		ft_putstr_fd(error_msg, STDERR_FILENO);

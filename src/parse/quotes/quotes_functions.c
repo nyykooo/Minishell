@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 14:40:02 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 19:26:13 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:29:23 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	count_quotes(char *input)
 	return (quotes);
 }
 
-char	*quote_del(char *input)
+char	*ft_quote_del(char *input)
 {
 	int		i;
 	int		size;
@@ -53,7 +53,7 @@ char	*quote_del(char *input)
 	return (new);
 }
 
-void	expand_quotes(t_token *token, t_minishell *shell)
+void	ft_expand_quotes(t_token *token, t_minishell *shell)
 {
 	int		i;
 	bool	flag;
@@ -76,12 +76,12 @@ void	expand_quotes(t_token *token, t_minishell *shell)
 		return ;
 	if (flag)
 		i++;
-	include_token(shell, token->content + i, curr);
+	ft_include_token(shell, token->content + i, curr);
 	token->content[i] = '\0';
-	expand_quotes(token->next, shell);
+	ft_expand_quotes(token->next, shell);
 }
 
-int	skip_quotes(char *input, int *i)
+int	ft_skip_quotes(char *input, int *i)
 {
 	char	quote;
 

@@ -6,13 +6,13 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:32:13 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 13:39:59 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:36:55 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-static void	manage_parent(int fd[2], int *old_read_fd, pid_t pid, \
+static void	ft_manage_parent(int fd[2], int *old_read_fd, pid_t pid, \
 pid_t *last_child_pid)
 {
 	if (*old_read_fd != 0)
@@ -22,15 +22,15 @@ pid_t *last_child_pid)
 	*last_child_pid = pid;
 }
 
-static void	manage_child(t_minishell *shell, t_cmd *cmd_temp, \
+static void	ft_manage_child(t_minishell *shell, t_cmd *cmd_temp, \
 int old_read_fd, int fd[2])
 {
 	int	in_fd;
 	int	out_fd;
 	int	has_pipe;
 
-	redefine_child_signals();
-	define_in_out_fd(cmd_temp, &in_fd, &out_fd);
+	ft_redefine_child_signals();
+	ft_define_in_out_fd(cmd_temp, &in_fd, &out_fd);
 	if (old_read_fd != 0)
 	{
 		dup2(old_read_fd, STDIN_FILENO);
@@ -49,7 +49,7 @@ int old_read_fd, int fd[2])
 	}
 }
 
-static pid_t	create_child_process(void)
+static pid_t	ft_create_child_process(void)
 {
 	pid_t	pid;
 
@@ -62,10 +62,10 @@ static pid_t	create_child_process(void)
 	return (pid);
 }
 
-static bool	check_and_advance_cmd(t_cmd **cmd_temp, int *i)
+static bool	ft_check_and_advance_cmd(t_cmd **cmd_temp, int *i)
 {
-	if ((is_pipe_or_redir(*cmd_temp, (*i)++) == true) || \
-	(is_file(*cmd_temp) == true))
+	if ((ft_is_pipe_or_redir(*cmd_temp, (*i)++) == true) || \
+	(ft_is_file(*cmd_temp) == true))
 	{
 		*cmd_temp = (*cmd_temp)->next;
 		return (true);
@@ -88,14 +88,14 @@ int fd[2], int old_read_fd)
 	status = 0;
 	while (cmd_temp != NULL)
 	{
-		if (check_and_advance_cmd(&cmd_temp, &i))
+		if (ft_check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
-		create_pipe(fd);
-		pid = create_child_process();
+		ft_create_pipe(fd);
+		pid = ft_create_child_process();
 		if (pid == 0)
-			manage_child(shell, cmd_temp, old_read_fd, fd);
+			ft_manage_child(shell, cmd_temp, old_read_fd, fd);
 		else
-			manage_parent(fd, &old_read_fd, pid, &last_child_pid);
+			ft_manage_parent(fd, &old_read_fd, pid, &last_child_pid);
 		cmd_temp = cmd_temp->next;
 	}
 	if (last_child_pid != -1)

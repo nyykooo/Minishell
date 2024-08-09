@@ -6,15 +6,17 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:59:15 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/05 17:22:26 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:37:44 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-bool	is_pipe_or_redir(t_cmd *cmd, int i)
+bool	ft_is_pipe_or_redir(t_cmd *cmd, int i)
 {
 	if (i == 0 && cmd->type == T_RTRUNC)
+		return (false);
+	if (i == 0 && cmd->type == T_LTRUNC)
 		return (false);
 	if (cmd->type == T_RTRUNC && cmd->prev->type == T_PIPE)
 		return (false);
@@ -25,7 +27,7 @@ bool	is_pipe_or_redir(t_cmd *cmd, int i)
 	return (false);
 }
 
-bool	is_file(t_cmd *cmd)
+bool	ft_is_file(t_cmd *cmd)
 {
 	if (cmd->prev != NULL && (cmd->prev->type == T_RAPEND || \
 	cmd->prev->type == T_RTRUNC || \

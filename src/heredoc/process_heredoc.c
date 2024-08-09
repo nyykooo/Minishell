@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 08:29:20 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/07 16:18:13 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:45:41 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*loop_heredoc(t_cmd *current, int fd[2], t_minishell *shell)
 		}
 		if (current->next->cmd && ft_strcmp(line, current->next->cmd) == 0)
 			break ;
-		expand_dolar(&line, shell);
+		ft_expand_dolar(&line, shell);
 		write_line_to_pipe(line, fd);
 	}
 	return (line);
@@ -71,7 +71,7 @@ t_minishell *shell)
 	}
 	if (pid == 0)
 	{
-		config_signals(1);
+		ft_config_signals(1);
 		line = loop_heredoc(current, fd, shell);
 		if (line)
 			free(line);
@@ -94,7 +94,7 @@ int	process_heredoc_cmds(t_minishell *shell, struct sigaction *sa_original)
 	{
 		if (current->type == T_LAPEND)
 		{
-			create_pipe(fd);
+			ft_create_pipe(fd);
 			pid = fork_and_execute_heredoc(current, fd, shell);
 			waitpid(pid, &status, 0);
 			if (status == 33280)
