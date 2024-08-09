@@ -12,8 +12,6 @@
 
 #include "../libs/headers.h"
 
-//volatile sig_atomic_t	g_sig;
-//static int	g_sig;
 int	g_sig;
 
 static char	*ft_get_pathname(void)
@@ -91,17 +89,6 @@ static void	ft_minishell_loop(t_minishell *shell)
 	}
 }
 
-static void	ft_launch_minishell(t_minishell *shell, char *input)
-{
-	if (input[0] == 0)
-		exit(shell->exit_status);
-	shell->input = ft_strdup(input);
-	ft_update_questionvar(shell);
-	ft_analyze_input(shell);
-	ft_clear_shell(shell);
-	exit(shell->exit_status);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	*shell;
@@ -111,8 +98,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_config_signals(0);
 	shell->envvars = ft_create_envvar_list(envp);
-	if (argc >= 3 && ft_strncmp(argv[1], "-c", 3) == 0)
-		ft_launch_minishell(shell, argv[2]);
 	if (argc != 1)
 	{
 		write(2, "usage: ./minishell\n", 20);

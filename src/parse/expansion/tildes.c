@@ -43,7 +43,7 @@ void	ft_expand_tildes(char **input, t_minishell *shell)
 			|| (*input)[i + 1] == '/'))
 		{
 			var = ft_find_envvar(shell->envvars, "HOME");
-			if (var && ft_strcmp(var_value, "") != 0)
+			if (var && ft_strcmp(var->value, "") != 0)
 				var_value = ft_strdup(var->value);
 			(*input) = ft_strreplace_tilde((*input), i, var_value, "~");
 			if (var_value[0] != 0)

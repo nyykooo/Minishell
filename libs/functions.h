@@ -22,16 +22,6 @@ t_minishell	*ft_get_shell(void);
 
 void		ft_analyze_input(t_minishell *shell);
 
-// PARSING
-
-// void	ft_parsing_hub(char *input, t_minishell *shell);
-// int	ft_input_manager(char **input);
-// t_token **token_manager(char *input);
-// void	create_tokens(char **array, t_token ***tokens);
-// char *check_meta(char *str);
-// void	analyze_argument(t_token **tokens, t_minishell *shell);
-// void	ft_expand_dolar(t_arg *argument , t_minishell *shell);
-
 // NEW PARSING
 
 void		ft_parsing_hub(t_minishell *shell);
@@ -47,7 +37,8 @@ void		ft_tokenizer(t_minishell *shell);
 void		ft_token_creation(char **array, t_minishell *shell);
 // void	ft_analyze_tokens(t_arg **tokens, t_minishell *shell);
 void		ft_analyze_tokens(t_token *tokens, t_minishell *shell);
-void		ft_include_token(t_minishell *shell, char *argument, t_token *token);
+void		ft_include_token(t_minishell *shell, \
+char *argument, t_token *token);
 
 // NEW PARSING - COMMANDS
 
