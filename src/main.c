@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 19:49:12 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:37:20 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //volatile sig_atomic_t	g_sig;
 //static int	g_sig;
-int 	g_sig;
+int	g_sig;
 
 static char	*ft_get_pathname(void)
 {
