@@ -101,7 +101,8 @@ void	ft_analyze_input(t_minishell *shell)
 		return ;
 	}
 	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0) || \
-	(ft_strcmp(shell->commands->cmd, "<") == 0))
+	(ft_strcmp(shell->commands->cmd, "<") == 0) \
+	|| (ft_strcmp(shell->commands->cmd, ">>") == 0))
 		ft_handle_pipe_and_redir(shell, shell->commands);
 	else if (shell->commands)
 	{

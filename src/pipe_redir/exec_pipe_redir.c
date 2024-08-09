@@ -90,9 +90,11 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 		ft_exec_builtin(shell, cmd_temp);
 		exit(shell->exit_status);
 	}
-	if (!cmd_temp->prev && strcmp(cmd_temp->cmd, ">") == 0)
+	if (!cmd_temp->prev && (strcmp(cmd_temp->cmd, ">") == 0 \
+	|| strcmp(cmd_temp->cmd, ">>") == 0))
 	{
-		exit(0); //arrumar exit_status
+		ft_free_shell(shell);
+		exit(0);
 	}
 	arg_array = ft_to_array(cmd_temp);
 	ft_get_path(cmd_temp);

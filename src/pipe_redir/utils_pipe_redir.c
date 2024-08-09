@@ -16,11 +16,13 @@ bool	ft_is_pipe_or_redir(t_cmd *cmd, int i)
 {
 	if (i == 0 && cmd->type == T_RTRUNC)
 		return (false);
-	if (i == 0 && cmd->type == T_LTRUNC)
+	else if (i == 0 && cmd->type == T_LTRUNC)
 		return (false);
-	if (cmd->type == T_RTRUNC && cmd->prev->type == T_PIPE)
+	else if (i == 0 && cmd->type == T_RAPEND)
 		return (false);
-	if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || \
+	else if (cmd->type == T_RTRUNC && cmd->prev->type == T_PIPE)
+		return (false);
+	else if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || \
 	cmd->type == T_LTRUNC || cmd->type == T_LAPEND || \
 	cmd->type == T_PIPE)
 		return (true);
