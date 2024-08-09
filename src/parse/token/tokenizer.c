@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   ft_tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:15:24 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 20:14:20 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:25:37 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	mark_tokens(char *input)
 	while (input[++i])
 	{
 		if (input[i] == '\'' || input[i] == '\"')
-			i = skip_quotes(input, &i);
+			i = ft_skip_quotes(input, &i);
 		if (input[i] == ' ')
 			input[i] *= -1;
 	}
@@ -33,7 +33,7 @@ static void	clear_commands(t_cmd *command)
 	tmp = command;
 	while (tmp)
 	{
-		tmp->cmd = quote_del(tmp->cmd);
+		tmp->cmd = ft_quote_del(tmp->cmd);
 		tmp = tmp->next;
 	}
 }
@@ -56,26 +56,26 @@ static void	reset_shell(t_minishell *shell)
 	}
 }
 
-void	tokenizer(t_minishell *shell)
+void	ft_tokenizer(t_minishell *shell)
 {
 	char	**array;
 
-	expand_dolar(&shell->input, shell);
-	expand_tildes(&shell->input, shell);
-	expand_hashtag(&shell->input);
-	expand_pipes_redir(shell);
+	ft_expand_dolar(&shell->input, shell);
+	ft_expand_tildes(&shell->input, shell);
+	ft_expand_hashtag(&shell->input);
+	ft_expand_pipes_redir(shell);
 	mark_tokens(shell->input);
 	array = ft_split(shell->input, N_SPACE);
 	if (!array)
 	{
-		free_shell(shell);
+		ft_free_shell(shell);
 		exit(1);
 	}
-	token_creation(array, shell);
-	free_array(array);
+	ft_token_creation(array, shell);
+	ft_free_array(array);
 	if (ft_verify_unexpected_token(shell) && ft_verify_fn(shell))
 	{
-		analyze_tokens(shell->tokens, shell);
+		ft_analyze_tokens(shell->tokens, shell);
 		reset_shell(shell);
 		clear_commands(shell->commands);
 		ft_mark_commands(shell);

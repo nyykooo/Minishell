@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/08 19:16:56 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:32:51 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	ft_check_options(t_arg *argument)
 	return (false);
 }
 
-int	handle_export(t_minishell *shell)
+int	ft_handle_export(t_minishell *shell)
 {
 	t_var	*current;
 	t_arg	*temp;
@@ -99,5 +99,5 @@ int	handle_export(t_minishell *shell)
 		return (0);
 	}
 	else
-		return (ft_handle_export_args(shell));
+		return (ft_ft_handle_export_args(shell));
 }

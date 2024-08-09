@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:11:44 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/08 20:12:22 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:33:19 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-void	handle_pwd(t_minishell *shell)
+void	ft_handle_pwd(t_minishell *shell)
 {
 	char	*pwd;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:31:55 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 19:52:41 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:50:52 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_free_arguments(t_arg **arguments)
 	}
 }
 
-void	free_array(char **array)
+void	ft_free_array(char **array)
 {
 	int	i;
 
@@ -73,7 +73,7 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	free_var(t_var *head)
+void	ft_free_var(t_var *head)
 {
 	t_var	*current;
 	t_var	*next;

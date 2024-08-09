@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tildes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:50:43 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/08 19:21:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:29:56 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*ft_strreplace_tilde(char *src, int i, char *insert, char *name)
 	return (new);
 }
 
-void	expand_tildes(char **input, t_minishell *shell)
+void	ft_expand_tildes(char **input, t_minishell *shell)
 {
 	int		i;
 	t_var	*var;

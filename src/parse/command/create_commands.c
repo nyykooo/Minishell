@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_commands.c                                  :+:      :+:    :+:   */
+/*   ft_create_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -72,7 +72,7 @@ void	ft_mark_commands(t_minishell *shell)
 	}
 }
 
-void	create_command(t_token *tokens, t_minishell *shell)
+void	ft_create_command(t_token *tokens, t_minishell *shell)
 {
 	t_token	*tmp;
 

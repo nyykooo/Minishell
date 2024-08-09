@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/08 19:59:59 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:29:46 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*ft_get_name(char *input, int start)
 	return (ft_substr(input, start, i));
 }
 
-void	expand_dolar(char **input, t_minishell *shell)
+void	ft_expand_dolar(char **input, t_minishell *shell)
 {
 	int		i;
 	t_var	*var;

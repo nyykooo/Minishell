@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/08 19:27:16 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:32:28 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	change_directory(char *dir, int should_free, t_minishell *shell)
 		free(dir);
 }
 
-void	handle_cd(t_cmd *command, t_minishell *shell)
+void	ft_handle_cd(t_cmd *command, t_minishell *shell)
 {
 	char	*dir;
 	int		should_free;
