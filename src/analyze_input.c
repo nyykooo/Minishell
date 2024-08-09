@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 17:47:41 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:36:34 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static void	handle_cmds(t_minishell *shell)
 void	ft_analyze_input(t_minishell *shell)
 {
 	int	status;
-	//t_cmd	*temp;
 
 	status = 0;
 	ft_parsing_hub(shell);
@@ -101,17 +100,8 @@ void	ft_analyze_input(t_minishell *shell)
 		shell->exit_status = 130;
 		return ;
 	}
-	// temp = shell->commands;
-	// while (temp)
-	// {
-	// 	printf("cmd: %s\n", temp->cmd);
-	// 	printf("type: %d\n", temp->type);
-	// 	printf("rtrunc: %d\n", temp->rtrunc);
-	// 	printf("rappend: %d\n", temp->rappend);
-	// 	printf("input_file: %d\n", temp->input_file);
-	// 	temp = temp->next;
-	// }
-	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0))
+	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0) || \
+	(ft_strcmp(shell->commands->cmd, "<") == 0))
 		ft_handle_pipe_and_redir(shell, shell->commands);
 	else if (shell->commands)
 	{
