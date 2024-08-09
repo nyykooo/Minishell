@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:51:55 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:29:48 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void		ft_create_pipe(int fd[2]);
 
 void		ft_execute_cmd(t_cmd *command, char **arguments, char **env_var);
 void		ft_get_path(t_cmd *commands);
-char		*ft_get_command_path(char *command);
+char		*ft_get_command_path(char *command, t_minishell *shell);
 void		ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd);
 void		ft_create_pipe(int fd[2]);
 void		ft_handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);

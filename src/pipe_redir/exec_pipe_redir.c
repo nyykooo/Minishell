@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 17:46:08 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:31:06 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	ft_free_dirs(char **dirs)
 	free(dirs);
 }
 
-char	*ft_get_command_path(char *command)
+char	*ft_get_command_path(char *command, t_minishell *shell)
 {
-	char	*path;
-	char	**dirs;
-	char	*possible_path;
-	int		i;
+	t_var		*path;
+	char		**dirs;
+	char		*possible_path;
+	int			i;
 
-	path = getenv ("PATH");
+	path = ft_find_envvar(shell->envvars, "PATH");
 	if (!path)
 		return (NULL);
-	dirs = ft_split (path, ':');
+	dirs = ft_split (path->value, ':');
 	i = -1;
 	while (dirs[++i] != NULL)
 	{
