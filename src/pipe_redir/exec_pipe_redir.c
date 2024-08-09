@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 16:54:29 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 17:46:08 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,10 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 	{
 		ft_exec_builtin(shell, cmd_temp);
 		exit(shell->exit_status);
+	}
+	if (!cmd_temp->prev && strcmp(cmd_temp->cmd, ">") == 0)
+	{
+		exit(0); //arrumar exit_status
 	}
 	arg_array = ft_to_array(cmd_temp);
 	ft_get_path(cmd_temp);

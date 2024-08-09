@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:59:15 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 17:08:09 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 17:48:44 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	ft_is_pipe_or_redir(t_cmd *cmd, int i)
 {
 	if (i == 0 && cmd->type == T_RTRUNC)
-		return (true);
+		return (false);
 	if (cmd->type == T_RTRUNC && cmd->prev->type == T_PIPE)
 		return (false);
 	if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || \
@@ -32,7 +32,7 @@ bool	ft_is_file(t_cmd *cmd)
 	cmd->prev->type == T_LTRUNC || \
 	cmd->prev->type == T_LAPEND))
 	{
-		printf("fdfadfad\n");
+		//	printf("dentro cmd = %s\n", cmd->cmd);
 		return (true);
 	}
 	return (false);

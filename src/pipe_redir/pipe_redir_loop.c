@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:32:13 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 17:02:10 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 17:48:09 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int fd[2], int old_read_fd)
 	{
 		if (ft_check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
-		printf("cmd_temp->cmd: %s\n", cmd_temp->cmd);
+		//printf("DENTRO cmd_temp->cmd: %s\n", cmd_temp->cmd);
 		ft_create_pipe(fd);
 		pid = ft_create_child_process();
 		if (pid == 0)
