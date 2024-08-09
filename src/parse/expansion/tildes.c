@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:50:43 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/08 19:21:52 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 15:30:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	expand_tildes(char **input, t_minishell *shell)
 			if (var)
 				var_value = ft_strdup(var->value);
 			(*input) = ft_strreplace_tilde((*input), i, var_value, "~");
-			free(var_value);
+			if (var_value[0] != 0)
+				free(var_value);
 		}
 	}
 }
