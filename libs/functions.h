@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 20:29:48 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:05:54 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void		ft_handle_exit(t_cmd *command, t_minishell *shell);
 // EXPORT
 void		ft_print_export(t_var *current);
 void		ft_sort_content(t_var *envvar);
-int			ft_ft_handle_export_args(t_minishell *shell);
+int			ft_handle_export_args(t_minishell *shell);
 int			ft_handle_no_equal(t_minishell *shell, t_arg *argument);
 bool		ft_handle_with_equal(t_minishell *shell, t_arg *argument);
 
@@ -152,5 +152,7 @@ void		ft_exec(t_minishell *shell, t_cmd *cmd_temp);
 bool		ft_verify_unexpected_token(t_minishell *shell);
 bool		ft_verify_fn(t_minishell *shell);
 void		ft_mark_commands(t_minishell *shell);
+
+void	close_survivors_fds(void);
 
 #endif

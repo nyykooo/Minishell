@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipe_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 17:02:25 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:16:46 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	ft_create_pipe(int fd[2])
 
 static void	ft_close_pipefds(int fd[2], int old_read_fd)
 {
-	if (old_read_fd != 0)
+	if (old_read_fd > 2)
 		close(old_read_fd);
-	if (fd[1] != 0)
+	if (fd[1] > 2)
 		close(fd[1]);
-	if (fd[0] != 0)
+	if (fd[0] > 2)
 		close(fd[0]);
 }
 
@@ -83,6 +83,9 @@ void	ft_handle_pipe_and_redir(t_minishell *shell, t_cmd *commands)
 	int		old_read_fd;
 	int		status;
 
+	fd[0] = -1;
+	fd[1] = -1;
+	old_read_fd = -1;
 	ft_ignore_some_signals();
 	old_read_fd = 0;
 	status = ft_pipe_redir_loop(shell, commands, fd, old_read_fd);
