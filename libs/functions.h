@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:51:55 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:29:48 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ here-document delimited by end-of-file\n"
 t_minishell	*ft_get_shell(void);
 
 void		ft_analyze_input(t_minishell *shell);
-
-// PARSING
-
-// void	ft_parsing_hub(char *input, t_minishell *shell);
-// int	ft_input_manager(char **input);
-// t_token **token_manager(char *input);
-// void	create_tokens(char **array, t_token ***tokens);
-// char *check_meta(char *str);
-// void	analyze_argument(t_token **tokens, t_minishell *shell);
-// void	ft_expand_dolar(t_arg *argument , t_minishell *shell);
 
 // NEW PARSING
 
@@ -47,7 +37,8 @@ void		ft_tokenizer(t_minishell *shell);
 void		ft_token_creation(char **array, t_minishell *shell);
 // void	ft_analyze_tokens(t_arg **tokens, t_minishell *shell);
 void		ft_analyze_tokens(t_token *tokens, t_minishell *shell);
-void		ft_include_token(t_minishell *shell, char *argument, t_token *token);
+void		ft_include_token(t_minishell *shell, \
+char *argument, t_token *token);
 
 // NEW PARSING - COMMANDS
 
@@ -147,7 +138,7 @@ void		ft_create_pipe(int fd[2]);
 
 void		ft_execute_cmd(t_cmd *command, char **arguments, char **env_var);
 void		ft_get_path(t_cmd *commands);
-char		*ft_get_command_path(char *command);
+char		*ft_get_command_path(char *command, t_minishell *shell);
 void		ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd);
 void		ft_create_pipe(int fd[2]);
 void		ft_handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 19:36:34 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:32:05 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	ft_get_path(t_cmd *commands)
 {
 	if (access(commands->cmd, X_OK) != 0)
-		commands->path = ft_get_command_path(commands->cmd);
+		commands->path = ft_get_command_path(commands->cmd, commands->shell);
 	else
 		commands->path = ft_strdup(commands->cmd);
 }
@@ -101,7 +101,8 @@ void	ft_analyze_input(t_minishell *shell)
 		return ;
 	}
 	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0) || \
-	(ft_strcmp(shell->commands->cmd, "<") == 0))
+	(ft_strcmp(shell->commands->cmd, "<") == 0) \
+	|| (ft_strcmp(shell->commands->cmd, ">>") == 0))
 		ft_handle_pipe_and_redir(shell, shell->commands);
 	else if (shell->commands)
 	{

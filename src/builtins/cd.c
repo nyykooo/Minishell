@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 11:32:28 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:45:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*get_dir(char *arg, int *should_free, t_var *envvar_list)
 		if (dir == NULL)
 		{
 			ft_print_error(false, 3, 1,
-				"-minishell: cd: too many arguments\n");
+				"-minishell: cd: no OLDPWD\n");
 			return (NULL);
 		}
 	}

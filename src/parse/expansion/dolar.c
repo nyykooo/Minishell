@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:29:46 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:46:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,38 +37,43 @@ static char	*ft_get_name(char *input, int start)
 	return (ft_substr(input, start, i));
 }
 
-void	ft_expand_dolar(char **input, t_minishell *shell)
+static void	ft_analyze_expansion(char **input, t_minishell *shell, int i)
 {
-	int		i;
 	t_var	*var;
 	char	*var_value;
 	char	*var_name;
 	bool	should_free;
 
-	i = -1;
 	should_free = false;
+	var_value = "";
+	var_name = ft_get_name((*input), i + 1);
+	if (var_name == NULL)
+		return ;
+	var = ft_find_envvar(shell->envvars, var_name);
+	if (var)
+	{
+		var_value = ft_strdup(var->value);
+		should_free = true;
+	}
+	(*input) = ft_strreplace((*input), i, var_value, var_name);
+	if (should_free)
+	{
+		free(var_value);
+		should_free = false;
+	}
+}
+
+void	ft_expand_dolar(char **input, t_minishell *shell)
+{
+	int		i;
+
+	i = -1;
 	while ((*input)[++i])
 	{
-		var_value = "";
 		if ((*input)[i] == '$' && ft_is_inside_quotes((*input), i) != 1
 			&& (*input)[i + 1] != '\0')
 		{
-			var_name = ft_get_name((*input), i + 1);
-			if (var_name == NULL)
-				continue ;
-			var = ft_find_envvar(shell->envvars, var_name);
-			if (var)
-			{
-				var_value = ft_strdup(var->value);
-				should_free = true;
-			}
-			(*input) = ft_strreplace((*input), i, var_value, var_name);
-			if (should_free)
-			{
-				free(var_value);
-				should_free	= false;
-			}
-			i = 0;
+			ft_analyze_expansion(input, shell, i);
 		}
 	}
 }

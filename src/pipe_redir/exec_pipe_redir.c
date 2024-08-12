@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 17:46:08 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:31:06 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	ft_free_dirs(char **dirs)
 	free(dirs);
 }
 
-char	*ft_get_command_path(char *command)
+char	*ft_get_command_path(char *command, t_minishell *shell)
 {
-	char	*path;
-	char	**dirs;
-	char	*possible_path;
-	int		i;
+	t_var		*path;
+	char		**dirs;
+	char		*possible_path;
+	int			i;
 
-	path = getenv ("PATH");
+	path = ft_find_envvar(shell->envvars, "PATH");
 	if (!path)
 		return (NULL);
-	dirs = ft_split (path, ':');
+	dirs = ft_split (path->value, ':');
 	i = -1;
 	while (dirs[++i] != NULL)
 	{
@@ -90,9 +90,11 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 		ft_exec_builtin(shell, cmd_temp);
 		exit(shell->exit_status);
 	}
-	if (!cmd_temp->prev && strcmp(cmd_temp->cmd, ">") == 0)
+	if (!cmd_temp->prev && (strcmp(cmd_temp->cmd, ">") == 0 \
+	|| strcmp(cmd_temp->cmd, ">>") == 0))
 	{
-		exit(0); //arrumar exit_status
+		ft_free_shell(shell);
+		exit(0);
 	}
 	arg_array = ft_to_array(cmd_temp);
 	ft_get_path(cmd_temp);

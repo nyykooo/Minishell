@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tildes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:50:43 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:29:56 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:46:13 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ void	ft_expand_tildes(char **input, t_minishell *shell)
 	while ((*input)[++i])
 	{
 		if ((*input)[i] == '~' && ft_is_inside_quotes((*input), i) == 0
-			&& ((*input)[i - 1] == ' ' || i == 0)
+			&& (i == 0 || (*input)[i - 1] == ' ')
 			&& ((*input)[i + 1] == ' ' || (*input)[i + 1] == '\0'
 			|| (*input)[i + 1] == '/'))
 		{
 			var = ft_find_envvar(shell->envvars, "HOME");
-			if (var)
+			if (var && ft_strcmp(var->value, "") != 0)
 				var_value = ft_strdup(var->value);
 			(*input) = ft_strreplace_tilde((*input), i, var_value, "~");
-			free(var_value);
+			if (var_value[0] != 0)
+				free(var_value);
+			i = -1;
 		}
 	}
 }

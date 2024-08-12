@@ -6,15 +6,13 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 12:49:46 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:59:42 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
 
-//volatile sig_atomic_t	g_sig;
-//static int	g_sig;
-int 	g_sig;
+int	g_sig;
 
 static char	*ft_get_pathname(void)
 {
@@ -91,7 +89,7 @@ static void	ft_minishell_loop(t_minishell *shell)
 	}
 }
 
-static void	ft_launch_minishell(t_minishell *shell, char *input)
+static int	ft_launch_minishell(t_minishell *shell, char *input)
 {
 	if (input[0] == 0)
 		exit(shell->exit_status);
@@ -111,8 +109,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_config_signals(0);
 	shell->envvars = ft_create_envvar_list(envp);
-	if (argc >= 3 && ft_strncmp(argv[1], "-c", 3) == 0)
-		ft_launch_minishell(shell, argv[2]);
+	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+	{
+		int exit_status = ft_launch_minishell(shell, argv[2]);
+		exit(exit_status);
+	}
 	// if (argc != 1)
 	// {
 	// 	write(2, "usage: ./minishell\n", 20);
