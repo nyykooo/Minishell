@@ -6,13 +6,13 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:50:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/12 22:55:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 22:58:47 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../libs/headers.h"
 
-void	expand_hashtag(char **input)
+void	ft_expand_hashtag(char **input)
 {
 	int		i;
 

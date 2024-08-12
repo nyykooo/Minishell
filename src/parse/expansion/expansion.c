@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:06:10 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 19:31:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:25:37 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static void	insert_spaces(char *input, char *new)
 	new[j] = '\0';
 }
 
-void	expand_pipes_redir(t_minishell *shell)
+void	ft_expand_pipes_redir(t_minishell *shell)
 {
 	int		add_space;
 	int		len;

@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 12:43:43 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:26:25 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@ static void	analyze_commands(t_minishell *shell)
 {
 	t_cmd	*temp;
 
+	shell->commands->prev = NULL;
 	temp = shell->commands;
 	while (temp)
 	{
-		analyze_arguments(shell, temp);
+		ft_analyze_arguments(shell, temp);
 		temp = temp->next;
 	}
 }
 
-void	analyze_tokens(t_token *tokens, t_minishell *shell)
+void	ft_analyze_tokens(t_token *tokens, t_minishell *shell)
 {
 	while (tokens != NULL)
 	{
@@ -37,7 +38,7 @@ void	analyze_tokens(t_token *tokens, t_minishell *shell)
 				shell->n_pipe++;
 			else
 				shell->n_cmd++;
-			create_command(tokens, shell);
+			ft_create_command(tokens, shell);
 		}
 		tokens = tokens->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 15:32:37 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:45:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	change_directory(char *dir, int should_free, t_minishell *shell)
 		free(dir);
 }
 
-void	handle_cd(t_cmd *command, t_minishell *shell)
+void	ft_handle_cd(t_cmd *command, t_minishell *shell)
 {
 	char	*dir;
 	int		should_free;

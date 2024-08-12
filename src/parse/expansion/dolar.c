@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 18:24:49 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:46:53 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	ft_analyze_expansion(char **input, t_minishell *shell, int i)
 	}
 }
 
-void	expand_dolar(char **input, t_minishell *shell)
+void	ft_expand_dolar(char **input, t_minishell *shell)
 {
 	int		i;
 

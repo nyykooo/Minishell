@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/08 20:12:36 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:28:49 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_include_arg(t_minishell *shell, char *input, t_arg *argument)
 		new->next->prev = new;
 }
 
-void	analyze_arguments(t_minishell *shell, t_cmd *cmd)
+void	ft_analyze_arguments(t_minishell *shell, t_cmd *cmd)
 {
 	t_arg	*tmp;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:13:40 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/08 20:11:49 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:33:04 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	look_for_flag(t_arg *argument)
 		return (false);
 }
 
-void	handle_echo(t_cmd *command)
+void	ft_handle_echo(t_cmd *command)
 {
 	bool	flag;
 	bool	not_flag;

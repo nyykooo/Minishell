@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 16:33:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/08 19:16:56 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:04:30 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	ft_check_options(t_arg *argument)
 	return (false);
 }
 
-int	handle_export(t_minishell *shell)
+int	ft_handle_export(t_minishell *shell)
 {
 	t_var	*current;
 	t_arg	*temp;

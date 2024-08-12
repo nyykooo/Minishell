@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:16:11 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/08 20:12:44 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:56:13 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	init_token(t_minishell *shell, char *value)
 	new_token = ft_calloc(1, sizeof(t_token));
 	if (!new_token)
 	{
-		free_shell(shell);
+		ft_free_shell(shell);
 		printf("init token\n");
 		exit (1);
 	}
@@ -71,7 +71,7 @@ static void	init_token(t_minishell *shell, char *value)
 	ft_tokenadd_back(&shell->tokens, new_token);
 }
 
-void	include_token(t_minishell *shell, char *input, t_token *argument)
+void	ft_include_token(t_minishell *shell, char *input, t_token *argument)
 {
 	t_token	*new;
 	t_token	*curr;
@@ -95,7 +95,7 @@ void	include_token(t_minishell *shell, char *input, t_token *argument)
 		new->next->prev = new;
 }
 
-void	token_creation(char **array, t_minishell *shell)
+void	ft_token_creation(char **array, t_minishell *shell)
 {
 	int		i;
 	t_token	*tmp;
@@ -107,7 +107,7 @@ void	token_creation(char **array, t_minishell *shell)
 	while (tmp)
 	{
 		check_token(tmp);
-		tmp->content = quote_del(tmp->content);
+		tmp->content = ft_quote_del(tmp->content);
 		get_type(tmp);
 		tmp = tmp->next;
 	}

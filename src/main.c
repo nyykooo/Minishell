@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:30:52 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/08 20:41:41 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 10:59:42 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/headers.h"
 
-volatile sig_atomic_t	g_sig;
+int	g_sig;
 
 static char	*ft_get_pathname(void)
 {
@@ -49,7 +49,7 @@ static bool	ft_create_prompt(t_minishell *shell)
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
-		handle_exit(shell->commands, shell);
+		ft_handle_exit(shell->commands, shell);
 	if (input[0] == 0)
 		return (false);
 	if (input)
@@ -64,11 +64,11 @@ static bool	ft_create_prompt(t_minishell *shell)
 static void	ft_clear_shell(t_minishell *shell)
 {
 	if (shell->tokens != NULL)
-		free_tokens(shell->tokens);
+		ft_free_tokens(shell->tokens);
 	if (shell->input != NULL)
 		free(shell->input);
 	if (shell->commands != NULL)
-		free_commands(shell->commands);
+		ft_free_commands(shell->commands);
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->commands = NULL;
@@ -89,16 +89,16 @@ static void	ft_minishell_loop(t_minishell *shell)
 	}
 }
 
-// static void	ft_launch_minishell(t_minishell *shell, char *input)
-// {
-// 	if (input[0] == 0)
-// 		exit(shell->exit_status);
-// 	shell->input = ft_strdup(input);
-// 	ft_update_questionvar(shell);
-// 	ft_analyze_input(shell);
-// 	ft_clear_shell(shell);
-// 	exit(shell->exit_status);
-// }
+static int	ft_launch_minishell(t_minishell *shell, char *input)
+{
+	if (input[0] == 0)
+		exit(shell->exit_status);
+	shell->input = ft_strdup(input);
+	ft_update_questionvar(shell);
+	ft_analyze_input(shell);
+	ft_clear_shell(shell);
+	exit(shell->exit_status);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -107,15 +107,18 @@ int	main(int argc, char **argv, char **envp)
 	shell = ft_get_shell();
 	g_sig = 0;
 	(void)argv;
-	config_signals(0);
+	ft_config_signals(0);
 	shell->envvars = ft_create_envvar_list(envp);
-	// if (argc >= 3 && ft_strncmp(argv[1], "-c", 3) == 0)
-	// 	ft_launch_minishell(shell, argv[2]);
-	if (argc != 1)
+	if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 	{
-		write(2, "usage: ./minishell\n", 20);
-		return (EXIT_FAILURE);
+		int exit_status = ft_launch_minishell(shell, argv[2]);
+		exit(exit_status);
 	}
+	// if (argc != 1)
+	// {
+	// 	write(2, "usage: ./minishell\n", 20);
+	// 	return (EXIT_FAILURE);
+	// }
 	ft_minishell_loop(shell);
 	return (0);
 }
