@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 20:31:06 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 13:59:09 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 		ft_exec_builtin(shell, cmd_temp);
 		exit(shell->exit_status);
 	}
-	if (!cmd_temp->prev && (strcmp(cmd_temp->cmd, ">") == 0 \
+	if ((!cmd_temp->prev || cmd_temp->prev->type == T_PIPE) && (strcmp(cmd_temp->cmd, ">") == 0 \
 	|| strcmp(cmd_temp->cmd, ">>") == 0))
 	{
 		ft_free_shell(shell);
