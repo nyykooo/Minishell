@@ -57,6 +57,7 @@
 		"types.h": "c",
 		"signal.h": "c",
 		"fcntl.h": "c",
-		"strings.h": "c"
+		"strings.h": "c",
+		"limits.h": "c"
 	}
 }

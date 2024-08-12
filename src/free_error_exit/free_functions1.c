@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:25:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:55:02 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:57:26 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 void	close_survivors_fds(void)
 {
 	int	fd;
+	int	i;
 
 	fd = 3;
-	while (1)
+	i = 3;
+	while (i < 1024)
 	{
-		if (close(fd) == -1 && errno == EBADF)
-			break ;
+		close(fd);
 		fd++;
+		i++;
 	}
 }
 

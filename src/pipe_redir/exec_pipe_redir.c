@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 20:31:06 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:09:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
 	else if (ft_strcmp(cmd_temp->cmd, "exit") == 0)
 		ft_handle_exit(cmd_temp, shell);
 	else if (ft_strcmp(cmd_temp->cmd, "export") == 0)
-		ft_handle_export(shell);
+		shell->exit_status = ft_handle_export(shell);
 	else if (ft_strcmp(cmd_temp->cmd, "unset") == 0)
 		ft_handle_unset(cmd_temp, &shell->envvars);
 	else if (ft_strcmp(cmd_temp->cmd, "env") == 0)
@@ -88,6 +88,7 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 	if (ft_is_builtin(cmd_temp->cmd) == true)
 	{
 		ft_exec_builtin(shell, cmd_temp);
+		ft_free_shell(shell);
 		exit(shell->exit_status);
 	}
 	if (!cmd_temp->prev && (strcmp(cmd_temp->cmd, ">") == 0 \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_arg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 22:20:03 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:32:51 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:04:38 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static bool	ft_is_valid_arg(const char *arg, bool has_equal)
 	return (return_value);
 }
 
-int	ft_ft_handle_export_args(t_minishell *shell)
+int	ft_handle_export_args(t_minishell *shell)
 {
 	t_arg	*temp;
 
