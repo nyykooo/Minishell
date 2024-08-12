@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/11 17:05:54 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 22:50:18 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void		ft_redefine_child_signals(void);
 void		ft_ignore_some_signals(void);
 
 // FTS_PIPE_REDIR_UTILS
-bool		ft_is_pipe_or_redir(t_cmd *cmd, int i);
+bool		ft_is_pipe_or_redir(t_cmd **cmd, int i);
 bool		ft_is_file(t_cmd *cmd);
 bool		ft_has_pipe(t_cmd *cmd_temp);
 void		ft_nopipe(int in_fd, int out_fd);
@@ -147,7 +147,6 @@ int			process_heredoc_cmds(t_minishell *shell, \
 struct sigaction *sa_original);
 int			ft_pipe_redir_loop(t_minishell *shell, \
 t_cmd *commands, int fd[2], int old_read_fd);
-bool		ft_is_pipe_or_redir(t_cmd *cmd, int i);
 void		ft_exec(t_minishell *shell, t_cmd *cmd_temp);
 bool		ft_verify_unexpected_token(t_minishell *shell);
 bool		ft_verify_fn(t_minishell *shell);

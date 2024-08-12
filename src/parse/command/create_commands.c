@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:49:42 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 19:53:41 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:07:46 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ void	ft_create_command(t_token *tokens, t_minishell *shell)
 	init_cmd(shell, tmp);
 	if (!shell->commands)
 		ft_print_error(true, 0, 1, "Error: malloc failed create commands\n");
+	shell->commands->prev = NULL;
 }

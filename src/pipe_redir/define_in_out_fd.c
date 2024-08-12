@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define_in_out_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 19:50:15 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 19:51:18 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 21:36:33 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,34 @@ static void	ft_out_fd(int *out_fd, t_cmd *current_cmd)
 	}
 	if (current_cmd->prev->prev != NULL && \
 	current_cmd->arguments != NULL)
-		ft_add_argument(&current_cmd->prev->prev->arguments, \
+		ft_add_argument(&current_cmd->prev->prev->arguments,
 		current_cmd->arguments);
 }
 
 void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 {
 	t_cmd	*current_cmd;
+	t_cmd	*current_cmd_2;
 
 	*in_fd = -1;
 	*out_fd = -1;
 	current_cmd = cmd_temp;
+	current_cmd_2 = cmd_temp;
+	while (current_cmd->prev != NULL || (current_cmd->prev && current_cmd->prev->type != T_PIPE))
+	{
+		// printf("entrou no while do define_in_out_fd\n");
+		// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
+		// printf("--------------------\n");
+		current_cmd = current_cmd->prev;
+	}
+	if (!(strcmp(current_cmd->cmd, ">") == 0 || strcmp(current_cmd->cmd, ">>") == 0 \
+	|| strcmp(current_cmd->cmd, "<") == 0))
+	{
+		current_cmd = current_cmd_2;
+	}
 	while (current_cmd != NULL && current_cmd->type != T_PIPE)
 	{
+		//printf("dentro do while dos fds current_cmd->cmd: %s\n", current_cmd->cmd);
 		if (current_cmd->input_file == true)
 			ft_in_fd(in_fd, current_cmd);
 		if (current_cmd->type == T_LAPEND)
@@ -104,7 +119,16 @@ void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 				*in_fd = current_cmd->prev->here_doc_fd;
 		}
 		if (current_cmd->rappend == true || current_cmd->rtrunc == true)
+		{
+			// printf("entrou no if do rappend ou rtrunc\n");
+			// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
 			ft_out_fd(out_fd, current_cmd);
+		}
 		current_cmd = current_cmd->next;
+		// printf("dentro do while out_fd: %d\n", *out_fd);
+		// printf("dentro do while in_fd: %d\n", *in_fd);
 	}
+	// printf("saiu do while do define_in_out_fd\n");
+	// printf("in_fd: %d\n", *in_fd);
+	// printf("out_fd: %d\n", *out_fd);
 }

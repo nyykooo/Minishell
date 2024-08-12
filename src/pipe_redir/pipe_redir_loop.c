@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:32:13 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/11 17:17:11 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 22:50:45 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static pid_t	ft_create_child_process(void)
 
 static bool	ft_check_and_advance_cmd(t_cmd **cmd_temp, int *i)
 {
-	if ((ft_is_pipe_or_redir(*cmd_temp, (*i)++) == true) || \
+	if ((ft_is_pipe_or_redir(cmd_temp, (*i)++) == true) || \
 	(ft_is_file(*cmd_temp) == true))
 	{
 		*cmd_temp = (*cmd_temp)->next;
@@ -90,6 +90,7 @@ int fd[2], int old_read_fd)
 	{
 		if (ft_check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
+		//printf("ESSE cmd_temp->cmd: %s FOI PRO FORK\n", cmd_temp->cmd);
 		ft_create_pipe(fd);
 		pid = ft_create_child_process();
 		if (pid == 0)

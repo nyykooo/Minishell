@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 20:32:05 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:46:32 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,18 @@ static void	handle_cmds(t_minishell *shell)
 void	ft_analyze_input(t_minishell *shell)
 {
 	int	status;
+	//t_cmd	*cmd_temp;
+	//t_token	*tokens;
 
 	status = 0;
 	ft_parsing_hub(shell);
+	// tokens = shell->tokens;
+	// while (tokens != NULL)
+	// {
+	// 	printf("tokens->content: %s\n", tokens->content);
+	// 	tokens = tokens->next;
+	// }
+	// printf("-----------------------\n");
 	if (shell->n_cmd == 0)
 		return ;
 	status = heredoc(shell);
@@ -100,6 +109,23 @@ void	ft_analyze_input(t_minishell *shell)
 		shell->exit_status = 130;
 		return ;
 	}
+	// cmd_temp = shell->commands;
+	// while (cmd_temp != NULL)
+	// {
+	// 	printf("cmd_temp->cmd: %s\n", cmd_temp->cmd);
+	// 	if (cmd_temp->prev == NULL)
+	// 		printf("cmd_temp->prev: ehhhhhhhh NULL\n");
+	// 	if (cmd_temp->arguments)
+	// 	{
+	// 		if (cmd_temp->arguments->arg)
+	// 			printf("cmd_temp->arguments: %s\n", cmd_temp->arguments->arg);
+	// 		//if (cmd_temp->arguments->next)
+	// 		//	printf("cmd_temp->arguments->next->arg: %s\n", cmd_temp->arguments->next->arg);
+	// 	}
+	// 	printf("cmd_temp->type: %d\n", cmd_temp->type);
+	// 	printf("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\n");
+	// 	cmd_temp = cmd_temp->next;
+	// }
 	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0) || \
 	(ft_strcmp(shell->commands->cmd, "<") == 0) \
 	|| (ft_strcmp(shell->commands->cmd, ">>") == 0))
