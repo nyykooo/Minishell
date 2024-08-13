@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:11:44 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:33:19 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:33:24 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 void	ft_handle_pwd(t_minishell *shell)
 {
 	char	*pwd;
+	t_var	*var;
 
-	pwd = ft_find_envvar(shell->envvars, "PWD")->content + 4;
-	if (pwd == NULL)
+	var = ft_find_envvar(shell->envvars, "PWD");
+	if (var)
+		pwd = var->content + 4;
+	if (!var)
 	{
 		pwd = getcwd(NULL, 0);
 		if (pwd == NULL)
@@ -27,4 +30,6 @@ void	ft_handle_pwd(t_minishell *shell)
 		}
 	}
 	printf("%s\n", pwd);
+	if (!var)
+		free(pwd);
 }
