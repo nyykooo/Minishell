@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:59:15 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/12 21:40:13 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:26:31 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ void	ft_corner_case(t_cmd *cmd)
 	t_arg	*new_arg;
 	t_arg	**new_arg_list_tail;
 
-	new_cmd = malloc(sizeof(t_cmd));
+	current_arg = NULL;
+	new_cmd = calloc(1, sizeof(t_cmd));
 	new_cmd->type = T_COMMAND;
 	new_cmd->rtrunc = false;
 	new_cmd->rappend = false;
 	new_cmd->input_file = false;
+	new_cmd->shell = ft_get_shell();
 	if (cmd->next && cmd->next->arguments && cmd->next->arguments->arg)
 		new_cmd->cmd = ft_strdup(cmd->next->arguments->arg);
 	if (cmd->next && cmd->next->arguments && cmd->next->arguments->next)
@@ -34,7 +36,8 @@ void	ft_corner_case(t_cmd *cmd)
 	while (current_arg)
 	{
 		new_arg = calloc(1, sizeof(t_arg));
-		new_arg->arg = ft_strdup(current_arg->arg);
+		if (current_arg->arg)
+			new_arg->arg = ft_strdup(current_arg->arg);
 		*new_arg_list_tail = new_arg;
 		new_arg_list_tail = &new_arg->next;
 		current_arg = current_arg->next;
@@ -66,26 +69,30 @@ bool	ft_is_pipe_or_redir(t_cmd **cmd, int i)
 		strcmp((*cmd)->next->arguments->arg, "<") != 0)
 		{
 			ft_corner_case(*cmd);
+			// temp = *cmd;
+			// while (temp)
+			// {
+			// 	printf("temp->cmd: %s\n", temp->cmd);
+			// 	printf("temp->type: %d\n", temp->type);
+			// 	printf("temp->rtrunc: %d\n", temp->rtrunc);
+			// 	while (temp->arguments)
+			// 	{
+			// 		printf("temp->arguments->arg: %s\n", temp->arguments->arg);
+			// 		temp->arguments = temp->arguments->next;
+			// 	}
+			// 	temp = temp->next;
+			// }
 			*cmd = (*cmd)->next->next;
 			//printf("LOGO APOS O CORNER cmd->cmd: %s\n", (*cmd)->cmd);
 		}
-		// temp = *cmd;
-		// while (temp)
-		// {
-		// 	printf("temp->cmd: %s\n", temp->cmd);
-		// 	printf("temp->type: %d\n", temp->type);
-		// 	if (temp->arguments)
-		// 		printf("temp->arguments->arg: %s\n", temp->arguments->arg);
-		// 	temp = temp->next;
-		// }
 		return (false);
 	}
 	else if ((*cmd)->prev && (*cmd)->prev->type == T_PIPE && \
 	((*cmd)->type == T_RTRUNC || (*cmd)->type == T_RAPEND || \
 	(*cmd)->type == T_LTRUNC))
 	{
-		//ft_corner_case(*cmd);
-		//*cmd = (*cmd)->next->next;
+		ft_corner_case(*cmd);
+		*cmd = (*cmd)->next->next;
 		return (false);
 	}
 	else if ((*cmd)->type == T_RAPEND || (*cmd)->type == T_RTRUNC || \

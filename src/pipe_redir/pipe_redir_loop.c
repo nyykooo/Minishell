@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:32:13 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/12 22:50:45 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:03:45 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int fd[2], int old_read_fd)
 	{
 		if (ft_check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
-		//printf("ESSE cmd_temp->cmd: %s FOI PRO FORK\n", cmd_temp->cmd);
+		//printf("esse cmd: %s !!!!!!!!!!!!! foi pro fork\n", cmd_temp->cmd);
 		ft_create_pipe(fd);
 		pid = ft_create_child_process();
 		if (pid == 0)
@@ -101,5 +101,6 @@ int fd[2], int old_read_fd)
 	}
 	if (last_child_pid != -1)
 		waitpid(last_child_pid, &status, 0);
+	//printf("status: %d\n", status);
 	return (status);
 }
