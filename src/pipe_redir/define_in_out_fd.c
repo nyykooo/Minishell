@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 19:50:15 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/13 09:21:03 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:03:38 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_add_argument(t_arg **main_cmd_args, t_arg *new_node)
 	}
 }
 
-static void	ft_in_fd(int *in_fd, t_cmd *current_cmd)
+static void	ft_in_fd(int *in_fd, t_cmd *current_cmd, t_cmd *cmd_root)
 {
 	char	*error_msg;
 
@@ -45,7 +45,7 @@ static void	ft_in_fd(int *in_fd, t_cmd *current_cmd)
 		current_cmd->cmd, ": ", strerror(errno), "\n");
 		exit (ft_put_error_msg(error_msg, 1));
 	}
-	ft_add_argument(&current_cmd->prev->prev->arguments, \
+	ft_add_argument(&cmd_root->arguments, \
 	current_cmd->arguments);
 	while (current_cmd->arguments)
 	{
@@ -66,7 +66,7 @@ static int	ft_determine_flags(t_cmd *cmd_temp)
 	return (flags);
 }
 
-static void	ft_out_fd(int *out_fd, t_cmd *current_cmd)
+static void	ft_out_fd(int *out_fd, t_cmd *current_cmd, t_cmd *cmd_root)
 {
 	int	flags;
 
@@ -81,7 +81,7 @@ static void	ft_out_fd(int *out_fd, t_cmd *current_cmd)
 	}
 	if (current_cmd->prev->prev != NULL && \
 	current_cmd->arguments != NULL)
-		ft_add_argument(&current_cmd->prev->prev->arguments,
+		ft_add_argument(&cmd_root->arguments,
 		current_cmd->arguments);
 }
 
@@ -89,11 +89,13 @@ void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 {
 	t_cmd	*current_cmd;
 	t_cmd	*current_cmd_2;
+	t_cmd	*cmd_root;
 
 	*in_fd = -1;
 	*out_fd = -1;
 	current_cmd = cmd_temp;
 	current_cmd_2 = cmd_temp;
+	cmd_root = cmd_temp;
 	while (current_cmd->prev != NULL && current_cmd->prev->type != T_PIPE)
 	{
 		// printf("entrou no decrement pointer com ");
@@ -113,7 +115,7 @@ void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 	{
 		//printf("dentro do while dos fds current_cmd->cmd: %s\n", current_cmd->cmd);
 		if (current_cmd->input_file == true)
-			ft_in_fd(in_fd, current_cmd);
+			ft_in_fd(in_fd, current_cmd, cmd_root);
 		if (current_cmd->type == T_LAPEND)
 		{
 			if (*in_fd >= 0)
@@ -125,7 +127,7 @@ void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 		{
 			// printf("entrou no if do rappend ou rtrunc com ");
 			// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
-			ft_out_fd(out_fd, current_cmd);
+			ft_out_fd(out_fd, current_cmd, cmd_root);
 		}
 		current_cmd = current_cmd->next;
 		// printf("dentro do while out_fd: %d\n", *out_fd);
