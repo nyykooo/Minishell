@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/12 22:50:40 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:03:39 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*ft_get_command_path(char *command, t_minishell *shell)
 	while (dirs[++i] != NULL)
 	{
 		possible_path = malloc (ft_strlen(dirs[i]) + ft_strlen(command) + 2);
+		if (!possible_path)
+			ft_print_error(true, 1, 1, "malloc: ", strerror(errno));
 		ft_strcpy (possible_path, dirs[i]);
 		ft_strcat (possible_path, "/");
 		ft_strcat (possible_path, command);
@@ -84,6 +86,7 @@ void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
 void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 {
 	char	**arg_array;
+	//t_arg	*temp;
 
 	if (ft_is_builtin(cmd_temp->cmd) == true)
 	{
@@ -91,12 +94,19 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 		ft_free_shell(shell);
 		exit(shell->exit_status);
 	}
-	if ((!cmd_temp->prev || cmd_temp->prev->type == T_PIPE) && (strcmp(cmd_temp->cmd, ">") == 0 \
+	if ((!cmd_temp->prev || cmd_temp->prev->type == T_PIPE) && (strcmp(cmd_temp->cmd, ">") == 0 
 	|| strcmp(cmd_temp->cmd, ">>") == 0))
 	{
 		ft_free_shell(shell);
 		exit(0);
 	}
+	// printf("cmd_temp->cmd: %s\n", cmd_temp->cmd);
+	// temp = cmd_temp->arguments;
+	// while (temp)
+	// {
+	// 	printf("temp->arg: %s\n", temp->arg);
+	// 	temp = temp->next;
+	// }
 	arg_array = ft_to_array(cmd_temp);
 	ft_get_path(cmd_temp);
 	ft_execute_cmd(cmd_temp, arg_array, envvar_array(shell));
