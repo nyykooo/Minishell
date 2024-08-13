@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:59:15 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/13 09:02:03 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:26:31 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_corner_case(t_cmd *cmd)
 	new_cmd->rtrunc = false;
 	new_cmd->rappend = false;
 	new_cmd->input_file = false;
+	new_cmd->shell = ft_get_shell();
 	if (cmd->next && cmd->next->arguments && cmd->next->arguments->arg)
 		new_cmd->cmd = ft_strdup(cmd->next->arguments->arg);
 	if (cmd->next && cmd->next->arguments && cmd->next->arguments->next)
