@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_analyze.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:08:53 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/12 20:26:25 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:37:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	analyze_commands(t_minishell *shell)
 {
 	t_cmd	*temp;
 
+	if (shell->commands == NULL)
+		return ;
 	shell->commands->prev = NULL;
 	temp = shell->commands;
 	while (temp)
