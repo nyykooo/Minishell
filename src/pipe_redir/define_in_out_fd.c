@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 19:50:15 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/12 21:36:33 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/13 09:21:03 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,21 @@ void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 	*out_fd = -1;
 	current_cmd = cmd_temp;
 	current_cmd_2 = cmd_temp;
-	while (current_cmd->prev != NULL || (current_cmd->prev && current_cmd->prev->type != T_PIPE))
+	while (current_cmd->prev != NULL && current_cmd->prev->type != T_PIPE)
 	{
-		// printf("entrou no while do define_in_out_fd\n");
+		// printf("entrou no decrement pointer com ");
 		// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
-		// printf("--------------------\n");
 		current_cmd = current_cmd->prev;
+
 	}
+	// printf("saiu do decrement pointer com ");
+	// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
 	if (!(strcmp(current_cmd->cmd, ">") == 0 || strcmp(current_cmd->cmd, ">>") == 0 \
 	|| strcmp(current_cmd->cmd, "<") == 0))
 	{
 		current_cmd = current_cmd_2;
 	}
+	//printf("passou pela strcmp e current_cmd->cmd: %s\n", current_cmd->cmd);
 	while (current_cmd != NULL && current_cmd->type != T_PIPE)
 	{
 		//printf("dentro do while dos fds current_cmd->cmd: %s\n", current_cmd->cmd);
@@ -120,7 +123,7 @@ void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 		}
 		if (current_cmd->rappend == true || current_cmd->rtrunc == true)
 		{
-			// printf("entrou no if do rappend ou rtrunc\n");
+			// printf("entrou no if do rappend ou rtrunc com ");
 			// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
 			ft_out_fd(out_fd, current_cmd);
 		}

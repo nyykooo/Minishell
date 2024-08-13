@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/12 20:46:32 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/13 09:09:24 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,16 +113,15 @@ void	ft_analyze_input(t_minishell *shell)
 	// while (cmd_temp != NULL)
 	// {
 	// 	printf("cmd_temp->cmd: %s\n", cmd_temp->cmd);
+	// 	printf("cmd_temp->type: %d\n", cmd_temp->type);
+	// 	printf("cmd_temp->rtunc: %d\n", cmd_temp->rtrunc);
 	// 	if (cmd_temp->prev == NULL)
 	// 		printf("cmd_temp->prev: ehhhhhhhh NULL\n");
-	// 	if (cmd_temp->arguments)
+	// 	while (cmd_temp->arguments != NULL)
 	// 	{
-	// 		if (cmd_temp->arguments->arg)
-	// 			printf("cmd_temp->arguments: %s\n", cmd_temp->arguments->arg);
-	// 		//if (cmd_temp->arguments->next)
-	// 		//	printf("cmd_temp->arguments->next->arg: %s\n", cmd_temp->arguments->next->arg);
+	// 		printf("arg_temp->arg: %s\n", cmd_temp->arguments->arg);
+	// 		cmd_temp->arguments = cmd_temp->arguments->next;
 	// 	}
-	// 	printf("cmd_temp->type: %d\n", cmd_temp->type);
 	// 	printf("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\n");
 	// 	cmd_temp = cmd_temp->next;
 	// }
