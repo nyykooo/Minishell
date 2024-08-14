@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 08:29:20 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 12:45:41 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:27:15 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static char	*loop_heredoc(t_cmd *current, int fd[2], t_minishell *shell)
 			if (line)
 				free(line);
 			close_fds(fd);
+			ft_free_shell(shell);
 			exit (130);
 		}
 		if (!line)
