@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:11:44 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:33:19 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:01:04 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	ft_handle_pwd(t_minishell *shell)
 {
+	t_var	*pwd_envvar;
 	char	*pwd;
 
-	pwd = ft_find_envvar(shell->envvars, "PWD")->content + 4;
-	if (pwd == NULL)
+	pwd_envvar = ft_find_envvar(shell->envvars, "PWD");
+	if (pwd_envvar != NULL)
+	{
+		printf("%s\n", pwd_envvar->value);
+		return ;
+	}
+	else if (pwd_envvar == NULL)
 	{
 		pwd = getcwd(NULL, 0);
 		if (pwd == NULL)
@@ -25,6 +31,6 @@ void	ft_handle_pwd(t_minishell *shell)
 			perror("minishell");
 			return ;
 		}
+		printf("%s\n", pwd);
 	}
-	printf("%s\n", pwd);
 }
