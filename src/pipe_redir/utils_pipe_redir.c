@@ -6,94 +6,26 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:59:15 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/13 14:26:31 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:43:00 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
-void	ft_corner_case(t_cmd *cmd)
-{
-	t_cmd	*new_cmd;
-	t_arg	*current_arg;
-	t_arg	*new_arg_list;
-	t_arg	*new_arg;
-	t_arg	**new_arg_list_tail;
-
-	current_arg = NULL;
-	new_cmd = calloc(1, sizeof(t_cmd));
-	new_cmd->type = T_COMMAND;
-	new_cmd->rtrunc = false;
-	new_cmd->rappend = false;
-	new_cmd->input_file = false;
-	new_cmd->shell = ft_get_shell();
-	if (cmd->next && cmd->next->arguments && cmd->next->arguments->arg)
-		new_cmd->cmd = ft_strdup(cmd->next->arguments->arg);
-	if (cmd->next && cmd->next->arguments && cmd->next->arguments->next)
-		current_arg = cmd->next->arguments->next;
-	new_arg_list = NULL;
-	new_arg_list_tail = &new_arg_list;
-	while (current_arg)
-	{
-		new_arg = calloc(1, sizeof(t_arg));
-		if (current_arg->arg)
-			new_arg->arg = ft_strdup(current_arg->arg);
-		*new_arg_list_tail = new_arg;
-		new_arg_list_tail = &new_arg->next;
-		current_arg = current_arg->next;
-	}
-	new_cmd->arguments = new_arg_list;
-	if (cmd->next)
-	{
-		new_cmd->next = cmd->next->next;
-		cmd->next->next = new_cmd;
-		new_cmd->prev = cmd->next;
-	}
-	else
-	{
-		new_cmd->next = NULL;
-		new_cmd->prev = cmd;
-	}
-}
-
 bool	ft_is_pipe_or_redir(t_cmd **cmd, int i)
 {
-	//t_cmd	*temp;
-
-	if (i == 0 && ((*cmd)->type == T_RTRUNC || (*cmd)->type == T_RAPEND || \
-	(*cmd)->type == T_LTRUNC))
+	if (i == 0 && ((*cmd)->type == T_RTRUNC || \
+	(*cmd)->type == T_RAPEND || (*cmd)->type == T_LTRUNC))
 	{
-		if ((*cmd)->next && (*cmd)->next->arguments && strcmp((*cmd)->next->arguments->arg, "|") != 0 && \
-		strcmp((*cmd)->next->arguments->arg, ">") != 0 && \
-		strcmp((*cmd)->next->arguments->arg, ">>") != 0 && \
-		strcmp((*cmd)->next->arguments->arg, "<") != 0)
-		{
-			ft_corner_case(*cmd);
-			// temp = *cmd;
-			// while (temp)
-			// {
-			// 	printf("temp->cmd: %s\n", temp->cmd);
-			// 	printf("temp->type: %d\n", temp->type);
-			// 	printf("temp->rtrunc: %d\n", temp->rtrunc);
-			// 	while (temp->arguments)
-			// 	{
-			// 		printf("temp->arguments->arg: %s\n", temp->arguments->arg);
-			// 		temp->arguments = temp->arguments->next;
-			// 	}
-			// 	temp = temp->next;
-			// }
-			*cmd = (*cmd)->next->next;
-			//printf("LOGO APOS O CORNER cmd->cmd: %s\n", (*cmd)->cmd);
-		}
-		return (false);
+		if (is_not_pipe_or_redir_arg(cmd))
+			return (false);
 	}
 	else if ((*cmd)->prev && (*cmd)->prev->type == T_PIPE && \
 	((*cmd)->type == T_RTRUNC || (*cmd)->type == T_RAPEND || \
 	(*cmd)->type == T_LTRUNC))
 	{
-		ft_corner_case(*cmd);
-		*cmd = (*cmd)->next->next;
-		return (false);
+		if (is_not_pipe_or_redir_arg(cmd))
+			return (false);
 	}
 	else if ((*cmd)->type == T_RAPEND || (*cmd)->type == T_RTRUNC || \
 	(*cmd)->type == T_LTRUNC || (*cmd)->type == T_LAPEND || \
@@ -109,9 +41,6 @@ bool	ft_is_file(t_cmd *cmd)
 	cmd->prev->type == T_LTRUNC || \
 	cmd->prev->type == T_LAPEND))
 		return (true);
-	// else if (cmd->type == T_RAPEND || cmd->type == T_RTRUNC || 
-	// cmd->type == T_LTRUNC)
-	// 	return (true);
 	return (false);
 }
 
