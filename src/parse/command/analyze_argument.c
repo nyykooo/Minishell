@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:20:31 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:28:49 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:45:22 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	ft_check_arg(t_arg *input)
 			input->dol = true;
 		else if (input->arg[i] == EQUAL)
 			input->equal = true;
-		else if (input->arg[i] == N_EQUAL)
-			input->arg[i] = EQUAL;
+		// else if (input->arg[i] == N_EQUAL)
+		// 	input->arg[i] = EQUAL;
 	}
 }
 

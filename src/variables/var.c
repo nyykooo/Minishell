@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/07 16:20:56 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/13 20:09:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ static void	ft_set_shlvl(t_var **envvar)
 	if (node)
 	{
 		shlvl_value = ft_itoa(ft_atoi(node->value) + 1);
+		if (ft_atoi(shlvl_value) < 0)
+			shlvl_value = ft_strdup("0");
+		else
+		if (ft_atoi(shlvl_value) > 1000)
+		{
+			ft_print_error(false, 1, 3, "minishell: warning: shell level (", \
+			shlvl_value, ") too high, resetting to 1\n");
+			shlvl_value = ft_strdup("1");
+		}
 		ft_update_existing_envvar(node, "SHLVL", shlvl_value);
 	}
 	else

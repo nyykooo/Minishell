@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/09 19:45:41 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 00:33:00 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,20 @@ void	pwds_update(t_var **envvar_list, char *dir)
 
 static void	change_directory(char *dir, int should_free, t_minishell *shell)
 {
-	if (chdir(dir) == -1)
-		ft_print_error(false, 1, 3,
+	struct stat	buf;
+
+	if (dir && dir[0] != 0 && chdir(dir) == -1)
+	{
+		if (stat(dir, &buf) == 0)
+		{
+			if ((buf.st_mode & __S_IFREG))
+				ft_print_error(false, 1, 3,
+					"-minishell: cd: ", dir, ": Not a directory\n");
+		}
+		else
+			ft_print_error(false, 1, 3,
 			"-minishell: cd: ", dir, ": No such file or directory\n");
+	}
 	else
 		pwds_update(&shell->envvars, dir);
 	if (should_free == 1)

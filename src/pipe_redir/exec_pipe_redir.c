@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/14 22:30:03 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/15 00:54:21 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_get_command_path(char *command, t_minishell *shell)
 		free (possible_path);
 	}
 	ft_free_dirs(dirs);
-	return (NULL);
+	return (ft_strdup(command));
 }
 
 bool	ft_is_builtin(char *cmd)

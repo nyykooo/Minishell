@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/14 10:33:00 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:57:51 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static void	handle_cmds(t_minishell *shell)
 		ft_handle_pwd(shell);
 	else if (shell->commands != NULL)
 		handle_command(shell->commands, shell);
-	free(shell->commands->path);
 }
 
 void	ft_analyze_input(t_minishell *shell)

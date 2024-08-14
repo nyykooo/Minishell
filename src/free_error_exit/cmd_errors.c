@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:01 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/14 10:33:44 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:59:46 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var)
 {
+	t_minishell *shell;
+
+	shell = ft_get_shell();
 	if (execve(command->path, arguments, env_var) == -1)
 	{
 		ft_print_error(false, 127, 3,
 			"-minishell: ", command->cmd, ": command not found\n");
-		free(command->path);
-		free(arguments);
+		ft_free_array(arguments);
 		ft_free_array(env_var);
 		ft_free_shell(command->shell);
-		exit(command->shell->exit_status);
+		exit(shell->exit_status);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:31:55 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/14 20:21:11 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:56:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	ft_free_commands(t_cmd *commands)
 			free(tmp_arg->arg);
 			free(tmp_arg);
 		}
+		if (commands->path)
+			free(commands->path);
 		if (commands->cmd != NULL)
 			free(commands->cmd);
 		tmp = commands;
@@ -68,9 +70,12 @@ void	ft_free_var(t_var *head)
 	while (current)
 	{
 		next = current->next;
-		free(current->content);
-		free(current->name);
-		free(current->value);
+		if (current->content)
+			free(current->content);
+		if (current->name)
+			free(current->name);
+		if (current->value)
+			free(current->value);
 		free(current);
 		current = next;
 	}
