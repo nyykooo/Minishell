@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/14 20:52:47 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 22:29:43 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void		ft_redefine_child_signals(void);
 void		ft_ignore_some_signals(void);
 
 // FTS_PIPE_REDIR_UTILS
+void		ft_close_survivors_fds(void);
 bool		ft_is_pipe_or_redir(t_cmd **cmd, int i);
 bool		ft_is_file(t_cmd *cmd);
 bool		ft_has_pipe(t_cmd *cmd_temp);
