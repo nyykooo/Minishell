@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:32:13 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/13 19:03:45 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:53:08 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,15 @@ int old_read_fd, int fd[2])
 
 static pid_t	ft_create_child_process(void)
 {
-	pid_t	pid;
+	pid_t		pid;
+	t_minishell	*shell;
 
 	pid = fork();
+	shell = ft_get_shell();
 	if (pid < 0)
 	{
 		perror("fork");
+		ft_free_shell(shell);
 		exit(2);
 	}
 	return (pid);
@@ -90,7 +93,6 @@ int fd[2], int old_read_fd)
 	{
 		if (ft_check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
-		//printf("esse cmd: %s !!!!!!!!!!!!! foi pro fork\n", cmd_temp->cmd);
 		ft_create_pipe(fd);
 		pid = ft_create_child_process();
 		if (pid == 0)
@@ -101,6 +103,5 @@ int fd[2], int old_read_fd)
 	}
 	if (last_child_pid != -1)
 		waitpid(last_child_pid, &status, 0);
-	//printf("status: %d\n", status);
 	return (status);
 }

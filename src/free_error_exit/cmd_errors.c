@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:01 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/13 15:44:01 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:33:44 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,6 @@
 
 void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var)
 {
-	//t_arg	*temp;
-
-	// printf("EXECUTION!");
-	// printf("command->path: %s\n", command->path);
-	// temp = command->arguments;
-	// while (temp)
-	// {
-	// 	printf("temp->arg: %s\n", temp->arg);
-	// 	temp = temp->next;
-	// }
 	if (execve(command->path, arguments, env_var) == -1)
 	{
 		ft_print_error(false, 127, 3,

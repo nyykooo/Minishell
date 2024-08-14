@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:59:53 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/13 19:03:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:53:04 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 void	ft_create_pipe(int fd[2])
 {
+	t_minishell *shell;
+
+	shell = ft_get_shell();
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
+		ft_free_shell(shell);
 		exit(1);
 	}
 }
