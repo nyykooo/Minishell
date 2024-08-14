@@ -6,11 +6,26 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:38:55 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/14 09:44:25 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:16:03 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
+
+void	ft_add_argument(t_arg **main_cmd_args, t_arg *new_node)
+{
+	t_arg	*temp;
+
+	temp = *main_cmd_args;
+	if (!temp)
+		*main_cmd_args = new_node;
+	else
+	{
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_node;
+	}
+}
 
 static void	ft_copy_arguments(t_arg *src, t_arg **dest)
 {

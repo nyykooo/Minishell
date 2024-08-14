@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:32:13 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/13 14:43:29 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:03:50 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int fd[2], int old_read_fd)
 	{
 		if (ft_check_and_advance_cmd(&cmd_temp, &i))
 			continue ;
-		//printf("esse cmd: %s !!!!!!!!!!!!! foi pro fork\n", cmd_temp->cmd);
 		ft_create_pipe(fd);
 		pid = ft_create_child_process();
 		if (pid == 0)
@@ -101,6 +100,5 @@ int fd[2], int old_read_fd)
 	}
 	if (last_child_pid != -1)
 		waitpid(last_child_pid, &status, 0);
-	//printf("status: %d\n", status);
 	return (status);
 }

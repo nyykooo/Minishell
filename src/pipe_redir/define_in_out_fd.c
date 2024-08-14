@@ -6,37 +6,18 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 19:50:15 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/13 15:13:35 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:21:48 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
-
-static void	ft_add_argument(t_arg **main_cmd_args, t_arg *new_node)
-{
-	t_arg	*temp;
-
-	temp = *main_cmd_args;
-	if (!temp)
-		*main_cmd_args = new_node;
-	else
-	{
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new_node;
-	}
-}
 
 static void	ft_in_fd(int *in_fd, t_cmd *current_cmd, t_cmd *cmd_root)
 {
 	char	*error_msg;
 
 	if (*in_fd >= 0)
-	{
-		// printf("in a ser fechado do ");
-		// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
 		close(*in_fd);
-	}
 	*in_fd = open(current_cmd->cmd, O_RDONLY);
 	if (*in_fd < 0)
 	{
@@ -49,16 +30,9 @@ static void	ft_in_fd(int *in_fd, t_cmd *current_cmd, t_cmd *cmd_root)
 		current_cmd->cmd, ": ", strerror(errno), "\n");
 		exit (ft_put_error_msg(error_msg, 1));
 	}
-	//printf("in_fd apos o open: %d\n", *in_fd);
 	if (current_cmd->next != cmd_root)
 		ft_add_argument(&cmd_root->arguments, \
 		current_cmd->arguments);
-	// while (current_cmd->arguments)
-	// {
-	// 	*in_fd = open(current_cmd->arguments->arg, O_RDONLY);
-	// 	current_cmd->arguments = current_cmd->arguments->next;
-	// }
-	//printf("in_fd apos o while: %d\n", *in_fd);
 }
 
 static int	ft_determine_flags(t_cmd *cmd_temp)
@@ -90,8 +64,23 @@ static void	ft_out_fd(int *out_fd, t_cmd *current_cmd, t_cmd *cmd_root)
 	}
 	if (current_cmd->prev->prev != NULL && \
 	current_cmd->arguments != NULL)
-		ft_add_argument(&cmd_root->arguments,
-		current_cmd->arguments);
+		ft_add_argument(&cmd_root->arguments, current_cmd->arguments);
+}
+
+void	initialize_cmd_pointers(t_cmd *cmd_temp, t_cmd **current_cmd, \
+t_cmd **current_cmd_2, t_cmd **cmd_root)
+{
+	*current_cmd = cmd_temp;
+	*current_cmd_2 = cmd_temp;
+	*cmd_root = cmd_temp;
+	while ((*current_cmd)->prev != NULL && (*current_cmd)->prev->type != T_PIPE)
+		*current_cmd = (*current_cmd)->prev;
+	if (!(strcmp((*current_cmd)->cmd, ">") == 0 || \
+	strcmp((*current_cmd)->cmd, ">>") == 0 || \
+	strcmp((*current_cmd)->cmd, "<") == 0))
+	{
+		*current_cmd = *current_cmd_2;
+	}
 }
 
 void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
@@ -102,34 +91,11 @@ void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 
 	*in_fd = -1;
 	*out_fd = -1;
-	current_cmd = cmd_temp;
-	current_cmd_2 = cmd_temp;
-	cmd_root = cmd_temp;
-	while (current_cmd->prev != NULL && current_cmd->prev->type != T_PIPE)
-	{
-		// printf("entrou no decrement pointer com ");
-		// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
-		current_cmd = current_cmd->prev;
-
-	}
-	// printf("saiu do decrement pointer com ");
-	// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
-	if (!(strcmp(current_cmd->cmd, ">") == 0 || strcmp(current_cmd->cmd, ">>") == 0 \
-	|| strcmp(current_cmd->cmd, "<") == 0))
-	{
-		current_cmd = current_cmd_2;
-	}
-	//printf("passou pela strcmp e current_cmd->cmd: %s\n", current_cmd->cmd);
+	initialize_cmd_pointers(cmd_temp, &current_cmd, &current_cmd_2, &cmd_root);
 	while (current_cmd != NULL && current_cmd->type != T_PIPE)
 	{
-		//printf("dentro do while dos fds current_cmd->cmd: %s\n", current_cmd->cmd);
 		if (current_cmd->input_file == true)
-		{
-			// printf("entrou no if do input_file com ");
-			// printf("current_cmd->cmd: %s ", current_cmd->cmd);
-			// printf("e in_fd: %d\n", *in_fd);
 			ft_in_fd(in_fd, current_cmd, cmd_root);
-		}
 		if (current_cmd->type == T_LAPEND)
 		{
 			if (*in_fd >= 0)
@@ -138,16 +104,7 @@ void	ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd)
 				*in_fd = current_cmd->prev->here_doc_fd;
 		}
 		if (current_cmd->rappend == true || current_cmd->rtrunc == true)
-		{
-			// printf("entrou no if do rappend ou rtrunc com ");
-			// printf("current_cmd->cmd: %s\n", current_cmd->cmd);
 			ft_out_fd(out_fd, current_cmd, cmd_root);
-		}
 		current_cmd = current_cmd->next;
-		// printf("dentro do while out_fd: %d\n", *out_fd);
-		// printf("dentro do while in_fd: %d\n", *in_fd);
 	}
-	// printf("saiu do while do define_in_out_fd\n");
-	// printf("in_fd: %d\n", *in_fd);
-	// printf("out_fd: %d\n", *out_fd);
 }
