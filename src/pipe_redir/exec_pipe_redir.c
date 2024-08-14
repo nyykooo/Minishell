@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/14 20:52:59 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 22:29:36 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_get_command_path(char *command, t_minishell *shell)
 		free (possible_path);
 	}
 	ft_free_dirs(dirs);
-	return (NULL);
+	return (ft_strdup(command));
 }
 
 bool	ft_is_builtin(char *cmd)
