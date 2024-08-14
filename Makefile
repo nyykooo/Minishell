@@ -6,7 +6,7 @@
 #    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/09 11:41:35 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/08/14 09:41:29 by brunhenr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ SRC_VARIABLES = var underline_var question_var var_operations1 var_operations2
 
 SRC_HEREDOC = heredoc process_heredoc
 
-SRC_PIPE_REDIR = utils_pipe_redir pipe_redir_loop exec_pipe_redir define_in_out_fd handle_pipe_redir
+SRC_PIPE_REDIR = utils_pipe_redir pipe_redir_loop exec_pipe_redir define_in_out_fd handle_pipe_redir utils_pipe_redir2
 
 SRC = $(addsuffix .c, $(addprefix src/, $(SRC_DIR))) \
 	$(addsuffix .c, $(addprefix src/builtins/, $(SRC_BUILTINS))) \

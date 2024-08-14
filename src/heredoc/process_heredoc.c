@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 08:29:20 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/11 16:53:08 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:56:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static char	*loop_heredoc(t_cmd *current, int fd[2], t_minishell *shell)
 			if (line)
 				free(line);
 			close_fds(fd);
+			ft_free_shell(shell);
 			exit (130);
 		}
 		if (!line)
@@ -66,7 +67,7 @@ t_minishell *shell)
 	if (pid == -1)
 	{
 		perror("fork");
-		close_fds(fd);
+		ft_free_shell(shell);
 		exit(1);
 	}
 	if (pid == 0)

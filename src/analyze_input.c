@@ -6,7 +6,7 @@
 /*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/13 14:43:29 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:33:00 by brunhenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,9 @@ static void	handle_cmds(t_minishell *shell)
 void	ft_analyze_input(t_minishell *shell)
 {
 	int	status;
-	//t_cmd	*cmd_temp;
-	//t_token	*tokens;
 
 	status = 0;
 	ft_parsing_hub(shell);
-	// tokens = shell->tokens;
-	// while (tokens != NULL)
-	// {
-	// 	printf("tokens->content: %s\n", tokens->content);
-	// 	tokens = tokens->next;
-	// }
-	// printf("-----------------------\n");
 	if (shell->n_cmd == 0)
 		return ;
 	status = heredoc(shell);
@@ -109,22 +100,6 @@ void	ft_analyze_input(t_minishell *shell)
 		shell->exit_status = 130;
 		return ;
 	}
-	// cmd_temp = shell->commands;
-	// while (cmd_temp != NULL)
-	// {
-	// 	printf("cmd_temp->cmd: %s\n", cmd_temp->cmd);
-	// 	printf("cmd_temp->type: %d\n", cmd_temp->type);
-	// 	printf("cmd_temp->rtunc: %d\n", cmd_temp->rtrunc);
-	// 	if (cmd_temp->prev == NULL)
-	// 		printf("cmd_temp->prev: ehhhhhhhh NULL\n");
-	// 	while (cmd_temp->arguments != NULL)
-	// 	{
-	// 		printf("arg_temp->arg: %s\n", cmd_temp->arguments->arg);
-	// 		cmd_temp->arguments = cmd_temp->arguments->next;
-	// 	}
-	// 	printf("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\n");
-	// 	cmd_temp = cmd_temp->next;
-	// }
 	if (shell->n_cmd > 1 || (ft_strcmp(shell->commands->cmd, ">") == 0) || \
 	(ft_strcmp(shell->commands->cmd, "<") == 0) \
 	|| (ft_strcmp(shell->commands->cmd, ">>") == 0))

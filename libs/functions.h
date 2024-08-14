@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/12 22:50:18 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:52:47 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void		ft_create_pipe(int fd[2]);
 void		ft_execute_cmd(t_cmd *command, char **arguments, char **env_var);
 void		ft_get_path(t_cmd *commands);
 char		*ft_get_command_path(char *command, t_minishell *shell);
+void		ft_add_argument(t_arg **main_cmd_args, t_arg *new_node);
 void		ft_define_in_out_fd(t_cmd *cmd_temp, int *in_fd, int *out_fd);
 void		ft_create_pipe(int fd[2]);
 void		ft_handle_pipe_and_redir(t_minishell *shell, t_cmd *commands);
@@ -151,6 +152,7 @@ void		ft_exec(t_minishell *shell, t_cmd *cmd_temp);
 bool		ft_verify_unexpected_token(t_minishell *shell);
 bool		ft_verify_fn(t_minishell *shell);
 void		ft_mark_commands(t_minishell *shell);
+bool		is_not_pipe_or_redir_arg(t_cmd **cmd);
 
 void	close_survivors_fds(void);
 

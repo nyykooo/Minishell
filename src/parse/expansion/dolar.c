@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 19:46:53 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:42:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,43 +37,50 @@ static char	*ft_get_name(char *input, int start)
 	return (ft_substr(input, start, i));
 }
 
-static void	ft_analyze_expansion(char **input, t_minishell *shell, int i)
+static int	ft_analyze_expansion(char **input, t_minishell *shell, int i)
 {
 	t_var	*var;
 	char	*var_value;
 	char	*var_name;
 	bool	should_free;
+	int		end;
 
 	should_free = false;
 	var_value = "";
+	end = 0;
 	var_name = ft_get_name((*input), i + 1);
 	if (var_name == NULL)
-		return ;
+		return (0);
 	var = ft_find_envvar(shell->envvars, var_name);
-	if (var)
+	if (var && var->value)
 	{
 		var_value = ft_strdup(var->value);
 		should_free = true;
 	}
 	(*input) = ft_strreplace((*input), i, var_value, var_name);
+	if (var_value[0] == 0)
+		end = 1;
 	if (should_free)
-	{
 		free(var_value);
-		should_free = false;
-	}
+	return (end);
 }
 
 void	ft_expand_dolar(char **input, t_minishell *shell)
 {
 	int		i;
+	bool	end;
 
 	i = -1;
-	while ((*input)[++i])
+	end = false;
+	while (!end && (*input)[++i])
 	{
 		if ((*input)[i] == '$' && ft_is_inside_quotes((*input), i) != 1
 			&& (*input)[i + 1] != '\0')
 		{
-			ft_analyze_expansion(input, shell, i);
+			if (ft_analyze_expansion(input, shell, i) == 1)
+				i = 0;
+			if ((*input)[i] == '\0')
+				end = true;
 		}
 	}
 }
