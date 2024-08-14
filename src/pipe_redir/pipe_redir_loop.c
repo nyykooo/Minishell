@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redir_loop.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 16:32:13 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/14 10:03:50 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:09:27 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,15 @@ int old_read_fd, int fd[2])
 
 static pid_t	ft_create_child_process(void)
 {
-	pid_t	pid;
+	pid_t		pid;
+	t_minishell	*shell;
 
 	pid = fork();
+	shell = ft_get_shell();
 	if (pid < 0)
 	{
 		perror("fork");
+		ft_free_shell(shell);
 		exit(2);
 	}
 	return (pid);

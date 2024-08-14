@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:31:55 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:50:52 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:21:11 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	ft_free_commands(t_cmd *commands)
 
 	while (commands)
 	{
-		if (commands->cmd != NULL)
-			free(commands->cmd);
 		while (commands->arguments)
 		{
 			tmp_arg = commands->arguments;
@@ -43,23 +41,11 @@ void	ft_free_commands(t_cmd *commands)
 			free(tmp_arg->arg);
 			free(tmp_arg);
 		}
+		if (commands->cmd != NULL)
+			free(commands->cmd);
 		tmp = commands;
 		commands = commands->next;
 		free(tmp);
-	}
-}
-
-void	ft_free_arguments(t_arg **arguments)
-{
-	int	i;
-
-	i = 0;
-	while (arguments[i] != NULL)
-	{
-		if (arguments[i]->arg != NULL)
-			free(arguments[i]->arg);
-		free(arguments[i]);
-		i++;
 	}
 }
 

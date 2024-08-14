@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 09:52:35 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/12 10:34:17 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:49:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,13 @@ void	initialize_heredoc(struct termios *term, struct sigaction *sa_original)
 
 void	finalize_heredoc(struct termios *term, struct sigaction *sa_original)
 {
+	t_minishell *shell;
+
+	shell = ft_get_shell();
 	if (sigaction(SIGINT, sa_original, NULL) == -1)
 	{
 		perror("sigaction");
+		ft_free_shell(shell);
 		exit(1);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, term);

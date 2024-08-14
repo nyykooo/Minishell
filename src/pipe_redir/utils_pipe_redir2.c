@@ -3,28 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipe_redir2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:38:55 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/14 10:16:03 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:32:43 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
 
+static t_arg	*ft_clone_argument(t_arg *src)
+{
+	t_arg	*new_arg;
+
+	if (!src)
+		return (NULL);
+	new_arg = calloc(1, sizeof(t_arg));
+	if (src->arg)
+		new_arg->arg = ft_strdup(src->arg);
+	new_arg->dq = src->dq;
+	new_arg->sq = src->sq;
+	new_arg->dol = src->dol;
+	new_arg->equal = src->equal;
+	new_arg->expanded = src->expanded;
+	return (new_arg);
+}
+
 void	ft_add_argument(t_arg **main_cmd_args, t_arg *new_node)
 {
 	t_arg	*temp;
-
+	t_arg	*temp2;
+// ------------------------
+	// printf("-----------BEFORE-------------\n");
+	// temp = *main_cmd_args;
+	// temp2 = new_node;
+	// while (temp)
+	// {
+	// 	printf("temp->arg: %s\n", temp->arg);
+	// 	temp = temp->next;
+	// }
+	// while (temp2)
+	// {
+	// 	printf("temp2->arg: %s\n", temp2->arg);
+	// 	temp2 = temp2->next;
+	// }
+	
+// ------------------------
 	temp = *main_cmd_args;
+	temp2 = new_node;
 	if (!temp)
-		*main_cmd_args = new_node;
+		*main_cmd_args = ft_clone_argument(temp2);
 	else
 	{
 		while (temp->next)
 			temp = temp->next;
-		temp->next = new_node;
+		while (temp2)
+		{
+			temp->next = ft_clone_argument(temp2);
+			temp = temp->next;
+			temp2 = temp2->next;	
+		}
 	}
+// ------------------------
+	// printf("-----------AFTER-------------\n");
+	// temp = *main_cmd_args;
+	// temp2 = new_node;
+	// while (temp)
+	// {
+	// 	printf("temp->arg: %s\n", temp->arg);
+	// 	temp = temp->next;
+	// }
+	// while (temp2)
+	// {
+	// 	printf("temp2->arg: %s\n", temp2->arg);
+	// 	temp2 = temp2->next;
+	// }
+	
 }
 
 static void	ft_copy_arguments(t_arg *src, t_arg **dest)

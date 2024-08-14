@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 08:29:20 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/14 14:27:15 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:55:56 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_minishell *shell)
 	if (pid == -1)
 	{
 		perror("fork");
-		close_fds(fd);
+		ft_free_shell(shell);
 		exit(1);
 	}
 	if (pid == 0)
@@ -76,7 +76,7 @@ t_minishell *shell)
 		line = loop_heredoc(current, fd, shell);
 		if (line)
 			free(line);
-		close_fds(fd);
+		ft_free_shell(shell);
 		exit(0);
 	}
 	return (pid);
