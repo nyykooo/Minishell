@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:12:01 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/14 22:16:32 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/14 23:59:46 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var)
 	{
 		ft_print_error(false, 127, 3,
 			"-minishell: ", command->cmd, ": command not found\n");
-		free(command->path);
 		ft_free_array(arguments);
 		ft_free_array(env_var);
 		ft_free_shell(command->shell);
