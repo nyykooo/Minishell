@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/15 12:22:57 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:55:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ static int	exit_number_analyze(char *arg)
 
 static int	ft_analyze_exit_arguments(t_cmd *command)
 {
-	if (!command->arguments)
-		return (0);
 	if (ft_strcmp(command->arguments->arg, "--") == 0)
 		return (0);
 	if (!ft_is_number(command->arguments->arg)
@@ -84,7 +82,7 @@ static int	ft_analyze_exit_arguments(t_cmd *command)
 		{
 			ft_print_error(false, 1, 1,
 				"-minishell: exit: too many arguments\n");
-			return (1);
+			return (-1);
 		}
 		else
 			return (exit_number_analyze(command->arguments->arg));
@@ -96,9 +94,10 @@ void	ft_handle_exit(t_cmd *command, t_minishell *shell)
 {
 	if (command && command->arguments)
 		shell->exit_status = ft_analyze_exit_arguments(command);
-	// if (shell->exit_status == 2 || shell->exit_status == 1)
-	// 	return ;
-	ft_free_shell(shell);
-	// printf("exit\n");
-	exit(shell->exit_status);
+	if (shell->exit_status >= 0)
+	{
+		ft_free_shell(shell);
+		exit(shell->exit_status);
+	}
+	shell->exit_status = 0;
 }

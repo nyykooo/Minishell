@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 14:29:05 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/15 14:35:50 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:57:07 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	ft_is_sep(char sep)
 {
 	if (sep == ' ' || sep == '\0' || sep == '"' || sep == '\''
-		|| sep == '=' || sep == '/' || sep == '|')
+		|| sep == '=' || sep == '/' || sep == '|' || sep == '&')
 		return (true);
 	return (false);
 }

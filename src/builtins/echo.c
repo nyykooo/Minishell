@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:13:40 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/13 19:49:39 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:50:36 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ void	ft_handle_echo(t_cmd *command)
 	}
 	if (!flag)
 		printf("\n");
+	command->shell->exit_status = 0;
 }
