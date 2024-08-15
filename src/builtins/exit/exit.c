@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/09 11:33:38 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/15 12:22:57 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static int	ft_analyze_exit_arguments(t_cmd *command)
 {
 	if (!command->arguments)
 		return (0);
+	if (ft_strcmp(command->arguments->arg, "--") == 0)
+		return (0);
 	if (!ft_is_number(command->arguments->arg)
 		|| !ft_long_number(command->arguments->arg))
 	{
@@ -92,12 +94,11 @@ static int	ft_analyze_exit_arguments(t_cmd *command)
 
 void	ft_handle_exit(t_cmd *command, t_minishell *shell)
 {
-	if (command)
+	if (command && command->arguments)
 		shell->exit_status = ft_analyze_exit_arguments(command);
-	else
-		shell->exit_status = 0;
-	if (shell->exit_status == 2 || shell->exit_status == 1)
-		return ;
+	// if (shell->exit_status == 2 || shell->exit_status == 1)
+	// 	return ;
 	ft_free_shell(shell);
+	// printf("exit\n");
 	exit(shell->exit_status);
 }

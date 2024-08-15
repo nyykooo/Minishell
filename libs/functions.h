@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/14 22:29:43 by brunhenr         ###   ########.fr       */
+/*   Updated: 2024/08/15 12:23:39 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		ft_parsing_hub(t_minishell *shell);
 
 // NEW PARSING - INPUT
 
-int			ft_input_manager(t_minishell *shell);
+bool		ft_input_manager(t_minishell *shell);
 void		ft_expand_pipes_redir(t_minishell *shell);
 
 // NEW PARSING - TOKENS
