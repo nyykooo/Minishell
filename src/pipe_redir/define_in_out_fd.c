@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 19:50:15 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/14 20:34:34 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:00:41 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ static void	ft_out_fd(int *out_fd, t_cmd *current_cmd, t_cmd *cmd_root)
 	*out_fd = open(current_cmd->cmd, flags, 0644);
 	if (*out_fd < 0)
 	{
-		perror("open");
+		ft_print_error(true, 1, 5 , "-minishell: ",
+		current_cmd->cmd, ": ", strerror(errno), "\n");
 		ft_free_shell(cmd_root->shell);
-		//ft_print_error(true, 1, 5, "-minishell: ",
-		//current_cmd->cmd, ": ", strerror(errno), "\n");
 		exit (1);
 	}
 	if (current_cmd->prev->prev != NULL && \

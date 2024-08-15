@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:27:00 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/13 20:09:15 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:02:09 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	ft_set_shlvl(t_var **envvar)
 		else
 		if (ft_atoi(shlvl_value) > 1000)
 		{
-			ft_print_error(false, 1, 3, "minishell: warning: shell level (", \
+			ft_print_error(false, 0, 3, "minishell: warning: shell level (", \
 			shlvl_value, ") too high, resetting to 1\n");
 			shlvl_value = ft_strdup("1");
 		}
