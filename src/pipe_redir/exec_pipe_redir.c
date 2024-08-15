@@ -85,7 +85,7 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 {
 	char	**arg_array;
 
-	close_survivors_fds();
+	ft_close_survivors_fds();
 	if (ft_is_builtin(cmd_temp->cmd) == true)
 	{
 		ft_exec_builtin(shell, cmd_temp);

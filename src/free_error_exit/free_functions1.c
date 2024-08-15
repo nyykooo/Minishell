@@ -12,7 +12,7 @@
 
 #include "../../libs/headers.h"
 
-void	close_survivors_fds(void)
+void	ft_close_survivors_fds(void)
 {
 	int	fd;
 	int	i;
@@ -38,7 +38,7 @@ void	ft_free_shell(t_minishell *shell)
 		free(shell->input);
 	if (shell->commands != NULL)
 		ft_free_commands(shell->commands);
-	close_survivors_fds();
+	ft_close_survivors_fds();
 }
 
 void	free_arguments(t_arg **arguments)

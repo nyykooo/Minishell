@@ -14,7 +14,7 @@
 
 void	ft_execute_cmd(t_cmd *command, char **arguments, char **env_var)
 {
-	t_minishell *shell;
+	t_minishell	*shell;
 
 	shell = ft_get_shell();
 	if (execve(command->path, arguments, env_var) == -1)

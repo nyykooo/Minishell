@@ -134,9 +134,7 @@ bool		ft_is_file(t_cmd *cmd);
 bool		ft_has_pipe(t_cmd *cmd_temp);
 void		ft_nopipe(int in_fd, int out_fd);
 void		ft_haspipe(int in_fd, int out_fd, int fd1, int fd0);
-
 void		ft_create_pipe(int fd[2]);
-
 void		ft_execute_cmd(t_cmd *command, char **arguments, char **env_var);
 void		ft_get_path(t_cmd *commands);
 char		*ft_get_command_path(char *command, t_minishell *shell);
@@ -154,7 +152,5 @@ bool		ft_verify_unexpected_token(t_minishell *shell);
 bool		ft_verify_fn(t_minishell *shell);
 void		ft_mark_commands(t_minishell *shell);
 bool		is_not_pipe_or_redir_arg(t_cmd **cmd);
-
-void	close_survivors_fds(void);
 
 #endif

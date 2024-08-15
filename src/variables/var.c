@@ -37,8 +37,7 @@ static void	ft_set_shlvl(t_var **envvar)
 		shlvl_value = ft_itoa(ft_atoi(node->value) + 1);
 		if (ft_atoi(shlvl_value) < 0)
 			shlvl_value = ft_strdup("0");
-		else
-		if (ft_atoi(shlvl_value) > 1000)
+		else if (ft_atoi(shlvl_value) > 1000)
 		{
 			ft_print_error(false, 0, 3, "minishell: warning: shell level (", \
 			shlvl_value, ") too high, resetting to 1\n");
