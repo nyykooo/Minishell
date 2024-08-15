@@ -58,7 +58,7 @@ static void	ft_out_fd(int *out_fd, t_cmd *current_cmd, t_cmd *cmd_root)
 	*out_fd = open(current_cmd->cmd, flags, 0644);
 	if (*out_fd < 0)
 	{
-		ft_print_error(true, 1, 5 , "-minishell: ",
+		ft_print_error(true, 1, 5, "-minishell: ", \
 		current_cmd->cmd, ": ", strerror(errno), "\n");
 		ft_free_shell(cmd_root->shell);
 		exit (1);
@@ -71,7 +71,6 @@ static void	ft_out_fd(int *out_fd, t_cmd *current_cmd, t_cmd *cmd_root)
 void	initialize_cmd_pointers(t_cmd *cmd_temp, t_cmd **current_cmd, \
 t_cmd **current_cmd_2, t_cmd **cmd_root)
 {
-	// deepcopy cmd_temp to current_cmd and current_cmd_2
 	*current_cmd = cmd_temp;
 	*current_cmd_2 = cmd_temp;
 	*cmd_root = cmd_temp;

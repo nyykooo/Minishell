@@ -14,7 +14,7 @@
 
 void	ft_create_pipe(int fd[2])
 {
-	t_minishell *shell;
+	t_minishell	*shell;
 
 	shell = ft_get_shell();
 	if (pipe(fd) == -1)

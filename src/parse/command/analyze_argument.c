@@ -29,8 +29,6 @@ static void	ft_check_arg(t_arg *input)
 			input->dol = true;
 		else if (input->arg[i] == EQUAL)
 			input->equal = true;
-		// else if (input->arg[i] == N_EQUAL)
-		// 	input->arg[i] = EQUAL;
 	}
 }
 

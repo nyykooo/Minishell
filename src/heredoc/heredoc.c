@@ -30,7 +30,7 @@ void	initialize_heredoc(struct termios *term, struct sigaction *sa_original)
 
 void	finalize_heredoc(struct termios *term, struct sigaction *sa_original)
 {
-	t_minishell *shell;
+	t_minishell	*shell;
 
 	shell = ft_get_shell();
 	if (sigaction(SIGINT, sa_original, NULL) == -1)

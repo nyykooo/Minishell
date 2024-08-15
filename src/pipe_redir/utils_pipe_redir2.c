@@ -33,22 +33,7 @@ void	ft_add_argument(t_arg **main_cmd_args, t_arg *new_node)
 {
 	t_arg	*temp;
 	t_arg	*temp2;
-// ------------------------
-	// printf("-----------BEFORE-------------\n");
-	// temp = *main_cmd_args;
-	// temp2 = new_node;
-	// while (temp)
-	// {
-	// 	printf("temp->arg: %s\n", temp->arg);
-	// 	temp = temp->next;
-	// }
-	// while (temp2)
-	// {
-	// 	printf("temp2->arg: %s\n", temp2->arg);
-	// 	temp2 = temp2->next;
-	// }
-	
-// ------------------------
+
 	temp = *main_cmd_args;
 	temp2 = new_node;
 	if (!temp)
@@ -61,24 +46,9 @@ void	ft_add_argument(t_arg **main_cmd_args, t_arg *new_node)
 		{
 			temp->next = ft_clone_argument(temp2);
 			temp = temp->next;
-			temp2 = temp2->next;	
+			temp2 = temp2->next;
 		}
 	}
-// ------------------------
-	// printf("-----------AFTER-------------\n");
-	// temp = *main_cmd_args;
-	// temp2 = new_node;
-	// while (temp)
-	// {
-	// 	printf("temp->arg: %s\n", temp->arg);
-	// 	temp = temp->next;
-	// }
-	// while (temp2)
-	// {
-	// 	printf("temp2->arg: %s\n", temp2->arg);
-	// 	temp2 = temp2->next;
-	// }
-	
 }
 
 static void	ft_copy_arguments(t_arg *src, t_arg **dest)

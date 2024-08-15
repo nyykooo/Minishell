@@ -20,8 +20,9 @@ void	close_fds(int fd[2])
 		close(fd[1]);
 }
 
-static void	write_line_to_pipe(char *line, int fd[2])
+static void	write_line_to_pipe(char *line, int fd[2], t_minishell *shell)
 {
+	ft_expand_dolar(&line, shell);
 	write(fd[1], line, ft_strlen(line));
 	write(fd[1], "\n", 1);
 	free(line);
@@ -51,8 +52,7 @@ static char	*loop_heredoc(t_cmd *current, int fd[2], t_minishell *shell)
 		}
 		if (current->next->cmd && ft_strcmp(line, current->next->cmd) == 0)
 			break ;
-		ft_expand_dolar(&line, shell);
-		write_line_to_pipe(line, fd);
+		write_line_to_pipe(line, fd, shell);
 	}
 	return (line);
 }
