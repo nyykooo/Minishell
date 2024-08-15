@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/14 23:57:51 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:41:09 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_analyze_input(t_minishell *shell)
 	else if (shell->commands)
 	{
 		if (shell->commands->type == T_EQUAL)
-			ft_handle_equal(shell, shell->commands);
+			ft_handle_equal_loop(shell, shell->commands);
 		if (shell->commands->type == T_COMMAND)
 			handle_cmds(shell);
 	}

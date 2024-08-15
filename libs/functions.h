@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:21:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/15 12:23:39 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:41:28 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void		ft_update_existing_envvar(t_var *envvar, char *name, char *value);
 // BUILTINS
 void		ft_handle_cd(t_cmd *command, t_minishell *shell);
 void		ft_handle_echo(t_cmd *command);
-void		ft_handle_equal(t_minishell *shell, t_cmd *command);
+void		ft_handle_equal_loop(t_minishell *shell, t_cmd *command);
 int			ft_handle_export(t_minishell *shell);
 void		ft_handle_env(t_var *envvar_list, t_cmd *command);
 void		ft_handle_unset(t_cmd *command, t_var **envvar_list);

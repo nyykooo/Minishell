@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:09:55 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/15 16:13:28 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:27:09 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_handle_unset(t_cmd *command, t_var **envvar_list)
 	t_var	*envvar;
 	t_arg	*temp;
 
+	command->shell->exit_status = 0;
 	if (command->arguments == NULL)
 		return ;
 	temp = command->arguments;

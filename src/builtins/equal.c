@@ -6,29 +6,11 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/05 16:38:56 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:51:28 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libs/headers.h"
-
-// parsing do igual vai precisar atuar um pouco diferente do antigo
-
-// bool	check_equal(t_token *token)
-// {
-// 	int		i;
-
-// 	i = -1;
-// 	if (token->content == NULL)
-// 		return (false);
-// 	while (token->content[++i])
-// 	{
-// 		if (token->content[i] == N_EQUAL)
-// 			return (true);
-// 	}
-// 	return (false);
-
-// }
 
 bool	ft_check_equal(t_token *token)
 {
@@ -43,7 +25,7 @@ bool	ft_check_equal(t_token *token)
 	return (false);
 }
 
-void	ft_handle_equal(t_minishell *shell, t_cmd *command)
+static void	ft_handle_equal_cmd(t_minishell *shell, t_cmd *command)
 {
 	t_var	*var;
 	char	*name;
@@ -68,4 +50,53 @@ void	ft_handle_equal(t_minishell *shell, t_cmd *command)
 	ft_set_envvar(&shell->envvars, name, value, 0);
 	free(name);
 	free(value);
+}
+
+
+static void	ft_handle_equal_arg(t_minishell *shell, t_arg *arg)
+{
+	t_var	*var;
+	char	*name;
+	char	*value;
+	int		equal;
+
+	equal = 0;
+	while (arg->arg[equal] != '=')
+		equal++;
+	name = ft_substr(arg->arg, 0, equal);
+	var = ft_find_envvar(shell->envvars, name);
+	if (var)
+	{
+		free(var->value);
+		var->value = ft_substr(arg->arg, equal + 1,
+				ft_strlen(arg->arg) - equal - 1);
+		free(name);
+		return ;
+	}
+	value = ft_substr(arg->arg, equal + 1,
+			ft_strlen(arg->arg) - equal - 1);
+	ft_set_envvar(&shell->envvars, name, value, 0);
+	free(name);
+	free(value);
+}
+
+void	ft_handle_equal_loop(t_minishell *shell, t_cmd *command)
+{
+	t_cmd	*tmp_cmd;
+	t_arg	*tmp_arg;
+
+	tmp_cmd = command;
+	tmp_arg = NULL;
+	if (command->arguments)
+		tmp_arg = command->arguments;
+	while (tmp_cmd && tmp_cmd->type == T_EQUAL)
+	{
+		ft_handle_equal_cmd(shell, tmp_cmd);
+		while (tmp_arg && tmp_arg->equal)
+		{
+			ft_handle_equal_arg(shell, tmp_arg);
+			tmp_arg = tmp_arg->next;
+		}
+		tmp_cmd = tmp_cmd->next;
+	}
 }
