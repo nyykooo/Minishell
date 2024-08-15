@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/15 18:51:28 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:52:42 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	ft_handle_equal_cmd(t_minishell *shell, t_cmd *command)
 	free(name);
 	free(value);
 }
-
 
 static void	ft_handle_equal_arg(t_minishell *shell, t_arg *arg)
 {

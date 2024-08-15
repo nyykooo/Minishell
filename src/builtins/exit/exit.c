@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:01:30 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/15 17:55:57 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 22:26:15 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ static bool	ft_long_number(const char *nbr)
 
 static int	exit_number_analyze(char *arg)
 {
-	int	number;
+	int				number;
+	unsigned int	neg;
 
 	number = ft_atoi(arg);
-	if (number < 0)
-		return (ft_itoui(number));
-	else if (number >= 0 && number <= 255)
-		return (number);
+	neg = ft_itoui(number);
+	if (neg <= 255)
+		return (neg);
 	else
-		return (number % 256);
+		return (neg % 256);
 }
 
 static int	ft_analyze_exit_arguments(t_cmd *command)
@@ -99,5 +99,8 @@ void	ft_handle_exit(t_cmd *command, t_minishell *shell)
 		ft_free_shell(shell);
 		exit(shell->exit_status);
 	}
-	shell->exit_status = 0;
+	if (shell->exit_status < 0)
+		shell->exit_status = 1;
+	else
+		shell->exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:36:28 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/15 00:33:00 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:58:16 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static void	change_directory(char *dir, int should_free, t_minishell *shell)
 					"-minishell: cd: ", dir, ": Not a directory\n");
 		}
 		else
-			ft_print_error(false, 1, 3,
-			"-minishell: cd: ", dir, ": No such file or directory\n");
+			ft_print_error(false, 1, 3, "-minishell: cd: ",
+				dir, ": No such file or directory\n");
 	}
 	else
 		pwds_update(&shell->envvars, dir);

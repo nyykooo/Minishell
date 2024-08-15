@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 22:20:03 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/11 17:04:38 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 21:01:17 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	ft_handle_export_args(t_minishell *shell)
 		if (temp->arg[0] == '_' && temp->arg[1] == '=')
 			return (0);
 		if (!ft_is_valid_arg(temp->arg, temp->equal))
-			ft_print_error(false, 1, 3, "-minishell: export: ",
-				temp->arg, ": not a valid identifier\n");
+			ft_print_error(false, 1, 3, "-minishell: export: `",
+				temp->arg, "': not a valid identifier\n");
 		else
 		{
 			if (temp->equal == false)

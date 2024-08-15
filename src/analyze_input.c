@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:56:57 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/15 18:41:09 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 22:02:27 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static void	handle_command(t_cmd *commands, t_minishell *shell)
 static void	handle_cmds(t_minishell *shell)
 {
 	ft_get_path(shell->commands);
-	ft_update_underlinevar(shell);
 	if (ft_strcmp(shell->commands->cmd, "cd") == 0)
 		ft_handle_cd(shell->commands, shell);
 	else if (ft_strcmp(shell->commands->cmd, "echo") == 0)

@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 22:12:28 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/07/30 17:30:39 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/15 22:12:08 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	ft_update_underlinevar(t_minishell *shell)
 	char	*underlinevar_value;
 
 	current = shell->commands;
-	while (current->next)
-		current = current->next;
 	if (!current->arguments)
 	{
 		if (current->path)
