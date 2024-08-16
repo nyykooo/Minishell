@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 13:24:08 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/15 20:52:42 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:36:45 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,16 @@ static void	ft_handle_equal_cmd(t_minishell *shell, t_cmd *command)
 	while (command->cmd[equal] != '=')
 		equal++;
 	name = ft_substr(command->cmd, 0, equal);
+	value = ft_substr(command->cmd, equal + 1,
+			ft_strlen(command->cmd) - equal - 1);
 	var = ft_find_envvar(shell->envvars, name);
 	if (var)
 	{
-		free(var->value);
-		var->value = ft_substr(command->cmd, equal + 1,
-				ft_strlen(command->cmd) - equal - 1);
+		ft_set_envvar(&shell->envvars, name, value, 1);
+		free(value);
 		free(name);
 		return ;
 	}
-	value = ft_substr(command->cmd, equal + 1,
-			ft_strlen(command->cmd) - equal - 1);
 	ft_set_envvar(&shell->envvars, name, value, 0);
 	free(name);
 	free(value);
@@ -63,17 +62,16 @@ static void	ft_handle_equal_arg(t_minishell *shell, t_arg *arg)
 	while (arg->arg[equal] != '=')
 		equal++;
 	name = ft_substr(arg->arg, 0, equal);
+	value = ft_substr(arg->arg, equal + 1,
+			ft_strlen(arg->arg) - equal - 1);
 	var = ft_find_envvar(shell->envvars, name);
 	if (var)
 	{
-		free(var->value);
-		var->value = ft_substr(arg->arg, equal + 1,
-				ft_strlen(arg->arg) - equal - 1);
+		ft_set_envvar(&shell->envvars, name, value, 1);
+		free(value);
 		free(name);
 		return ;
 	}
-	value = ft_substr(arg->arg, equal + 1,
-			ft_strlen(arg->arg) - equal - 1);
 	ft_set_envvar(&shell->envvars, name, value, 0);
 	free(name);
 	free(value);

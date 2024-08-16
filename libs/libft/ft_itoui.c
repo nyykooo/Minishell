@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 15:21:35 by ncampbel          #+#    #+#             */
-/*   Updated: 2024/08/15 22:22:33 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:37:22 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ int	ft_itoui(int negative)
 {
 	unsigned int	num;
 
-	num = (unsigned int)negative;\
+	num = (unsigned int)negative;
 	return (num);
 }

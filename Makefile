@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brunhenr <brunhenr@student.42.fr>          +#+  +:+       +#+         #
+#    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/14 09:41:29 by brunhenr         ###   ########.fr        #
+#    Updated: 2024/08/16 15:31:04 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,10 +82,10 @@ fclean: clean
 re: fclean all
 
 valgrind:
-		valgrind --suppressions=study/readline.supp --leak-check=full --trace-children=yes --track-fds=yes --show-leak-kinds=all ./${NAME}
+		valgrind --suppressions=study/readline.supp --leak-check=full  --track-fds=yes --show-leak-kinds=all ./${NAME}
 
 envvalgrind:
-		valgrind --suppressions=study/readline.supp --leak-check=full --trace-children=yes --track-fds=yes --show-leak-kinds=all env -i ./${NAME}
+		valgrind --suppressions=study/readline.supp --leak-check=full  --track-fds=yes --show-leak-kinds=all env -i ./${NAME}
 
 .PHONY: all clean fclean re
 
