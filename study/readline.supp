@@ -1,12 +1,124 @@
 {
-   <readline_leaks>
+
+   readline1
+
    Memcheck:Leak
+
+   match-leak-kinds: reachable
+
    ...
-   fun:readline
+
+   obj:/usr/lib32/libreadline.so
+
+}
+
+{
+
+   readline2
+
+   Memcheck:Leak
+
+   match-leak-kinds: reachable
+
+   ...
+
+   obj:/usr/lib32/libreadline.so.8
+
+}
+
+{
+
+   readline3
+
+   Memcheck:Leak
+
+   match-leak-kinds: reachable
+
+   ...
+
+   obj:/usr/lib32/libreadline.so.8.1
+
+}
+
+{
+
+   readline4
+
+   Memcheck:Leak
+
+   match-leak-kinds: reachable
+
+   ...
+
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so
+
+}
+
+{
+
+   readline5
+
+   Memcheck:Leak
+
+   match-leak-kinds: reachable
+
+   ...
+
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8
+
+}
+
+{
+
+   readline6
+
+   Memcheck:Leak
+
+   match-leak-kinds: reachable
+
+   ...
+
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.0
+
+}
+
+{
+
+   readline7
+
+   Memcheck:Leak
+
+   match-leak-kinds: reachable
+
+   ...
+
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+
 }
 {
-    leak add_history
-    Memcheck:Leak
-    ...
-    fun:add_history
+
+   readline8
+
+   Memcheck:Leak
+
+   match-leak-kinds: reachable
+
+   ...
+
+   obj:/usr/lib/aarch64-linux-gnu/libreadline.so.8.2
+
+}
+
+{
+
+   readline8
+
+   Memcheck:Leak
+
+   match-leak-kinds: reachable
+
+   ...
+
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.2
+
 }
