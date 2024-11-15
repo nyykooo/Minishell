@@ -6,7 +6,7 @@
 #    By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:37:50 by ncampbel          #+#    #+#              #
-#    Updated: 2024/08/16 15:31:04 by ncampbel         ###   ########.fr        #
+#    Updated: 2024/08/16 15:43:18 by ncampbel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,10 +82,10 @@ fclean: clean
 re: fclean all
 
 valgrind:
-		valgrind --suppressions=study/readline.supp --leak-check=full  --track-fds=yes --show-leak-kinds=all ./${NAME}
+		valgrind --suppressions=readline.supp ./${NAME}
 
 envvalgrind:
-		valgrind --suppressions=study/readline.supp --leak-check=full  --track-fds=yes --show-leak-kinds=all env -i ./${NAME}
+		valgrind --suppressions=readline.supp env -i ./${NAME}
 
 .PHONY: all clean fclean re
 

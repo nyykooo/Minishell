@@ -6,7 +6,7 @@
 /*   By: ncampbel <ncampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 17:08:41 by brunhenr          #+#    #+#             */
-/*   Updated: 2024/08/15 22:02:46 by ncampbel         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:11:40 by ncampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ void	ft_exec_builtin(t_minishell *shell, t_cmd *cmd_temp)
 
 void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 {
-	char	**arg_array;
-
 	ft_close_survivors_fds();
 	if (ft_is_builtin(cmd_temp->cmd) == true)
 	{
@@ -99,7 +97,6 @@ void	ft_exec(t_minishell *shell, t_cmd *cmd_temp)
 		ft_free_shell(shell);
 		exit(0);
 	}
-	arg_array = ft_to_array(cmd_temp);
 	ft_get_path(cmd_temp);
-	ft_execute_cmd(cmd_temp, arg_array, envvar_array(shell));
+	ft_analyze_cmd(cmd_temp);
 }
